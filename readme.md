@@ -53,7 +53,7 @@ src/
  │   │   ├── auth.controller.ts
  │   │   ├── auth.service.ts
  │   │   ├── auth.repository.ts
- │   │   └── index.ts
+ │   │   └── auth.routes.ts
  │   │
  │   ├── branches/                # CRUD de filiais (branches)
  │   │   ├── dtos/
@@ -61,7 +61,7 @@ src/
  │   │   ├── branch.controller.ts
  │   │   ├── branch.service.ts
  │   │   ├── branch.repository.ts # Inclui auditoria e listagem paginada
- │   │   └── index.ts
+ │   │   └── branch.routes.ts
  │   │
  │   ├── users/                   # CRUD de usuários (admin, manager, employee)
  │   │   ├── dtos/
@@ -69,7 +69,7 @@ src/
  │   │   ├── user.controller.ts
  │   │   ├── user.service.ts
  │   │   ├── user.repository.ts   # Inclui auditoria e listagem paginada
- │   │   └── index.ts
+ │   │   └── user.routes.ts
  │
  ├── routes/
  │   └── index.ts                 # Registro global das rotas

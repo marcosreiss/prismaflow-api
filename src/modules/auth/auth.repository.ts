@@ -1,6 +1,6 @@
 import { prisma } from '../../config/prisma';
 import bcrypt from 'bcryptjs';
-import { RegisterAdminDto } from './auth.dto';
+import { RegisterAdminDto } from './dtos/register.dto';
 
 export class AuthRepository {
   async createTenantWithAdmin(dto: RegisterAdminDto) {

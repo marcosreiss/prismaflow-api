@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
-import { LoginDto, RegisterAdminDto } from "./auth.dto";
+import { RegisterAdminDto } from "./dtos/register.dto";
+import { LoginDto } from "./dtos/login.dto";
 
 const service = new AuthService();
 

@@ -4,7 +4,8 @@ import jwt from 'jsonwebtoken';
 import { ApiResponse } from '../../responses/ApiResponse';
 import { AuthRepository } from './auth.repository';
 import { env } from '../../config/env';
-import { LoginDto, RegisterAdminDto } from './auth.dto';
+import { RegisterAdminDto } from './dtos/register.dto';
+import { LoginDto } from './dtos/login.dto';
 
 export class AuthService {
   private repository = new AuthRepository();

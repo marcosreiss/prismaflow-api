@@ -7,9 +7,11 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-
-    // 👇 ADICIONE ESSAS LINHAS
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
   },
 }

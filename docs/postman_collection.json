@@ -1,0 +1,118 @@
+{
+    "info": {
+        "name": "PrismaFlow API - Node",
+        "_postman_id": "b0d1c260-bbfe-4cbb-84b2-5a2ff7fa0a33",
+        "description": "Coleção de rotas principais da API PrismaFlow (Node.js + Express + Prisma).",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Registrar administrador (tenant + branch + admin)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/auth/register-admin",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"tenantName\": \"Ótica Vision\",\n  \"branchName\": \"Matriz São Luís\",\n  \"name\": \"Diogo França\",\n  \"email\": \"diogo@gmail.com\",\n  \"password\": \"123456\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login (gerar token JWT)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/auth/login",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"diogo@gmail.com\",\n  \"password\": \"123456\"\n}"
+                        }
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  if (json.token) pm.environment.set('token', json.token);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Branches",
+            "item": [
+                {
+                    "name": "Criar nova filial",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/branches",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Unidade Centro\"\n}"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Criar novo usuário",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/users",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Gerente A\",\n  \"email\": \"gerente@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\",\n  \"branchId\": \"<id_da_branch>\"\n}"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}

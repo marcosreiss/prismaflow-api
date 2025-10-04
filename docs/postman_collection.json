@@ -106,6 +106,20 @@
                         }
                     },
                     "response": []
+                },
+                {
+                    "name": "Listar filiais (somente ADMIN)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/branches?page=1&limit=10"
+                    },
+                    "response": []
                 }
             ]
         },
@@ -131,6 +145,20 @@
                             "mode": "raw",
                             "raw": "{\n  \"name\": \"Gerente A\",\n  \"email\": \"gerente@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\",\n  \"branchId\": \"<id_da_branch>\"\n}"
                         }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar usuários (ADMIN / MANAGER)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/users?page=1&limit=10"
                     },
                     "response": []
                 }

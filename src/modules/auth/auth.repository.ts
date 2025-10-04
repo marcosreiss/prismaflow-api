@@ -1,35 +1,63 @@
-import { prisma } from '../../config/prisma';
-import bcrypt from 'bcryptjs';
-import { RegisterAdminDto } from './dtos/register.dto';
+import { prisma } from "../../config/prisma";
+import { RegisterAdminDto } from "./dtos/register.dto";
+import { PasswordUtils } from "../../utils/password";
+import { ApiResponse } from "../../responses/ApiResponse";
+import { Request } from "express";
+
 
 export class AuthRepository {
-  async createTenantWithAdmin(dto: RegisterAdminDto) {
-    const hash = await bcrypt.hash(dto.password, 10);
+  async createTenantWithAdmin(dto: RegisterAdminDto, req: Request) {
+    // Verificar se o e-mail já está em uso
+    const existing = await prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (existing) {
+      throw ApiResponse.error("E-mail já está em uso.", 400, req);
+    }
 
-    const tenant = await prisma.tenant.create({
-      data: {
-        name: dto.tenantName,
-        branches: {
-          create: {
-            name: dto.branchName,
+    const hash = await PasswordUtils.hash(dto.password);
+
+    // Transação Prisma para garantir atomicidade
+    const result = await prisma.$transaction(async (tx) => {
+      const tenant = await tx.tenant.create({
+        data: {
+          name: dto.tenantName,
+          branches: {
+            create: { name: dto.branchName },
+          },
+          users: {
+            create: {
+              name: dto.name,
+              email: dto.email,
+              password: hash,
+              role: "ADMIN",
+            },
           },
         },
-        users: {
-          create: {
-            name: dto.name,
-            email: dto.email,
-            password: hash,
-            role: 'ADMIN',
+        include: {
+          branches: true,
+          users: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              role: true,
+            },
           },
         },
-      },
-      include: {
-        branches: true,
-        users: true,
-      },
+      });
+
+      const branch = tenant.branches[0];
+      const admin = tenant.users[0];
+
+      return {
+        tenantId: tenant.id,
+        branchId: branch.id,
+        admin,
+      };
     });
 
-    return tenant;
+    return result;
   }
 
   async findUserByEmail(email: string) {

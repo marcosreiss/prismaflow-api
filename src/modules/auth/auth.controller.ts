@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
 import { RegisterAdminDto } from "./dtos/register.dto";
 import { LoginDto } from "./dtos/login.dto";
+import { ChangePasswordDto } from "./dtos/change-password.dto";
 
 const service = new AuthService();
 
@@ -27,6 +28,20 @@ export const login = async (
   try {
     const dto: LoginDto = req.body;
     const result = await service.login(req, dto);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const dto: ChangePasswordDto = req.body;
+    const result = await service.changePassword(req, dto);
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

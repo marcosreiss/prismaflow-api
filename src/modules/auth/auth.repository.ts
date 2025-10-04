@@ -4,7 +4,6 @@ import { PasswordUtils } from "../../utils/password";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { Request } from "express";
 
-
 export class AuthRepository {
   async createTenantWithAdmin(dto: RegisterAdminDto, req: Request) {
     // Verificar se o e-mail já está em uso
@@ -67,6 +66,15 @@ export class AuthRepository {
         tenant: true,
         branch: true,
       },
+    });
+  }
+
+  async updatePassword(userId: string, newPassword: string) {
+    const hash = await PasswordUtils.hash(newPassword);
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hash },
     });
   }
 }

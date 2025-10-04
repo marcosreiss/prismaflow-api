@@ -1,6 +1,6 @@
 import { prisma } from '../../config/prisma';
-import { RegisterAdminDto } from './auth.dto';
 import bcrypt from 'bcryptjs';
+import { RegisterAdminDto } from './auth.dto';
 
 export class AuthRepository {
   async createTenantWithAdmin(dto: RegisterAdminDto) {
@@ -30,5 +30,15 @@ export class AuthRepository {
     });
 
     return tenant;
+  }
+
+  async findUserByEmail(email: string) {
+    return prisma.user.findUnique({
+      where: { email },
+      include: {
+        tenant: true,
+        branch: true,
+      },
+    });
   }
 }

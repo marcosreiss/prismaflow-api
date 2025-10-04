@@ -3,24 +3,41 @@ import { validate } from "class-validator";
 import { Request, Response, NextFunction } from "express";
 import { ApiResponse } from "../responses/ApiResponse";
 
-export function validateDto(dtoClass: any) {
+type ValidationSource = "body" | "query" | "params";
+
+export function validateDto(dtoClass: any, source: ValidationSource = "body") {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const dtoObject = plainToInstance(dtoClass, req.body);
-    const errors = await validate(dtoObject, { whitelist: true });
+    try {
+      // Pega a origem (body, query ou params)
+      const payload = req[source];
 
-    if (errors.length > 0) {
-      const messages = errors.flatMap((err) =>
-        Object.values(err.constraints || {})
-      );
-      const response = ApiResponse.error(
-        `Validation failed: ${messages.join(", ")}`,
-        400,
-        req
-      );
-      return res.status(400).json(response);
+      // Converte para classe DTO
+      const dtoObject = plainToInstance(dtoClass, payload);
+
+      // Valida campos com class-validator
+      const errors = await validate(dtoObject, {
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      });
+
+      if (errors.length > 0) {
+        const messages = errors.flatMap((err) =>
+          Object.values(err.constraints || {})
+        );
+
+        const response = ApiResponse.error(
+          `Validation failed: ${messages.join(", ")}`,
+          400,
+          req
+        );
+        return res.status(400).json(response);
+      }
+
+      // Sobrescreve o conteúdo validado (garante tipagem e limpeza)
+      req[source] = dtoObject;
+      next();
+    } catch (error) {
+      next(error);
     }
-
-    req.body = dtoObject;
-    next();
   };
 }

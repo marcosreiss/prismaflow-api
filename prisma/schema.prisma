@@ -56,10 +56,10 @@ model User {
   // 🔹 Relações inversas (fecham os relacionamentos)
   tenantsCreated  Tenant[] @relation("TenantCreatedBy")
   tenantsUpdated  Tenant[] @relation("TenantUpdatedBy")
-  branchesCreated Branch[] @relation("BranchCreatedBy")
-  branchesUpdated Branch[] @relation("BranchUpdatedBy")
-  usersCreated    User[]   @relation("UserCreatedBy")
-  usersUpdated    User[]   @relation("UserUpdatedBy")
+  branchesCreatedByMe Branch[] @relation("BranchCreatedBy")
+  branchesUpdatedByMe Branch[] @relation("BranchUpdatedBy")
+  usersCreatedByMe    User[]   @relation("UserCreatedBy")
+  usersUpdatedByMe    User[]   @relation("UserUpdatedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

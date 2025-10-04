@@ -1,26 +1,46 @@
 import { prisma } from "../../config/prisma";
-import { withAuditData } from "../../config/prisma-audit.middleware";
+import { withAuditData } from "../../config/prisma-context";
 
 export class BranchRepository {
-  create(tenantId: string, name: string, userId: string) {
+  create(tenantId: string, name: string, userId?: string) {
     return prisma.branch.create({
       data: withAuditData(userId, { name, tenantId }),
+      include: {
+        createdBy: { select: { name: true } },
+        updatedBy: { select: { name: true } },
+      },
     });
   }
 
-  update(branchId: string, data: any, userId: string) {
+  update(branchId: string, data: any, userId?: string) {
     return prisma.branch.update({
       where: { id: branchId },
       data: withAuditData(userId, data, true),
+      include: {
+        createdBy: { select: { name: true } },
+        updatedBy: { select: { name: true } },
+      },
     });
   }
 
   findByNameInTenant(tenantId: string, name: string) {
-    return prisma.branch.findFirst({ where: { tenantId, name } });
+    return prisma.branch.findFirst({
+      where: { tenantId, name },
+      include: {
+        createdBy: { select: { name: true } },
+        updatedBy: { select: { name: true } },
+      },
+    });
   }
 
   findByIdInTenant(tenantId: string, branchId: string) {
-    return prisma.branch.findFirst({ where: { id: branchId, tenantId } });
+    return prisma.branch.findFirst({
+      where: { id: branchId, tenantId },
+      include: {
+        createdBy: { select: { name: true } },
+        updatedBy: { select: { name: true } },
+      },
+    });
   }
 
   async findAllByTenant(tenantId: string, page: number, limit: number) {
@@ -32,6 +52,10 @@ export class BranchRepository {
         skip,
         take: limit,
         orderBy: { name: "asc" },
+        include: {
+          createdBy: { select: { name: true } },
+          updatedBy: { select: { name: true } },
+        },
       }),
       prisma.branch.count({ where: { tenantId } }),
     ]);

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createBranch } from "./branch.controller";
+import { createBranch, listBranches } from "./branch.controller";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { requireRoles } from "../../middlewares/authorize.middleware";
 import { validateDto } from "../../middlewares/validation.middleware";
@@ -14,3 +14,5 @@ branchRoutes.post(
   validateDto(CreateBranchDto, "body"),
   createBranch
 );
+
+branchRoutes.get("/", authGuard, requireRoles("ADMIN"), listBranches);

@@ -16,3 +16,16 @@ export const createBranch = async (
     next(e);
   }
 };
+
+export const listBranches = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await service.list(req);
+    res.status(result.status).json(result);
+  } catch (e) {
+    next(e);
+  }
+};

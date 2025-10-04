@@ -8,30 +8,33 @@ generator client {
 }
 
 model Tenant {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   branches    Branch[]
   users       User[]
+  brands      Brand[]
+  products    Product[]
   createdById String?
   updatedById String?
-  createdBy   User?    @relation("TenantCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?    @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdBy   User?     @relation("TenantCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?     @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Branch {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   tenantId    String
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
   users       User[]
   createdById String?
   updatedById String?
-  createdBy   User?    @relation("BranchCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?    @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdBy   User?     @relation("BranchCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?     @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Product     Product[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -53,13 +56,64 @@ model User {
   createdBy   User?   @relation("UserCreatedBy", fields: [createdById], references: [id])
   updatedBy   User?   @relation("UserUpdatedBy", fields: [updatedById], references: [id])
 
-  // 🔹 Relações inversas (fecham os relacionamentos)
-  tenantsCreated  Tenant[] @relation("TenantCreatedBy")
-  tenantsUpdated  Tenant[] @relation("TenantUpdatedBy")
-  branchesCreatedByMe Branch[] @relation("BranchCreatedBy")
-  branchesUpdatedByMe Branch[] @relation("BranchUpdatedBy")
-  usersCreatedByMe    User[]   @relation("UserCreatedBy")
-  usersUpdatedByMe    User[]   @relation("UserUpdatedBy")
+  // 🔹 Relações inversas
+  tenantsCreated      Tenant[]  @relation("TenantCreatedBy")
+  tenantsUpdated      Tenant[]  @relation("TenantUpdatedBy")
+  branchesCreatedByMe Branch[]  @relation("BranchCreatedBy")
+  branchesUpdatedByMe Branch[]  @relation("BranchUpdatedBy")
+  usersCreatedByMe    User[]    @relation("UserCreatedBy")
+  usersUpdatedByMe    User[]    @relation("UserUpdatedBy")
+  brandsCreatedByMe   Brand[]   @relation("BrandCreatedBy")
+  brandsUpdatedByMe   Brand[]   @relation("BrandUpdatedBy")
+  productsCreatedByMe Product[] @relation("ProductCreatedBy")
+  productsUpdatedByMe Product[] @relation("ProductUpdatedBy")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Brand {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  isActive Boolean   @default(true)
+  tenantId String
+  tenant   Tenant    @relation(fields: [tenantId], references: [id])
+  products Product[]
+
+  // 🔹 Auditoria
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("BrandCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("BrandUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String?
+  costPrice     Float?
+  markup        Float?
+  salePrice     Float?
+  stockQuantity Int?            @default(0)
+  minimumStock  Int?            @default(0)
+  category      ProductCategory
+  isActive      Boolean         @default(true)
+
+  tenantId String
+  tenant   Tenant  @relation(fields: [tenantId], references: [id])
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id])
+  brandId  Int?
+  brand    Brand?  @relation(fields: [brandId], references: [id])
+
+  // 🔹 Auditoria
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("ProductCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("ProductUpdatedBy", fields: [updatedById], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,4 +123,10 @@ enum Role {
   ADMIN
   MANAGER
   EMPLOYEE
+}
+
+enum ProductCategory {
+  FRAME
+  LENS
+  ACCESSORY
 }

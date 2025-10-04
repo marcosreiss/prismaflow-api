@@ -6,6 +6,10 @@
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // 👇 ADICIONE ESSAS LINHAS
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

@@ -8,6 +8,6 @@ export class AuthService {
 
   async registerAdmin(req: Request, dto: RegisterAdminDto) {
     const tenant = await this.repository.createTenantWithAdmin(dto);
-    return ApiResponse.success('Tenant and admin created successfully', req, tenant);
+    return ApiResponse.success('Ótica e administrador criados com sucesso.', req, tenant);
   }
 }

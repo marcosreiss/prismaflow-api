@@ -10,7 +10,7 @@ export function errorMiddleware(
   console.error('🔥 Error:', err);
 
   const status = err.status || 500;
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || 'Erro interno no servidor.';
 
   const response = ApiResponse.error(message, status, req);
   res.status(status).json(response);

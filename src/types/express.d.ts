@@ -12,7 +12,15 @@ declare global {
       exp?: number;
     }
     interface Request {
-      user?: UserPayload;
+      user?: {
+        sub: string;
+        email: string;
+        tenantId: string;
+        branchId?: string;
+        role: "ADMIN" | "MANAGER" | "EMPLOYEE";
+        iat?: number;
+        exp?: number;
+      };
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { authRoutes } from '../modules/auth';
-import { branchRoutes } from '../modules/branches';
-import { userRoutes } from '../modules/users';
+import { authRoutes } from '../modules/auth/auth.routes';
+import { branchRoutes } from '../modules/branches/branch.routes';
+import { userRoutes } from '../modules/users/user.routes';
 
 export const router = Router();
 

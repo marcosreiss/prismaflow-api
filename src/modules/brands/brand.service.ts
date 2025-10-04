@@ -52,13 +52,15 @@ export class BrandService {
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
+    const search = (req.query.search as string) || "";
 
     const { items, total } = await this.repo.findAllByTenant(
       user.tenantId,
       page,
-      limit
+      limit,
+      search
     );
-    return PagedResponse.success(
+    return new PagedResponse(
       "Marcas listadas com sucesso.",
       req,
       items,
@@ -66,6 +68,20 @@ export class BrandService {
       limit,
       total
     );
+  }
+
+  async getById(req: Request, id: number) {
+    const user = req.user!;
+    if (user.role !== "ADMIN") {
+      return ApiResponse.error("Acesso negado.", 403, req);
+    }
+
+    const brand = await this.repo.findById(id);
+    if (!brand) {
+      return ApiResponse.error("Marca não encontrada.", 404, req);
+    }
+
+    return ApiResponse.success("Marca encontrada com sucesso.", req, brand);
   }
 
   async delete(req: Request, id: number) {

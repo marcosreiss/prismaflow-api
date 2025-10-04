@@ -6,6 +6,7 @@ import {
   createBrand,
   updateBrand,
   listBrands,
+  getBrandById,
   deleteBrand,
 } from "./brand.controller";
 import { CreateBrandDto, UpdateBrandDto } from "./dtos/brand.dto";
@@ -20,7 +21,14 @@ brandRoutes.post(
   createBrand
 );
 
-brandRoutes.get("/", authGuard, requireRoles("ADMIN"), listBrands);
+brandRoutes.get(
+  "/",
+  authGuard,
+  requireRoles("ADMIN"),
+  listBrands // suporta ?page=&limit=&search=
+);
+
+brandRoutes.get("/:id", authGuard, requireRoles("ADMIN"), getBrandById);
 
 brandRoutes.put(
   "/:id",

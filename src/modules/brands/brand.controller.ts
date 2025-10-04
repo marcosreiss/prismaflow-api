@@ -43,6 +43,20 @@ export const listBrands = async (
   }
 };
 
+export const getBrandById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await service.getById(req, id);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const deleteBrand = async (
   req: Request,
   res: Response,

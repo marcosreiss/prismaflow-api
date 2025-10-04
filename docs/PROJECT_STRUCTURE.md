@@ -95,7 +95,6 @@ export class BranchRepository {
     ]).then(([items, total]) => ({ items, total }));
   }
 }
-
 ```
 
 📘 **Responsabilidades:**
@@ -125,7 +124,11 @@ export class BranchService {
   async create(req: Request, name: string) {
     const user = req.user!;
     if (user.role !== "ADMIN") {
-      return ApiResponse.error("Apenas administradores podem criar filiais.", 403, req);
+      return ApiResponse.error(
+        "Apenas administradores podem criar filiais.",
+        403,
+        req
+      );
     }
 
     const exists = await this.repo.findByNameInTenant(user.tenantId, name);
@@ -145,12 +148,22 @@ export class BranchService {
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-    const { items, total } = await this.repo.findAllByTenant(user.tenantId, page, limit);
+    const { items, total } = await this.repo.findAllByTenant(
+      user.tenantId,
+      page,
+      limit
+    );
 
-    return ApiResponse.paged("Filiais listadas com sucesso.", req, items, page, limit, total);
+    return ApiResponse.paged(
+      "Filiais listadas com sucesso.",
+      req,
+      items,
+      page,
+      limit,
+      total
+    );
   }
 }
-
 ```
 
 📘 **Responsabilidades:**
@@ -176,7 +189,11 @@ import { BranchService } from "./branch.service";
 
 const service = new BranchService();
 
-export const createBranch = async (req: Request, res: Response, next: NextFunction) => {
+export const createBranch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { name } = req.body;
     const result = await service.create(req, name);
@@ -186,7 +203,11 @@ export const createBranch = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const listBranches = async (req: Request, res: Response, next: NextFunction) => {
+export const listBranches = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const result = await service.list(req);
     res.status(result.status).json(result);
@@ -194,7 +215,6 @@ export const listBranches = async (req: Request, res: Response, next: NextFuncti
     next(err);
   }
 };
-
 ```
 
 📘 **Responsabilidades:**
@@ -230,7 +250,6 @@ branchRoutes.post(
 );
 
 branchRoutes.get("/", authGuard, requireRoles("ADMIN"), listBranches);
-
 ```
 
 📘 **Responsabilidades:**
@@ -260,27 +279,27 @@ src/
 
 Para criar uma nova entidade:
 
-| Etapa | Arquivo | Responsabilidade |
-| --- | --- | --- |
-| 1️⃣ | `schema.prisma` | Definir o model Prisma |
-| 2️⃣ | `cliente.repository.ts` | CRUD no banco via Prisma |
-| 3️⃣ | `cliente.service.ts` | Regras de negócio e validações |
-| 4️⃣ | `cliente.controller.ts` | Funções de entrada HTTP |
-| 5️⃣ | `cliente.routes.ts` | Definição das rotas Express |
-| 6️⃣ | `entity.routes.ts` | Exportar rotas e service se necessário |
+| Etapa | Arquivo                 | Responsabilidade                       |
+| ----- | ----------------------- | -------------------------------------- |
+| 1️⃣    | `schema.prisma`         | Definir o model Prisma                 |
+| 2️⃣    | `cliente.repository.ts` | CRUD no banco via Prisma               |
+| 3️⃣    | `cliente.service.ts`    | Regras de negócio e validações         |
+| 4️⃣    | `cliente.controller.ts` | Funções de entrada HTTP                |
+| 5️⃣    | `cliente.routes.ts`     | Definição das rotas Express            |
+| 6️⃣    | `entity.routes.ts`      | Exportar rotas e service se necessário |
 
 ---
 
 ## ⚙️ 7️⃣ Padrões Recomendados
 
-| Item | Padrão |
-| --- | --- |
-| **Camadas isoladas** | Cada módulo deve ter dtos, repository, service, controller e rotas |
-| **Respostas unificadas** | Sempre retornar `ApiResponse` ou `PagedResponse` |
-| **Auditoria automática** | Usar `withAuditData(userId, data)` em `create` e `update` |
-| **Paginação** | Sempre incluir `page` e `limit` nos `GET` de listagem |
-| **Validação** | Todos os `POST` e `PUT` devem usar DTOs (`class-validator`) |
-| **Permissões (RBAC)** | Controlar acesso via `requireRoles()` no arquivo de rotas |
+| Item                         | Padrão                                                              |
+| ---------------------------- | ------------------------------------------------------------------- |
+| **Camadas isoladas**         | Cada módulo deve ter dtos, repository, service, controller e rotas  |
+| **Respostas unificadas**     | Sempre retornar `ApiResponse` ou `PagedResponse`                    |
+| **Auditoria automática**     | Usar `withAuditData(userId, data)` em `create` e `update`           |
+| **Paginação**                | Sempre incluir `page` e `limit` nos `GET` de listagem               |
+| **Validação**                | Todos os `POST` e `PUT` devem usar DTOs (`class-validator`)         |
+| **Permissões (RBAC)**        | Controlar acesso via `requireRoles()` no arquivo de rotas           |
 | **Nomenclatura de arquivos** | Seguir o padrão `<entidade>.<camada>.ts` (ex: `cliente.service.ts`) |
 
 ---
@@ -308,6 +327,211 @@ ApiResponse / PagedResponse → JSON final
 
 ---
 
-Essa estrutura modular e tipada garante que cada novo módulo (ex: *clientes*, *produtos*, *vendas*)
+## 📦 9️⃣ Padrão de Resposta da API (`ApiResponse` e `PagedResponse`)
+
+Toda resposta da **PrismaFlow API** segue um **formato padronizado**, garantindo consistência entre endpoints e facilitando o consumo por aplicações front-end e serviços externos.
+
+---
+
+### 🧱 Estrutura Base — `ApiResponse<T>`
+
+A classe `ApiResponse<T>` define o **formato genérico de todas as respostas HTTP** da API.
+
+```tsx
+import { Request } from "express";
+
+export class ApiResponse<T> {
+  status: number;
+  message: string;
+  data?: T;
+  token?: string;
+  timestamp: string;
+  path: string;
+
+  constructor(
+    status: number,
+    message: string,
+    req: Request,
+    data?: T,
+    token?: string
+  ) {
+    this.status = status;
+    this.message = message;
+    this.data = data;
+    this.token = token;
+    this.timestamp = new Date().toISOString();
+    this.path = req.originalUrl;
+  }
+
+  static success<T>(message: string, req: Request, data?: T, token?: string) {
+    return new ApiResponse<T>(200, message, req, data, token);
+  }
+
+  static error(message: string, status: number, req: Request) {
+    return new ApiResponse(status, message, req);
+  }
+}
+```
+
+### 🔹 Estrutura JSON resultante
+
+Exemplo de resposta bem-sucedida:
+
+```json
+{
+  "status": 200,
+  "message": "Filial criada com sucesso.",
+  "data": {
+    "id": "br_123",
+    "name": "Matriz São Paulo",
+    "tenantId": "tnt_456"
+  },
+  "timestamp": "2025-10-04T14:22:15.412Z",
+  "path": "/api/branches"
+}
+```
+
+Exemplo de resposta de erro:
+
+```json
+{
+  "status": 403,
+  "message": "Acesso negado.",
+  "timestamp": "2025-10-04T14:23:10.120Z",
+  "path": "/api/branches"
+}
+```
+
+---
+
+### 🧭 Uso no Service
+
+A classe é utilizada diretamente nos **services** para gerar respostas padronizadas:
+
+```tsx
+import { ApiResponse } from "../../responses/ApiResponse";
+
+if (!user.isAdmin) {
+  return ApiResponse.error("Acesso negado.", 403, req);
+}
+
+const branch = await this.repo.create(user.tenantId, name, user.sub);
+return ApiResponse.success("Filial criada com sucesso.", req, branch);
+```
+
+---
+
+## 📄 1️⃣0️⃣ Resposta Paginada — `PagedResponse<T>`
+
+Para endpoints que retornam listas com paginação, usamos a classe `PagedResponse<T>`, que **herda de `ApiResponse`** e adiciona o objeto `PageData`.
+
+```tsx
+import { Request } from "express";
+import { ApiResponse } from "./ApiResponse";
+
+export interface PageData<T> {
+  currentPage: number;
+  totalPages: number;
+  totalElements: number;
+  limit: number;
+  content: T[];
+}
+
+export class PagedResponse<T> extends ApiResponse<PageData<T>> {
+  constructor(
+    message: string,
+    req: Request,
+    items: T[],
+    page: number,
+    limit: number,
+    total: number
+  ) {
+    const totalPages = Math.ceil(total / limit);
+
+    const data: PageData<T> = {
+      currentPage: page,
+      totalPages,
+      totalElements: total,
+      limit,
+      content: items,
+    };
+
+    super(200, message, req, data);
+  }
+}
+```
+
+---
+
+### 🔹 Estrutura JSON paginada
+
+```json
+{
+  "status": 200,
+  "message": "Filiais listadas com sucesso.",
+  "data": {
+    "currentPage": 1,
+    "totalPages": 3,
+    "totalElements": 25,
+    "limit": 10,
+    "content": [
+      { "id": "br_001", "name": "Matriz SP" },
+      { "id": "br_002", "name": "Filial RJ" }
+    ]
+  },
+  "timestamp": "2025-10-04T14:30:20.189Z",
+  "path": "/api/branches"
+}
+```
+
+---
+
+### 🧭 Uso no Service
+
+```tsx
+import { PagedResponse } from "../../responses/PagedResponse";
+
+const { items, total } = await this.repo.findAllByTenant(
+  user.tenantId,
+  page,
+  limit
+);
+
+return new PagedResponse(
+  "Filiais listadas com sucesso.",
+  req,
+  items,
+  page,
+  limit,
+  total
+);
+```
+
+---
+
+### 📘 Boas práticas de uso
+
+| Tipo de Resposta      | Método Recomendado      | Exemplo                                                         |
+| --------------------- | ----------------------- | --------------------------------------------------------------- |
+| **Sucesso simples**   | `ApiResponse.success()` | `ApiResponse.success("Criado", req, data)`                      |
+| **Erro controlado**   | `ApiResponse.error()`   | `ApiResponse.error("Não autorizado", 401, req)`                 |
+| **Listagem paginada** | `PagedResponse`         | `new PagedResponse("Listagem", req, items, page, limit, total)` |
+
+---
+
+### 💡 Benefícios do padrão
+
+- **Uniformidade:** Todas as rotas retornam o mesmo formato de JSON
+- **Rastreabilidade:** Cada resposta inclui `timestamp` e `path`
+- **Extensibilidade:** Permite adicionar campos extras (ex: `token`, `meta`, etc.)
+- **Integração simplificada:** Front-ends e consumidores externos podem tratar respostas de forma genérica
+
+---
+
+Com isso, **todas as respostas da API** seguem o mesmo padrão padronizado (`ApiResponse` e `PagedResponse`), garantindo **consistência, previsibilidade e clareza** em todo o ecossistema do projeto.
+
+---
+
+Essa estrutura modular e tipada garante que cada novo módulo (ex: _clientes_, _produtos_, _vendas_)
 
 possa ser criado **em minutos**, mantendo o mesmo padrão limpo, escalável e rastreável de todo o sistema.

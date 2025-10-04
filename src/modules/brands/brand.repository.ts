@@ -22,26 +22,6 @@ export class BrandRepository {
     });
   }
 
-  async findAllByTenant(tenantId: string, page: number, limit: number) {
-    const skip = (page - 1) * limit;
-
-    const [items, total] = await Promise.all([
-      prisma.brand.findMany({
-        where: { tenantId },
-        skip,
-        take: limit,
-        orderBy: { name: "asc" },
-        include: {
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
-        },
-      }),
-      prisma.brand.count({ where: { tenantId } }),
-    ]);
-
-    return { items, total };
-  }
-
   async findById(id: number) {
     return prisma.brand.findUnique({
       where: { id },
@@ -56,6 +36,36 @@ export class BrandRepository {
     return prisma.brand.findFirst({
       where: { tenantId, name },
     });
+  }
+
+  async findAllByTenant(
+    tenantId: string,
+    page: number,
+    limit: number,
+    search?: string
+  ) {
+    const skip = (page - 1) * limit;
+
+    const whereClause: any = {
+      tenantId,
+      ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
+    };
+
+    const [items, total] = await Promise.all([
+      prisma.brand.findMany({
+        where: whereClause,
+        skip,
+        take: limit,
+        orderBy: { name: "asc" },
+        include: {
+          createdBy: { select: { name: true } },
+          updatedBy: { select: { name: true } },
+        },
+      }),
+      prisma.brand.count({ where: whereClause }),
+    ]);
+
+    return { items, total };
   }
 
   async delete(id: number) {

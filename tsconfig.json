@@ -10,6 +10,6 @@
 
     // 👇 ADICIONE ESSAS LINHAS
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+  },
 }

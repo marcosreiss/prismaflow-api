@@ -1,8 +1,14 @@
 import { Router } from 'express';
-import { getUserById } from './user.controller';
+import { createUser } from './user.controller';
+import { authGuard } from '../../middlewares/auth.middleware';
 import { validateDto } from '../../middlewares/validation.middleware';
-import { GetUserParamDto } from './dtos/get-user-param.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
 
 export const userRoutes = Router();
 
-userRoutes.get('/:id', validateDto(GetUserParamDto, 'params'), getUserById);
+userRoutes.post(
+  '/',
+  authGuard,                // precisa estar logado
+  validateDto(CreateUserDto, 'body'),
+  createUser
+);

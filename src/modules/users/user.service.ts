@@ -86,6 +86,7 @@ export class UserService {
       role,
       tenantId: actor.tenantId,
       branchId: branch?.id ?? null,
+      userId: actor.sub
     });
 
     const { password: _, ...safe } = created;

@@ -25,7 +25,7 @@ export class BranchService {
       );
     }
 
-    const branch = await this.repo.create(user.tenantId, name);
+    const branch = await this.repo.create(user.tenantId, name, user.sub);
     return ApiResponse.success("Filial criada com sucesso.", req, branch);
   }
 

@@ -8,36 +8,59 @@ generator client {
 }
 
 model Tenant {
-  id        String   @id @default(cuid())
-  name      String
-  branches  Branch[]
-  users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  branches    Branch[]
+  users       User[]
+  createdById String?
+  updatedById String?
+  createdBy   User?    @relation("TenantCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?    @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Branch {
-  id        String   @id @default(cuid())
-  name      String
-  tenantId  String
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
-  users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  users       User[]
+  createdById String?
+  updatedById String?
+  createdBy   User?    @relation("BranchCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?    @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role
-  tenantId  String
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
-  branchId  String?
-  branch    Branch?  @relation(fields: [branchId], references: [id])
+  id       String  @id @default(cuid())
+  name     String
+  email    String  @unique
+  password String
+  role     Role
+  tenantId String
+  tenant   Tenant  @relation(fields: [tenantId], references: [id])
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id])
+
+  // 🔹 Auditoria
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("UserCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("UserUpdatedBy", fields: [updatedById], references: [id])
+
+  // 🔹 Relações inversas (fecham os relacionamentos)
+  tenantsCreated  Tenant[] @relation("TenantCreatedBy")
+  tenantsUpdated  Tenant[] @relation("TenantUpdatedBy")
+  branchesCreated Branch[] @relation("BranchCreatedBy")
+  branchesUpdated Branch[] @relation("BranchUpdatedBy")
+  usersCreated    User[]   @relation("UserCreatedBy")
+  usersUpdated    User[]   @relation("UserUpdatedBy")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -1,5 +1,6 @@
 import { prisma } from "../../config/prisma";
 import { Role } from "@prisma/client";
+import { withAuditData } from "../../config/prisma-audit.middleware";
 
 export class UserRepository {
   create(params: {
@@ -9,8 +10,17 @@ export class UserRepository {
     role: Role;
     tenantId: string;
     branchId?: string | null;
+    userId?: string; // 👈 agora opcional
   }) {
-    return prisma.user.create({ data: params });
+    const { userId, ...data } = params;
+    return prisma.user.create({ data: withAuditData(userId, data) });
+  }
+
+  update(id: string, data: any, userId?: string) {
+    return prisma.user.update({
+      where: { id },
+      data: withAuditData(userId, data, true),
+    });
   }
 
   findByEmail(email: string) {

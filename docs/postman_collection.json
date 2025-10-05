@@ -686,6 +686,111 @@
                     "response": []
                 }
             ]
+        },
+        {
+            "name": "Payments",
+            "item": [
+                {
+                    "name": "Criar novo pagamento",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"saleId\": 1,\n  \"method\": \"CREDIT\",\n  \"status\": \"PENDING\",\n  \"total\": 450.00,\n  \"discount\": 50.00,\n  \"downPayment\": 100.00,\n  \"installmentsTotal\": 3,\n  \"paidAmount\": 0,\n  \"installmentsPaid\": 0,\n  \"firstDueDate\": \"2025-10-10T00:00:00.000Z\",\n  \"branchId\": \"br_01j9xyz72h\",\n  \"tenantId\": \"ten_01j8b32v7x\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar pagamento existente",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"method\": \"PIX\",\n  \"status\": \"PENDING\",\n  \"total\": 500.00,\n  \"discount\": 0,\n  \"downPayment\": 150.00,\n  \"installmentsTotal\": 2,\n  \"paidAmount\": 150.00,\n  \"installmentsPaid\": 1,\n  \"lastPaymentAt\": \"2025-10-12T00:00:00.000Z\",\n  \"firstDueDate\": \"2025-10-10T00:00:00.000Z\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar pagamentos (paginado + filtro opcional por status)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments?page=1&limit=10&status=PENDING"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar pagamento por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar status do pagamento por saleId",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments/by-sale/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir pagamento",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments/1"
+                    },
+                    "response": []
+                }
+            ]
         }
     ]
 }

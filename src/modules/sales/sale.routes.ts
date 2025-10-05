@@ -13,12 +13,7 @@ import { CreateSaleDto, UpdateSaleDto } from "./dtos/sale.dto";
 export const saleRoutes = Router();
 
 // 🔹 Criar venda
-saleRoutes.post(
-  "/",
-  authGuard,
-  validateDto(CreateSaleDto, "body"),
-  createSale
-);
+saleRoutes.post("/", authGuard, validateDto(CreateSaleDto, "body"), createSale);
 
 // 🔹 Listar vendas
 saleRoutes.get("/", authGuard, listSales);

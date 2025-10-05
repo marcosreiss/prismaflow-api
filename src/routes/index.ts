@@ -10,6 +10,7 @@ import { opticalServiceRoutes } from "../modules/optical-services/optical-servic
 import { clientRoutes } from "../modules/clients/client.routes";
 import { prescriptionRoutes } from "../modules/prescriptions/prescription.routes";
 import { saleRoutes } from "../modules/sales/sale.routes";
+import { paymentRoutes } from "../modules/payments/payment.routes";
 
 export const router = Router();
 
@@ -31,3 +32,4 @@ router.use("/clients", clientRoutes);
 router.use("/prescriptions", prescriptionRoutes);
 
 router.use("/sales", saleRoutes)
+router.use("/payments", paymentRoutes)

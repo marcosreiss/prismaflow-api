@@ -163,6 +163,188 @@
                     "response": []
                 }
             ]
+        },
+        {
+            "name": "Brands",
+            "item": [
+                {
+                    "name": "Criar nova marca",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/brands",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Ray-Ban\",\n  \"isActive\": true\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar marcas (paginado + busca opcional)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/brands?page=1&limit=10&search=Ray"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar marca por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/brands/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar marca",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/brands/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Oakley\",\n  \"isActive\": true\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir marca",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/brands/1"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Criar novo produto",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Armação Classic\",\n  \"description\": \"Armação leve em acetato\",\n  \"costPrice\": 120.50,\n  \"markup\": 2.0,\n  \"salePrice\": 241.00,\n  \"stockQuantity\": 50,\n  \"minimumStock\": 10,\n  \"category\": \"FRAME\",\n  \"brandId\": 1,\n  \"branchId\": \"br_01j9xyz72h\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar produtos (paginado + busca + filtro categoria)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products?page=1&limit=10&search=armação&category=FRAME"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar produto por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar produto",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Lente Antirreflexo Premium\",\n  \"description\": \"Lente com filtro de luz azul\",\n  \"salePrice\": 320.00,\n  \"stockQuantity\": 25\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir produto",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products/1"
+                    },
+                    "response": []
+                }
+            ]
         }
     ]
 }

@@ -1,0 +1,39 @@
+import { Router } from "express";
+import { authGuard } from "../../middlewares/auth.middleware";
+import { validateDto } from "../../middlewares/validation.middleware";
+import {
+  createProduct,
+  updateProduct,
+  listProducts,
+  getProductById,
+  deleteProduct,
+} from "./product.controller";
+import { CreateProductDto, UpdateProductDto } from "./product.dto";
+
+export const productRoutes = Router();
+
+// 🔹 Criar produto
+productRoutes.post(
+  "/",
+  authGuard,
+  validateDto(CreateProductDto, "body"),
+  createProduct
+);
+
+// 🔹 Listar produtos com paginação, busca e filtro
+// Exemplo: GET /products?page=1&limit=10&search=lente&category=LENS
+productRoutes.get("/", authGuard, listProducts);
+
+// 🔹 Buscar produto por ID
+productRoutes.get("/:id", authGuard, getProductById);
+
+// 🔹 Atualizar produto
+productRoutes.put(
+  "/:id",
+  authGuard,
+  validateDto(UpdateProductDto, "body"),
+  updateProduct
+);
+
+// 🔹 Excluir produto
+productRoutes.delete("/:id", authGuard, deleteProduct);

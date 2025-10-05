@@ -21,6 +21,8 @@ model Tenant {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   OpticalService OpticalService[]
+  Client         Client[]
+  Prescription   Prescription[]
 }
 
 model Branch {
@@ -37,6 +39,8 @@ model Branch {
   updatedAt      DateTime         @updatedAt
   Product        Product[]
   OpticalService OpticalService[]
+  Client         Client[]
+  Prescription   Prescription[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -59,18 +63,22 @@ model User {
   updatedBy   User?   @relation("UserUpdatedBy", fields: [updatedById], references: [id])
 
   // 🔹 Relações inversas
-  tenantsCreated      Tenant[]         @relation("TenantCreatedBy")
-  tenantsUpdated      Tenant[]         @relation("TenantUpdatedBy")
-  branchesCreatedByMe Branch[]         @relation("BranchCreatedBy")
-  branchesUpdatedByMe Branch[]         @relation("BranchUpdatedBy")
-  usersCreatedByMe    User[]           @relation("UserCreatedBy")
-  usersUpdatedByMe    User[]           @relation("UserUpdatedBy")
-  brandsCreatedByMe   Brand[]          @relation("BrandCreatedBy")
-  brandsUpdatedByMe   Brand[]          @relation("BrandUpdatedBy")
-  productsCreatedByMe Product[]        @relation("ProductCreatedBy")
-  productsUpdatedByMe Product[]        @relation("ProductUpdatedBy")
-  servicesCreatedByMe OpticalService[] @relation("ServiceCreatedBy")
-  servicesUpdatedByMe OpticalService[] @relation("ServiceUpdatedBy")
+  tenantsCreated           Tenant[]         @relation("TenantCreatedBy")
+  tenantsUpdated           Tenant[]         @relation("TenantUpdatedBy")
+  branchesCreatedByMe      Branch[]         @relation("BranchCreatedBy")
+  branchesUpdatedByMe      Branch[]         @relation("BranchUpdatedBy")
+  usersCreatedByMe         User[]           @relation("UserCreatedBy")
+  usersUpdatedByMe         User[]           @relation("UserUpdatedBy")
+  brandsCreatedByMe        Brand[]          @relation("BrandCreatedBy")
+  brandsUpdatedByMe        Brand[]          @relation("BrandUpdatedBy")
+  productsCreatedByMe      Product[]        @relation("ProductCreatedBy")
+  productsUpdatedByMe      Product[]        @relation("ProductUpdatedBy")
+  servicesCreatedByMe      OpticalService[] @relation("ServiceCreatedBy")
+  servicesUpdatedByMe      OpticalService[] @relation("ServiceUpdatedBy")
+  clientsCreatedByMe       Client[]         @relation("ClientCreatedBy")
+  clientsUpdatedByMe       Client[]         @relation("ClientUpdatedBy")
+  prescriptionsCreatedByMe Prescription[]   @relation("PrescriptionCreatedBy")
+  prescriptionsUpdatedByMe Prescription[]   @relation("PrescriptionUpdatedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,6 +152,98 @@ model OpticalService {
   updatedAt DateTime @updatedAt
 }
 
+model Client {
+  id            Int       @id @default(autoincrement())
+  name          String
+  nickname      String?
+  cpf           String?   @unique
+  rg            String?
+  bornDate      DateTime?
+  gender        Gender?
+  fatherName    String?
+  motherName    String?
+  spouse        String?
+  email         String?
+  company       String?
+  occupation    String?
+  street        String?
+  number        String?
+  neighborhood  String?
+  city          String?
+  uf            String?
+  cep           String?
+  complement    String?
+  isBlacklisted Boolean?  @default(false)
+  obs           String?
+  phone01       String?
+  phone02       String?
+  phone03       String?
+  reference01   String?
+  reference02   String?
+  reference03   String?
+  isActive      Boolean   @default(true)
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  prescriptions Prescription[]
+
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("ClientCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("ClientUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Prescription {
+  id Int @id @default(autoincrement())
+
+  clientId Int
+  client   Client @relation(fields: [clientId], references: [id])
+
+  prescriptionDate DateTime
+
+  doctorName String?
+  crm        String?
+
+  // Olho Direito (OD)
+  odSpherical   String?
+  odCylindrical String?
+  odAxis        String?
+  odDnp         String?
+
+  // Olho Esquerdo (OE)
+  oeSpherical   String?
+  oeCylindrical String?
+  oeAxis        String?
+  oeDnp         String?
+
+  // Valores independentes
+  additionRight      String?
+  additionLeft       String?
+  opticalCenterRight String?
+  opticalCenterLeft  String?
+
+  isActive Boolean @default(true)
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("PrescriptionCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("PrescriptionUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   ADMIN
   MANAGER
@@ -154,4 +254,10 @@ enum ProductCategory {
   FRAME
   LENS
   ACCESSORY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }

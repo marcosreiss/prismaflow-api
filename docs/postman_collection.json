@@ -436,6 +436,165 @@
                     "response": []
                 }
             ]
+        },
+        {
+            "name": "Clients & Prescriptions",
+            "item": [
+                {
+                    "name": "Clients",
+                    "item": [
+                        {
+                            "name": "Criar novo cliente",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"name\": \"Maria Oliveira\",\n  \"nickname\": \"Maria O.\",\n  \"cpf\": \"12345678900\",\n  \"bornDate\": \"1990-05-12\",\n  \"gender\": \"FEMALE\",\n  \"email\": \"maria@otica.com\",\n  \"phone01\": \"5598999999999\",\n  \"street\": \"Av. dos Holandeses\",\n  \"city\": \"São Luís\",\n  \"uf\": \"MA\",\n  \"branchId\": \"<id_da_branch>\"\n}"
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Atualizar cliente existente",
+                            "request": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients/1",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"email\": \"maria.oliveira@otica.com\",\n  \"phone02\": \"5598988888888\",\n  \"isBlacklisted\": false\n}"
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Buscar cliente por ID",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients/1"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Listar clientes (com paginação e busca por nome)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients?page=1&limit=10&search=Maria"
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Prescriptions",
+                    "item": [
+                        {
+                            "name": "Criar nova receita",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/prescriptions",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"clientId\": 1,\n  \"prescriptionDate\": \"2025-10-04\",\n  \"doctorName\": \"Dr. Paulo Medeiros\",\n  \"crm\": \"CRM-MA 12345\",\n  \"odSpherical\": \"-1.25\",\n  \"odCylindrical\": \"-0.75\",\n  \"odAxis\": \"180\",\n  \"oeSpherical\": \"-1.00\",\n  \"oeCylindrical\": \"-0.50\",\n  \"oeAxis\": \"170\",\n  \"additionRight\": \"+2.00\",\n  \"additionLeft\": \"+1.75\",\n  \"opticalCenterRight\": \"31\",\n  \"opticalCenterLeft\": \"31\",\n  \"branchId\": \"<id_da_branch>\"\n}"
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Atualizar receita existente",
+                            "request": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/prescriptions/1",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"doctorName\": \"Dr. Carlos Silva\",\n  \"additionRight\": \"+2.25\",\n  \"opticalCenterRight\": \"32\"\n}"
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Buscar receita por ID",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/prescriptions/1"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Listar receitas (com paginação e filtro por cliente)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/prescriptions?page=1&limit=10&clientId=1"
+                            },
+                            "response": []
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

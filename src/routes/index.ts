@@ -7,6 +7,8 @@ import { userRoutes } from "../modules/users/user.routes";
 import { brandRoutes } from "../modules/brands/brand.routes";
 import { productRoutes } from "../modules/products/product.routes";
 import { opticalServiceRoutes } from "../modules/optical-services/optical-service.routes";
+import { clientRoutes } from "../modules/clients/client.routes";
+import { prescriptionRoutes } from "../modules/prescriptions/prescription.routes";
 
 export const router = Router();
 
@@ -22,3 +24,7 @@ router.use("/users", userRoutes);
 router.use("/brands", brandRoutes);
 router.use("/products", productRoutes);
 router.use("/optical-services", opticalServiceRoutes);
+
+
+router.use("/clients", clientRoutes);
+router.use("/prescriptions", prescriptionRoutes);

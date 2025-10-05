@@ -9,6 +9,7 @@ import { productRoutes } from "../modules/products/product.routes";
 import { opticalServiceRoutes } from "../modules/optical-services/optical-service.routes";
 import { clientRoutes } from "../modules/clients/client.routes";
 import { prescriptionRoutes } from "../modules/prescriptions/prescription.routes";
+import { saleRoutes } from "../modules/sales/sale.routes";
 
 export const router = Router();
 
@@ -28,3 +29,5 @@ router.use("/optical-services", opticalServiceRoutes);
 
 router.use("/clients", clientRoutes);
 router.use("/prescriptions", prescriptionRoutes);
+
+router.use("/sales", saleRoutes)

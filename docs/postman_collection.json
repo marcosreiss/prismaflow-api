@@ -595,6 +595,97 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "Sales",
+            "item": [
+                {
+                    "name": "Criar nova venda",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"clientId\": 1,\n  \"subtotal\": 500.00,\n  \"discount\": 50.00,\n  \"total\": 450.00,\n  \"notes\": \"Venda à vista com desconto\",\n  \"branchId\": \"br_01j9xyz72h\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2,\n      \"frameDetails\": {\n        \"frameMaterialType\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Preto\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    { \"serviceId\": 1 }\n  ],\n  \"protocol\": {\n    \"recordNumber\": \"A123\",\n    \"book\": \"1\",\n    \"page\": 20,\n    \"os\": \"OS001\"\n  }\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar venda existente",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"subtotal\": 520.00,\n  \"discount\": 20.00,\n  \"total\": 500.00,\n  \"notes\": \"Venda ajustada com novo desconto\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 3,\n      \"frameDetails\": {\n        \"frameMaterialType\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Azul\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    { \"serviceId\": 1 },\n    { \"serviceId\": 2 }\n  ],\n  \"protocol\": {\n    \"recordNumber\": \"A123\",\n    \"book\": \"1\",\n    \"page\": 21,\n    \"os\": \"OS001\"\n  }\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar vendas (paginado + filtro opcional por cliente)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales?page=1&limit=10&clientId=1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar venda por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir venda",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales/1"
+                    },
+                    "response": []
+                }
+            ]
         }
     ]
 }

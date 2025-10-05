@@ -4,7 +4,12 @@ import { ApiResponse } from "../../responses/ApiResponse";
 import { AuthRepository } from "./auth.repository";
 import { env } from "../../config/env";
 import { PasswordUtils } from "../../utils/password";
-import { RegisterAdminDto, LoginDto, ChangePasswordDto } from "./dtos/auth.dto";
+import {
+  RegisterAdminDto,
+  LoginDto,
+  ChangePasswordDto,
+  RegisterUserDto,
+} from "./dtos/auth.dto";
 
 export class AuthService {
   private repository = new AuthRepository();
@@ -16,6 +21,29 @@ export class AuthService {
       req,
       tenant
     );
+  }
+
+  async registerUser(req: Request, dto: RegisterUserDto) {
+    const currentUserId = req.user?.sub;
+
+    if (!currentUserId) {
+      return ApiResponse.error("Usuário não autenticado.", 401, req);
+    }
+
+    // Garante que o usuário logado é ADMIN
+    if (req.user?.role !== "ADMIN") {
+      return ApiResponse.error(
+        "Apenas administradores podem cadastrar novos usuários.",
+        403,
+        req
+      );
+    }
+
+    // Adiciona auditoria
+    dto.createdById = currentUserId;
+    const user = await this.repository.createUser(dto, req);
+
+    return ApiResponse.success("Usuário criado com sucesso.", req, user);
   }
 
   async login(req: Request, dto: LoginDto) {

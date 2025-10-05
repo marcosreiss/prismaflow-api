@@ -1,8 +1,20 @@
 import { Router } from "express";
-import { registerAdmin, login, changePassword } from "./auth.controller";
+import {
+  registerAdmin,
+  login,
+  changePassword,
+  registerUser,
+} from "./auth.controller";
 import { validateDto } from "../../middlewares/validation.middleware";
 import { authGuard } from "../../middlewares/auth.middleware";
-import { RegisterAdminDto, LoginDto, ChangePasswordDto } from "./dtos/auth.dto";
+import {
+  RegisterAdminDto,
+  LoginDto,
+  ChangePasswordDto,
+  RegisterUserDto,
+} from "./dtos/auth.dto";
+import { Role } from "@prisma/client";
+import { requireRoles } from "../../middlewares/authorize.middleware";
 
 export const authRoutes = Router();
 
@@ -19,4 +31,12 @@ authRoutes.put(
   authGuard,
   validateDto(ChangePasswordDto, "body"),
   changePassword
+);
+
+authRoutes.post(
+  "/register-user",
+  authGuard, // precisa estar logado
+  requireRoles(Role.ADMIN), // apenas ADMIN pode criar
+  validateDto(RegisterUserDto, "body"),
+  registerUser
 );

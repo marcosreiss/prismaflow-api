@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
-import { RegisterAdminDto } from "./dtos/register.dto";
-import { LoginDto } from "./dtos/login.dto";
-import { ChangePasswordDto } from "./dtos/change-password.dto";
+import { RegisterAdminDto, LoginDto, ChangePasswordDto, RegisterUserDto } from "./dtos/auth.dto";
 
 const service = new AuthService();
 
@@ -43,6 +41,20 @@ export const changePassword = async (
     const dto: ChangePasswordDto = req.body;
     const result = await service.changePassword(req, dto);
     res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const registerUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const dto: RegisterUserDto = req.body;
+    const result = await service.registerUser(req, dto);
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }

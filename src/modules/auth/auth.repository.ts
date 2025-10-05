@@ -2,7 +2,7 @@ import { prisma } from "../../config/prisma";
 import { PasswordUtils } from "../../utils/password";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { Request } from "express";
-import { RegisterAdminDto } from "./dtos/auth.dto";
+import { RegisterAdminDto, RegisterUserDto } from "./dtos/auth.dto";
 
 export class AuthRepository {
   async createTenantWithAdmin(dto: RegisterAdminDto, req: Request) {
@@ -57,6 +57,44 @@ export class AuthRepository {
     });
 
     return result;
+  }
+
+  async createUser(dto: RegisterUserDto, req: Request) {
+    // 🔹 Verifica se o e-mail já está em uso
+    const existing = await prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (existing) {
+      throw ApiResponse.error("E-mail já está em uso.", 400, req);
+    }
+
+    // 🔹 Gera o hash da senha
+    const hash = await PasswordUtils.hash(dto.password);
+
+    // 🔹 Cria o usuário dentro do tenant e branch existentes
+    const user = await prisma.user.create({
+      data: {
+        name: dto.name,
+        email: dto.email,
+        password: hash,
+        role: dto.role,
+        tenant: { connect: { id: dto.tenantId } },
+        branch: { connect: { id: dto.branchId } },
+        createdBy: { connect: { id: dto.createdById } },
+        updatedBy: { connect: { id: dto.createdById } },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        tenantId: true,
+        branchId: true,
+        createdAt: true,
+      },
+    });
+
+    return user;
   }
 
   async findUserByEmail(email: string) {

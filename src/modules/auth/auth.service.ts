@@ -3,10 +3,8 @@ import jwt from "jsonwebtoken";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { AuthRepository } from "./auth.repository";
 import { env } from "../../config/env";
-import { RegisterAdminDto } from "./dtos/register.dto";
-import { LoginDto } from "./dtos/login.dto";
 import { PasswordUtils } from "../../utils/password";
-import { ChangePasswordDto } from "./dtos/change-password.dto";
+import { RegisterAdminDto, LoginDto, ChangePasswordDto } from "./dtos/auth.dto";
 
 export class AuthService {
   private repository = new AuthRepository();
@@ -72,4 +70,5 @@ export class AuthService {
     await this.repository.updatePassword(user.id, dto.newPassword);
     return ApiResponse.success("Senha alterada com sucesso.", req);
   }
+
 }

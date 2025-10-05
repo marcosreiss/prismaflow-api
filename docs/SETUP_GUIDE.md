@@ -94,7 +94,7 @@ PORT=3000
 2. Execute as migrações do Prisma para gerar as tabelas:
     
     ```bash
-    npx prisma migrate dev --name init
+    npx prisma migrate dev
     
     ```
     

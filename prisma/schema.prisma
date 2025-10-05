@@ -28,6 +28,8 @@ model Tenant {
   itemProducts        ItemProduct[]
   frameDetails        FrameDetails[]
   itemOpticalServices ItemOpticalService[]
+  payments            Payment[]
+  paymentInstallments PaymentInstallment[]
 }
 
 model Branch {
@@ -51,6 +53,8 @@ model Branch {
   itemProducts        ItemProduct[]
   frameDetails        FrameDetails[]
   itemOpticalServices ItemOpticalService[]
+  payments            Payment[]
+  paymentInstallments PaymentInstallment[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -99,6 +103,10 @@ model User {
   frameDetailsUpdatedByMe        FrameDetails[]       @relation("FrameDetailsUpdatedBy")
   itemOpticalServicesCreatedByMe ItemOpticalService[] @relation("ItemOpticalServiceCreatedBy")
   itemOpticalServicesUpdatedByMe ItemOpticalService[] @relation("ItemOpticalServiceUpdatedBy")
+  paymentsCreatedByMe            Payment[]            @relation("PaymentCreatedBy")
+  paymentsUpdatedByMe            Payment[]            @relation("PaymentUpdatedBy")
+  paymentInstallmentsCreatedByMe PaymentInstallment[] @relation("PaymentInstallmentCreatedBy")
+  paymentInstallmentsUpdatedByMe PaymentInstallment[] @relation("PaymentInstallmentUpdatedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -274,9 +282,9 @@ model Sale {
 
   // Relacionamentos
   protocol     Protocol?            @relation("SaleProtocol")
-  paymentId    Int?
   productItems ItemProduct[]
   serviceItems ItemOpticalService[]
+  payment      Payment?             @relation("SalePayment") // ✅ Aqui
 
   subtotal Float?  @default(0)
   discount Float?  @default(0)
@@ -293,30 +301,6 @@ model Sale {
   updatedById String?
   createdBy   User?   @relation("SaleCreatedBy", fields: [createdById], references: [id])
   updatedBy   User?   @relation("SaleUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Protocol {
-  id           Int     @id @default(autoincrement())
-  saleId       Int?    @unique
-  sale         Sale?   @relation("SaleProtocol", fields: [saleId], references: [id])
-  recordNumber String?
-  book         String?
-  page         Int?
-  os           String?
-  isActive     Boolean @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("ProtocolCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ProtocolUpdatedBy", fields: [updatedById], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -390,6 +374,91 @@ model ItemOpticalService {
   updatedAt DateTime @updatedAt
 }
 
+model Payment {
+  id                Int            @id @default(autoincrement())
+  saleId            Int            @unique
+  sale              Sale           @relation("SalePayment", fields: [saleId], references: [id])
+  method            PaymentMethod?
+  status            PaymentStatus  @default(PENDING)
+  total             Float          @default(0)
+  discount          Float          @default(0)
+  downPayment       Float          @default(0)
+  installmentsTotal Int?
+  paidAmount        Float          @default(0)
+  installmentsPaid  Int            @default(0)
+  lastPaymentAt     DateTime?
+  firstDueDate      DateTime?
+  isActive          Boolean        @default(true)
+
+  // 🔹 Relacionamento com parcelas
+  installments PaymentInstallment[]
+
+  // 🔹 Multi-tenant / multi-branch
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  // 🔹 Auditoria
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("PaymentCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("PaymentUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Protocol {
+  id           Int     @id @default(autoincrement())
+  saleId       Int?    @unique
+  sale         Sale?   @relation("SaleProtocol", fields: [saleId], references: [id])
+  recordNumber String?
+  book         String?
+  page         Int?
+  os           String?
+  isActive     Boolean @default(true)
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("ProtocolCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("ProtocolUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentInstallment {
+  id         Int       @id @default(autoincrement())
+  paymentId  Int
+  payment    Payment   @relation(fields: [paymentId], references: [id])
+  sequence   Int
+  amount     Float     @default(0)
+  paidAmount Float     @default(0)
+  paidAt     DateTime?
+  isActive   Boolean   @default(true)
+
+  // 🔹 Multi-tenant / multi-branch
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  // 🔹 Auditoria
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("PaymentInstallmentCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("PaymentInstallmentUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   ADMIN
   MANAGER
@@ -416,4 +485,18 @@ enum FrameMaterialType {
   TITANIUM
   WOOD
   OTHERS
+}
+
+enum PaymentMethod {
+  PIX
+  MONEY
+  DEBIT
+  CREDIT
+  INSTALLMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
 }

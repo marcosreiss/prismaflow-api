@@ -70,5 +70,4 @@ export class AuthService {
     await this.repository.updatePassword(user.id, dto.newPassword);
     return ApiResponse.success("Senha alterada com sucesso.", req);
   }
-
 }

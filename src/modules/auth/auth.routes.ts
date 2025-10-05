@@ -1,10 +1,8 @@
 import { Router } from "express";
 import { registerAdmin, login, changePassword } from "./auth.controller";
 import { validateDto } from "../../middlewares/validation.middleware";
-import { RegisterAdminDto } from "./dtos/register.dto";
-import { LoginDto } from "./dtos/login.dto";
 import { authGuard } from "../../middlewares/auth.middleware";
-import { ChangePasswordDto } from "./dtos/change-password.dto";
+import { RegisterAdminDto, LoginDto, ChangePasswordDto } from "./dtos/auth.dto";
 
 export const authRoutes = Router();
 

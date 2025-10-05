@@ -8,33 +8,35 @@ generator client {
 }
 
 model Tenant {
-  id          String    @id @default(cuid())
-  name        String
-  branches    Branch[]
-  users       User[]
-  brands      Brand[]
-  products    Product[]
-  createdById String?
-  updatedById String?
-  createdBy   User?     @relation("TenantCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?     @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String           @id @default(cuid())
+  name           String
+  branches       Branch[]
+  users          User[]
+  brands         Brand[]
+  products       Product[]
+  createdById    String?
+  updatedById    String?
+  createdBy      User?            @relation("TenantCreatedBy", fields: [createdById], references: [id])
+  updatedBy      User?            @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  OpticalService OpticalService[]
 }
 
 model Branch {
-  id          String    @id @default(cuid())
-  name        String
-  tenantId    String
-  tenant      Tenant    @relation(fields: [tenantId], references: [id])
-  users       User[]
-  createdById String?
-  updatedById String?
-  createdBy   User?     @relation("BranchCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?     @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  Product     Product[]
+  id             String           @id @default(cuid())
+  name           String
+  tenantId       String
+  tenant         Tenant           @relation(fields: [tenantId], references: [id])
+  users          User[]
+  createdById    String?
+  updatedById    String?
+  createdBy      User?            @relation("BranchCreatedBy", fields: [createdById], references: [id])
+  updatedBy      User?            @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Product        Product[]
+  OpticalService OpticalService[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -57,16 +59,18 @@ model User {
   updatedBy   User?   @relation("UserUpdatedBy", fields: [updatedById], references: [id])
 
   // 🔹 Relações inversas
-  tenantsCreated      Tenant[]  @relation("TenantCreatedBy")
-  tenantsUpdated      Tenant[]  @relation("TenantUpdatedBy")
-  branchesCreatedByMe Branch[]  @relation("BranchCreatedBy")
-  branchesUpdatedByMe Branch[]  @relation("BranchUpdatedBy")
-  usersCreatedByMe    User[]    @relation("UserCreatedBy")
-  usersUpdatedByMe    User[]    @relation("UserUpdatedBy")
-  brandsCreatedByMe   Brand[]   @relation("BrandCreatedBy")
-  brandsUpdatedByMe   Brand[]   @relation("BrandUpdatedBy")
-  productsCreatedByMe Product[] @relation("ProductCreatedBy")
-  productsUpdatedByMe Product[] @relation("ProductUpdatedBy")
+  tenantsCreated      Tenant[]         @relation("TenantCreatedBy")
+  tenantsUpdated      Tenant[]         @relation("TenantUpdatedBy")
+  branchesCreatedByMe Branch[]         @relation("BranchCreatedBy")
+  branchesUpdatedByMe Branch[]         @relation("BranchUpdatedBy")
+  usersCreatedByMe    User[]           @relation("UserCreatedBy")
+  usersUpdatedByMe    User[]           @relation("UserUpdatedBy")
+  brandsCreatedByMe   Brand[]          @relation("BrandCreatedBy")
+  brandsUpdatedByMe   Brand[]          @relation("BrandUpdatedBy")
+  productsCreatedByMe Product[]        @relation("ProductCreatedBy")
+  productsUpdatedByMe Product[]        @relation("ProductUpdatedBy")
+  servicesCreatedByMe OpticalService[] @relation("ServiceCreatedBy")
+  servicesUpdatedByMe OpticalService[] @relation("ServiceUpdatedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,6 +118,27 @@ model Product {
   updatedById String?
   createdBy   User?   @relation("ProductCreatedBy", fields: [createdById], references: [id])
   updatedBy   User?   @relation("ProductUpdatedBy", fields: [updatedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OpticalService {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  isActive    Boolean @default(true)
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id])
+
+  createdById String?
+  updatedById String?
+  createdBy   User?   @relation("ServiceCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?   @relation("ServiceUpdatedBy", fields: [updatedById], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

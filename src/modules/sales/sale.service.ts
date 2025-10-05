@@ -4,7 +4,7 @@ import { ProductRepository } from "../products/product.repository";
 import { OpticalServiceRepository } from "../optical-services/optical-service.repository";
 import { PaymentRepository } from "../payments/payment.repository";
 import { ClientRepository } from "../clients/client.repository";
-import { prisma } from "../../config/prisma-context";
+import { prisma, withAuditData } from "../../config/prisma-context";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { UpdateSaleDto } from "./dtos/sale.dto";
@@ -181,20 +181,29 @@ export class SaleService {
     });
   }
 
+  // ======================================================
+  // UPDATE SALE
+  // ======================================================
   async updateSale(req: Request) {
+    // Extrai informações básicas da requisição:
+    // - id da venda (URL)
+    // - corpo da requisição (dados para atualizar)
+    // - dados do usuário autenticado (para auditoria e escopo multi-tenant)
     const { id } = req.params;
     const body = req.body as UpdateSaleDto;
     const userId = req.user?.sub;
     const tenantId = req.user?.tenantId!;
     const branchId = req.user?.branchId!;
 
-    // 🔹 1. Buscar venda
+    // 🔹 1. Buscar a venda existente no banco
+    // Verifica se a venda realmente existe antes de tentar atualizar.
     const sale = await this.saleRepo.findById(Number(id), tenantId);
     if (!sale) {
       throw new Error(`Venda ${id} não encontrada`);
     }
 
-    // 🔹 2. Buscar pagamento vinculado
+    // 🔹 2. Buscar o pagamento vinculado à venda
+    // Cada venda tem (ou deve ter) um registro de pagamento relacionado.
     const payment = await prisma.payment.findFirst({
       where: { saleId: Number(id) },
     });
@@ -202,7 +211,9 @@ export class SaleService {
       throw new Error("Pagamento não encontrado para esta venda.");
     }
 
-    // 🔹 3. Validações de pagamento (somente PENDING pode editar)
+    // 🔹 3. Validações de status de pagamento
+    // Apenas vendas com pagamento "PENDING" podem ser editadas.
+    // Se o pagamento já tiver sido parcial ou totalmente feito, bloqueia a edição.
     if (payment.status !== "PENDING") {
       throw new Error(
         "Somente vendas com pagamento PENDING podem ser editadas."
@@ -214,12 +225,14 @@ export class SaleService {
       );
     }
 
-    // 🔹 4. Atualizar cliente e dados principais
+    // 🔹 4. Atualizar dados principais da venda (cliente, valores, observações, etc.)
+    // Se o corpo da requisição tiver um novo cliente, verifica se ele existe.
     if (body.clientId) {
       const client = await this.clientRepo.findById(body.clientId, tenantId);
       if (!client) throw new Error("Cliente não encontrado.");
     }
 
+    // Atualiza os campos básicos da venda, mantendo valores antigos caso algum não tenha sido informado.
     const updatedSale = await this.saleRepo.update(
       Number(id),
       {
@@ -233,21 +246,24 @@ export class SaleService {
       userId
     );
 
-    // 🔹 5. Atualizar itens de produto (estoque)
+    // 🔹 5. Atualizar itens de produto vinculados à venda
     if (body.productItems) {
+      // Busca todos os itens de produto já existentes nessa venda.
       const existingItems = await this.saleRepo.findProductItemsBySale(
         Number(id)
       );
+
+      // Cria um mapa (productId -> DTO) dos novos itens enviados.
       const newItemsMap = new Map(
         body.productItems.map((i) => [i.productId, i])
       );
 
-      // ➕ Atualizar ou remover existentes
+      // ➕ Percorre cada item existente para ver se será atualizado ou removido.
       for (const existing of existingItems) {
         const dto = newItemsMap.get(existing.product.id);
 
+        // 🧹 Caso o item não esteja mais presente → remover item e devolver estoque
         if (!dto) {
-          // Item removido → devolver estoque
           const product = await this.productRepo.findById(existing.productId);
           if (!product) {
             return ApiResponse.error(
@@ -256,18 +272,21 @@ export class SaleService {
               req
             );
           }
+
+          // Devolve a quantidade ao estoque
           await this.productRepo.update(
             product.id,
             { stockQuantity: (product.stockQuantity ?? 0) + existing.quantity },
             userId
           );
 
+          // Remove detalhes de armação (frameDetails) e o item do produto
           await prisma.frameDetails.deleteMany({
             where: { itemProductId: existing.id },
           });
           await prisma.itemProduct.delete({ where: { id: existing.id } });
         } else {
-          // Item atualizado → comparar quantidade
+          // 🛠 Caso o item ainda exista, pode ter mudado a quantidade
           const product = await this.productRepo.findById(existing.product.id);
           if (!product) {
             return ApiResponse.error(
@@ -278,8 +297,9 @@ export class SaleService {
           }
 
           const oldQty = existing.quantity;
-          const newQty = dto.quantity;
+          const newQty = dto.quantity ?? 0;
 
+          // Se a nova quantidade for maior → precisa verificar se há estoque suficiente
           if (newQty > oldQty) {
             const diff = newQty - oldQty;
             if ((product.stockQuantity ?? 0) < diff) {
@@ -289,12 +309,15 @@ export class SaleService {
                 req
               );
             }
+            // Diminui o estoque pela diferença
             await this.productRepo.update(
               product.id,
               { stockQuantity: (product.stockQuantity ?? 0) - diff },
               userId
             );
-          } else if (newQty < oldQty) {
+          }
+          // Se for menor → devolve a diferença ao estoque
+          else if (newQty < oldQty) {
             const diff = oldQty - newQty;
             await this.productRepo.update(
               product.id,
@@ -303,17 +326,20 @@ export class SaleService {
             );
           }
 
-          // Atualiza quantidade e frame details
+          // Atualiza a quantidade do item no banco
           await prisma.itemProduct.update({
             where: { id: existing.id },
             data: withAuditData(userId, { quantity: newQty }, true),
           });
 
+          // Atualiza ou cria os detalhes da armação (frameDetails)
           if (dto.frameDetails) {
             const fd = await prisma.frameDetails.findFirst({
               where: { itemProductId: existing.id },
             });
+
             if (fd) {
+              // Atualiza detalhes existentes
               await prisma.frameDetails.update({
                 where: { id: fd.id },
                 data: withAuditData(
@@ -327,6 +353,7 @@ export class SaleService {
                 ),
               });
             } else {
+              // Cria novos detalhes, se ainda não existirem
               await prisma.frameDetails.create({
                 data: withAuditData(userId, {
                   itemProductId: existing.id,
@@ -342,11 +369,13 @@ export class SaleService {
         }
       }
 
-      // ➕ Criar novos
+      // ➕ Agora, adiciona novos produtos que não existiam antes na venda.
       for (const dto of body.productItems) {
         const alreadyExists = existingItems.some(
           (i) => i.product.id === dto.productId
         );
+
+        // Se for um item totalmente novo:
         if (!alreadyExists) {
           const product = await this.productRepo.findById(dto.productId);
           if (!product) {
@@ -356,24 +385,26 @@ export class SaleService {
               req
             );
           }
-          if ((product.stockQuantity ?? 0) < dto.quantity) {
+
+          // Verifica estoque antes de inserir
+          if ((product.stockQuantity ?? 0) < (dto.quantity ?? 0)) {
             return ApiResponse.error(
               `Estoque insuficiente para o produto ${product.name}`,
               400,
               req
             );
           }
-          if (!product)
-            throw new Error(`Produto ${dto.productId} não encontrado`);
-          if ((product.stockQuantity ?? 0) < dto.quantity)
-            throw new Error(`Estoque insuficiente para ${product.name}`);
 
+          // Atualiza estoque (remove quantidade vendida)
           await this.productRepo.update(
             product.id,
-            { stockQuantity: (product.stockQuantity ?? 0) - dto.quantity },
+            {
+              stockQuantity: (product.stockQuantity ?? 0) - (dto.quantity ?? 0),
+            },
             userId
           );
 
+          // Cria o novo item do produto vinculado à venda
           const itemProduct = await prisma.itemProduct.create({
             data: withAuditData(userId, {
               saleId: Number(id),
@@ -384,6 +415,7 @@ export class SaleService {
             }),
           });
 
+          // Se houver detalhes de armação, cria também
           if (dto.frameDetails) {
             await prisma.frameDetails.create({
               data: withAuditData(userId, {
@@ -400,15 +432,18 @@ export class SaleService {
       }
     }
 
-    // 🔹 6. Atualizar itens de serviço
+    // 🔹 6. Atualizar itens de serviço vinculados à venda (ex: ajustes, manutenção, etc.)
     if (body.serviceItems) {
+      // Busca os serviços já existentes
       const existingServices =
         await this.saleRepo.findOpticalServiceItemsBySale(Number(id));
+
+      // Cria um mapa com os novos serviços enviados
       const newItemsMap = new Map(
         body.serviceItems.map((i) => [i.serviceId, i])
       );
 
-      // ➖ Remover serviços não enviados
+      // ➖ Remove serviços que não estão mais na lista enviada
       for (const existing of existingServices) {
         if (!newItemsMap.has(existing.service.id)) {
           await prisma.itemOpticalService.delete({
@@ -417,7 +452,7 @@ export class SaleService {
         }
       }
 
-      // ➕ Adicionar novos
+      // ➕ Adiciona novos serviços (que ainda não existiam)
       for (const dto of body.serviceItems) {
         const alreadyExists = existingServices.some(
           (i) => i.service.id === dto.serviceId
@@ -435,21 +470,28 @@ export class SaleService {
       }
     }
 
-    // 🔹 7. Atualizar protocolo (opcional)
+    // 🔹 7. Atualizar protocolo (dados extras opcionais da venda)
     if (body.protocol) {
+      // Verifica se já existe protocolo para a venda
       const existingProtocol = await this.saleRepo.findProtocolBySale(
         Number(id)
       );
+
       if (!existingProtocol) {
+        // Se não existir → cria novo
         await prisma.protocol.create({
           data: withAuditData(userId, {
             saleId: Number(id),
             tenantId,
             branchId,
-            ...body.protocol,
+            recordNumber: body.protocol.recordNumber,
+            book: body.protocol.book,
+            page: body.protocol.page,
+            os: body.protocol.os,
           }),
         });
       } else {
+        // Se existir → apenas atualiza os dados
         await prisma.protocol.update({
           where: { id: existingProtocol.id },
           data: withAuditData(userId, body.protocol, true),
@@ -457,13 +499,18 @@ export class SaleService {
       }
     }
 
-    // 🔹 8. Atualizar total no pagamento
+    // 🔹 8. Atualizar total do pagamento (sincroniza valor final da venda com o pagamento)
     await prisma.payment.update({
       where: { saleId: Number(id) },
-      data: withAuditData(userId, { total: body.total ?? sale.total }, true),
+      data: withAuditData(
+        userId,
+        { total: Number(body.total ?? sale.total) },
+        true
+      ),
     });
 
     // 🔹 9. Retornar resposta padronizada
+    // Busca novamente a venda completa e retorna sucesso.
     const result = await this.saleRepo.findById(Number(id), tenantId);
     return ApiResponse.success("Venda atualizada com sucesso.", req, result);
   }
@@ -518,7 +565,7 @@ export class SaleService {
     const sale = await this.saleRepo.findById(Number(id), tenantId);
     if (!sale) return ApiResponse.error("Venda não encontrada.", 404, req);
 
-    const payment = await this.paymentRepo.findBySale(Number(id));
+    const payment = await this.paymentRepo.findBySaleId(Number(id));
     if (!payment)
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
 

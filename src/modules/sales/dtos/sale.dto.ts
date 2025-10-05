@@ -106,5 +106,10 @@ export class UpdateSaleDto {
   @ValidateNested({ each: true })
   @Type(() => CreateItemOpticalServiceDto)
   serviceItems?: CreateItemOpticalServiceDto[];
+
+  // Protocolo (opcional)
+@IsOptional()
+@ValidateNested()
+@Type(() => CreateProtocolDto)
+protocol?: CreateProtocolDto;
 }
-  

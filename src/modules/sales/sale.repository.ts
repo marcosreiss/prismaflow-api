@@ -131,7 +131,7 @@ export class SaleRepository {
     return prisma.itemProduct.findMany({
       where: { saleId },
       include: {
-        product: { select: { id: true, name: true } },
+        product: { select: { id: true, name: true, stockQuantity: true } }, // 👈 add stockQuantity
         frameDetails: true,
       },
     });

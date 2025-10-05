@@ -42,7 +42,7 @@ export class PaymentRepository {
   }
 
   // 🔹 Buscar pagamento de uma venda específica
-  async findBySale(saleId: number) {
+  async findBySaleId(saleId: number) {
     return prisma.payment.findUnique({
       where: { saleId },
       include: {

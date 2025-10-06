@@ -48,7 +48,7 @@ export class BrandRepository {
 
     const whereClause: any = {
       tenantId,
-      ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
+      ...(search ? { name: { contains: search, } } : {}),
     };
 
     const [items, total] = await Promise.all([

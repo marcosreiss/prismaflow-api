@@ -6,6 +6,7 @@ import { seedOpticalServices } from "./seed-optical-services";
 import { seedProducts } from "./seed-products";
 import { seedTenant } from "./seed-tenant";
 import { seedUser } from "./seed-users";
+import { seedPrescriptions } from "./seed-prescriptions";
 
 const prisma = new PrismaClient();
 
@@ -21,6 +22,7 @@ async function main() {
   );
   await seedOpticalServices(tenant.id, branch.id);
   await seedClients(tenant.id, branch.id);
+  await seedPrescriptions(tenant.id, branch.id);
 
   console.log("🌱 SEED FINALIZADO COM SUCESSO!");
 }

@@ -24,6 +24,11 @@ export class CreateSaleDto {
   @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
   branchId!: string;
 
+  // 🔹 Nova relação opcional com Prescription
+  @IsOptional()
+  @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
+  prescriptionId?: number;
+
   @IsOptional()
   @IsString()
   notes?: string;
@@ -64,7 +69,6 @@ export class CreateSaleDto {
   @Type(() => CreateProtocolDto)
   protocol?: CreateProtocolDto;
 }
-
 /**
  * DTO para atualização de vendas
  */
@@ -72,6 +76,11 @@ export class UpdateSaleDto {
   @IsOptional()
   @IsNumber()
   clientId?: number;
+
+  // 🔹 Nova relação opcional com Prescription
+  @IsOptional()
+  @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
+  prescriptionId?: number;
 
   @IsOptional()
   @IsString()
@@ -93,7 +102,7 @@ export class UpdateSaleDto {
   @IsBoolean()
   isActive?: boolean;
 
-  // Itens de produto (pode vir vazio, alterar ou remover)
+  // Itens de produto
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
@@ -108,8 +117,8 @@ export class UpdateSaleDto {
   serviceItems?: CreateItemOpticalServiceDto[];
 
   // Protocolo (opcional)
-@IsOptional()
-@ValidateNested()
-@Type(() => CreateProtocolDto)
-protocol?: CreateProtocolDto;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateProtocolDto)
+  protocol?: CreateProtocolDto;
 }

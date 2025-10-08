@@ -81,4 +81,29 @@ export class ClientRepository {
 
     return { items, total };
   }
+
+  async findAllByTenantAndBranch(
+    tenantId: string,
+    branchId?: string,
+    page = 1,
+    limit = 10,
+    search?: string
+  ) {
+    const skip = (page - 1) * limit;
+    const where: any = { tenantId };
+    if (branchId) where.branchId = branchId;
+    if (search) where.name = { contains: search, mode: "insensitive" };
+
+    const [items, total] = await Promise.all([
+      prisma.client.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { name: "asc" },
+      }),
+      prisma.client.count({ where }),
+    ]);
+
+    return { items, total };
+  }
 }

@@ -9,11 +9,16 @@ export class ClientService {
   async create(req: Request, data: any) {
     const user = req.user!;
     const tenantId = user.tenantId;
-    const branchId = user.branchId; // 🔹 novo
+    const branchId = user.branchId;
 
     // 🔹 Preenche automaticamente os campos de contexto
     data.tenantId = tenantId;
     data.branchId = branchId;
+
+    // 🔹 Corrige campos de data (ex: bornDate)
+    if (data.bornDate) {
+      data.bornDate = new Date(data.bornDate);
+    }
 
     // 🔹 Verifica duplicidade no mesmo tenant (e opcionalmente na filial)
     const exists = await this.repo.findByNameInTenant(tenantId, data.name);
@@ -30,6 +35,11 @@ export class ClientService {
   async update(req: Request, clientId: number, data: any) {
     const user = req.user!;
     const tenantId = user.tenantId;
+
+    // 🔹 Corrige campos de data (ex: bornDate)
+    if (data.bornDate) {
+      data.bornDate = new Date(data.bornDate);
+    }
 
     const existing = await this.repo.findById(clientId, tenantId);
     if (!existing) {
@@ -55,13 +65,15 @@ export class ClientService {
   async list(req: Request) {
     const user = req.user!;
     const tenantId = user.tenantId;
+    const branchId = user.branchId;
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
     const search = req.query.search ? String(req.query.search) : undefined;
 
-    const { items, total } = await this.repo.findAllByTenant(
+    const { items, total } = await this.repo.findAllByTenantAndBranch(
       tenantId,
+      branchId,
       page,
       limit,
       search

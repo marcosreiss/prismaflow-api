@@ -30,18 +30,12 @@ clientRoutes.put(
   updateClient
 );
 
+// 🔹 ROTAS MAIS ESPECÍFICAS PRIMEIRO
 clientRoutes.get(
-  "/:id",
+  "/select",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  getClientById
-);
-
-clientRoutes.get(
-  "/",
-  authGuard,
-  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listClients
+  selectClients
 );
 
 clientRoutes.get(
@@ -51,8 +45,16 @@ clientRoutes.get(
 );
 
 clientRoutes.get(
-  "/select",
+  "/",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  selectClients
+  listClients
+);
+
+// 🔹 SOMENTE DEPOIS as rotas genéricas
+clientRoutes.get(
+  "/:id",
+  authGuard,
+  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
+  getClientById
 );

@@ -273,6 +273,9 @@ model Prescription {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // 🔹 Relação inversa (1:N)
+  sales Sale[]
 }
 
 model Sale {
@@ -280,11 +283,15 @@ model Sale {
   clientId Int
   client   Client @relation(fields: [clientId], references: [id])
 
-  // Relacionamentos
+  // 🔹 Nova coluna (opcional)
+  prescriptionId Int?
+  prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+
+  // Relacionamentos existentes
   protocol     Protocol?            @relation("SaleProtocol")
   productItems ItemProduct[]
   serviceItems ItemOpticalService[]
-  payment      Payment?             @relation("SalePayment") // ✅ Aqui
+  payment      Payment?             @relation("SalePayment")
 
   subtotal Float?  @default(0)
   discount Float?  @default(0)

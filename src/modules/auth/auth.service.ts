@@ -85,7 +85,7 @@ export class AuthService {
         return ApiResponse.success(
           "Login realizado com sucesso (filial única detectada).",
           req,
-          { ...userSafe, branch },
+          { ...userSafe, branch, branchId: branch.id },
           token
         );
       }

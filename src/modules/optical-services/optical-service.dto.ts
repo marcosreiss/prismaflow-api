@@ -26,9 +26,10 @@ export class CreateOpticalServiceDto {
   @Min(0, { message: "O preço não pode ser negativo." })
   price!: number;
 
-  @IsString({ message: "O ID da filial é obrigatório." })
-  @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
-  branchId!: string;
+  // 🔸 branchId agora é opcional e não deve ser enviado pelo cliente
+  @IsOptional()
+  @IsString()
+  branchId?: string;
 
   @IsOptional()
   @IsBoolean()

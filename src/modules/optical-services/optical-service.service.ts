@@ -9,9 +9,17 @@ export class OpticalServiceService {
   async create(req: Request, data: any) {
     const user = req.user!;
 
-    if (!data.branchId) {
-      return ApiResponse.error("O campo 'branchId' é obrigatório.", 400, req);
+    // 🔸 Garante que o usuário tenha um branchId associado
+    if (!user.branchId) {
+      return ApiResponse.error(
+        "Usuário não está associado a nenhuma filial (branchId).",
+        400,
+        req
+      );
     }
+
+    // 🔸 Força o uso do branchId do token, ignorando qualquer valor vindo do body
+    data.branchId = user.branchId;
 
     const exists = await this.repo.findByNameInTenant(user.tenantId, data.name);
     if (exists) {
@@ -25,8 +33,14 @@ export class OpticalServiceService {
   async update(req: Request, id: number, data: any) {
     const user = req.user!;
     const service = await this.repo.findById(id);
+
     if (!service) {
       return ApiResponse.error("Serviço não encontrado.", 404, req);
+    }
+
+    // 🔒 Garante que só atualize dentro do mesmo tenant
+    if (service.tenantId !== user.tenantId) {
+      return ApiResponse.error("Acesso negado a este serviço.", 403, req);
     }
 
     const updated = await this.repo.update(id, data, user.sub);
@@ -36,6 +50,7 @@ export class OpticalServiceService {
   async getById(req: Request, id: number) {
     const user = req.user!;
     const service = await this.repo.findById(id);
+
     if (!service || service.tenantId !== user.tenantId) {
       return ApiResponse.error("Serviço não encontrado.", 404, req);
     }
@@ -55,6 +70,7 @@ export class OpticalServiceService {
       limit,
       search
     );
+
     return new PagedResponse(
       "Serviços listados com sucesso.",
       req,
@@ -68,6 +84,7 @@ export class OpticalServiceService {
   async delete(req: Request, id: number) {
     const user = req.user!;
     const service = await this.repo.findById(id);
+
     if (!service || service.tenantId !== user.tenantId) {
       return ApiResponse.error("Serviço não encontrado.", 404, req);
     }

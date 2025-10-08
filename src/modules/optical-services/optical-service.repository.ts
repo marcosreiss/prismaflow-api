@@ -3,7 +3,10 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 export class OpticalServiceRepository {
   async create(tenantId: string, data: any, userId?: string) {
     return prisma.opticalService.create({
-      data: withAuditData(userId, { ...data, tenantId }),
+      data: withAuditData(userId, {
+        ...data,
+        tenantId,
+      }),
       include: {
         branch: { select: { id: true, name: true } },
         createdBy: { select: { name: true } },
@@ -39,7 +42,9 @@ export class OpticalServiceRepository {
     return prisma.opticalService.findFirst({
       where: {
         tenantId,
-        name: { contains: name },
+        name: {
+          equals: name,
+        },
       },
     });
   }
@@ -51,9 +56,10 @@ export class OpticalServiceRepository {
     search?: string
   ) {
     const skip = (page - 1) * limit;
+
     const whereClause: any = {
       tenantId,
-      ...(search ? { name: { contains: search } } : {}),
+      ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
     };
 
     const [items, total] = await Promise.all([

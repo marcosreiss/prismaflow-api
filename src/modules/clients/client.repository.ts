@@ -2,11 +2,14 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class ClientRepository {
   async create(tenantId: string, branchId: string, data: any, userId?: string) {
+    // 🔹 Remove qualquer campo duplicado vindo do DTO
+    const { tenant, branch, ...safeData } = data;
+
     return prisma.client.create({
       data: withAuditData(userId, {
-        ...data,
-        tenant: { connect: { id: tenantId } },
-        branch: { connect: { id: branchId } },
+        ...safeData,
+        tenantId, // ✅ usa os IDs diretos
+        branchId, // ✅ idem
       }),
       include: {
         createdBy: { select: { name: true } },

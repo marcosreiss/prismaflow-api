@@ -46,38 +46,41 @@ export class AuthService {
     return ApiResponse.success("Usuário criado com sucesso.", req, user);
   }
 
-  async login(req: Request, dto: LoginDto) {
-    const user = await this.repository.findUserByEmail(dto.email);
-    if (!user) {
-      return ApiResponse.error("Usuário não encontrado.", 404, req);
-    }
-
-    const isValid = await PasswordUtils.compare(dto.password, user.password);
-    if (!isValid) {
-      return ApiResponse.error("Credenciais inválidas.", 401, req);
-    }
-
-    const secret = env.JWT_SECRET || "chave-padrao";
-    const token = jwt.sign(
-      {
-        sub: user.id,
-        email: user.email,
-        tenantId: user.tenantId,
-        role: user.role,
-      },
-      secret,
-      { expiresIn: "2h" }
-    );
-
-    const { password, ...userSafe } = user;
-
-    return ApiResponse.success(
-      "Login realizado com sucesso.",
-      req,
-      userSafe,
-      token
-    );
+async login(req: Request, dto: LoginDto) {
+  const user = await this.repository.findUserByEmail(dto.email);
+  if (!user) {
+    return ApiResponse.error("Usuário não encontrado.", 404, req);
   }
+
+  const isValid = await PasswordUtils.compare(dto.password, user.password);
+  if (!isValid) {
+    return ApiResponse.error("Credenciais inválidas.", 401, req);
+  }
+
+  const secret = env.JWT_SECRET || "chave-padrao";
+
+  // 🔹 Inclui o branchId no payload do token
+  const token = jwt.sign(
+    {
+      sub: user.id,
+      email: user.email,
+      tenantId: user.tenantId,
+      branchId: user.branchId, // ✅ novo campo
+      role: user.role,
+    },
+    secret,
+    { expiresIn: "2h" }
+  );
+
+  const { password, ...userSafe } = user;
+
+  return ApiResponse.success(
+    "Login realizado com sucesso.",
+    req,
+    userSafe,
+    token
+  );
+}
 
   async changePassword(req: Request, dto: ChangePasswordDto) {
     const userId = req.user?.sub;

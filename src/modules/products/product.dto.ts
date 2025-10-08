@@ -59,10 +59,6 @@ export class CreateProductDto {
   @IsInt({ message: "O ID da marca deve ser um número inteiro." })
   @IsPositive({ message: "O ID da marca deve ser positivo." })
   brandId!: number;
-
-  @IsString({ message: "O ID da filial deve ser uma string." })
-  @IsNotEmpty({ message: "O ID da filial é obrigatório." })
-  branchId!: string;
 }
 
 /**
@@ -112,8 +108,4 @@ export class UpdateProductDto {
   @IsInt()
   @IsPositive()
   brandId?: number;
-
-  @IsOptional()
-  @IsString()
-  branchId?: string;
 }

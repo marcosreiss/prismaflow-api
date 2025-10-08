@@ -10,21 +10,24 @@ export class ProductService {
   async create(req: Request, data: any) {
     const user = req.user!;
 
-    // Validação de campos obrigatórios (garantia extra além do DTO)
-    if (!data.brandId || !data.branchId) {
-      return ApiResponse.error(
-        "Os campos 'brandId' e 'branchId' são obrigatórios.",
-        400,
-        req
-      );
+    // 🔹 Preenche automaticamente os campos de contexto
+    data.tenantId = user.tenantId;
+    data.branchId = user.branchId;
+
+    // 🔹 Validação de campos obrigatórios
+    if (!data.brandId) {
+      return ApiResponse.error("O campo 'brandId' é obrigatório.", 400, req);
     }
 
+    // 🔹 Verifica duplicidade dentro do mesmo tenant
     const exists = await this.repo.findByNameInTenant(user.tenantId, data.name);
     if (exists) {
       return ApiResponse.error("Já existe um produto com esse nome.", 409, req);
     }
 
+    // 🔹 Criação do produto
     const product = await this.repo.create(user.tenantId, data, user.sub);
+
     return ApiResponse.success("Produto criado com sucesso.", req, product);
   }
 

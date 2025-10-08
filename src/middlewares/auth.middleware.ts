@@ -3,8 +3,11 @@ import jwt from "jsonwebtoken";
 import { env } from "../config/env";
 import { ApiResponse } from "../responses/ApiResponse";
 
-interface JwtPayload {
-  sub: string;
+/**
+ * Payload esperado dentro do token JWT
+ */
+export interface JwtPayload {
+  sub: string; // ID do usuário
   email: string;
   tenantId: string;
   branchId?: string;
@@ -13,8 +16,23 @@ interface JwtPayload {
   exp?: number;
 }
 
+/**
+ * Extensão do tipo Request para incluir o usuário autenticado
+ */
+declare global {
+  namespace Express {
+    interface Request {
+      user?: JwtPayload;
+    }
+  }
+}
+
+/**
+ * Middleware de autenticação JWT
+ */
 export function authGuard(req: Request, res: Response, next: NextFunction) {
   const header = req.headers.authorization;
+
   if (!header?.startsWith("Bearer ")) {
     const resp = ApiResponse.error("Não autenticado.", 401, req);
     return res.status(401).json(resp);
@@ -24,9 +42,18 @@ export function authGuard(req: Request, res: Response, next: NextFunction) {
 
   try {
     const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
-    req.user = payload; // agora tipado corretamente
+
+    // ✅ injeta o usuário autenticado na requisição
+    req.user = {
+      sub: payload.sub,
+      email: payload.email,
+      tenantId: payload.tenantId,
+      branchId: payload.branchId, // inclui branchId se existir
+      role: payload.role,
+    };
+
     next();
-  } catch {
+  } catch (error) {
     const resp = ApiResponse.error("Token inválido ou expirado.", 401, req);
     return res.status(401).json(resp);
   }

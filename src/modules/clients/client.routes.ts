@@ -7,6 +7,7 @@ import {
   updateClient,
   getClientById,
   listClients,
+  selectClients,
 } from "./client.controller";
 import { getPrescriptionsByClientId } from "../prescriptions/prescription.controller";
 import { CreateClientDto, UpdateClientDto } from "./client.dto";
@@ -47,4 +48,11 @@ clientRoutes.get(
   "/:clientId/prescriptions",
   authGuard,
   getPrescriptionsByClientId
+);
+
+clientRoutes.get(
+  "/select",
+  authGuard,
+  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
+  selectClients
 );

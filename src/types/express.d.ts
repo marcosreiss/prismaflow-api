@@ -6,17 +6,18 @@ declare global {
       sub: string;
       email: string;
       tenantId: string;
+      branchId: string; // ✅ obrigatório
       role: Role;
-      branchId?: string | null;
       iat?: number;
       exp?: number;
     }
+
     interface Request {
       user?: {
         sub: string;
         email: string;
         tenantId: string;
-        branchId?: string;
+        branchId: string; // ✅ obrigatório também aqui
         role: "ADMIN" | "MANAGER" | "EMPLOYEE";
         iat?: number;
         exp?: number;

@@ -10,21 +10,10 @@ export interface JwtPayload {
   sub: string; // ID do usuário
   email: string;
   tenantId: string;
-  branchId?: string;
+  branchId: string; // ✅ agora obrigatório
   role: "ADMIN" | "MANAGER" | "EMPLOYEE";
   iat?: number;
   exp?: number;
-}
-
-/**
- * Extensão do tipo Request para incluir o usuário autenticado
- */
-declare global {
-  namespace Express {
-    interface Request {
-      user?: JwtPayload;
-    }
-  }
 }
 
 /**
@@ -48,8 +37,10 @@ export function authGuard(req: Request, res: Response, next: NextFunction) {
       sub: payload.sub,
       email: payload.email,
       tenantId: payload.tenantId,
-      branchId: payload.branchId, // inclui branchId se existir
+      branchId: payload.branchId, // ✅ agora sempre existe
       role: payload.role,
+      iat: payload.iat,
+      exp: payload.exp,
     };
 
     next();

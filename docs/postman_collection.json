@@ -536,6 +536,20 @@
                                 "url": "{{baseUrl}}/clients?page=1&limit=10&search=Maria"
                             },
                             "response": []
+                        },
+                        {
+                            "name": "Buscar clientes para select (por nome, limitado a 50 registros)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients/select?name=Maria"
+                            },
+                            "response": []
                         }
                     ]
                 },

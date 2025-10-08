@@ -104,4 +104,17 @@ export class ClientRepository {
 
     return { items, total };
   }
+
+  async findByNameForSelect(tenantId: string, branchId: string, name: string) {
+    return prisma.client.findMany({
+      where: {
+        tenantId,
+        branchId,
+        name: { contains: name },
+      },
+      select: { id: true, name: true },
+      take: 50,
+      orderBy: { name: "asc" },
+    });
+  }
 }

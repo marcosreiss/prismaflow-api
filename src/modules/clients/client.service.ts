@@ -88,4 +88,26 @@ export class ClientService {
       total
     );
   }
+
+  async select(req: Request) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+    const branchId = user.branchId;
+    const name = String(req.query.name || "").trim();
+
+    if (!name) {
+      return ApiResponse.error("O parâmetro 'name' é obrigatório.", 400, req);
+    }
+
+    const clients = await this.repo.findByNameForSelect(
+      tenantId,
+      branchId,
+      name
+    );
+    return ApiResponse.success(
+      "Clientes encontrados com sucesso.",
+      req,
+      clients
+    );
+  }
 }

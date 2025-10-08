@@ -56,3 +56,16 @@ export const listClients = async (
     next(err);
   }
 };
+
+export const selectClients = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await service.select(req);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};

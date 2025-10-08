@@ -25,16 +25,14 @@ export class CreatePrescriptionDto {
   @IsOptional() @IsString() odCylindrical?: string;
   @IsOptional() @IsString() odAxis?: string;
   @IsOptional() @IsString() odDnp?: string;
+  @IsOptional() @IsString() additionRight?: string;
+  @IsOptional() @IsString() additionLeft?: string;
 
   // OE
   @IsOptional() @IsString() oeSpherical?: string;
   @IsOptional() @IsString() oeCylindrical?: string;
   @IsOptional() @IsString() oeAxis?: string;
   @IsOptional() @IsString() oeDnp?: string;
-
-  // Adição e centro ótico separados
-  @IsOptional() @IsString() additionRight?: string;
-  @IsOptional() @IsString() additionLeft?: string;
   @IsOptional() @IsString() opticalCenterRight?: string;
   @IsOptional() @IsString() opticalCenterLeft?: string;
 

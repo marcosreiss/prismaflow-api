@@ -73,4 +73,28 @@ export class PrescriptionService {
       total
     );
   }
+
+  async getByClientId(
+    req: Request,
+    clientId: number,
+    page: number,
+    limit: number
+  ) {
+    const user = req.user!;
+    const { items, total } = await this.repo.findByClientId(
+      user.tenantId,
+      clientId,
+      page,
+      limit
+    );
+
+    return new PagedResponse(
+      "Prescrições listadas com sucesso.",
+      req,
+      items,
+      page,
+      limit,
+      total
+    );
+  }
 }

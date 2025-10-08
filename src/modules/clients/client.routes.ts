@@ -8,6 +8,7 @@ import {
   getClientById,
   listClients,
 } from "./client.controller";
+import { getPrescriptionsByClientId } from "../prescriptions/prescription.controller";
 import { CreateClientDto, UpdateClientDto } from "./client.dto";
 
 export const clientRoutes = Router();
@@ -40,4 +41,10 @@ clientRoutes.get(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   listClients
+);
+
+clientRoutes.get(
+  "/:clientId/prescriptions",
+  authGuard,
+  getPrescriptionsByClientId
 );

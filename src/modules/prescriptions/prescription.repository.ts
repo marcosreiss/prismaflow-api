@@ -64,4 +64,33 @@ export class PrescriptionRepository {
 
     return { items, total };
   }
+
+  async findByClientId(
+    tenantId: string,
+    clientId: number,
+    page: number,
+    limit: number
+  ) {
+    const skip = (page - 1) * limit;
+
+    const [items, total] = await Promise.all([
+      prisma.prescription.findMany({
+        where: {
+          tenantId,
+          clientId,
+        },
+        skip,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.prescription.count({
+        where: {
+          tenantId,
+          clientId,
+        },
+      }),
+    ]);
+
+    return { items, total };
+  }
 }

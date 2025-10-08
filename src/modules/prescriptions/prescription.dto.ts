@@ -38,10 +38,6 @@ export class CreatePrescriptionDto {
   @IsOptional() @IsString() opticalCenterRight?: string;
   @IsOptional() @IsString() opticalCenterLeft?: string;
 
-  @IsString()
-  @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
-  branchId!: string;
-
   @IsOptional()
   @IsBoolean()
   isActive?: boolean = true;

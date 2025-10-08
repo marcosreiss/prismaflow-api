@@ -1,12 +1,7 @@
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class ClientRepository {
-  async create(
-    tenantId: string,
-    branchId: string | undefined,
-    data: any,
-    userId?: string
-  ) {
+  async create(tenantId: string, branchId: string, data: any, userId?: string) {
     return prisma.client.create({
       data: withAuditData(userId, {
         ...data,

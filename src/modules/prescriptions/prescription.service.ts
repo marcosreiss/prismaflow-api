@@ -6,11 +6,21 @@ import { PrescriptionRepository } from "./prescription.repository";
 export class PrescriptionService {
   private repo = new PrescriptionRepository();
 
+  // =========================================================
+  // 🔹 CREATE
+  // =========================================================
   async create(req: Request, data: any) {
     const user = req.user!;
-    const tenantId = user.tenantId;
+    const { tenantId, branchId, sub: userId } = user;
 
-    const prescription = await this.repo.create(tenantId, data, user.sub);
+    // 🔸 Sempre injeta tenantId e branchId no payload
+    const payload = {
+      ...data,
+      tenantId,
+      branchId,
+    };
+
+    const prescription = await this.repo.create(tenantId, payload, userId);
     return ApiResponse.success(
       "Receita criada com sucesso.",
       req,
@@ -18,19 +28,32 @@ export class PrescriptionService {
     );
   }
 
+  // =========================================================
+  // 🔹 UPDATE
+  // =========================================================
   async update(req: Request, prescriptionId: number, data: any) {
     const user = req.user!;
-    const tenantId = user.tenantId;
+    const { tenantId, branchId, sub: userId } = user;
 
     const existing = await this.repo.findById(prescriptionId, tenantId);
     if (!existing) {
       return ApiResponse.error("Receita não encontrada.", 404, req);
     }
 
-    const updated = await this.repo.update(prescriptionId, data, user.sub);
+    // 🔸 Garante tenantId e branchId também na atualização
+    const payload = {
+      ...data,
+      tenantId,
+      branchId,
+    };
+
+    const updated = await this.repo.update(prescriptionId, payload, userId);
     return ApiResponse.success("Receita atualizada com sucesso.", req, updated);
   }
 
+  // =========================================================
+  // 🔹 FIND BY ID
+  // =========================================================
   async getById(req: Request, prescriptionId: number) {
     const user = req.user!;
     const tenantId = user.tenantId;
@@ -47,6 +70,9 @@ export class PrescriptionService {
     );
   }
 
+  // =========================================================
+  // 🔹 LIST (com paginação e filtro por cliente)
+  // =========================================================
   async list(req: Request) {
     const user = req.user!;
     const tenantId = user.tenantId;
@@ -74,6 +100,9 @@ export class PrescriptionService {
     );
   }
 
+  // =========================================================
+  // 🔹 LIST BY CLIENT
+  // =========================================================
   async getByClientId(
     req: Request,
     clientId: number,
@@ -81,8 +110,10 @@ export class PrescriptionService {
     limit: number
   ) {
     const user = req.user!;
+    const tenantId = user.tenantId;
+
     const { items, total } = await this.repo.findByClientId(
-      user.tenantId,
+      tenantId,
       clientId,
       page,
       limit

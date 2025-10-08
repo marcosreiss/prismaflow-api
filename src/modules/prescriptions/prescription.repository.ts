@@ -10,16 +10,19 @@ export class PrescriptionRepository {
     data: Prisma.PrescriptionUncheckedCreateInput,
     userId?: string
   ) {
-    // Garante que a relação com o cliente seja feita corretamente
-    const formattedData: Prisma.PrescriptionUncheckedCreateInput = {
-      ...data,
-      tenantId,
-      // se o front enviar clientId, isso é suficiente (unchecked input permite)
-      // mas se vier `client` no formato relacional, também funciona
-    };
+    if (!data.branchId) {
+      throw new Error("branchId é obrigatório para criar a prescrição.");
+    }
+
+    if (data.prescriptionDate) {
+      data.prescriptionDate = new Date(data.prescriptionDate).toISOString();
+    }
 
     return prisma.prescription.create({
-      data: withAuditData(userId, formattedData),
+      data: withAuditData(userId, {
+        ...data,
+        tenantId,
+      }) as Prisma.PrescriptionUncheckedCreateInput,
       include: {
         client: { select: { id: true, name: true } },
         createdBy: { select: { name: true } },
@@ -71,7 +74,6 @@ export class PrescriptionRepository {
     clientId?: number
   ) {
     const skip = (page - 1) * limit;
-
     const where: Prisma.PrescriptionWhereInput = {
       tenantId,
       ...(clientId && { clientId }),

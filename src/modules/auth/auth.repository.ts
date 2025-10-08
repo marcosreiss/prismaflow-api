@@ -115,4 +115,21 @@ export class AuthRepository {
       data: { password: hash },
     });
   }
+
+  async findBranchesByTenantId(tenantId: string) {
+    return prisma.branch.findMany({
+      where: { tenantId },
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: { name: "asc" },
+    });
+  }
+
+  async findUserById(userId: string) {
+    return prisma.user.findUnique({
+      where: { id: userId },
+    });
+  }
 }

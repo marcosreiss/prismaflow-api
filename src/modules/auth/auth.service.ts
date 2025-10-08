@@ -9,6 +9,7 @@ import {
   LoginDto,
   ChangePasswordDto,
   RegisterUserDto,
+  SelectBranchDto,
 } from "./dtos/auth.dto";
 
 export class AuthService {
@@ -30,7 +31,6 @@ export class AuthService {
       return ApiResponse.error("Usuário não autenticado.", 401, req);
     }
 
-    // Garante que o usuário logado é ADMIN
     if (req.user?.role !== "ADMIN") {
       return ApiResponse.error(
         "Apenas administradores podem cadastrar novos usuários.",
@@ -39,48 +39,154 @@ export class AuthService {
       );
     }
 
-    // Adiciona auditoria
     dto.createdById = currentUserId;
     const user = await this.repository.createUser(dto, req);
 
     return ApiResponse.success("Usuário criado com sucesso.", req, user);
   }
 
-async login(req: Request, dto: LoginDto) {
-  const user = await this.repository.findUserByEmail(dto.email);
-  if (!user) {
-    return ApiResponse.error("Usuário não encontrado.", 404, req);
+  // 🔹 Novo fluxo de login com token temporário e seleção de branch
+  async login(req: Request, dto: LoginDto) {
+    const user = await this.repository.findUserByEmail(dto.email);
+    if (!user) {
+      return ApiResponse.error("Usuário não encontrado.", 404, req);
+    }
+
+    const isValid = await PasswordUtils.compare(dto.password, user.password);
+    if (!isValid) {
+      return ApiResponse.error("Credenciais inválidas.", 401, req);
+    }
+
+    const secret = env.JWT_SECRET || "chave-padrao";
+
+    // 🔹 Se for ADMIN e não tiver branchId, iniciar fluxo de seleção de filial
+    if (user.role === "ADMIN" && !user.branchId) {
+      const branches = await this.repository.findBranchesByTenantId(
+        user.tenantId
+      );
+
+      // Se só houver uma filial, faz login direto
+      if (branches.length === 1) {
+        const branch = branches[0];
+        const token = jwt.sign(
+          {
+            sub: user.id,
+            email: user.email,
+            tenantId: user.tenantId,
+            branchId: branch.id,
+            role: user.role,
+          },
+          secret,
+          { expiresIn: "2h" }
+        );
+
+        const { password, ...userSafe } = user;
+
+        return ApiResponse.success(
+          "Login realizado com sucesso (filial única detectada).",
+          req,
+          { ...userSafe, branch },
+          token
+        );
+      }
+
+      // Caso contrário, gera token temporário (5 min)
+      const tempToken = jwt.sign(
+        {
+          sub: user.id,
+          email: user.email,
+          tenantId: user.tenantId,
+          role: user.role,
+          isTemp: true,
+        },
+        secret,
+        { expiresIn: "5m" }
+      );
+
+      return ApiResponse.success("Selecione a filial para continuar.", req, {
+        branches,
+        tempToken,
+      });
+    }
+
+    // 🔹 Login normal (usuário comum ou admin com branchId definido)
+    const token = jwt.sign(
+      {
+        sub: user.id,
+        email: user.email,
+        tenantId: user.tenantId,
+        branchId: user.branchId,
+        role: user.role,
+      },
+      secret,
+      { expiresIn: "2h" }
+    );
+
+    const { password, ...userSafe } = user;
+
+    return ApiResponse.success(
+      "Login realizado com sucesso.",
+      req,
+      userSafe,
+      token
+    );
   }
 
-  const isValid = await PasswordUtils.compare(dto.password, user.password);
-  if (!isValid) {
-    return ApiResponse.error("Credenciais inválidas.", 401, req);
+  // 🔹 Novo método: seleção de filial (branch-selection)
+  async selectBranch(req: Request, dto: SelectBranchDto) {
+    const secret = env.JWT_SECRET || "chave-padrao";
+    const header = req.headers.authorization;
+
+    if (!header?.startsWith("Bearer ")) {
+      return ApiResponse.error("Token temporário não informado.", 401, req);
+    }
+
+    const token = header.substring(7);
+
+    try {
+      const payload = jwt.verify(token, secret) as any;
+
+      if (!payload.isTemp) {
+        return ApiResponse.error(
+          "Token inválido para seleção de filial.",
+          401,
+          req
+        );
+      }
+
+      const user = await this.repository.findUserById(payload.sub);
+      if (!user) {
+        return ApiResponse.error("Usuário não encontrado.", 404, req);
+      }
+
+      const finalToken = jwt.sign(
+        {
+          sub: user.id,
+          email: user.email,
+          tenantId: user.tenantId,
+          branchId: dto.branchId,
+          role: user.role,
+        },
+        secret,
+        { expiresIn: "2h" }
+      );
+
+      const { password, ...userSafe } = user;
+
+      return ApiResponse.success(
+        "Login completado com sucesso.",
+        req,
+        userSafe,
+        finalToken
+      );
+    } catch {
+      return ApiResponse.error(
+        "Token temporário inválido ou expirado.",
+        401,
+        req
+      );
+    }
   }
-
-  const secret = env.JWT_SECRET || "chave-padrao";
-
-  // 🔹 Inclui o branchId no payload do token
-  const token = jwt.sign(
-    {
-      sub: user.id,
-      email: user.email,
-      tenantId: user.tenantId,
-      branchId: user.branchId, // ✅ novo campo
-      role: user.role,
-    },
-    secret,
-    { expiresIn: "2h" }
-  );
-
-  const { password, ...userSafe } = user;
-
-  return ApiResponse.success(
-    "Login realizado com sucesso.",
-    req,
-    userSafe,
-    token
-  );
-}
 
   async changePassword(req: Request, dto: ChangePasswordDto) {
     const userId = req.user?.sub;

@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
-import { RegisterAdminDto, LoginDto, ChangePasswordDto, RegisterUserDto } from "./dtos/auth.dto";
+import {
+  RegisterAdminDto,
+  LoginDto,
+  ChangePasswordDto,
+  RegisterUserDto,
+  SelectBranchDto,
+} from "./dtos/auth.dto";
 
 const service = new AuthService();
 
@@ -26,6 +32,20 @@ export const login = async (
   try {
     const dto: LoginDto = req.body;
     const result = await service.login(req, dto);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const selectBranch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const dto: SelectBranchDto = req.body;
+    const result = await service.selectBranch(req, dto);
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

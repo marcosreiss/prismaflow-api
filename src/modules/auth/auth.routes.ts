@@ -4,6 +4,7 @@ import {
   login,
   changePassword,
   registerUser,
+  selectBranch,
 } from "./auth.controller";
 import { validateDto } from "../../middlewares/validation.middleware";
 import { authGuard } from "../../middlewares/auth.middleware";
@@ -12,6 +13,7 @@ import {
   LoginDto,
   ChangePasswordDto,
   RegisterUserDto,
+  SelectBranchDto,
 } from "./dtos/auth.dto";
 import { Role } from "@prisma/client";
 import { requireRoles } from "../../middlewares/authorize.middleware";
@@ -23,8 +25,12 @@ authRoutes.post(
   validateDto(RegisterAdminDto, "body"),
   registerAdmin
 );
-
 authRoutes.post("/login", validateDto(LoginDto, "body"), login);
+authRoutes.post(
+  "/branch-selection",
+  validateDto(SelectBranchDto, "body"),
+  selectBranch
+);
 
 authRoutes.put(
   "/change-password",
@@ -35,8 +41,8 @@ authRoutes.put(
 
 authRoutes.post(
   "/register-user",
-  authGuard, // precisa estar logado
-  requireRoles(Role.ADMIN), // apenas ADMIN pode criar
+  authGuard,
+  requireRoles(Role.ADMIN),
   validateDto(RegisterUserDto, "body"),
   registerUser
 );

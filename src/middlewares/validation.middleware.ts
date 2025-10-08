@@ -26,7 +26,7 @@ export function validateDto(dtoClass: any, source: ValidationSource = "body") {
         );
 
         const response = ApiResponse.error(
-          `Validation failed: ${messages.join(", ")}`,
+          `Erro de validação: ${messages.join(", ")}`,
           400,
           req
         );

@@ -9,13 +9,21 @@ export class ClientService {
   async create(req: Request, data: any) {
     const user = req.user!;
     const tenantId = user.tenantId;
+    const branchId = user.branchId; // 🔹 novo
 
+    // 🔹 Preenche automaticamente os campos de contexto
+    data.tenantId = tenantId;
+    data.branchId = branchId;
+
+    // 🔹 Verifica duplicidade no mesmo tenant (e opcionalmente na filial)
     const exists = await this.repo.findByNameInTenant(tenantId, data.name);
     if (exists) {
       return ApiResponse.error("Já existe um cliente com esse nome.", 409, req);
     }
 
-    const client = await this.repo.create(tenantId, data, user.sub);
+    // 🔹 Criação do cliente no contexto do tenant/branch
+    const client = await this.repo.create(tenantId, branchId, data, user.sub);
+
     return ApiResponse.success("Cliente criado com sucesso.", req, client);
   }
 

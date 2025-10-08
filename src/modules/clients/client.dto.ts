@@ -28,7 +28,10 @@ export class CreateClientDto {
   rg?: string;
 
   @IsOptional()
-  @IsDateString({}, { message: "A data de nascimento deve estar em formato válido." })
+  @IsDateString(
+    {},
+    { message: "A data de nascimento deve estar em formato válido." }
+  )
   bornDate?: string;
 
   @IsOptional()
@@ -38,7 +41,9 @@ export class CreateClientDto {
   @IsOptional() @IsString() fatherName?: string;
   @IsOptional() @IsString() motherName?: string;
   @IsOptional() @IsString() spouse?: string;
-  @IsOptional() @IsEmail() email?: string;
+  @IsOptional()
+  @IsEmail({}, { message: "O campo 'email' deve ser um e-mail válido." })
+  email?: string;
   @IsOptional() @IsString() company?: string;
   @IsOptional() @IsString() occupation?: string;
 
@@ -61,10 +66,6 @@ export class CreateClientDto {
   @IsOptional() @IsString() reference02?: string;
   @IsOptional() @IsString() reference03?: string;
 
-  @IsString()
-  @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
-  branchId!: string;
-
   @IsOptional()
   @IsBoolean()
   isActive?: boolean = true;
@@ -80,7 +81,9 @@ export class UpdateClientDto {
   @IsOptional() @IsString() fatherName?: string;
   @IsOptional() @IsString() motherName?: string;
   @IsOptional() @IsString() spouse?: string;
-  @IsOptional() @IsEmail() email?: string;
+  @IsOptional()
+  @IsEmail({}, { message: "O campo 'email' deve ser um e-mail válido." })
+  email?: string;
   @IsOptional() @IsString() company?: string;
   @IsOptional() @IsString() occupation?: string;
   @IsOptional() @IsString() street?: string;

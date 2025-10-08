@@ -1,9 +1,18 @@
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class ClientRepository {
-  async create(tenantId: string, data: any, userId?: string) {
+  async create(
+    tenantId: string,
+    branchId: string | undefined,
+    data: any,
+    userId?: string
+  ) {
     return prisma.client.create({
-      data: withAuditData(userId, { ...data, tenantId }),
+      data: withAuditData(userId, {
+        ...data,
+        tenantId,
+        branchId, // 🔹 agora incluído
+      }),
       include: {
         createdBy: { select: { name: true } },
         updatedBy: { select: { name: true } },

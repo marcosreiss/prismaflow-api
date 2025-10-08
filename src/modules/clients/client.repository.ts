@@ -10,8 +10,8 @@ export class ClientRepository {
     return prisma.client.create({
       data: withAuditData(userId, {
         ...data,
-        tenantId,
-        branchId, // 🔹 agora incluído
+        tenant: { connect: { id: tenantId } },
+        branch: { connect: { id: branchId } },
       }),
       include: {
         createdBy: { select: { name: true } },

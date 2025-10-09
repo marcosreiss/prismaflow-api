@@ -60,23 +60,78 @@ export class SaleRepository {
   async findById(id: number, tenantId: string) {
     return prisma.sale.findFirst({
       where: { id, tenantId },
-      include: {
-        client: { select: { id: true, name: true } },
+      select: {
+        // ✅ ADICIONE ESTES CAMPOS OBRIGATÓRIOS:
+        id: true,
+        clientId: true,
+        prescriptionId: true,
+        subtotal: true,
+        discount: true,
+        total: true,
+        notes: true,
+        isActive: true,
+        tenantId: true,
+        branchId: true,
+        createdAt: true,
+        updatedAt: true,
+
+        client: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone01: true,
+          }
+        },
         protocol: true,
         productItems: {
-          include: {
-            product: { select: { id: true, name: true } },
+          select: {
+            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
+            id: true,
+            productId: true,
+            quantity: true,
+            saleId: true,
+
+            product: {
+              select: {
+                id: true,
+                name: true,
+                salePrice: true,
+                category: true,
+                stockQuantity: true,
+                brand: {
+                  select: {
+                    id: true,
+                    name: true
+                  }
+                }
+              }
+            },
             frameDetails: true,
           },
         },
         serviceItems: {
-          include: {
-            service: { select: { id: true, name: true } },
+          select: {
+            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
+            id: true,
+            serviceId: true,
+            saleId: true,
+
+            service: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                description: true,
+                isActive: true
+              }
+            },
           },
         },
       },
     });
   }
+
 
   async findAllByTenant(
     tenantId: string,

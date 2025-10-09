@@ -90,7 +90,7 @@ export class ClientRepository {
     const skip = (page - 1) * limit;
     const where: any = { tenantId };
     if (branchId) where.branchId = branchId;
-    if (search) where.name = { contains: search, mode: "insensitive" };
+    if (search) where.name = { contains: search };
 
     const [items, total] = await Promise.all([
       prisma.client.findMany({

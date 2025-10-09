@@ -1,6 +1,8 @@
 // src/utils/logger.ts
 import winston from "winston";
 
+const ENABLE_DEBUG_LOGS = process.env.DEBUG_LOGS === "true";
+
 // Define níveis de log padrão
 const levels = {
   error: 0,
@@ -39,7 +41,7 @@ const format = winston.format.combine(
 // Transporte: Console (padrão)
 const transports: winston.transport[] = [
   new winston.transports.Console({
-    level: isDevelopment ? "debug" : "info",
+    level: ENABLE_DEBUG_LOGS ? "debug" : "info",
   }),
 ];
 

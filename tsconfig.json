@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    "rootDir": ".",
+    "rootDir": "src",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
@@ -16,6 +16,10 @@
   },
   "include": [
     "src",
+    "prisma/seeds"
+  ],
+  "exclude": [
+    "node_modules",
     "prisma/seeds"
   ]
 }

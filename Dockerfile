@@ -5,14 +5,14 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copia apenas os arquivos de dependências primeiro (melhor uso de cache)
+# Copia dependências e instala
 COPY package*.json ./
 RUN npm install
 
-# Copia o restante do código-fonte
+# Copia o restante do código
 COPY . .
 
-# Gera o client Prisma antes do build TypeScript
+# Gera Prisma Client antes do build
 RUN npx prisma generate
 
 # Compila o TypeScript
@@ -25,14 +25,18 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copia o app já compilado
-COPY --from=build /app ./
+# Copia apenas o que é necessário para rodar
+COPY package*.json ./
+RUN npm install --omit=dev
 
-# Expõe a porta padrão
+# Copia o build (dist) e schema do prisma
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/prisma ./prisma
+
+# Expõe a porta
 EXPOSE 3000
 
-# Variável padrão (Render define automaticamente)
 ENV NODE_ENV=production
 
-# Comando de inicialização
-CMD ["npm", "run", "start"]
+# Executa o servidor
+CMD ["node", "dist/server.js"]

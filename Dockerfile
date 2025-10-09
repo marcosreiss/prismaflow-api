@@ -1,42 +1,45 @@
-# ==============================
+#########################################
 # 🔹 Etapa 1: Build da aplicação
-# ==============================
+#########################################
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copia dependências e instala
+# Copia e instala dependências (com cache eficiente)
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Copia o restante do código
+# Copia o restante do código-fonte
 COPY . .
 
-# Gera Prisma Client antes do build
+# Gera o Prisma Client antes do build (para tipos TS)
 RUN npx prisma generate
 
-# Compila o TypeScript
+# Compila TypeScript → dist/
 RUN npm run build
 
-# ==============================
+
+#########################################
 # 🔹 Etapa 2: Execução da aplicação
-# ==============================
+#########################################
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Copia apenas o que é necessário para rodar
+# Copia package.json e instala apenas dependências de produção
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
-# Copia o build (dist) e schema do prisma
+# Copia o build e schema Prisma do estágio anterior
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
 
-# Expõe a porta
+# Gera novamente o Prisma Client no ambiente final
+RUN npx prisma generate
+
+# Define variáveis e porta
+ENV NODE_ENV=production
 EXPOSE 3000
 
-ENV NODE_ENV=production
-
-# Executa o servidor
+# Comando de inicialização
 CMD ["node", "dist/server.js"]

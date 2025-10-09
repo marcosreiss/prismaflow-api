@@ -5,3 +5,4 @@ Dockerfile
 .env
 npm-debug.log
 *.tsbuildinfo
+dist

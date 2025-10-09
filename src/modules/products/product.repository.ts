@@ -85,4 +85,14 @@ export class ProductRepository {
   async delete(id: number) {
     return prisma.product.delete({ where: { id } });
   }
+
+  /**
+   * 🔹 Retorna a quantidade em estoque de um produto no tenant atual
+   */
+  async findStockById(id: number, tenantId: string) {
+    return prisma.product.findFirst({
+      where: { id, tenantId },
+      select: { id: true, stockQuantity: true },
+    });
+  }
 }

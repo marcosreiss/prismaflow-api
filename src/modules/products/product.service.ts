@@ -91,4 +91,22 @@ export class ProductService {
     await this.repo.delete(id);
     return ApiResponse.success("Produto excluído com sucesso.", req);
   }
+
+  /**
+   * 🔹 Retorna a quantidade em estoque de um produto
+   */
+  async getStock(req: Request, id: number) {
+    const user = req.user!;
+
+    const product = await this.repo.findStockById(id, user.tenantId);
+
+    if (!product) {
+      return ApiResponse.error("Produto não encontrado.", 404, req);
+    }
+
+    return ApiResponse.success("Estoque do produto obtido com sucesso.", req, {
+      productId: product.id,
+      stockQuantity: product.stockQuantity ?? 0,
+    });
+  }
 }

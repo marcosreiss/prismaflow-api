@@ -9,6 +9,7 @@ import {
   deleteProduct,
 } from "./product.controller";
 import { CreateProductDto, UpdateProductDto } from "./product.dto";
+import { getProductStock } from "./product.controller";
 
 export const productRoutes = Router();
 
@@ -21,7 +22,6 @@ productRoutes.post(
 );
 
 // 🔹 Listar produtos com paginação, busca e filtro
-// Exemplo: GET /products?page=1&limit=10&search=lente&category=LENS
 productRoutes.get("/", authGuard, listProducts);
 
 // 🔹 Buscar produto por ID
@@ -37,3 +37,7 @@ productRoutes.put(
 
 // 🔹 Excluir produto
 productRoutes.delete("/:id", authGuard, deleteProduct);
+
+
+productRoutes.get("/:id/stock", authGuard, getProductStock);
+

@@ -85,3 +85,20 @@ export const deleteProduct = async (
     next(err);
   }
 };
+
+/**
+ * Retorna a quantidade em estoque de um produto
+ */
+export const getProductStock = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await service.getStock(req, id);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};

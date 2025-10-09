@@ -1,7 +1,8 @@
+// src/modules/sales/sale.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class SaleRepository {
-  // 🔹 Criação de venda completa (com protocolo e itens)
+  // 🔹 Criação de venda (não cria protocolo aqui)
   async create(data: any, userId?: string) {
     return prisma.sale.create({
       data: withAuditData(userId, data),
@@ -50,7 +51,22 @@ export class SaleRepository {
     });
   }
 
-  // 🔹 Buscar venda por ID
+  // 🔹 Criar protocolo (1:1) — usar no Service
+  async createProtocol(data: any, userId?: string) {
+    return prisma.protocol.create({
+      data: withAuditData(userId, data),
+    });
+  }
+
+  // 🔹 Atualizar protocolo — usar no Service
+  async updateProtocol(id: number, data: any, userId?: string) {
+    return prisma.protocol.update({
+      where: { id },
+      data: withAuditData(userId, data, true),
+    });
+  }
+
+  // 🔹 Buscar venda por ID (escopo tenant)
   async findById(id: number, tenantId: string) {
     return prisma.sale.findFirst({
       where: { id, tenantId },
@@ -74,7 +90,7 @@ export class SaleRepository {
     });
   }
 
-  // 🔹 Listagem paginada (com filtro opcional por clientId)
+  // 🔹 Listagem paginada (opcional por clientId)
   async findAllByTenant(
     tenantId: string,
     page: number,
@@ -82,7 +98,6 @@ export class SaleRepository {
     clientId?: number
   ) {
     const skip = (page - 1) * limit;
-
     const where = clientId ? { tenantId, clientId } : { tenantId };
 
     const [items, total] = await Promise.all([
@@ -104,7 +119,7 @@ export class SaleRepository {
     return { items, total };
   }
 
-  // 🔹 Busca vendas por clientId (atalho)
+  // 🔹 Atalho: buscar por clientId
   async findByClientId(clientId: number, tenantId: string) {
     return prisma.sale.findMany({
       where: { tenantId, clientId },
@@ -126,12 +141,12 @@ export class SaleRepository {
     });
   }
 
-  // 🔹 Buscar itens de produto por saleId
+  // 🔹 Buscar itens de produto por saleId (inclui stockQuantity)
   async findProductItemsBySale(saleId: number) {
     return prisma.itemProduct.findMany({
       where: { saleId },
       include: {
-        product: { select: { id: true, name: true, stockQuantity: true } }, // 👈 add stockQuantity
+        product: { select: { id: true, name: true, stockQuantity: true } },
         frameDetails: true,
       },
     });
@@ -155,7 +170,7 @@ export class SaleRepository {
     });
   }
 
-  // 🔹 Remover venda (soft delete)
+  // 🔹 Remoção lógica da venda
   async softDelete(id: number, userId?: string) {
     return prisma.sale.update({
       where: { id },

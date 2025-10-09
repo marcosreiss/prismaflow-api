@@ -8,8 +8,6 @@ export class ProductRepository {
       include: {
         brand: { select: { id: true, name: true } },
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -21,8 +19,6 @@ export class ProductRepository {
       include: {
         brand: { select: { id: true, name: true } },
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -33,8 +29,6 @@ export class ProductRepository {
       include: {
         brand: { select: { id: true, name: true } },
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -72,8 +66,6 @@ export class ProductRepository {
         include: {
           brand: { select: { id: true, name: true } },
           branch: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.product.count({ where: whereClause }),
@@ -86,9 +78,6 @@ export class ProductRepository {
     return prisma.product.delete({ where: { id } });
   }
 
-  /**
-   * 🔹 Retorna a quantidade em estoque de um produto no tenant atual
-   */
   async findStockById(id: number, tenantId: string) {
     return prisma.product.findFirst({
       where: { id, tenantId },

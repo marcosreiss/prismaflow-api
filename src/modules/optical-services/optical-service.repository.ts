@@ -9,8 +9,6 @@ export class OpticalServiceRepository {
       }),
       include: {
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -21,8 +19,6 @@ export class OpticalServiceRepository {
       data: withAuditData(userId, data, true),
       include: {
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -32,8 +28,6 @@ export class OpticalServiceRepository {
       where: { id },
       include: {
         branch: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
@@ -70,8 +64,6 @@ export class OpticalServiceRepository {
         orderBy: { name: "asc" },
         include: {
           branch: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.opticalService.count({ where: whereClause }),

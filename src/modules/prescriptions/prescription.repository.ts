@@ -2,9 +2,6 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 import { Prisma } from "@prisma/client";
 
 export class PrescriptionRepository {
-  // =========================================================
-  // 🔹 CREATE
-  // =========================================================
   async create(
     tenantId: string,
     data: Prisma.PrescriptionUncheckedCreateInput,
@@ -25,15 +22,10 @@ export class PrescriptionRepository {
       }) as Prisma.PrescriptionUncheckedCreateInput,
       include: {
         client: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
 
-  // =========================================================
-  // 🔹 UPDATE
-  // =========================================================
   async update(
     prescriptionId: number,
     data: Prisma.PrescriptionUpdateInput,
@@ -44,29 +36,19 @@ export class PrescriptionRepository {
       data: withAuditData(userId, data, true),
       include: {
         client: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
 
-  // =========================================================
-  // 🔹 FIND BY ID
-  // =========================================================
   async findById(prescriptionId: number, tenantId: string) {
     return prisma.prescription.findFirst({
       where: { id: prescriptionId, tenantId },
       include: {
         client: { select: { id: true, name: true } },
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
       },
     });
   }
 
-  // =========================================================
-  // 🔹 FIND ALL BY TENANT
-  // =========================================================
   async findAllByTenant(
     tenantId: string,
     page: number,
@@ -87,8 +69,6 @@ export class PrescriptionRepository {
         orderBy: { prescriptionDate: "desc" },
         include: {
           client: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.prescription.count({ where }),
@@ -97,9 +77,6 @@ export class PrescriptionRepository {
     return { items, total };
   }
 
-  // =========================================================
-  // 🔹 FIND BY CLIENT ID
-  // =========================================================
   async findByClientId(
     tenantId: string,
     clientId: number,
@@ -107,7 +84,6 @@ export class PrescriptionRepository {
     limit: number
   ) {
     const skip = (page - 1) * limit;
-
     const where: Prisma.PrescriptionWhereInput = { tenantId, clientId };
 
     const [items, total] = await Promise.all([
@@ -118,8 +94,6 @@ export class PrescriptionRepository {
         orderBy: { createdAt: "desc" },
         include: {
           client: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.prescription.count({ where }),

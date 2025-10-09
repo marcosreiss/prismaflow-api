@@ -4,10 +4,6 @@ export class BrandRepository {
   async create(tenantId: string, data: any, userId?: string) {
     return prisma.brand.create({
       data: withAuditData(userId, { ...data, tenantId }),
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
@@ -15,20 +11,12 @@ export class BrandRepository {
     return prisma.brand.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
   async findById(id: number) {
     return prisma.brand.findUnique({
       where: { id },
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
@@ -48,7 +36,7 @@ export class BrandRepository {
 
     const whereClause: any = {
       tenantId,
-      ...(search ? { name: { contains: search, } } : {}),
+      ...(search ? { name: { contains: search } } : {}),
     };
 
     const [items, total] = await Promise.all([
@@ -57,10 +45,6 @@ export class BrandRepository {
         skip,
         take: limit,
         orderBy: { name: "asc" },
-        include: {
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
-        },
       }),
       prisma.brand.count({ where: whereClause }),
     ]);

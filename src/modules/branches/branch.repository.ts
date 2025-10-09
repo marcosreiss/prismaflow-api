@@ -5,10 +5,6 @@ export class BranchRepository {
   create(tenantId: string, name: string, userId?: string) {
     return prisma.branch.create({
       data: withAuditData(userId, { name, tenantId }),
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
@@ -16,30 +12,18 @@ export class BranchRepository {
     return prisma.branch.update({
       where: { id: branchId },
       data: withAuditData(userId, data, true),
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
   findByNameInTenant(tenantId: string, name: string) {
     return prisma.branch.findFirst({
       where: { tenantId, name },
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
   findByIdInTenant(tenantId: string, branchId: string) {
     return prisma.branch.findFirst({
       where: { id: branchId, tenantId },
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
@@ -52,10 +36,6 @@ export class BranchRepository {
         skip,
         take: limit,
         orderBy: { name: "asc" },
-        include: {
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
-        },
       }),
       prisma.branch.count({ where: { tenantId } }),
     ]);

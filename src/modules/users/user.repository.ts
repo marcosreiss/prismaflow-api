@@ -16,8 +16,6 @@ export class UserRepository {
     return prisma.user.create({
       data: withAuditData(userId, data),
       include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
         branch: { select: { id: true, name: true } },
       },
     });
@@ -27,20 +25,12 @@ export class UserRepository {
     return prisma.user.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
   findByEmail(email: string) {
     return prisma.user.findUnique({
       where: { email },
-      include: {
-        createdBy: { select: { name: true } },
-        updatedBy: { select: { name: true } },
-      },
     });
   }
 
@@ -55,8 +45,6 @@ export class UserRepository {
         orderBy: { name: "asc" },
         include: {
           branch: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.user.count({ where: { tenantId } }),
@@ -81,8 +69,6 @@ export class UserRepository {
         orderBy: { name: "asc" },
         include: {
           branch: { select: { id: true, name: true } },
-          createdBy: { select: { name: true } },
-          updatedBy: { select: { name: true } },
         },
       }),
       prisma.user.count({ where: { tenantId, branchId, role: "EMPLOYEE" } }),

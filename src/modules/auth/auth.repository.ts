@@ -80,8 +80,8 @@ export class AuthRepository {
         role: dto.role,
         tenant: { connect: { id: dto.tenantId } },
         branch: { connect: { id: dto.branchId } },
-        createdBy: { connect: { id: dto.createdById } },
-        updatedBy: { connect: { id: dto.createdById } },
+        createdById: dto.createdById, // 👈 substitui o antigo connect
+        updatedById: dto.createdById,
       },
       select: {
         id: true,

@@ -20,14 +20,15 @@ export class CreateSaleDto {
   @IsNotEmpty({ message: "O campo 'clientId' é obrigatório." })
   clientId!: number;
 
-  @IsString()
-  @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
-  branchId!: string;
+  // @IsString()
+  // @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
+  // branchId!: string;
 
   // 🔹 Nova relação opcional com Prescription
   @IsOptional()
   @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
   prescriptionId?: number;
+
 
   @IsOptional()
   @IsString()

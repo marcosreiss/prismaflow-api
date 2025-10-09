@@ -7,6 +7,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ============================================================
+// 🔹 MODELOS
+// ============================================================
+
 model Tenant {
   id                  String               @id @default(cuid())
   name                String
@@ -16,8 +20,6 @@ model Tenant {
   products            Product[]
   createdById         String?
   updatedById         String?
-  createdBy           User?                @relation("TenantCreatedBy", fields: [createdById], references: [id])
-  updatedBy           User?                @relation("TenantUpdatedBy", fields: [updatedById], references: [id])
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
   OpticalService      OpticalService[]
@@ -40,8 +42,6 @@ model Branch {
   users               User[]
   createdById         String?
   updatedById         String?
-  createdBy           User?                @relation("BranchCreatedBy", fields: [createdById], references: [id])
-  updatedBy           User?                @relation("BranchUpdatedBy", fields: [updatedById], references: [id])
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
   Product             Product[]
@@ -60,74 +60,32 @@ model Branch {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String
-  email    String  @unique
-  password String
-  role     Role
-  tenantId String
-  tenant   Tenant  @relation(fields: [tenantId], references: [id])
-  branchId String?
-  branch   Branch? @relation(fields: [branchId], references: [id])
-
-  // 🔹 Auditoria
+  id        String  @id @default(cuid())
+  name      String
+  email     String  @unique
+  password  String
+  role      Role
+  tenantId  String
+  tenant    Tenant  @relation(fields: [tenantId], references: [id])
+  branchId  String?
+  branch    Branch? @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdBy   User?   @relation("UserCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("UserUpdatedBy", fields: [updatedById], references: [id])
-
-  // 🔹 Relações inversas
-  tenantsCreated                 Tenant[]             @relation("TenantCreatedBy")
-  tenantsUpdated                 Tenant[]             @relation("TenantUpdatedBy")
-  branchesCreatedByMe            Branch[]             @relation("BranchCreatedBy")
-  branchesUpdatedByMe            Branch[]             @relation("BranchUpdatedBy")
-  usersCreatedByMe               User[]               @relation("UserCreatedBy")
-  usersUpdatedByMe               User[]               @relation("UserUpdatedBy")
-  brandsCreatedByMe              Brand[]              @relation("BrandCreatedBy")
-  brandsUpdatedByMe              Brand[]              @relation("BrandUpdatedBy")
-  productsCreatedByMe            Product[]            @relation("ProductCreatedBy")
-  productsUpdatedByMe            Product[]            @relation("ProductUpdatedBy")
-  servicesCreatedByMe            OpticalService[]     @relation("ServiceCreatedBy")
-  servicesUpdatedByMe            OpticalService[]     @relation("ServiceUpdatedBy")
-  clientsCreatedByMe             Client[]             @relation("ClientCreatedBy")
-  clientsUpdatedByMe             Client[]             @relation("ClientUpdatedBy")
-  prescriptionsCreatedByMe       Prescription[]       @relation("PrescriptionCreatedBy")
-  prescriptionsUpdatedByMe       Prescription[]       @relation("PrescriptionUpdatedBy")
-  salesCreatedByMe               Sale[]               @relation("SaleCreatedBy")
-  salesUpdatedByMe               Sale[]               @relation("SaleUpdatedBy")
-  protocolsCreatedByMe           Protocol[]           @relation("ProtocolCreatedBy")
-  protocolsUpdatedByMe           Protocol[]           @relation("ProtocolUpdatedBy")
-  itemProductsCreatedByMe        ItemProduct[]        @relation("ItemProductCreatedBy")
-  itemProductsUpdatedByMe        ItemProduct[]        @relation("ItemProductUpdatedBy")
-  frameDetailsCreatedByMe        FrameDetails[]       @relation("FrameDetailsCreatedBy")
-  frameDetailsUpdatedByMe        FrameDetails[]       @relation("FrameDetailsUpdatedBy")
-  itemOpticalServicesCreatedByMe ItemOpticalService[] @relation("ItemOpticalServiceCreatedBy")
-  itemOpticalServicesUpdatedByMe ItemOpticalService[] @relation("ItemOpticalServiceUpdatedBy")
-  paymentsCreatedByMe            Payment[]            @relation("PaymentCreatedBy")
-  paymentsUpdatedByMe            Payment[]            @relation("PaymentUpdatedBy")
-  paymentInstallmentsCreatedByMe PaymentInstallment[] @relation("PaymentInstallmentCreatedBy")
-  paymentInstallmentsUpdatedByMe PaymentInstallment[] @relation("PaymentInstallmentUpdatedBy")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Brand {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  isActive Boolean   @default(true)
-  tenantId String
-  tenant   Tenant    @relation(fields: [tenantId], references: [id])
-  products Product[]
-
-  // 🔹 Auditoria
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  isActive   Boolean   @default(true)
+  tenantId   String
+  tenant     Tenant    @relation(fields: [tenantId], references: [id])
+  products   Product[]
   createdById String?
   updatedById String?
-  createdBy   User?   @relation("BrandCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("BrandUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Product {
@@ -141,23 +99,17 @@ model Product {
   minimumStock  Int?            @default(0)
   category      ProductCategory
   isActive      Boolean         @default(true)
-
-  tenantId String
-  tenant   Tenant  @relation(fields: [tenantId], references: [id])
-  branchId String?
-  branch   Branch? @relation(fields: [branchId], references: [id])
-  brandId  Int?
-  brand    Brand?  @relation(fields: [brandId], references: [id])
-
-  // 🔹 Auditoria
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("ProductCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ProductUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  ItemProduct ItemProduct[]
+  tenantId      String
+  tenant        Tenant  @relation(fields: [tenantId], references: [id])
+  branchId      String?
+  branch        Branch? @relation(fields: [branchId], references: [id])
+  brandId       Int?
+  brand         Brand?  @relation(fields: [brandId], references: [id])
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  ItemProduct   ItemProduct[]
 }
 
 model OpticalService {
@@ -166,19 +118,14 @@ model OpticalService {
   description String?
   price       Float
   isActive    Boolean @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
+  tenantId    String
+  tenant      Tenant @relation(fields: [tenantId], references: [id])
+  branchId    String
+  branch      Branch @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdBy   User?   @relation("ServiceCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ServiceUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   ItemOpticalService ItemOpticalService[]
 }
 
@@ -212,129 +159,90 @@ model Client {
   reference02   String?
   reference03   String?
   isActive      Boolean   @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
+  tenantId      String
+  tenant        Tenant @relation(fields: [tenantId], references: [id])
+  branchId      String
+  branch        Branch @relation(fields: [branchId], references: [id])
   prescriptions Prescription[]
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("ClientCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ClientUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Sale      Sale[]
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Sale          Sale[]
 }
 
 model Prescription {
-  id Int @id @default(autoincrement())
-
-  clientId Int
-  client   Client @relation(fields: [clientId], references: [id])
-
-  prescriptionDate DateTime
-
-  doctorName String?
-  crm        String?
-
-  // Olho Direito (OD)
-  odSpherical   String?
-  odCylindrical String?
-  odAxis        String?
-  odDnp         String?
-
-  // Olho Esquerdo (OE)
-  oeSpherical   String?
-  oeCylindrical String?
-  oeAxis        String?
-  oeDnp         String?
-
-  // Valores independentes
-  additionRight      String?
-  additionLeft       String?
-  opticalCenterRight String?
-  opticalCenterLeft  String?
-
-  isActive Boolean @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("PrescriptionCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("PrescriptionUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // 🔹 Relação inversa (1:N)
-  sales Sale[]
+  id                   Int @id @default(autoincrement())
+  clientId             Int
+  client               Client @relation(fields: [clientId], references: [id])
+  prescriptionDate     DateTime
+  doctorName           String?
+  crm                  String?
+  odSpherical          String?
+  odCylindrical        String?
+  odAxis               String?
+  odDnp                String?
+  oeSpherical          String?
+  oeCylindrical        String?
+  oeAxis               String?
+  oeDnp                String?
+  additionRight        String?
+  additionLeft         String?
+  opticalCenterRight   String?
+  opticalCenterLeft    String?
+  isActive             Boolean @default(true)
+  tenantId             String
+  tenant               Tenant @relation(fields: [tenantId], references: [id])
+  branchId             String
+  branch               Branch @relation(fields: [branchId], references: [id])
+  createdById          String?
+  updatedById          String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  sales                Sale[]
 }
 
 model Sale {
-  id       Int    @id @default(autoincrement())
-  clientId Int
-  client   Client @relation(fields: [clientId], references: [id])
-
-  // 🔹 Nova coluna (opcional)
+  id             Int    @id @default(autoincrement())
+  clientId       Int
+  client         Client @relation(fields: [clientId], references: [id])
   prescriptionId Int?
   prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
-
-  // Relacionamentos existentes
-  protocol     Protocol?            @relation("SaleProtocol")
-  productItems ItemProduct[]
-  serviceItems ItemOpticalService[]
-  payment      Payment?             @relation("SalePayment")
-
-  subtotal Float?  @default(0)
-  discount Float?  @default(0)
-  total    Float?  @default(0)
-  notes    String?
-  isActive Boolean @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("SaleCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("SaleUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  protocol       Protocol? @relation("SaleProtocol")
+  productItems   ItemProduct[]
+  serviceItems   ItemOpticalService[]
+  payment        Payment? @relation("SalePayment")
+  subtotal       Float?  @default(0)
+  discount       Float?  @default(0)
+  total          Float?  @default(0)
+  notes          String?
+  isActive       Boolean @default(true)
+  tenantId       String
+  tenant         Tenant @relation(fields: [tenantId], references: [id])
+  branchId       String
+  branch         Branch @relation(fields: [branchId], references: [id])
+  createdById    String?
+  updatedById    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model ItemProduct {
-  id        Int     @id @default(autoincrement())
-  saleId    Int
-  sale      Sale    @relation(fields: [saleId], references: [id])
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  quantity     Int           @default(1)
-  frameDetails FrameDetails?
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("ItemProductCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ItemProductUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int     @id @default(autoincrement())
+  saleId        Int
+  sale          Sale    @relation(fields: [saleId], references: [id])
+  productId     Int
+  product       Product @relation(fields: [productId], references: [id])
+  quantity      Int     @default(1)
+  frameDetails  FrameDetails?
+  tenantId      String
+  tenant        Tenant @relation(fields: [tenantId], references: [id])
+  branchId      String
+  branch        Branch @relation(fields: [branchId], references: [id])
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model FrameDetails {
@@ -345,40 +253,30 @@ model FrameDetails {
   reference     String?
   color         String?
   isActive      Boolean           @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("FrameDetailsCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("FrameDetailsUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tenantId      String
+  tenant        Tenant @relation(fields: [tenantId], references: [id])
+  branchId      String
+  branch        Branch @relation(fields: [branchId], references: [id])
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model ItemOpticalService {
-  id        Int            @id @default(autoincrement())
-  saleId    Int
-  sale      Sale           @relation(fields: [saleId], references: [id])
-  serviceId Int
-  service   OpticalService @relation(fields: [serviceId], references: [id])
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
+  id          Int            @id @default(autoincrement())
+  saleId      Int
+  sale        Sale           @relation(fields: [saleId], references: [id])
+  serviceId   Int
+  service     OpticalService @relation(fields: [serviceId], references: [id])
+  tenantId    String
+  tenant      Tenant @relation(fields: [tenantId], references: [id])
+  branchId    String
+  branch      Branch @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdBy   User?   @relation("ItemOpticalServiceCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ItemOpticalServiceUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Payment {
@@ -396,24 +294,15 @@ model Payment {
   lastPaymentAt     DateTime?
   firstDueDate      DateTime?
   isActive          Boolean        @default(true)
-
-  // 🔹 Relacionamento com parcelas
-  installments PaymentInstallment[]
-
-  // 🔹 Multi-tenant / multi-branch
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  // 🔹 Auditoria
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("PaymentCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("PaymentUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  installments      PaymentInstallment[]
+  tenantId          String
+  tenant            Tenant @relation(fields: [tenantId], references: [id])
+  branchId          String
+  branch            Branch @relation(fields: [branchId], references: [id])
+  createdById       String?
+  updatedById       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Protocol {
@@ -425,19 +314,14 @@ model Protocol {
   page         Int?
   os           String?
   isActive     Boolean @default(true)
-
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  createdById String?
-  updatedById String?
-  createdBy   User?   @relation("ProtocolCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("ProtocolUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tenantId     String
+  tenant       Tenant @relation(fields: [tenantId], references: [id])
+  branchId     String
+  branch       Branch @relation(fields: [branchId], references: [id])
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model PaymentInstallment {
@@ -449,22 +333,19 @@ model PaymentInstallment {
   paidAmount Float     @default(0)
   paidAt     DateTime?
   isActive   Boolean   @default(true)
-
-  // 🔹 Multi-tenant / multi-branch
-  tenantId String
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
-  branchId String
-  branch   Branch @relation(fields: [branchId], references: [id])
-
-  // 🔹 Auditoria
+  tenantId   String
+  tenant     Tenant @relation(fields: [tenantId], references: [id])
+  branchId   String
+  branch     Branch @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdBy   User?   @relation("PaymentInstallmentCreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?   @relation("PaymentInstallmentUpdatedBy", fields: [updatedById], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
+
+// ============================================================
+// 🔹 ENUMS
+// ============================================================
 
 enum Role {
   ADMIN

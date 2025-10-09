@@ -8,9 +8,9 @@ import "dotenv/config";
 const prisma = new PrismaClient();
 
 // ====== IDs fixos (do usuário) ======
-const TENANT_ID = "cmgjqez320000rtn821sh7o45";
-const BRANCH_CENTRO_ID = "cmgjqez350001rtn87jojm8g1";
-const BRANCH_MAIOBAO_ID = "cmgjqlujb0004rtn845ak3dho";
+const TENANT_ID = "cmgjtmag60000rtu4554iz0fr";
+const BRANCH_CENTRO_ID = "cmgjtmag60001rtu422b81w6g";
+const BRANCH_MAIOBAO_ID = "cmgjtnt4i0004rtu4ywdn2tv5";
 
 // ====== Arquivo Excel ======
 const EXCEL_PATH = process.env.CLIENTS_XLSX_PATH || "clientes-oticareis.xlsx";

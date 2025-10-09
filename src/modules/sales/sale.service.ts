@@ -54,6 +54,7 @@ export class SaleService {
         discount: body.discount ?? 0,
         total: body.total,
         notes: body.notes,
+        isActive: true,
       },
       userId
     );
@@ -69,6 +70,7 @@ export class SaleService {
           book: body.protocol.book,
           page: body.protocol.page,
           os: body.protocol.os,
+          isActive: true,
         },
         userId
       );

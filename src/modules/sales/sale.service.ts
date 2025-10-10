@@ -259,8 +259,7 @@ export class SaleService {
       const payment = await prisma.payment.findFirst({
         where: { saleId: Number(id) },
       });
-      if (!payment)
-        throw new Error("Pagamento não encontrado para esta venda.");
+      if (!payment) throw new Error("Pagamento não encontrado para esta venda.");
       if (payment.status !== "PENDING" || (payment.paidAmount ?? 0) > 0)
         throw new Error("Venda não pode ser editada com pagamento iniciado.");
 
@@ -269,74 +268,288 @@ export class SaleService {
         if (!client) throw new Error("Cliente não encontrado.");
       }
 
-      const updatedSale = await this.saleRepo.update(
-        Number(id),
-        {
-          clientId: body.clientId ?? sale.clientId,
-          subtotal: body.subtotal ?? sale.subtotal,
-          discount: body.discount ?? sale.discount,
-          total: body.total ?? sale.total,
-          notes: body.notes ?? sale.notes,
-          isActive: body.isActive ?? sale.isActive,
-        },
-        userId
-      );
-      logger.info("✅ [SaleService] Venda atualizada", {
-        saleId: updatedSale.id,
-      });
-
-      if (body.protocol) {
-        logger.debug("📘 [SaleService] Atualizando ou criando protocolo", {
-          saleId: id,
-        });
-        const existingProtocol = await this.saleRepo.findProtocolBySale(
-          Number(id)
+      // 🔥 USAR TRANSAÇÃO PARA ATOMICIDADE
+      return await prisma.$transaction(async (tx) => {
+        // 1️⃣ Atualizar venda básica
+        const updatedSale = await this.saleRepo.update(
+          Number(id),
+          {
+            clientId: body.clientId ?? sale.clientId,
+            subtotal: body.subtotal ?? sale.subtotal ?? 0,
+            discount: body.discount ?? sale.discount ?? 0,
+            total: body.total ?? sale.total ?? 0,
+            notes: body.notes ?? sale.notes,
+            isActive: body.isActive ?? sale.isActive,
+          },
+          userId
         );
-        if (!existingProtocol) {
-          await this.saleRepo.createProtocol(
-            {
-              saleId: Number(id),
-              tenantId,
-              branchId,
-              recordNumber: body.protocol.recordNumber,
-              book: body.protocol.book,
-              page: body.protocol.page,
-              os: body.protocol.os,
-            },
-            userId
-          );
-        } else {
-          await this.saleRepo.updateProtocol(
-            existingProtocol.id,
-            {
-              recordNumber: body.protocol.recordNumber,
-              book: body.protocol.book,
-              page: body.protocol.page,
-              os: body.protocol.os,
-            },
-            userId
-          );
+
+        // 2️⃣ VALIDAÇÃO ANTECIPADA DOS NOVOS PRODUTOS
+        if (body.productItems !== undefined && body.productItems.length > 0) {
+          for (const item of body.productItems) {
+            // ✅ VALIDAR se quantity existe e é válida
+            const quantity = item.quantity ?? 1;
+            if (quantity < 1) {
+              throw new Error(`Quantidade deve ser pelo menos 1 para o produto ${item.productId}`);
+            }
+
+            const product = await tx.product.findFirst({
+              where: { id: item.productId, tenantId }
+            });
+            if (!product) {
+              throw new Error(`Produto ${item.productId} não encontrado`);
+            }
+          }
         }
-      }
 
-      await prisma.payment.update({
-        where: { saleId: Number(id) },
-        data: withAuditData(
-          userId,
-          { total: Number(body.total ?? sale.total) },
-          true
-        ),
-      });
+        // 3️⃣ ATUALIZAR ITENS DE PRODUTO (ESTOQUE INTELIGENTE)
+        if (body.productItems !== undefined) {
+          logger.debug("📦 [SaleService] Atualizando itens de produto", {
+            count: body.productItems.length,
+          });
 
-      const result = await this.saleRepo.findById(Number(id), tenantId);
-      logger.info("✅ [SaleService] Venda atualizada com sucesso", {
-        saleId: id,
+          // Buscar itens antigos
+          const oldProductItems = await this.saleRepo.findProductItemsBySale(Number(id));
+          const newProductIds = body.productItems.map(item => item.productId);
+
+          // 🔄 RESTAURAR estoque APENAS dos itens que SERÃO REMOVIDOS
+          for (const oldItem of oldProductItems) {
+            // Se o produto NÃO está na nova lista, restaura estoque
+            if (!newProductIds.includes(oldItem.productId)) {
+              await tx.product.update({
+                where: { id: oldItem.productId },
+                data: {
+                  stockQuantity: { increment: oldItem.quantity },
+                  updatedById: userId
+                }
+              });
+              logger.debug("📥 [SaleService] Estoque restaurado para produto removido", {
+                productId: oldItem.productId,
+                quantity: oldItem.quantity
+              });
+            }
+          }
+
+          // 🗑️ REMOVER todos os itens antigos (incluindo frameDetails)
+          await tx.frameDetails.deleteMany({
+            where: { itemProduct: { saleId: Number(id) } }
+          });
+          await tx.itemProduct.deleteMany({
+            where: { saleId: Number(id) }
+          });
+
+          // ➕ CRIAR novos itens com GESTÃO INTELIGENTE DE ESTOQUE
+          if (body.productItems.length > 0) {
+            for (const item of body.productItems) {
+              const product = await tx.product.findFirst({
+                where: { id: item.productId, tenantId }
+              });
+              if (!product) throw new Error(`Produto ${item.productId} não encontrado`);
+
+              // ✅ GARANTIR que quantity existe
+              const quantity = item.quantity ?? 1;
+
+              // 🔍 IDENTIFICAR se é item NOVO ou EXISTENTE
+              const oldItem = oldProductItems.find(old => old.productId === item.productId);
+              const isNewItem = !oldItem;
+              const isModifiedItem = oldItem && oldItem.quantity !== quantity;
+
+              // 📊 CALCULAR ajuste de estoque necessário
+              if (isNewItem) {
+                // NOVO PRODUTO: Baixar estoque completo
+                if ((product.stockQuantity ?? 0) < quantity) {
+                  throw new Error(`Estoque insuficiente para ${product.name}. Disponível: ${product.stockQuantity}, Necessário: ${quantity}`);
+                }
+
+                await tx.product.update({
+                  where: { id: product.id },
+                  data: {
+                    stockQuantity: { decrement: quantity },
+                    updatedById: userId
+                  }
+                });
+                logger.debug("🆕 [SaleService] Estoque baixado para novo produto", {
+                  productId: product.id,
+                  quantity: quantity
+                });
+
+              } else if (isModifiedItem) {
+                // PRODUTO EXISTENTE COM QUANTIDADE MODIFICADA
+                const quantityDifference = quantity - oldItem.quantity;
+
+                if (quantityDifference > 0) {
+                  // AUMENTOU quantidade: baixar estoque adicional
+                  if ((product.stockQuantity ?? 0) < quantityDifference) {
+                    throw new Error(`Estoque insuficiente para aumentar quantidade de ${product.name}. Disponível: ${product.stockQuantity}, Necessário adicional: ${quantityDifference}`);
+                  }
+
+                  await tx.product.update({
+                    where: { id: product.id },
+                    data: {
+                      stockQuantity: { decrement: quantityDifference },
+                      updatedById: userId
+                    }
+                  });
+                  logger.debug("📈 [SaleService] Estoque baixado para quantidade aumentada", {
+                    productId: product.id,
+                    quantity: quantityDifference
+                  });
+
+                } else if (quantityDifference < 0) {
+                  // DIMINUIU quantidade: restaurar estoque
+                  const quantityToRestore = Math.abs(quantityDifference);
+                  await tx.product.update({
+                    where: { id: product.id },
+                    data: {
+                      stockQuantity: { increment: quantityToRestore },
+                      updatedById: userId
+                    }
+                  });
+                  logger.debug("📉 [SaleService] Estoque restaurado para quantidade reduzida", {
+                    productId: product.id,
+                    quantity: quantityToRestore
+                  });
+                }
+              }
+
+              // 🆕 CRIAR item de produto
+              const itemProduct = await tx.itemProduct.create({
+                data: {
+                  saleId: Number(id),
+                  productId: item.productId,
+                  quantity: quantity,
+                  tenantId,
+                  branchId,
+                  createdById: userId,
+                  updatedById: userId,
+                },
+              });
+
+              // 🖼️ Frame details se necessário
+              if (product.category === "FRAME" && item.frameDetails) {
+                await tx.frameDetails.create({
+                  data: {
+                    itemProductId: itemProduct.id,
+                    material: item.frameDetails.material,
+                    reference: item.frameDetails.reference,
+                    color: item.frameDetails.color,
+                    tenantId,
+                    branchId,
+                    createdById: userId,
+                    updatedById: userId,
+                  },
+                });
+              }
+            }
+          }
+        }
+
+        // 4️⃣ ATUALIZAR ITENS DE SERVIÇO
+        if (body.serviceItems !== undefined) {
+          logger.debug("🧰 [SaleService] Atualizando itens de serviço", {
+            count: body.serviceItems.length,
+          });
+
+          // VALIDAR serviços antes de remover
+          if (body.serviceItems.length > 0) {
+            for (const item of body.serviceItems) {
+              const service = await tx.opticalService.findFirst({
+                where: { id: item.serviceId, tenantId }
+              });
+              if (!service) throw new Error(`Serviço ${item.serviceId} não encontrado`);
+            }
+          }
+
+          // 🗑️ REMOVER itens antigos
+          await tx.itemOpticalService.deleteMany({
+            where: { saleId: Number(id) }
+          });
+
+          // ➕ CRIAR novos itens
+          if (body.serviceItems.length > 0) {
+            for (const item of body.serviceItems) {
+              await tx.itemOpticalService.create({
+                data: {
+                  saleId: Number(id),
+                  serviceId: item.serviceId,
+                  tenantId,
+                  branchId,
+                  createdById: userId,
+                  updatedById: userId,
+                },
+              });
+            }
+            logger.debug("✅ [SaleService] Itens de serviço criados", {
+              count: body.serviceItems.length
+            });
+          }
+        }
+
+        // 5️⃣ ATUALIZAR PROTOCOLO
+        if (body.protocol) {
+          logger.debug("📘 [SaleService] Atualizando ou criando protocolo", {
+            saleId: id,
+          });
+          const existingProtocol = await this.saleRepo.findProtocolBySale(Number(id));
+          if (!existingProtocol) {
+            await this.saleRepo.createProtocol(
+              {
+                saleId: Number(id),
+                tenantId,
+                branchId,
+                recordNumber: body.protocol.recordNumber,
+                book: body.protocol.book,
+                page: body.protocol.page,
+                os: body.protocol.os,
+              },
+              userId
+            );
+          } else {
+            await this.saleRepo.updateProtocol(
+              existingProtocol.id,
+              {
+                recordNumber: body.protocol.recordNumber,
+                book: body.protocol.book,
+                page: body.protocol.page,
+                os: body.protocol.os,
+              },
+              userId
+            );
+          }
+        }
+
+        // 6️⃣ ATUALIZAR PAGAMENTO (CORRIGIDO)
+        await tx.payment.update({
+          where: { saleId: Number(id) },
+          data: {
+            total: Number(body.total ?? sale.total ?? 0),
+            discount: body.discount ?? sale.discount ?? 0, // ← CORREÇÃO
+            updatedById: userId,
+            updatedAt: new Date()
+          },
+        });
+
+        // 7️⃣ BUSCAR VENDA ATUALIZADA (CORRIGIDO)
+        const result = await this.saleRepo.findById(Number(id), tenantId);
+
+        // ✅ VALIDAR que result não é null
+        if (!result) {
+          throw new Error("Venda não encontrada após atualização");
+        }
+
+        logger.info("✅ [SaleService] Venda atualizada com sucesso", {
+          saleId: id,
+          productItemsCount: result.productItems.length,
+          serviceItemsCount: result.serviceItems.length
+        });
+
+        return ApiResponse.success("Venda atualizada com sucesso.", req, result);
       });
-      return ApiResponse.success("Venda atualizada com sucesso.", req, result);
     } catch (error: any) {
       logger.error("❌ [SaleService] Erro ao atualizar venda", {
         message: error.message,
         stack: error.stack,
+        saleId: id
       });
       throw error;
     }

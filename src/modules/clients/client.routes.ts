@@ -8,6 +8,7 @@ import {
   getClientById,
   listClients,
   selectClients,
+  listBirthdays,
 } from "./client.controller";
 import { getPrescriptionsByClientId } from "../prescriptions/prescription.controller";
 import { CreateClientDto, UpdateClientDto } from "./client.dto";
@@ -42,6 +43,14 @@ clientRoutes.get(
   "/:clientId/prescriptions",
   authGuard,
   getPrescriptionsByClientId
+);
+
+// 🔹 ROTA DE ANIVERSARIANTES — precisa vir ANTES de /:id
+clientRoutes.get(
+  "/birthdays",
+  authGuard,
+  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
+  listBirthdays
 );
 
 clientRoutes.get(

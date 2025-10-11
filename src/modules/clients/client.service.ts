@@ -110,4 +110,29 @@ export class ClientService {
       clients
     );
   }
+
+  async listBirthdays(req: Request) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+    const branchId = user.branchId;
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const { items, total } = await this.repo.findBirthdays(
+      tenantId,
+      branchId,
+      page,
+      limit
+    );
+
+    return new PagedResponse(
+      "Aniversariantes listados com sucesso.",
+      req,
+      items,
+      page,
+      limit,
+      total
+    );
+  }
 }

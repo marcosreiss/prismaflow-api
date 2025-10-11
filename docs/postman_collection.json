@@ -524,7 +524,7 @@
                             "response": []
                         },
                         {
-                            "name": "Listar clientes (com paginação e busca por nome)",
+                            "name": "Listar clientes",
                             "request": {
                                 "method": "GET",
                                 "header": [
@@ -548,6 +548,20 @@
                                     }
                                 ],
                                 "url": "{{baseUrl}}/clients/select?name=Maria"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Listar aniversariantes do dia",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/clients/birthdays?page=1&limit=10"
                             },
                             "response": []
                         }

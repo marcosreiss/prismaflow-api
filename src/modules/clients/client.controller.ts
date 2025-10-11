@@ -69,3 +69,16 @@ export const selectClients = async (
     next(err);
   }
 };
+
+export const listBirthdays = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await service.listBirthdays(req);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};

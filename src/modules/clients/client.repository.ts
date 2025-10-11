@@ -102,4 +102,47 @@ export class ClientRepository {
       orderBy: { name: "asc" },
     });
   }
+
+  async findBirthdays(
+    tenantId: string,
+    branchId?: string,
+    page = 1,
+    limit = 10
+  ) {
+    const skip = (page - 1) * limit;
+
+    // Data atual no fuso do Brasil
+    const now = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+    );
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+
+    // 🔹 where bem definido, sem undefined
+    const where: Record<string, any> = {
+      tenantId,
+    };
+    if (branchId) where.branchId = branchId;
+    where.bornDate = { not: null };
+
+    // 🔹 busca pura — sem middlewares disparando findFirst inválido
+    const clients = await prisma.client.findMany({
+      where,
+      orderBy: { name: "asc" },
+      skip,
+      take: limit,
+    });
+
+    // 🔹 filtro por mês/dia
+    const filtered = clients.filter((c) => {
+      if (!c.bornDate) return false;
+      const d = new Date(c.bornDate);
+      return d.getMonth() + 1 === month && d.getDate() === day;
+    });
+
+    return {
+      items: filtered,
+      total: filtered.length,
+    };
+  }
 }

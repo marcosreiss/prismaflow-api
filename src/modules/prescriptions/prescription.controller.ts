@@ -57,9 +57,6 @@ export const listPrescriptions = async (
   }
 };
 
-/**
- * Lista prescrições de um cliente (paginado)
- */
 export const getPrescriptionsByClientId = async (
   req: Request,
   res: Response,
@@ -71,6 +68,19 @@ export const getPrescriptionsByClientId = async (
     const limit = Number(req.query.limit) || 10;
 
     const result = await service.getByClientId(req, clientId, page, limit);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const listExpiringPrescriptions = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await service.listExpiringPrescriptions(req);
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

@@ -62,6 +62,7 @@ export class SaleService {
           clientId: body.clientId,
           tenantId,
           branchId,
+          prescriptionId: body.prescriptionId,
           subtotal: body.subtotal,
           discount: body.discount ?? 0,
           total: body.total,
@@ -224,6 +225,7 @@ export class SaleService {
       return ApiResponse.success("Venda criada com sucesso.", req, {
         saleId: sale.id,
         clientId: sale.clientId,
+        precripitonId: sale.prescriptionId,
         subtotal: sale.subtotal,
         discount: sale.discount,
         total: sale.total,

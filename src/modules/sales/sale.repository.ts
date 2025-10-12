@@ -2,11 +2,18 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class SaleRepository {
   async create(data: any, userId?: string) {
+    console.log('🔍 Dados recebidos no SaleRepository.create:', {
+      prescriptionId: data.prescriptionId,
+      clientId: data.clientId,
+      hasProductItems: !!data.productItems,
+      hasServiceItems: !!data.serviceItems
+    });
     return prisma.sale.create({
       data: withAuditData(userId, data),
       include: {
         client: { select: { id: true, name: true } },
         protocol: true,
+        prescription: data.prescriptionId,
         productItems: {
           include: {
             product: { select: { id: true, name: true } },

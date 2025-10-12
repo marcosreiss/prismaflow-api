@@ -126,7 +126,7 @@ export class ClientRepository {
       const brazilNow = new Date(
         nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
       );
-      const day = brazilNow.getDate();
+      const day = brazilNow.getDate() + 1;
       const month = brazilNow.getMonth() + 1;
 
       logger.debug("🕐 [ClientRepository] Datas de referência", {

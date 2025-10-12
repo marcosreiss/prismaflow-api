@@ -34,6 +34,13 @@ prescriptionRoutes.put(
 );
 
 prescriptionRoutes.get(
+  "/expired",
+  authGuard,
+  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
+  listExpiringPrescriptions
+);
+
+prescriptionRoutes.get(
   "/:id",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
@@ -45,11 +52,4 @@ prescriptionRoutes.get(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   listPrescriptions
-);
-
-prescriptionRoutes.get(
-  "/expired",
-  authGuard,
-  requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listExpiringPrescriptions
 );

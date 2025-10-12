@@ -110,7 +110,7 @@ export class PrescriptionRepository {
     limit = 10,
     targetDate?: string // ← opcional (ISO)
   ) {
-    logger.debug("🟦 [PrescriptionRepository] Buscando receitas vencidas", {
+    logger.debug("\n \n \n \n🟦 [PrescriptionRepository] Buscando receitas vencidas", {
       tenantId,
       branchId,
       page,
@@ -136,16 +136,16 @@ export class PrescriptionRepository {
       const expirationLimit = new Date(referenceDate);
       expirationLimit.setFullYear(expirationLimit.getFullYear() - 1);
 
-      const day = expirationLimit.getDate();
-      const month = expirationLimit.getMonth() + 1;
+      // 🧭 Formata YYYY-MM-DD com padding
       const year = expirationLimit.getFullYear();
+      const month = String(expirationLimit.getMonth() + 1).padStart(2, "0");
+      const day = String(expirationLimit.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
 
       logger.debug("🕐 [PrescriptionRepository] Data referência calculada", {
         referenceDate: referenceDate.toISOString(),
         expirationLimit: expirationLimit.toISOString(),
-        day,
-        month,
-        year,
+        formattedDate,
       });
 
       // 🔢 Filtro opcional de filial
@@ -153,14 +153,14 @@ export class PrescriptionRepository {
         ? Prisma.sql`AND p.branchId = ${branchId}`
         : Prisma.empty;
 
-      // 📊 COUNT total
+      // 🧮 Consulta COUNT total
       const totalRows = await prisma.$queryRaw<{ total: bigint }[]>(Prisma.sql`
       SELECT COUNT(*) AS total
       FROM Prescription p
       WHERE p.tenantId = ${tenantId}
         ${branchFilter}
         AND p.isActive = true
-        AND DATE(p.prescriptionDate) = ${Prisma.sql`${year}-${month}-${day}`}
+        AND DATE(CONVERT_TZ(p.prescriptionDate, '+00:00', '-03:00')) = ${formattedDate}
     `);
 
       const total =
@@ -169,10 +169,13 @@ export class PrescriptionRepository {
           : 0;
 
       if (total === 0) {
+        logger.debug("⚪ Nenhuma receita encontrada para a data", {
+          formattedDate,
+        });
         return { items: [], total: 0, page, limit };
       }
 
-      // 📄 Lista paginada
+      // 📋 Lista paginada
       const items = await prisma.$queryRaw<any[]>(Prisma.sql`
       SELECT 
         c.id AS clientId,
@@ -187,14 +190,15 @@ export class PrescriptionRepository {
       WHERE p.tenantId = ${tenantId}
         ${branchFilter}
         AND p.isActive = true
-        AND DATE(p.prescriptionDate) = ${Prisma.sql`${year}-${month}-${day}`}
+        AND DATE(CONVERT_TZ(p.prescriptionDate, '+00:00', '-03:00')) = ${formattedDate}
       ORDER BY c.name ASC
       LIMIT ${limit} OFFSET ${skip}
     `);
 
       logger.debug("✅ [PrescriptionRepository] Consulta concluída", {
-        returned: items.length,
         total,
+        returned: items.length,
+        formattedDate,
       });
 
       return { items, total, page, limit };

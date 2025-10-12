@@ -119,15 +119,21 @@ export class ClientService {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
+    // 🗓️ Nova query param opcional: date=YYYY-MM-DD ou ISO
+    const targetDate = req.query.date ? String(req.query.date) : undefined;
+
     const { items, total } = await this.repo.findBirthdays(
       tenantId,
       branchId,
       page,
-      limit
+      limit,
+      targetDate // ← repassa a data
     );
 
     return new PagedResponse(
-      "Aniversariantes listados com sucesso.",
+      `Aniversariantes listados com sucesso${
+        targetDate ? ` para ${targetDate}` : ""
+      }.`,
       req,
       items,
       page,

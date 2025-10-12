@@ -45,7 +45,6 @@ clientRoutes.get(
   getPrescriptionsByClientId
 );
 
-// 🔹 ROTA DE ANIVERSARIANTES — precisa vir ANTES de /:id
 clientRoutes.get(
   "/birthdays",
   authGuard,

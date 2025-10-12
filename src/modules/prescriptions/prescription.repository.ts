@@ -108,9 +108,9 @@ export class PrescriptionRepository {
     branchId?: string,
     page = 1,
     limit = 10,
-    targetDate?: string // ← opcional (ISO)
+    targetDate?: string
   ) {
-    logger.debug("\n \n \n \n🟦 [PrescriptionRepository] Buscando receitas vencidas", {
+    logger.debug("🟦 [PrescriptionRepository] Buscando receitas vencidas", {
       tenantId,
       branchId,
       page,
@@ -121,26 +121,21 @@ export class PrescriptionRepository {
     try {
       const skip = (page - 1) * limit;
 
-      // 📅 Define a data-base: atual (Brasil) ou informada
-      let referenceDate: Date;
-      if (targetDate) {
-        referenceDate = new Date(targetDate);
-      } else {
-        const nowUtc = new Date();
-        referenceDate = new Date(
-          nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-        );
-      }
+      // 📅 Define data de referência
+      const referenceDate = targetDate
+        ? new Date(targetDate)
+        : new Date(
+            new Date().toLocaleString("en-US", {
+              timeZone: "America/Sao_Paulo",
+            })
+          );
 
-      // 🔢 Data limite: exatamente 1 ano antes
+      // 📆 Um ano antes
       const expirationLimit = new Date(referenceDate);
       expirationLimit.setFullYear(expirationLimit.getFullYear() - 1);
 
-      // 🧭 Formata YYYY-MM-DD com padding
-      const year = expirationLimit.getFullYear();
-      const month = String(expirationLimit.getMonth() + 1).padStart(2, "0");
-      const day = String(expirationLimit.getDate()).padStart(2, "0");
-      const formattedDate = `${year}-${month}-${day}`;
+      // 📅 Formata YYYY-MM-DD
+      const formattedDate = expirationLimit.toISOString().split("T")[0];
 
       logger.debug("🕐 [PrescriptionRepository] Data referência calculada", {
         referenceDate: referenceDate.toISOString(),
@@ -148,25 +143,21 @@ export class PrescriptionRepository {
         formattedDate,
       });
 
-      // 🔢 Filtro opcional de filial
       const branchFilter = branchId
         ? Prisma.sql`AND p.branchId = ${branchId}`
         : Prisma.empty;
 
-      // 🧮 Consulta COUNT total
+      // 🔢 COUNT total
       const totalRows = await prisma.$queryRaw<{ total: bigint }[]>(Prisma.sql`
       SELECT COUNT(*) AS total
       FROM Prescription p
       WHERE p.tenantId = ${tenantId}
         ${branchFilter}
         AND p.isActive = true
-        AND DATE(CONVERT_TZ(p.prescriptionDate, '+00:00', '-03:00')) = ${formattedDate}
+        AND DATE(p.prescriptionDate) = ${formattedDate}
     `);
 
-      const total =
-        Array.isArray(totalRows) && totalRows[0]
-          ? Number(totalRows[0].total)
-          : 0;
+      const total = totalRows?.[0] ? Number(totalRows[0].total) : 0;
 
       if (total === 0) {
         logger.debug("⚪ Nenhuma receita encontrada para a data", {
@@ -175,30 +166,27 @@ export class PrescriptionRepository {
         return { items: [], total: 0, page, limit };
       }
 
-      // 📋 Lista paginada
+      // 🧾 Lista completa
       const items = await prisma.$queryRaw<any[]>(Prisma.sql`
       SELECT 
+        p.*,
         c.id AS clientId,
         c.name AS clientName,
-        c.phone01,
-        p.id AS prescriptionId,
-        p.prescriptionDate,
-        p.doctorName,
-        p.crm
+        c.phone01
       FROM Prescription p
       INNER JOIN Client c ON c.id = p.clientId
       WHERE p.tenantId = ${tenantId}
         ${branchFilter}
         AND p.isActive = true
-        AND DATE(CONVERT_TZ(p.prescriptionDate, '+00:00', '-03:00')) = ${formattedDate}
+        AND DATE(p.prescriptionDate) = ${formattedDate}
       ORDER BY c.name ASC
       LIMIT ${limit} OFFSET ${skip}
     `);
 
       logger.debug("✅ [PrescriptionRepository] Consulta concluída", {
+        formattedDate,
         total,
         returned: items.length,
-        formattedDate,
       });
 
       return { items, total, page, limit };

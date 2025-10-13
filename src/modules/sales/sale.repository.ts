@@ -135,6 +135,27 @@ export class SaleRepository {
             },
           },
         },
+        prescription: {
+          select: {
+            id: true,
+            prescriptionDate: true,
+            doctorName: true,
+            crm: true,
+            odSpherical: true,
+            odCylindrical: true,
+            odAxis: true,
+            odDnp: true,
+            oeSpherical: true,
+            oeCylindrical: true,
+            oeAxis: true,
+            oeDnp: true,
+            additionRight: true,
+            additionLeft: true,
+            opticalCenterRight: true,
+            opticalCenterLeft: true,
+            isActive: true,
+          }
+        }
       },
     });
   }

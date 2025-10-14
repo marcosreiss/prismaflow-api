@@ -9,6 +9,7 @@ import {
   getPrescriptionById,
   listPrescriptions,
   listExpiringPrescriptions,
+  deletePrescription,
 } from "./prescription.controller";
 import {
   CreatePrescriptionDto,
@@ -45,6 +46,13 @@ prescriptionRoutes.get(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   getPrescriptionById
+);
+
+prescriptionRoutes.delete(
+  "/:id",
+  authGuard,
+  requireRoles("ADMIN", "MANAGER"),
+  deletePrescription
 );
 
 prescriptionRoutes.get(

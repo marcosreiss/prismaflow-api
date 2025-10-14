@@ -86,3 +86,18 @@ export const listExpiringPrescriptions = async (
     next(err);
   }
 };
+
+export const deletePrescription = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await service.delete(req, id);
+    res.status(result.status).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+ 

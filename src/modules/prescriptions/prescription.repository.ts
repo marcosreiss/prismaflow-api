@@ -201,4 +201,38 @@ export class PrescriptionRepository {
       throw error;
     }
   }
+
+  async delete(prescriptionId: number, tenantId: string, userId?: string) {
+    try {
+      const existing = await prisma.prescription.findFirst({
+        where: { id: prescriptionId, tenantId },
+      });
+
+      if (!existing) {
+        throw new Error(
+          "Receita não encontrada ou não pertence ao tenant informado."
+        );
+      }
+
+      await prisma.prescription.delete({
+        where: { id: prescriptionId },
+      });
+
+      logger.info("🗑️ [PrescriptionRepository] Receita deletada com sucesso", {
+        prescriptionId,
+        tenantId,
+        userId,
+      });
+
+      return { success: true, message: "Receita deletada com sucesso." };
+    } catch (error: any) {
+      logger.error("❌ [PrescriptionRepository] Erro ao deletar receita", {
+        prescriptionId,
+        tenantId,
+        message: error?.message,
+        stack: error?.stack,
+      });
+      throw error;
+    }
+  }
 }

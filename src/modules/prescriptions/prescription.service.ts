@@ -159,4 +159,22 @@ export class PrescriptionService {
       total
     );
   }
+
+  // =========================================================
+  // 🔹 DELETE
+  // =========================================================
+  async delete(req: Request, prescriptionId: number) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+    const userId = user.sub;
+
+    const existing = await this.repo.findById(prescriptionId, tenantId);
+    if (!existing) {
+      return ApiResponse.error("Receita não encontrada.", 404, req);
+    }
+
+    await this.repo.delete(prescriptionId, tenantId, userId);
+
+    return ApiResponse.success("Receita deletada com sucesso.", req);
+  }
 }

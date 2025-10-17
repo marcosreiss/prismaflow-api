@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, Min } from "class-validator";
+import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { PaymentMethod, PaymentStatus } from "@prisma/client";
 
@@ -117,4 +117,14 @@ export class UpdatePaymentDto {
 
   @IsOptional()
   isActive?: boolean;
+}
+
+// payment.dto.ts - Adicione este DTO
+export class UpdatePaymentStatusDto {
+  @IsEnum(PaymentStatus)
+  status!: PaymentStatus;
+
+  @IsOptional()
+  @IsString()
+  reason?: string; // Para justificativa de cancelamento
 }

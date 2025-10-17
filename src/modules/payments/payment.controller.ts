@@ -92,3 +92,16 @@ export async function deletePayment(req: Request, res: Response) {
       });
   }
 }
+
+// payment.controller.ts - Adicione esta função
+export async function updatePaymentStatus(req: Request, res: Response) {
+  try {
+    const result = await service.updateStatus(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao atualizar status do pagamento.",
+    });
+  }
+}

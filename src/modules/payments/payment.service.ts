@@ -56,13 +56,13 @@ export class PaymentService {
       ...payment,
       sale: sale
         ? {
-            id: sale.id,
-            subtotal: sale.subtotal,
-            discount: sale.discount,
-            total: sale.total,
-            notes: sale.notes,
-            clientName: sale.client?.name,
-          }
+          id: sale.id,
+          subtotal: sale.subtotal,
+          discount: sale.discount,
+          total: sale.total,
+          notes: sale.notes,
+          clientName: sale.client?.name,
+        }
         : null,
     };
 
@@ -171,4 +171,55 @@ export class PaymentService {
 
     return ApiResponse.success("Pagamento removido com sucesso.", req);
   }
+
+  // PaymentService - Adicione este método
+  async updateStatus(req: Request) {
+    const user = req.user!;
+    const { id } = req.params;
+    const { status, reason } = req.body;
+    const userId = user.sub;
+
+    const existing = await this.repo.findById(Number(id));
+    if (!existing) {
+      return ApiResponse.error("Pagamento não encontrado.", 404, req);
+    }
+
+    // 🔐 Validações de regra de negócio
+    if (existing.status === PaymentStatus.CONFIRMED && status === PaymentStatus.PENDING) {
+      return ApiResponse.error(
+        "Não é possível reabrir um pagamento já confirmado.",
+        400,
+        req
+      );
+    }
+
+    if (existing.status === PaymentStatus.CANCELED && status !== PaymentStatus.CANCELED) {
+      return ApiResponse.error(
+        "Não é possível modificar um pagamento cancelado.",
+        400,
+        req
+      );
+    }
+
+    // 📝 Se for cancelamento, registrar motivo
+    const updateData: any = { status };
+    if (status === PaymentStatus.CANCELED && reason) {
+      updateData.cancelReason = reason;
+    }
+
+    // Se for confirmação, atualizar paidAmount
+    if (status === PaymentStatus.CONFIRMED) {
+      updateData.paidAmount = existing.total - (existing.discount || 0);
+      updateData.lastPaymentAt = new Date();
+    }
+
+    const updated = await this.repo.update(Number(id), updateData, userId);
+
+    return ApiResponse.success(
+      "Status do pagamento atualizado com sucesso.",
+      req,
+      updated
+    );
+  }
 }
+

@@ -160,7 +160,6 @@ export class SaleRepository {
     });
   }
 
-
   async findAllByTenant(
     tenantId: string,
     page: number,

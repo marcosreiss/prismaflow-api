@@ -10,7 +10,7 @@ import {
   deletePayment,
   updatePaymentStatus,
 } from "./payment.controller";
-import { CreatePaymentDto, UpdatePaymentDto } from "./dtos/payment.dto";
+import { CreatePaymentDto, UpdatePaymentDto, UpdatePaymentStatusDto } from "./dtos/payment.dto";
 
 export const paymentRoutes = Router();
 
@@ -42,8 +42,6 @@ paymentRoutes.put(
 // 🔹 Excluir pagamento
 paymentRoutes.delete("/:id", authGuard, deletePayment);
 
-// payment.routes.ts - Adicione esta rota
-import { UpdatePaymentStatusDto } from "./dtos/payment.dto";
 
 // 🔹 Atualizar status do pagamento (rota específica)
 paymentRoutes.patch(

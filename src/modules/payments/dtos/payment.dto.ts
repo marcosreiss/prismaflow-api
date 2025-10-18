@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
+import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Max, Min } from "class-validator";
 import { Type } from "class-transformer";
 import { PaymentMethod, PaymentStatus } from "@prisma/client";
 
@@ -127,4 +127,45 @@ export class UpdatePaymentStatusDto {
   @IsOptional()
   @IsString()
   reason?: string; // Para justificativa de cancelamento
+}
+
+// payment.dto.ts - Adicione este DTO
+export class PaymentFilterDto {
+  @IsOptional()
+  @IsEnum(PaymentStatus)
+  status?: PaymentStatus;
+
+  @IsOptional()
+  @IsEnum(PaymentMethod)
+  method?: PaymentMethod; // ✅ Novo filtro
+
+  @IsOptional()
+  @Type(() => Date)
+  startDate?: Date; // ✅ Data de início
+
+  @IsOptional()
+  @Type(() => Date)
+  endDate?: Date; // ✅ Data de fim
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  page?: number = 1;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  limit?: number = 10;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  clientId?: number; // ✅ Filtro por ID do cliente
+
+  @IsOptional()
+  @IsString()
+  clientName?: string; // ✅ Filtro por nome do cliente
 }

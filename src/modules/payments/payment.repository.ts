@@ -45,11 +45,36 @@ export class PaymentRepository {
     tenantId: string,
     page: number,
     limit: number,
-    status?: string
+    filters?: {
+      status?: string;
+      method?: string;
+      startDate?: Date;
+      endDate?: Date;
+      clientId?: number;
+      clientName?: string;
+    }
   ) {
     const skip = (page - 1) * limit;
     const where: any = { tenantId };
-    if (status) where.status = status;
+
+    // ✅ Filtros existentes
+    if (filters?.status) where.status = filters.status;
+    if (filters?.method) where.method = filters.method;
+    if (filters?.startDate || filters?.endDate) {
+      where.createdAt = {};
+      if (filters.startDate) where.createdAt.gte = filters.startDate;
+      if (filters.endDate) where.createdAt.lte = filters.endDate;
+    }
+
+    // ✅ NOVOS FILTROS POR CLIENTE
+    if (filters?.clientId || filters?.clientName) {
+      where.sale = {
+        client: {}
+      };
+
+      if (filters.clientId) where.sale.client.id = filters.clientId;
+      if (filters.clientName) where.sale.client.name = { contains: filters.clientName, mode: 'insensitive' };
+    }
 
     const [items, total] = await Promise.all([
       prisma.payment.findMany({
@@ -58,7 +83,14 @@ export class PaymentRepository {
         take: limit,
         orderBy: { createdAt: "desc" },
         include: {
-          sale: { select: { id: true, clientId: true, total: true } },
+          sale: {
+            select: {
+              id: true,
+              clientId: true,
+              total: true,
+              client: { select: { id: true, name: true } } // ✅ Incluir dados do cliente
+            }
+          },
           installments: true,
         },
       }),

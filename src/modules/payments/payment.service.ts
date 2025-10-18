@@ -11,16 +11,25 @@ export class PaymentService {
   // ======================================================
   // LISTAR PAGAMENTOS (Paginado + Filtro por status)
   // ======================================================
+  // payment.service.ts - Modifique o método findAll
+  // payment.service.ts - Modifique o método findAll
   async findAll(req: Request) {
     const user = req.user!;
     const { tenantId } = user;
-    const { page = 1, limit = 10, status } = req.query;
+    const { page = 1, limit = 10, status, method, startDate, endDate, clientId, clientName } = req.query;
 
     const { items, total } = await this.repo.findAllByTenant(
       tenantId,
       Number(page),
       Number(limit),
-      status ? String(status) : undefined
+      {
+        status: status ? String(status) : undefined,
+        method: method ? String(method) : undefined,
+        startDate: startDate ? new Date(String(startDate)) : undefined,
+        endDate: endDate ? new Date(String(endDate)) : undefined,
+        clientId: clientId ? Number(clientId) : undefined,
+        clientName: clientName ? String(clientName) : undefined,
+      }
     );
 
     return new PagedResponse(

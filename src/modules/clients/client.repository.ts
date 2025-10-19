@@ -109,54 +109,56 @@ export class ClientRepository {
     tenantId: string,
     branchId?: string,
     page = 1,
-    limit = 10
+    limit = 10,
+    targetDate?: string // ← nova data opcional (ISO)
   ) {
     logger.debug("🟦 [ClientRepository] Iniciando busca de aniversariantes", {
       tenantId,
       branchId,
       page,
       limit,
+      targetDate,
     });
 
     try {
       const skip = (page - 1) * limit;
 
-      // 📅 Data atual no fuso do Brasil (para calcular dia/mês)
-      const nowUtc = new Date();
-      const brazilNow = new Date(
-        nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-      );
-      const day = brazilNow.getDate() + 1;
-      const month = brazilNow.getMonth() + 1;
+      // 📅 Define data-base: se vier na request, usa ela; senão, pega data atual do Brasil
+      let referenceDate: Date;
+      if (targetDate) {
+        referenceDate = new Date(targetDate);
+      } else {
+        const nowUtc = new Date();
+        referenceDate = new Date(
+          nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+        );
+      }
+
+      const day = referenceDate.getDate() + 1;
+      const month = referenceDate.getMonth() + 1;
 
       logger.debug("🕐 [ClientRepository] Datas de referência", {
-        nowUtc: nowUtc.toISOString(),
-        brazilNow: brazilNow.toISOString(),
+        targetDate,
+        referenceDate: referenceDate.toISOString(),
         day,
         month,
       });
 
-      // 🔢 Monta fragmentos SQL opcionais de forma segura
       const branchFilter = branchId
         ? Prisma.sql`AND branchId = ${branchId}`
         : Prisma.empty;
 
-      // 📊 COUNT total (antes da paginação)
-      logger.debug("🔎 [ClientRepository] Executando COUNT de aniversariantes", {
-        day,
-        month,
-      });
-
+      // 📊 COUNT total
       const totalRows = await prisma.$queryRaw<{ total: bigint }[]>(
         Prisma.sql`
-          SELECT COUNT(*) AS total
-          FROM Client
-          WHERE tenantId = ${tenantId}
-            ${branchFilter}
-            AND bornDate IS NOT NULL
-            AND DAY(bornDate) = ${day}
-            AND MONTH(bornDate) = ${month}
-        `
+        SELECT COUNT(*) AS total
+        FROM Client
+        WHERE tenantId = ${tenantId}
+          ${branchFilter}
+          AND bornDate IS NOT NULL
+          AND DAY(bornDate) = ${day}
+          AND MONTH(bornDate) = ${month}
+      `
       );
 
       const total =
@@ -164,88 +166,27 @@ export class ClientRepository {
           ? Number(totalRows[0].total)
           : 0;
 
-      logger.debug("🧮 [ClientRepository] COUNT finalizado", { total });
-
       if (total === 0) {
-        logger.info(
-          "ℹ️ [ClientRepository] Nenhum aniversariante encontrado para hoje",
-          {
-            day,
-            month,
-            tenantId,
-            branchId,
-          }
-        );
-        return {
-          items: [],
-          total: 0,
-          page,
-          limit,
-        };
+        return { items: [], total: 0, page, limit };
       }
-
-      // 📄 Lista paginada
-      logger.debug(
-        "📥 [ClientRepository] Buscando lista paginada de aniversariantes",
-        {
-          skip,
-          limit,
-        }
-      );
 
       const items = await prisma.$queryRaw<any[]>(
         Prisma.sql`
-          SELECT 
-            id, name, nickname, email, phone01, phone02, phone03,
-            bornDate, isActive, tenantId, branchId, createdAt, updatedAt
-          FROM Client
-          WHERE tenantId = ${tenantId}
-            ${branchFilter}
-            AND bornDate IS NOT NULL
-            AND DAY(bornDate) = ${day}
-            AND MONTH(bornDate) = ${month}
-          ORDER BY name ASC
-          LIMIT ${limit} OFFSET ${skip}
-        `
+        SELECT 
+          id, name, nickname, email, phone01, phone02, phone03,
+          bornDate, isActive, tenantId, branchId, createdAt, updatedAt
+        FROM Client
+        WHERE tenantId = ${tenantId}
+          ${branchFilter}
+          AND bornDate IS NOT NULL
+          AND DAY(bornDate) = ${day}
+          AND MONTH(bornDate) = ${month}
+        ORDER BY name ASC
+        LIMIT ${limit} OFFSET ${skip}
+      `
       );
 
-      logger.debug("✅ [ClientRepository] Consulta concluída", {
-        returned: items.length,
-        page,
-        limit,
-        sample: items.slice(0, 3).map((c) => ({
-          id: c.id,
-          name: c.name,
-          bornDate: c.bornDate,
-        })),
-      });
-
-      // Observação útil para troubleshooting: se o total > 0 e items = 0, page/limit/skip podem estar fora do range
-      if (items.length === 0 && total > 0) {
-        logger.warn(
-          "⚠️ [ClientRepository] Página solicitada não possui resultados",
-          {
-            page,
-            limit,
-            skip,
-            total,
-          }
-        );
-      }
-
-      logger.info("📤 [ClientRepository] Retornando aniversariantes", {
-        count: items.length,
-        total,
-        page,
-        limit,
-      });
-
-      return {
-        items,
-        total,
-        page,
-        limit,
-      };
+      return { items, total, page, limit };
     } catch (error: any) {
       logger.error("❌ [ClientRepository] Erro ao buscar aniversariantes", {
         message: error?.message,

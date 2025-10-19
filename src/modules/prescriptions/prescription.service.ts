@@ -128,4 +128,53 @@ export class PrescriptionService {
       total
     );
   }
+
+  async listExpiringPrescriptions(req: Request) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+    const branchId = user.branchId;
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    // 🗓️ Data opcional (ISO)
+    const targetDate = req.query.date ? String(req.query.date) : undefined;
+
+    const { items, total } = await this.repo.findExpiringPrescriptions(
+      tenantId,
+      branchId,
+      page,
+      limit,
+      targetDate
+    );
+
+    return new PagedResponse(
+      `Receitas vencidas listadas com sucesso${
+        targetDate ? ` para ${targetDate}` : ""
+      }.`,
+      req,
+      items,
+      page,
+      limit,
+      total
+    );
+  }
+
+  // =========================================================
+  // 🔹 DELETE
+  // =========================================================
+  async delete(req: Request, prescriptionId: number) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+    const userId = user.sub;
+
+    const existing = await this.repo.findById(prescriptionId, tenantId);
+    if (!existing) {
+      return ApiResponse.error("Receita não encontrada.", 404, req);
+    }
+
+    await this.repo.delete(prescriptionId, tenantId, userId);
+
+    return ApiResponse.success("Receita deletada com sucesso.", req);
+  }
 }

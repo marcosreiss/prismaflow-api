@@ -641,6 +641,20 @@
                                 "url": "{{baseUrl}}/prescriptions?page=1&limit=10&clientId=1"
                             },
                             "response": []
+                        },
+                        {
+                            "name": "Listar receitas vencidas (com paginação e data opcional)",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{token}}"
+                                    }
+                                ],
+                                "url": "{{baseUrl}}/prescriptions/expired?page=1&limit=10&date=2025-10-12"
+                            },
+                            "response": []
                         }
                     ]
                 }

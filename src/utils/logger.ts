@@ -34,7 +34,7 @@ const format = winston.format.combine(
     const metaString = Object.keys(meta).length
       ? JSON.stringify(meta, null, 2)
       : "";
-    return `[${timestamp}] ${level}: ${message} ${metaString}`;
+    return `\n \n \n \n [${timestamp}] ${level}: ${message} ${metaString}`;
   })
 );
 

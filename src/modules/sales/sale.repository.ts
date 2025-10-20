@@ -8,6 +8,7 @@ export class SaleRepository {
       hasProductItems: !!data.productItems,
       hasServiceItems: !!data.serviceItems,
     });
+
     return prisma.sale.create({
       data: withAuditData(userId, data),
       include: {
@@ -68,7 +69,6 @@ export class SaleRepository {
     return prisma.sale.findFirst({
       where: { id, tenantId },
       select: {
-        // ✅ ADICIONE ESTES CAMPOS OBRIGATÓRIOS:
         id: true,
         clientId: true,
         prescriptionId: true,
@@ -93,12 +93,10 @@ export class SaleRepository {
         protocol: true,
         productItems: {
           select: {
-            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
             id: true,
             productId: true,
             quantity: true,
             saleId: true,
-
             product: {
               select: {
                 id: true,
@@ -106,12 +104,7 @@ export class SaleRepository {
                 salePrice: true,
                 category: true,
                 stockQuantity: true,
-                brand: {
-                  select: {
-                    id: true,
-                    name: true,
-                  },
-                },
+                brand: { select: { id: true, name: true } },
               },
             },
             frameDetails: true,
@@ -119,11 +112,9 @@ export class SaleRepository {
         },
         serviceItems: {
           select: {
-            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
             id: true,
             serviceId: true,
             saleId: true,
-
             service: {
               select: {
                 id: true,
@@ -142,14 +133,38 @@ export class SaleRepository {
             prescriptionDate: true,
             doctorName: true,
             crm: true,
-            odSpherical: true,
-            odCylindrical: true,
-            odAxis: true,
-            odDnp: true,
-            oeSpherical: true,
-            oeCylindrical: true,
-            oeAxis: true,
-            oeDnp: true,
+
+            // 🔹 Grau de longe (renomeados)
+            odSphericalFar: true,
+            odCylindricalFar: true,
+            odAxisFar: true,
+            odDnpFar: true,
+            oeSphericalFar: true,
+            oeCylindricalFar: true,
+            oeAxisFar: true,
+            oeDnpFar: true,
+
+            // 🔹 Grau de perto (novos)
+            odSphericalNear: true,
+            odCylindricalNear: true,
+            odAxisNear: true,
+            odDnpNear: true,
+            oeSphericalNear: true,
+            oeCylindricalNear: true,
+            oeAxisNear: true,
+            oeDnpNear: true,
+
+            // 🔹 Películas
+            odPellicleFar: true,
+            odPellicleNear: true,
+            oePellicleFar: true,
+            oePellicleNear: true,
+
+            // 🔹 Gerais
+            frameAndRef: true,
+            lensType: true,
+            notes: true,
+
             additionRight: true,
             additionLeft: true,
             opticalCenterRight: true,
@@ -205,9 +220,7 @@ export class SaleRepository {
   }
 
   async findProtocolBySale(saleId: number) {
-    return prisma.protocol.findFirst({
-      where: { saleId },
-    });
+    return prisma.protocol.findFirst({ where: { saleId } });
   }
 
   async findProductItemsBySale(saleId: number) {
@@ -221,9 +234,7 @@ export class SaleRepository {
   }
 
   async findFrameDetailsByItemProduct(itemProductId: number) {
-    return prisma.frameDetails.findFirst({
-      where: { itemProductId },
-    });
+    return prisma.frameDetails.findFirst({ where: { itemProductId } });
   }
 
   async findOpticalServiceItemsBySale(saleId: number) {

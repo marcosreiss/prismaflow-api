@@ -60,32 +60,32 @@ model Branch {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  name      String
-  email     String  @unique
-  password  String
-  role      Role
-  tenantId  String
-  tenant    Tenant  @relation(fields: [tenantId], references: [id])
-  branchId  String?
-  branch    Branch? @relation(fields: [branchId], references: [id])
-  createdById String?
-  updatedById String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-model Brand {
-  id         Int       @id @default(autoincrement())
-  name       String    @unique
-  isActive   Boolean   @default(true)
-  tenantId   String
-  tenant     Tenant    @relation(fields: [tenantId], references: [id])
-  products   Product[]
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        Role
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  branchId    String?
+  branch      Branch?  @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  isActive    Boolean   @default(true)
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  products    Product[]
+  createdById String?
+  updatedById String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Product {
@@ -100,40 +100,40 @@ model Product {
   category      ProductCategory
   isActive      Boolean         @default(true)
   tenantId      String
-  tenant        Tenant  @relation(fields: [tenantId], references: [id])
+  tenant        Tenant          @relation(fields: [tenantId], references: [id])
   branchId      String?
-  branch        Branch? @relation(fields: [branchId], references: [id])
+  branch        Branch?         @relation(fields: [branchId], references: [id])
   brandId       Int?
-  brand         Brand?  @relation(fields: [brandId], references: [id])
+  brand         Brand?          @relation(fields: [brandId], references: [id])
   createdById   String?
   updatedById   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   ItemProduct   ItemProduct[]
 }
 
 model OpticalService {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  isActive    Boolean @default(true)
-  tenantId    String
-  tenant      Tenant @relation(fields: [tenantId], references: [id])
-  branchId    String
-  branch      Branch @relation(fields: [branchId], references: [id])
-  createdById String?
-  updatedById String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String?
+  price              Float
+  isActive           Boolean              @default(true)
+  tenantId           String
+  tenant             Tenant               @relation(fields: [tenantId], references: [id])
+  branchId           String
+  branch             Branch               @relation(fields: [branchId], references: [id])
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
   ItemOpticalService ItemOpticalService[]
 }
 
 model Client {
-  id            Int       @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   name          String
   nickname      String?
-  cpf           String?   @unique
+  cpf           String?        @unique
   rg            String?
   bornDate      DateTime?
   gender        Gender?
@@ -150,7 +150,7 @@ model Client {
   uf            String?
   cep           String?
   complement    String?
-  isBlacklisted Boolean?  @default(false)
+  isBlacklisted Boolean?       @default(false)
   obs           String?
   phone01       String?
   phone02       String?
@@ -158,91 +158,115 @@ model Client {
   reference01   String?
   reference02   String?
   reference03   String?
-  isActive      Boolean   @default(true)
+  isActive      Boolean        @default(true)
   tenantId      String
-  tenant        Tenant @relation(fields: [tenantId], references: [id])
+  tenant        Tenant         @relation(fields: [tenantId], references: [id])
   branchId      String
-  branch        Branch @relation(fields: [branchId], references: [id])
+  branch        Branch         @relation(fields: [branchId], references: [id])
   prescriptions Prescription[]
   createdById   String?
   updatedById   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   Sale          Sale[]
 }
 
 model Prescription {
-  id                   Int @id @default(autoincrement())
-  clientId             Int
-  client               Client @relation(fields: [clientId], references: [id])
-  prescriptionDate     DateTime
-  doctorName           String?
-  crm                  String?
-  odSpherical          String?
-  odCylindrical        String?
-  odAxis               String?
-  odDnp                String?
-  oeSpherical          String?
-  oeCylindrical        String?
-  oeAxis               String?
-  oeDnp                String?
-  additionRight        String?
-  additionLeft         String?
-  opticalCenterRight   String?
-  opticalCenterLeft    String?
-  isActive             Boolean @default(true)
-  tenantId             String
-  tenant               Tenant @relation(fields: [tenantId], references: [id])
-  branchId             String
-  branch               Branch @relation(fields: [branchId], references: [id])
-  createdById          String?
-  updatedById          String?
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  sales                Sale[]
+  id               Int      @id @default(autoincrement())
+  clientId         Int
+  client           Client   @relation(fields: [clientId], references: [id])
+  prescriptionDate DateTime
+  doctorName       String?
+  crm              String?
+
+  // Campos antigos renomeados para longe
+  odSphericalFar   String?
+  odCylindricalFar String?
+  odAxisFar        String?
+  odDnpFar         String?
+  oeSphericalFar   String?
+  oeCylindricalFar String?
+  oeAxisFar        String?
+  oeDnpFar         String?
+
+  // Novos campos (grau de perto)
+  odSphericalNear   String?
+  odCylindricalNear String?
+  odAxisNear        String?
+  odDnpNear         String?
+  oeSphericalNear   String?
+  oeCylindricalNear String?
+  oeAxisNear        String?
+  oeDnpNear         String?
+
+  // Campos de película (bifocal/progressiva)
+  odPellicleFar  String?
+  odPellicleNear String?
+  oePellicleFar  String?
+  oePellicleNear String?
+
+  // Novos campos gerais
+  frameAndRef String?
+  lensType    String?
+  notes       String?
+
+  additionRight      String?
+  additionLeft       String?
+  opticalCenterRight String?
+  opticalCenterLeft  String?
+  isActive           Boolean  @default(true)
+  tenantId           String
+  tenant             Tenant   @relation(fields: [tenantId], references: [id])
+  branchId           String
+  branch             Branch   @relation(fields: [branchId], references: [id])
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  sales              Sale[]
 }
 
 model Sale {
-  id             Int    @id @default(autoincrement())
+  id             Int                  @id @default(autoincrement())
   clientId       Int
-  client         Client @relation(fields: [clientId], references: [id])
+  client         Client               @relation(fields: [clientId], references: [id])
   prescriptionId Int?
-  prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
-  protocol       Protocol? @relation("SaleProtocol")
+  prescription   Prescription?        @relation(fields: [prescriptionId], references: [id])
+  protocol       Protocol?            @relation("SaleProtocol")
   productItems   ItemProduct[]
   serviceItems   ItemOpticalService[]
-  payment        Payment? @relation("SalePayment")
-  subtotal       Float?  @default(0)
-  discount       Float?  @default(0)
-  total          Float?  @default(0)
+  payment        Payment?             @relation("SalePayment")
+  subtotal       Float?               @default(0)
+  discount       Float?               @default(0)
+  total          Float?               @default(0)
   notes          String?
-  isActive       Boolean @default(true)
+  isActive       Boolean              @default(true)
   tenantId       String
-  tenant         Tenant @relation(fields: [tenantId], references: [id])
+  tenant         Tenant               @relation(fields: [tenantId], references: [id])
   branchId       String
-  branch         Branch @relation(fields: [branchId], references: [id])
+  branch         Branch               @relation(fields: [branchId], references: [id])
   createdById    String?
   updatedById    String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
 }
 
 model ItemProduct {
-  id            Int     @id @default(autoincrement())
-  saleId        Int
-  sale          Sale    @relation(fields: [saleId], references: [id])
-  productId     Int
-  product       Product @relation(fields: [productId], references: [id])
-  quantity      Int     @default(1)
-  frameDetails  FrameDetails?
-  tenantId      String
-  tenant        Tenant @relation(fields: [tenantId], references: [id])
-  branchId      String
-  branch        Branch @relation(fields: [branchId], references: [id])
-  createdById   String?
-  updatedById   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           Int           @id @default(autoincrement())
+  saleId       Int
+  sale         Sale          @relation(fields: [saleId], references: [id])
+  productId    Int
+  product      Product       @relation(fields: [productId], references: [id])
+  quantity     Int           @default(1)
+  frameDetails FrameDetails?
+  tenantId     String
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  branchId     String
+  branch       Branch        @relation(fields: [branchId], references: [id])
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model FrameDetails {
@@ -254,13 +278,13 @@ model FrameDetails {
   color         String?
   isActive      Boolean           @default(true)
   tenantId      String
-  tenant        Tenant @relation(fields: [tenantId], references: [id])
+  tenant        Tenant            @relation(fields: [tenantId], references: [id])
   branchId      String
-  branch        Branch @relation(fields: [branchId], references: [id])
+  branch        Branch            @relation(fields: [branchId], references: [id])
   createdById   String?
   updatedById   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
 }
 
 model ItemOpticalService {
@@ -270,54 +294,54 @@ model ItemOpticalService {
   serviceId   Int
   service     OpticalService @relation(fields: [serviceId], references: [id])
   tenantId    String
-  tenant      Tenant @relation(fields: [tenantId], references: [id])
+  tenant      Tenant         @relation(fields: [tenantId], references: [id])
   branchId    String
-  branch      Branch @relation(fields: [branchId], references: [id])
+  branch      Branch         @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
 
 model Payment {
-  id                Int            @id @default(autoincrement())
-  saleId            Int            @unique
-  sale              Sale           @relation("SalePayment", fields: [saleId], references: [id])
+  id                Int                  @id @default(autoincrement())
+  saleId            Int                  @unique
+  sale              Sale                 @relation("SalePayment", fields: [saleId], references: [id])
   method            PaymentMethod?
-  status            PaymentStatus  @default(PENDING)
-  total             Float          @default(0)
-  discount          Float          @default(0)
-  downPayment       Float          @default(0)
+  status            PaymentStatus        @default(PENDING)
+  total             Float                @default(0)
+  discount          Float                @default(0)
+  downPayment       Float                @default(0)
   installmentsTotal Int?
-  paidAmount        Float          @default(0)
-  installmentsPaid  Int            @default(0)
+  paidAmount        Float                @default(0)
+  installmentsPaid  Int                  @default(0)
   lastPaymentAt     DateTime?
   firstDueDate      DateTime?
-  isActive          Boolean        @default(true)
+  isActive          Boolean              @default(true)
   installments      PaymentInstallment[]
   tenantId          String
-  tenant            Tenant @relation(fields: [tenantId], references: [id])
+  tenant            Tenant               @relation(fields: [tenantId], references: [id])
   branchId          String
-  branch            Branch @relation(fields: [branchId], references: [id])
+  branch            Branch               @relation(fields: [branchId], references: [id])
   createdById       String?
   updatedById       String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
 }
 
 model Protocol {
-  id           Int     @id @default(autoincrement())
-  saleId       Int?    @unique
-  sale         Sale?   @relation("SaleProtocol", fields: [saleId], references: [id])
+  id           Int      @id @default(autoincrement())
+  saleId       Int?     @unique
+  sale         Sale?    @relation("SaleProtocol", fields: [saleId], references: [id])
   recordNumber String?
   book         String?
   page         Int?
   os           String?
-  isActive     Boolean @default(true)
+  isActive     Boolean  @default(true)
   tenantId     String
-  tenant       Tenant @relation(fields: [tenantId], references: [id])
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
   branchId     String
-  branch       Branch @relation(fields: [branchId], references: [id])
+  branch       Branch   @relation(fields: [branchId], references: [id])
   createdById  String?
   updatedById  String?
   createdAt    DateTime @default(now())
@@ -325,22 +349,22 @@ model Protocol {
 }
 
 model PaymentInstallment {
-  id         Int       @id @default(autoincrement())
-  paymentId  Int
-  payment    Payment   @relation(fields: [paymentId], references: [id])
-  sequence   Int
-  amount     Float     @default(0)
-  paidAmount Float     @default(0)
-  paidAt     DateTime?
-  isActive   Boolean   @default(true)
-  tenantId   String
-  tenant     Tenant @relation(fields: [tenantId], references: [id])
-  branchId   String
-  branch     Branch @relation(fields: [branchId], references: [id])
+  id          Int       @id @default(autoincrement())
+  paymentId   Int
+  payment     Payment   @relation(fields: [paymentId], references: [id])
+  sequence    Int
+  amount      Float     @default(0)
+  paidAmount  Float     @default(0)
+  paidAt      DateTime?
+  isActive    Boolean   @default(true)
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  branchId    String
+  branch      Branch    @relation(fields: [branchId], references: [id])
   createdById String?
   updatedById String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 // ============================================================

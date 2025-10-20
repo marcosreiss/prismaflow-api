@@ -5,18 +5,23 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copia e instala dependências (com cache eficiente)
+# Copia apenas os manifests primeiro
 COPY package*.json ./
+
+# Instala dependências (sem postinstall automático)
 RUN npm ci
 
-# Copia o restante do código-fonte
-COPY . .
+# Copia o restante do código e o schema Prisma
+COPY prisma ./prisma
+COPY tsconfig*.json ./
+COPY src ./src
 
-# Gera o Prisma Client antes do build (para tipos TS)
+# Gera o Prisma Client (agora com schema presente)
 RUN npx prisma generate
 
-# Compila TypeScript → dist/
+# Compila o código TypeScript
 RUN npm run build
+
 
 
 #########################################

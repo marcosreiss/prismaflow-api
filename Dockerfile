@@ -1,27 +1,22 @@
-##########################################
+#########################################
 # 🔹 Etapa 1: Build da aplicação
 #########################################
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copia apenas os manifests primeiro
+# Copia e instala dependências (com cache eficiente)
 COPY package*.json ./
-
-# Instala dependências (sem postinstall automático)
 RUN npm ci
 
-# Copia o restante do código e o schema Prisma
-COPY prisma ./prisma
-COPY tsconfig*.json ./
-COPY src ./src
+# Copia o restante do código-fonte
+COPY . .
 
-# Gera o Prisma Client (agora com schema presente)
+# Gera o Prisma Client antes do build (para tipos TS)
 RUN npx prisma generate
 
-# Compila o código TypeScript
+# Compila TypeScript → dist/
 RUN npm run build
-
 
 
 #########################################

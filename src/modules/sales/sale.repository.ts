@@ -2,11 +2,11 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class SaleRepository {
   async create(data: any, userId?: string) {
-    console.log('🔍 Dados recebidos no SaleRepository.create:', {
+    console.log("🔍 Dados recebidos no SaleRepository.create:", {
       prescriptionId: data.prescriptionId,
       clientId: data.clientId,
       hasProductItems: !!data.productItems,
-      hasServiceItems: !!data.serviceItems
+      hasServiceItems: !!data.serviceItems,
     });
     return prisma.sale.create({
       data: withAuditData(userId, data),
@@ -88,7 +88,7 @@ export class SaleRepository {
             name: true,
             email: true,
             phone01: true,
-          }
+          },
         },
         protocol: true,
         productItems: {
@@ -109,10 +109,10 @@ export class SaleRepository {
                 brand: {
                   select: {
                     id: true,
-                    name: true
-                  }
-                }
-              }
+                    name: true,
+                  },
+                },
+              },
             },
             frameDetails: true,
           },
@@ -130,14 +130,15 @@ export class SaleRepository {
                 name: true,
                 price: true,
                 description: true,
-                isActive: true
-              }
+                isActive: true,
+              },
             },
           },
         },
         prescription: {
           select: {
             id: true,
+            clientId: true,
             prescriptionDate: true,
             doctorName: true,
             crm: true,
@@ -154,8 +155,14 @@ export class SaleRepository {
             opticalCenterRight: true,
             opticalCenterLeft: true,
             isActive: true,
-          }
-        }
+            tenantId: true,
+            branchId: true,
+            createdById: true,
+            updatedById: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
       },
     });
   }

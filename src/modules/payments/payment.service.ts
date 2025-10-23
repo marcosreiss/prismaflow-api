@@ -11,8 +11,7 @@ export class PaymentService {
   // ======================================================
   // LISTAR PAGAMENTOS (Paginado + Filtro por status)
   // ======================================================
-  // payment.service.ts - Modifique o método findAll
-  // payment.service.ts - Modifique o método findAll
+
   async findAll(req: Request) {
     const user = req.user!;
     const { tenantId } = user;

@@ -73,7 +73,7 @@ export class PaymentRepository {
       };
 
       if (filters.clientId) where.sale.client.id = filters.clientId;
-      if (filters.clientName) where.sale.client.name = { contains: filters.clientName, mode: 'insensitive' };
+      if (filters.clientName) where.sale.client.name = { contains: filters.clientName };
     }
 
     const [items, total] = await Promise.all([

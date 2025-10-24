@@ -2,18 +2,54 @@ import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class SaleRepository {
   async create(data: any, userId?: string) {
-    console.log('🔍 Dados recebidos no SaleRepository.create:', {
+    console.log("🔍 Dados recebidos no SaleRepository.create:", {
       prescriptionId: data.prescriptionId,
       clientId: data.clientId,
       hasProductItems: !!data.productItems,
-      hasServiceItems: !!data.serviceItems
+      hasServiceItems: !!data.serviceItems,
     });
     return prisma.sale.create({
       data: withAuditData(userId, data),
       include: {
         client: { select: { id: true, name: true } },
         protocol: true,
-        prescription: data.prescriptionId,
+        // 
+        // ❗️ CORREÇÃO AQUI: 
+        // Alterado de "data.prescriptionId" para um "select"
+        // para incluir os dados da prescrição relacionada.
+        // 
+        prescription: {
+          select: {
+            id: true,
+            prescriptionDate: true,
+            doctorName: true,
+            crm: true,
+            // Longe
+            odSphericalFar: true,
+            odCylindricalFar: true,
+            odAxisFar: true,
+            odDnpFar: true,
+            oeSphericalFar: true,
+            oeCylindricalFar: true,
+            oeAxisFar: true,
+            oeDnpFar: true,
+            // Perto
+            odSphericalNear: true,
+            odCylindricalNear: true,
+            odAxisNear: true,
+            odDnpNear: true,
+            oeSphericalNear: true,
+            oeCylindricalNear: true,
+            oeAxisNear: true,
+            oeDnpNear: true,
+            // Outros
+            additionRight: true,
+            additionLeft: true,
+            opticalCenterRight: true,
+            opticalCenterLeft: true,
+            isActive: true,
+          },
+        },
         productItems: {
           include: {
             product: { select: { id: true, name: true } },
@@ -36,6 +72,40 @@ export class SaleRepository {
       include: {
         client: { select: { id: true, name: true } },
         protocol: true,
+        // 
+        // ❗️ ADIÇÃO (SUGESTÃO): 
+        // Adicionado para consistência, para que o update
+        // também retorne os dados da prescrição.
+        // 
+        prescription: {
+          select: {
+            id: true,
+            prescriptionDate: true,
+            doctorName: true,
+            crm: true,
+            odSphericalFar: true,
+            odCylindricalFar: true,
+            odAxisFar: true,
+            odDnpFar: true,
+            oeSphericalFar: true,
+            oeCylindricalFar: true,
+            oeAxisFar: true,
+            oeDnpFar: true,
+            odSphericalNear: true,
+            odCylindricalNear: true,
+            odAxisNear: true,
+            odDnpNear: true,
+            oeSphericalNear: true,
+            oeCylindricalNear: true,
+            oeAxisNear: true,
+            oeDnpNear: true,
+            additionRight: true,
+            additionLeft: true,
+            opticalCenterRight: true,
+            opticalCenterLeft: true,
+            isActive: true,
+          },
+        },
         productItems: {
           include: {
             product: { select: { id: true, name: true } },
@@ -68,7 +138,6 @@ export class SaleRepository {
     return prisma.sale.findFirst({
       where: { id, tenantId },
       select: {
-        // ✅ ADICIONE ESTES CAMPOS OBRIGATÓRIOS:
         id: true,
         clientId: true,
         prescriptionId: true,
@@ -81,24 +150,21 @@ export class SaleRepository {
         branchId: true,
         createdAt: true,
         updatedAt: true,
-
         client: {
           select: {
             id: true,
             name: true,
             email: true,
             phone01: true,
-          }
+          },
         },
         protocol: true,
         productItems: {
           select: {
-            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
             id: true,
             productId: true,
             quantity: true,
             saleId: true,
-
             product: {
               select: {
                 id: true,
@@ -109,53 +175,69 @@ export class SaleRepository {
                 brand: {
                   select: {
                     id: true,
-                    name: true
-                  }
-                }
-              }
+                    name: true,
+                  },
+                },
+              },
             },
             frameDetails: true,
           },
         },
         serviceItems: {
           select: {
-            // ✅ ADICIONE ESTES CAMPOS CRÍTICOS:
             id: true,
             serviceId: true,
             saleId: true,
-
             service: {
               select: {
                 id: true,
                 name: true,
                 price: true,
                 description: true,
-                isActive: true
-              }
+                isActive: true,
+              },
             },
           },
         },
+        // 
+        // ❗️ CORREÇÃO PRINCIPAL AQUI:
+        // Os campos "odSpherical", "oeSpherical", etc., foram
+        // substituídos pelos campos corretos ("...Far", "...Near").
+        // 
         prescription: {
           select: {
             id: true,
             prescriptionDate: true,
             doctorName: true,
             crm: true,
-            odSpherical: true,
-            odCylindrical: true,
-            odAxis: true,
-            odDnp: true,
-            oeSpherical: true,
-            oeCylindrical: true,
-            oeAxis: true,
-            oeDnp: true,
+            // Longe
+            odSphericalFar: true,
+            odCylindricalFar: true,
+            odAxisFar: true,
+            odDnpFar: true,
+            oeSphericalFar: true,
+            oeCylindricalFar: true,
+            oeAxisFar: true,
+            oeDnpFar: true,
+            // Perto
+            odSphericalNear: true,
+            odCylindricalNear: true,
+            odAxisNear: true,
+            odDnpNear: true,
+            oeSphericalNear: true,
+            oeCylindricalNear: true,
+            oeAxisNear: true,
+            oeDnpNear: true,
+            // Outros
             additionRight: true,
             additionLeft: true,
             opticalCenterRight: true,
             opticalCenterLeft: true,
             isActive: true,
-          }
-        }
+            // Você pode adicionar mais campos da prescrição aqui se precisar
+            // ex: frameAndRef, lensType, notes, etc.
+          },
+        },
       },
     });
   }
@@ -178,6 +260,10 @@ export class SaleRepository {
         include: {
           client: { select: { id: true, name: true } },
           protocol: true,
+          // ❗️ NOTA: Esta consulta "findAll" NÃO inclui a prescrição
+          // com todos os detalhes, apenas o ID. Se você precisar 
+          // dos detalhes na listagem, adicione o "include"
+          // ou "select" de prescrição aqui também.
         },
       }),
       prisma.sale.count({ where }),

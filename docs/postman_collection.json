@@ -142,6 +142,20 @@
                         "url": "{{baseUrl}}/branches?page=1&limit=10"
                     },
                     "response": []
+                },
+                {
+                    "name": "Listar filiais para select (id e nome)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/branches/select"
+                    },
+                    "response": []
                 }
             ]
         },

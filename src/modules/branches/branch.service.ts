@@ -56,4 +56,13 @@ export class BranchService {
       total
     );
   }
+
+  async select(req: Request) {
+    const user = req.user!;
+    const tenantId = user.tenantId;
+
+    const branches = await this.repo.findAllSelectByTenant(tenantId);
+
+    return ApiResponse.success("Filiais disponíveis.", req, branches);
+  }
 }

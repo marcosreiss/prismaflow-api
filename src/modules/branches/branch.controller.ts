@@ -29,3 +29,16 @@ export const listBranches = async (
     next(e);
   }
 };
+
+export const selectBranches = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await service.select(req);
+    res.status(result.status).json(result);
+  } catch (e) {
+    next(e);
+  }
+};

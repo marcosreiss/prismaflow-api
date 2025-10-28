@@ -65,7 +65,11 @@ export class ClientService {
   async list(req: Request) {
     const user = req.user!;
     const tenantId = user.tenantId;
-    const branchId = user.branchId;
+
+    // 🔹 Se branchId vier na query, usa ele; senão, undefined (retorna todos do tenant)
+    const branchId = req.query.branchId
+      ? String(req.query.branchId)
+      : undefined;
 
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;

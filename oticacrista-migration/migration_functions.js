@@ -143,10 +143,20 @@ function cleanPhone(phone) {
  */
 function extractFatherName(filiacao) {
   if (!filiacao) return null;
-
-  // Procurar por " E " ou " e " como separador
-  const match = filiacao.match(/\s+[Ee]\s+(.+)$/);
-  return match ? match[1].trim() : null;
+  const cleaned = filiacao.trim();
+  if (cleaned === '-----' || cleaned === '') return null;
+  
+  // Normalizar: adiciona espaço se termina com ' E'
+  const normalized = cleaned.endsWith(' E') ? cleaned + ' ' : cleaned;
+  
+  if (normalized.includes(' E ')) {
+    const parts = normalized.split(' E ');
+    if (parts.length >= 2) {
+      const pai = parts[1].trim();
+      return pai || null;
+    }
+  }
+  return null;
 }
 
 /**
@@ -155,10 +165,18 @@ function extractFatherName(filiacao) {
  */
 function extractMotherName(filiacao) {
   if (!filiacao) return null;
-
-  // Procurar por " E " ou " e " como separador
-  const match = filiacao.match(/^(.+?)\s+[Ee]\s+/);
-  return match ? match[1].trim() : filiacao.trim();
+  const cleaned = filiacao.trim();
+  if (cleaned === '-----' || cleaned === '') return null;
+  
+  // Normalizar: adiciona espaço se termina com ' E'
+  const normalized = cleaned.endsWith(' E') ? cleaned + ' ' : cleaned;
+  
+  if (normalized.includes(' E ')) {
+    const parts = normalized.split(' E ');
+    const mae = parts[0].trim();
+    return mae || null;
+  }
+  return cleaned;
 }
 
 // ============================================================================

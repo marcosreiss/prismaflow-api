@@ -1,0 +1,821 @@
+
+================================================================================
+MIGRAÇÃO DE PRODUTOS - ÓTICA CRISTÃ
+================================================================================
+
+Tenant ID: cmibvcyed00007m0118rkgft8
+Branch ID: cmibvcyed00017m014r66e39w
+Arquivo: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\produto.xlsx
+
+📂 Lendo arquivo Excel...
+✓ 783 produtos encontrados
+
+🔄 Iniciando migração...
+
+✓ Produto 1: Produto Indisponivel
+✓ Produto 8: ARMAÇÃO NYLON
+✓ Produto 10: ARMAÇÃO BALGRIF
+✓ Produto 18: OCULOS SOLAR PROSOL
+✓ Produto 19: OCULOS SOLAR PIERRE CARDIN
+✓ Produto 21: SOLAR Z FORA DE LINHA
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 27: SOLAR MAXLINE
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 31: OCULOS SOLAR LEMUD
+✓ Produto 32: OCULOS SOLAR KRISTAL
+✓ Produto 33: SOLAR COROLLA
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 40: LENTE P VIP/INC
+✓ Produto 41: LENTE P GT21.67/AR-MAR
+✓ Produto 42: LENTE P 1.50 ESPACE / INC.
+✓ Produto 43: LENTE P 1.50 ESPACE/TRANST
+✓ Produto 44: LENTE ARGOS 1.50 INC.
+✓ Produto 45: LENTE ARGOS 1.50 AR CX
+✓ Produto 47: LENTE GT2 PHOTOFUSION
+✓ Produto 48: LENTE P GT2/INC
+✓ Produto 49: LENTE P 1.50 ESPACE / AR
+✓ Produto 50: LENTE P VIP/TRANST
+✓ Produto 51: LENTE P VIP/AR
+✓ Produto 54: LENTE P VARILUX LIB/INC
+✓ Produto 55: LENTE P VARILUX LIB/CZ
+✓ Produto 56: VARILUX LIBERTY360 TRAN/CZ SAPPHIPE
+✓ Produto 57: LENTE VARILUX CONFORT MAX INC
+✓ Produto 58: VARILUX COMFORT MAX CZ SAPPHIRE
+✓ Produto 59: LENTE P VARILUX CONF.TRAN/CZ
+✓ Produto 60: LENTE Z FORA DE LINHA
+✓ Produto 70: LENTE PR1.50 ARGOS TRANSIT
+⏭️  Produto "LENTE PR1.50 ARGOS TRANSIT" já existe (ID: 70)
+✓ Produto 72: LENTE P NOLINE INC
+✓ Produto 73: LENTE P NOLINE TRANS
+✓ Produto 74: LENTE P 1.50 ESPACE TRAN/AR
+✓ Produto 75: LENTE P 1.50 ESPACE TRANS VII/AR
+✓ Produto 76: LENTE PR1.50 ARGOS TF INC.
+✓ Produto 77: ARMAÇÃO PLATINI
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 80: ARMAÇÃO Z FORA DE LINHA
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 86: ARMAÇÃO RAY BAN
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 88: ARMAÇÃO TECNOL
+✓ Produto 89: ARMAÇÃO ACETATO
+✓ Produto 90: ARMAÇÃO INFANTIL DIVERSAS
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 95: ARMAÇÃO VOGUE
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 97: ARMAÇÃO NYLON FL
+✓ Produto 98: ARMAÇÃO PIERRE CARDIN
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 102: ARMAÇÃO MAXLINE
+✓ Produto 103: ARMAÇÃO LUCIANA GIMENES
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 108: ARMAÇÃO COPACABANA
+✓ Produto 109: LENTE ARGOS 1.60 AR BC
+✓ Produto 111: ARMAÇÃO JEAN MONIER
+✓ Produto 112: LENTE VS1.49 ACABADA AR
+✓ Produto 113: LENTE VS1.53 SENSITY AR NR/BC
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 120: COLOLAÇÃO CINZA DEGRADE
+✓ Produto 121: LENTE BIF. ULTEX TRANS IV
+⚠️  Produto 122: Marca 3 não existe. Usando marca padrão.
+✓ Produto 122: ARMAÇÃO JEAN PIERRE
+✓ Produto 123: LENTE VS1.50 TRANSIT C2
+✓ Produto 125: LENTE VS1.49 ACABADA INC
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 128: LENTE BIF. ULTEX INC
+✓ Produto 129: LENTE BIF. BIOVIS INC
+✓ Produto 130: LENTE BIF. BIOVIS TRANT II
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 132: LENTE VS1.50 ACABADA AR C-4
+✓ Produto 133: ARMAÇÃO BERINE
+✓ Produto 134: LENTE VS1.50 INC
+✓ Produto 135: ARMAÇÃO KEYPER
+✓ Produto 136: LENTE VS1.49 CRIZAL C-2
+✓ Produto 137: ARMAÇÃO LAVORATO
+✓ Produto 138: ARMAÇÃO SIGNUS
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 141: LENTE VS1.59 INC
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 143: LENTE P 1.50 ESPACE PLUS AR
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 145: COLORAÇÃO CINZA SUAVE
+✓ Produto 146: COLOLAÇÃO CINZA
+✓ Produto 147: COLORAÇÃO MORRON ESCURO
+✓ Produto 148: LENTE VS1.50 SENSITY AR CE
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 150: LENTE PR1.50 ARGOS TANSIT AR CE
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 152: LENTE VS1.50 TRANSIT VII
+✓ Produto 153: LENTE VS1.49 TRANSIT
+✓ Produto 154: LENTE VS1.59 AR
+✓ Produto 155: LENTE VS1.49 TRANST
+⏭️  Produto "LENTE VS1.49 ACABADA INC" já existe (ID: 125)
+✓ Produto 157: LENTE BIF. ULTEX TRANS VII
+✓ Produto 158: LENTE BIF. BIOVIS FOTO
+✓ Produto 159: OCULOS SOLAR LOUGGE
+⏭️  Produto "LENTE P NOLINE INC" já existe (ID: 72)
+✓ Produto 161: LENTE P NOLINE FOTO
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 163: ARMAÇÃO FOX
+✓ Produto 164: ARMAÇÃO POPULAR NYLON
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 166: ARMAÇÃO METAL
+✓ Produto 167: LENTE VS1.59 ACABADA INC C-2
+✓ Produto 168: SOLDA
+✓ Produto 169: TROCA DE PLAQUETA
+✓ Produto 170: COLOCAÇAO DE PARAFUSOS
+✓ Produto 171: TROCA DE NYLON
+✓ Produto 172: LENTE VS1.59 AR C-4
+✓ Produto 173: LENTE VS1.67 AR C3
+✓ Produto 174: LENTE VS1.67 INC.
+✓ Produto 175: LENTE VS1.67 INC
+✓ Produto 176: LENTE VS1.59 SURF / AR -10+6C-4
+✓ Produto 177: LENTE VS1.50 FOTO FUSION
+✓ Produto 178: LENTE VS1.50 FOTO FUSION AR C-4
+⏭️  Produto "LENTE VS1.49 ACABADA AR" já existe (ID: 112)
+✓ Produto 180: LENTE PR HAYTEK 1.50 ACAB AR
+✓ Produto 182: LENTE P 1.50 ACABADA / AR
+✓ Produto 183: LENTE VS1.50 ACABADA AR C-2
+✓ Produto 184: ARMAÇÃO GRAZI
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 187: LENTE P HOYALUX18WPTX1.53/T
+✓ Produto 188: LENTE P VIP TRANS/AR
+✓ Produto 189: LENTE P GT21.67/AR-PLATINUM
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 199: SALDO DEVEDOR 2014
+✓ Produto 200: LENTE VS HAYTEK1.56 AR
+✓ Produto 201: LENTE HOYA VS1.50 AR CE
+✓ Produto 202: RENEGOCIAÇÃO
+✓ Produto 203: ARMAÇÃO DETROIT
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 206: JEAN MONIER SOLAR
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 209: LENTE VS1.50 TRANSIT AR C4
+✓ Produto 210: LENTE VS1.50 TRANSIT AR
+✓ Produto 211: ARMAÇÃO DA VINCI
+✓ Produto 212: LENTE VS1.49 TRANST AR
+✓ Produto 213: ARMAÇÃO INTELECTUM
+✓ Produto 214: LENTE P HOYALUX18WP1.67T
+✓ Produto 215: LENTE P HOYALUX18WP1.67T/AR
+✓ Produto 216: LENTE P HOYALUX WIDE BKS 1.67 SENSITY
+✓ Produto 217: LENTE HOYALUX WIDE BKS 1.53 TRANSIT AR
+✓ Produto 218: LENTE P HOYALUX18WP1.5/I
+✓ Produto 219: LENTE PROG. HOYALUX18P1.5/AR
+✓ Produto 220: LENTE P HOYALUX18WP1.5/T
+✓ Produto 221: LENTE P HOYALUX18WP1.5T/AR
+✓ Produto 222: LENTE P HOYALUX18WPTX1.53/I
+✓ Produto 223: LENTE P HOYALUX18WPTX1.53/AR
+✓ Produto 224: LENTE P HOYALUX18WP1.53TX/T
+✓ Produto 225: LENTE P HOYALUX18WP1.53TX T/AR
+✓ Produto 226: LENTE P HOYALUX18WP1.67 INC
+✓ Produto 227: LENTE P HOYALUX18WP1.67/AR
+✓ Produto 228: LENTE HOYALUX14S1.5
+✓ Produto 229: LENTE HOYALUX WIDE BKS 1.50 INC
+✓ Produto 230: LENTE HOYALUX14S1.5/AR
+✓ Produto 231: LENTE PR DAYNAMIC1.5 AR CX
+✓ Produto 232: LENTE HOYALUX WIDE BKS PRO 1.50 SENSITY AR CX
+✓ Produto 233: LENTE PR DAYNAMIC1.5 SENSITY AR CX
+✓ Produto 234: LENTE HOYALUX WIDE BKS 1.53 TVX INC
+✓ Produto 235: LENTE HOYALUX WIDE BKS 1.53 SENSITY
+✓ Produto 236: LENTE HOYALUX WIDE BKS 1.53 SENSITY AR
+✓ Produto 237: LENTE P HOYALUX WIDE BKS 1.67 INC
+✓ Produto 238: LENTE PR1.67 HOYALUX WIDE BKS AR
+✓ Produto 239: LENTE P HOYALUX18W1.5 /I
+✓ Produto 240: LENTE P HOYALUX WIDE VXT 1.67 SENSITY
+✓ Produto 241: LENTE P HOYALUX18W1.5 / T
+✓ Produto 242: LENTE P HOYALUX18W1.5 T/AR
+✓ Produto 243: LENTE P HOYALUX18WTX1.53/I
+✓ Produto 244: LENTE P HOYALUX18WTX1.53/AR
+✓ Produto 245: LENTE P HOYALUX18WTX1.53/T
+✓ Produto 246: LENTE P HOYALUX18WTX1.53 T/AR
+✓ Produto 247: LENTE PR1.53 ARGOS INC.
+✓ Produto 248: LENTE PR1.53 ARGOS AR
+✓ Produto 249: LENTE PR1.53 ARGOS TRANSIT
+✓ Produto 250: LENTE PR1.53 ARGOS TRANSIT AR
+✓ Produto 251: LENTE PR1.59 ARGOS INC.
+✓ Produto 252: LENTE ARGOS 1.59 AR NR BC
+✓ Produto 253: LENTE ARGOS 1.60 INC.
+✓ Produto 254: LENTE ARGOS 1.60 AR CX
+✓ Produto 255: LENTE P HOYALUX22GP1.5/ I
+✓ Produto 256: LENTE P HOYALUX22GP1.5/ AR
+✓ Produto 257: LENTE PR1.50 ARGOS TF TRANSIT AR
+✓ Produto 258: LENTE PR1.53 ARGOS TF INC.
+✓ Produto 259: LENTE PR1.53 ARGOS TF AR
+✓ Produto 260: LENTE PR1.53 ARGOS TF TRANSIT AR
+✓ Produto 261: LENTE PR1.53 ARGOS TF TRANSIT
+✓ Produto 262: LENTE ARGOS 1.60 AR NR BC
+✓ Produto 263: LENTE PR1.50 ARGOS TF AR
+✓ Produto 264: LENTE BIF. BIOVIS TRANST IV
+✓ Produto 265: LENTE VS1.67 STYLIS CRIZAL C4
+✓ Produto 266: LENTE VS1.74 STYLIS CRIZAL C4
+✓ Produto 267: LENTE VS1.67 STYLIS CRIZAL C2
+✓ Produto 268: LENTE VS1.74 STYLIS1.74 CRIZAL C2
+✓ Produto 269: LENTE VS STYLIS1.67CZ4 TRANT
+✓ Produto 270: LENTE VS1.67 STYLIS TRANSIT CRIZAL C4
+✓ Produto 271: LENTE VS1.59 TRANS CRIZAL C4
+✓ Produto 272: LENTE VS1.49 CRIZAL C-4
+✓ Produto 273: LENTE VS1.49 TRANT VII CRIZAL C-2
+✓ Produto 274: LENTE VS1.59 TRANT VII C2
+⏭️  Produto "LENTE VS1.49 CRIZAL C-2" já existe (ID: 136)
+✓ Produto 276: LENTE VS1.49 TRANT VII CRIZAL C-4
+✓ Produto 277: LENTE VS1.49 TRANT VII C-2
+✓ Produto 278: LENTE VS1.74 STYLIS CRIZAL C6
+✓ Produto 279: LENTE VS1.67 STYLIS TRANSIT CRIZAL C6
+✓ Produto 280: LENTE VS1.67 STYLIS CRIZAL C6
+✓ Produto 281: LENTE VS1.59 TRANSIT CRIZAL C6
+✓ Produto 282: LENTE VS1.59 TRANS C6
+✓ Produto 283: LENTE VS1.59 CRIZAL C6
+✓ Produto 284: LENTE VS1.59 INC C-6
+✓ Produto 285: LENTE VS1.49 TRANST CRIZAL C-6
+✓ Produto 286: LENTE VS1.49 TRANT C-6
+✓ Produto 287: LENTE VARILUX CONF1.5 CRIZAL EASY PRO
+✓ Produto 288: LENTE VARILUX PHYSIO CZ EASY PRO
+✓ Produto 289: LENTE P VARILUX POLY T/CZ
+✓ Produto 290: LENTE P VARILUX CONF POLY TRAN
+✓ Produto 291: LENTE P VARILUX POLY POLARZ/CZ
+✓ Produto 292: LENTE P VARILUX POLY POLARZ/INC
+✓ Produto 293: LENTE P VARILUX POLY/CZ
+✓ Produto 294: LENTE VARILUX LIBET360 POLY TRANST CZ SAPPHIRE
+✓ Produto 295: LENTE VARILUX TRANS
+✓ Produto 296: LENTE P VARILUX LIB POLY/CZ
+✓ Produto 297: LENTE P VARILUX POLY/INC
+✓ Produto 298: LENTE P VARILUX LIB POLY T/CZ
+✓ Produto 299: LENTE P VARILUX LIB POLY/INC
+⏭️  Produto "LENTE PR HAYTEK 1.50 ACAB AR" já existe (ID: 180)
+✓ Produto 301: LENTE BIF. ULTEX TRANT II
+✓ Produto 302: LENTE P GT2/AR-MAR
+✓ Produto 303: LENTE PR ZEISS GT21.59 FOTOFUSION AR DURAV CHROME UV
+✓ Produto 304: LENTE P GT2 POLY/AR-PLATINUM
+✓ Produto 305: LENTE P 1.50 GT2 FOTO/AR-PLATINUM
+✓ Produto 306: LENTE GT2 1.60 AR DURAVISION CHROME UV
+✓ Produto 307: LENTE P GT2/AR-PLATINUM
+✓ Produto 308: LENTE P GT21.67 FOTO/AR-PLATINUM
+✓ Produto 309: LENTE P GT2 POLY FOTO/INC
+✓ Produto 310: LENTE P GT21.67 FOTO/AR-MAR
+✓ Produto 311: LENTE P GT2 POLY FOTO/AR-MAR
+✓ Produto 312: LENTE P 1.50 GT2 FOTO/AR-MAR
+✓ Produto 313: LENTE P GT2 POLY AR-MAR
+✓ Produto 314: VARILUX LIBERTY ORMA CRIZAL EASY PRO
+✓ Produto 315: LENTE P VARILUX LIB TAN/INC
+✓ Produto 316: LENTE VS1.59 ACABADA AR
+✓ Produto 317: ARMAÇÃO SEGURANÇA
+✓ Produto 318: OCULOS SOLAR DETROIT
+✓ Produto 319: LENTE VS1.53 ACABADA AR -6+3C-2
+✓ Produto 320: LENTE VS1.53 ACABADA TRANSIT AR C-2
+✓ Produto 321: LENTE VS1.53 ACABADA AR +6-6C-2
+✓ Produto 322: LENTE VS1.53 ACABADA INC C-2
+✓ Produto 323: LENTE VS1.53 ACABADA TRANSIT C-2
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 325: LENTE P SOLAMAX1,67 E-12+8C-4/INC
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 327: LENTE PR GRAND VIEW1.5 TRANSITIONS
+✓ Produto 328: LENTE PR GRAND VIEW1.5 AR
+✓ Produto 329: LENTE GRAND VIEW 1.50 INC
+✓ Produto 330: LENTE PR GRAND VIEW1.5 TRANSITIOS AR
+✓ Produto 331: LENTE P 1.53 GRAND VIEW / AR
+✓ Produto 332: LENTE P 1.53 GRAND VIEW / INC
+✓ Produto 333: LENTE P 1.53 GRAND VIEW / TRANT
+✓ Produto 334: LENTE P 1.53 GRAND VIEW TRANT / AR
+✓ Produto 335: ARMAÇÃO HAGNUS
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 337: LENTE VS1.59 AR C-2
+✓ Produto 338: OCULOS SOLAR PAOLA PIOVANI
+✓ Produto 339: LENTE VS1.53 SURF AR +8-10C4
+✓ Produto 340: OCULOS DE LEITURA
+✓ Produto 341: LENTE VS1.50 TRANT AR
+✓ Produto 342: ATUALIZAR PRODUTO1
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 345: VARILUX COMFORT MAX ORMA BLUE UV TGEN8 CRZ EASY PRO
+✓ Produto 346: LENTE AMPLUS 1.50 AR CE
+✓ Produto 347: LENTE VS1.49 TRANS C4
+✓ Produto 348: LENTE VS1.49 TRANSIT C4
+✓ Produto 349: ARMAÇÃO DIOCULOS
+✓ Produto 350: LENTE P 1.50 ESPACE/TRANT III
+✓ Produto 351: LENTE P 1.50 ESPACE/TRANS III
+✓ Produto 352: LENTE VS1.49 ACABADA AR C-2
+✓ Produto 353: LENTE VS1.56 ACABADA AR C-4
+✓ Produto 354: LENTE AMPLUS 1.53 INCOLOR
+✓ Produto 355: LENTE AMPLUS 1.50 SENSITY AR
+✓ Produto 356: LENTE VS1.59 SURF TRANT AR A. I.
+✓ Produto 357: LENTE VS1.67 TRANSIT AR
+✓ Produto 358: LENTE VS1.67 TRANSIT / AR
+✓ Produto 359: ARMAÇÃO KEEPER
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 363: ARMAÇÃO DI VITTORE
+✓ Produto 364: LENTE AMPLUS 1.50 INC
+✓ Produto 365: LENTE AMPLUS 1.50 SENSITY
+✓ Produto 366: LENTE HOYA VS1.50 SENSITY AR CX
+✓ Produto 367: LENTE HOYA VS1.50 SENSITY
+✓ Produto 368: COLORAÇAO ROSA
+✓ Produto 369: COLORAÇÃO AZUL
+✓ Produto 370: LENTE VS1.59 TRANSIT C-4
+✓ Produto 371: LENTE VS1.59 SURF TRAN C-4
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 373: LENTE VS1.50 HOYA AR LL/BC
+✓ Produto 374: LENTE VS1.53 ACABADA AR BC C-2
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 376: LENTE HOYA VS1.50  AR BLUE
+✓ Produto 377: LENTE VS1.53 AR BLUE +4-4C-2
+✓ Produto 378: LENTE VS1.59 SURF AR BLUE CONTROL C-4
+✓ Produto 379: LENTE HOYA VS1.50 SENSITY AR LL UV CONTROL
+✓ Produto 380: LENTE VS1.50 HOYA SENSITY NR/BC
+✓ Produto 381: LENTE PR ARGOS1.5 SENSITY ORIGINAL
+✓ Produto 382: LENTE ARGOS 1.50 SENSITY AR CX
+✓ Produto 383: LENTE ARGOS 1.53 SENSITY
+✓ Produto 384: LENTE ARGOS 1.53 SENSITY AR CX
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 386: LENTE VS1.50 INC PLANA
+✓ Produto 387: OCULOS SOLAR KEYPER
+✓ Produto 388: OCULOS SOLAR TOP LINE
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 390: OCULOS DESATIVADO
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 392: LENTE P VARILUX CONF/EASY CLEAN
+✓ Produto 393: LENTE DE CONTATO GRAU INC
+✓ Produto 396: LENTE DE CONTATO PLANA COLORIDA
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 398: LENTE ARGOS 1.59 SENSITY AR CX
+✓ Produto 399: LENTE ARGOS 1.59 SENSITY
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 407: ARMAÇÃO FLEX
+✓ Produto 408: LENTE VS1.67 FOTOFUSION/AR -18+12C-4
+✓ Produto 409: LENTE VS1.50 SOLAR CINZA
+✓ Produto 410: LENTE VS1.50 PLANA B8 CINZA ESCURO
+✓ Produto 411: COLORAÇÃO AZUL SUAVE
+✓ Produto 412: LENTE VS1.67 HOYA AR
+✓ Produto 413: LENTE VS1.74 ACABADA AR C-2
+✓ Produto 414: LENTE VS1.74 SURF AR
+✓ Produto 415: LENTE PR1.50 ARGOS SOLAR
+✓ Produto 416: ARMAÇÃO PROMOÇÃO ZF
+⚠️  Produto 418: Marca 109 não existe. Usando marca padrão.
+✓ Produto 418: NOVO ACORDO - OSMARIA
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+✓ Produto 420: LENTE AMPLUS 1.59 INCOLOR
+✓ Produto 421: LENTE ARGOS 1.50 AR BC
+✓ Produto 422: LENTE VS1.50 PLANA MARRON
+✓ Produto 423: LENTE HOYALUX ID LIFE STYLE 1.50 AR CE
+✓ Produto 424: LENTE OCUPACIONAL DESKTOP PREMIUM1.50
+✓ Produto 425: LENTE VS1.59 ACABADA INC
+✓ Produto 426: LENTE VS1.74 SURF INCOLOR
+✓ Produto 427: LENTE VS1.67 ANTIRRISCO
+✓ Produto 428: LENTE VS1.74 SURF INC
+✓ Produto 429: LENTE VS1.67 INC. E-25,00 C-2,00
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 431: LENTE VS1.59 SURF TRANST AR A.I.
+✓ Produto 436: LENTE P 1.56 FOTO AR
+✓ Produto 437: LENTE VS1.49 SOLAR ESPELHADA
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 439: LENTE HOYALUX WIDE BKS 1.53 AR
+✓ Produto 440: LENTE VS1.67 AR C6
+✓ Produto 441: LENTE VS1.50 PLANA B6 AZUL
+✓ Produto 442: ARMAÇÃO GIRO
+✓ Produto 444: VARILUX LIBERTY ORMA TRANS CZ EASY PRO
+✓ Produto 445: LENTE VS1.67 AR C-6
+✓ Produto 446: LENTE DE CONTATO COLORIDA SOLOTICA PL
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⚠️  Produto 449: Marca 109 não existe. Usando marca padrão.
+✓ Produto 449: NOVO ACORDO - LUCIA MARIA
+✓ Produto 450: OCULOS SOLAR MARESIA
+✓ Produto 451: OCULOS SOLAR VIZZANO
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+✓ Produto 455: LENTE VS1.60 +4-10C2 AR
+✓ Produto 456: LENTE PR GRAND VIEW 1.59 FILTRO AR VD
+✓ Produto 457: ARMAÇÃO LEVERT
+⏭️  Produto "SOLAR Z FORA DE LINHA" já existe (ID: 21)
+✓ Produto 460: ARMAÇÃO YNOT
+⚠️  Produto 461: Marca 109 não existe. Usando marca padrão.
+✓ Produto 461: NOVO ACORDO - ROBERVAL NOV/14
+✓ Produto 462: LENTE VS1.67 FOTOFUSION / AR
+✓ Produto 463: LENTE PR GRAND VIEW 1.59  AR
+✓ Produto 464: COLORAÇAO VERDE
+✓ Produto 465: LENTE VS1.60 VISION EASY/AR
+✓ Produto 466: LENTE AMPLUS 1.50 SOLAR
+✓ Produto 467: LENTE VS1.56 AR
+✓ Produto 468: LENTE VS1.56 ACABADA AR
+⏭️  Produto "LENTE VS1.49 ACABADA AR" já existe (ID: 112)
+✓ Produto 470: LENTE P 1.50 GRAND VIEW1.5 / ACLIMATTES
+✓ Produto 472: LENTE DE CONTATO TORICA INC
+✓ Produto 473: LENTE VS1.50 AC AR LL C-2
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 475: VARILUX CONF360/EASY CLEAN
+✓ Produto 476: LENTE HOYALUX WIDE BKS 1.50 AR BC
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+✓ Produto 479: LENTE HOYALUX WIDE BKS 1.50 SENSITY
+✓ Produto 480: LENTE VS1.53 HOYA SYNC III 5 SENSITY NR/BC
+✓ Produto 481: LENTE PR 1.50 FOTO
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 487: LENTE VS1.50 SOLAR -10+8 C4
+✓ Produto 488: ARMAÇÃO SPELLBOUND
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 492: LENTE VS1.50 FOTOFUSION
+⏭️  Produto "ARMAÇAO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 494: LENTE
+✓ Produto 495: LENTE P 1.50 AO COMPACTA INC
+✓ Produto 496: LENTE P HOYALUX WIDE BKS1.5 SENST/AR
+✓ Produto 497: LENTE PR VISIONMAX HD1.67 INC
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 499: LENTE Z FORA DE LINHA ARGOS
+✓ Produto 500: LENTE PR1.59 ARGOS AR
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 502: LENTE VS HAYTEK 1.56 FOTO AR
+✓ Produto 503: LENTE P GRAND VIEW1.50 TRANST / AR
+✓ Produto 504: LENTE VS HAYTEK 1.56 INC.
+✓ Produto 505: LENTE VS1.50 SURF SENSITY AR -10+8C-4
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 511: LENTE VS1.67 AR VISION EASE
+⏭️  Produto "RENEGOCIAÇÃO" já existe (ID: 202)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 517: LENTE VS1.67 FOTOFUSION -18+12C-4
+✓ Produto 518: LENTE VS1.59 FOTO -10+7 C-6
+✓ Produto 519: LENTE VS1.60 SURF AR  C-4
+✓ Produto 520: LENTE VS1.60 SURF SOLAR C4
+✓ Produto 521: VARILUX LIBERTY ORMA AR EASY CLEAN
+✓ Produto 522: LENTE SOLAR MARRON PLANA
+⏭️  Produto "ARMAÇÃO NYLON FL" já existe (ID: 97)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 526: ARMAÇÃO IMOLA
+✓ Produto 528: LENTE PR NO LINE INC
+✓ Produto 529: LENTE VS1.50 ACABADA FOTOFUSION
+✓ Produto 530: LENTE VS1.50 HOYA SENSITY LL/BC
+✓ Produto 531: LENTE VS1.59 ACABADA / AR -4+4C-2
+✓ Produto 532: LENTE VS1.56 FOTO AR
+✓ Produto 533: LENTE P HOYALUX WIDE BKS PRO 1.67 SENSITY AR
+⏭️  Produto "LENTE BIF. BIOVIS FOTO" já existe (ID: 158)
+✓ Produto 535: LENTE PR1.50 ARGOS TF SENSITY AR
+✓ Produto 536: ATUALIZAR PRODUTO2
+✓ Produto 537: LENTE P OPTI PRIME 1.56 FOTO
+✓ Produto 538: LENTE P 1.56 INC
+✓ Produto 539: LENTE P SOLAMAX 1.67 FOTOFUSION
+✓ Produto 540: LENTE BIOVIS 1.59 INCOLOR
+✓ Produto 541: LENTE P 1.56 BYVISION AR ACABADA
+✓ Produto 542: LENTE PR1.50 FOTO AR
+✓ Produto 543: LENTE VS1.59 INCOLOR
+✓ Produto 544: LENTE ARGOS 1.50 SENSITY AR BC
+⏭️  Produto "LENTE BIF. BIOVIS INC" já existe (ID: 129)
+✓ Produto 546: ARMAÇÃO FIAMMA
+✓ Produto 547: ARMAÇÃO URBAN
+⏭️  Produto "LENTE PR 1.50 FOTO" já existe (ID: 481)
+✓ Produto 551: LENTE VS1.67 AR
+✓ Produto 552: LENTE VS1.50 AR
+✓ Produto 553: LENTE PR 1.50 INC
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+⏭️  Produto "LENTE BIF. BIOVIS FOTO" já existe (ID: 158)
+⏭️  Produto "LENTE VS1.56 FOTO AR" já existe (ID: 532)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 558: LENTE PR ESPACE1.5 ACLIMATES
+⏭️  Produto "LENTE VS1.50 INC" já existe (ID: 134)
+✓ Produto 560: LENTE PR ESPACE 1.50 INC
+✓ Produto 561: LENTE VS1.67 AR BC
+✓ Produto 562: LENTE BIFOCAL ULTEX INC
+✓ Produto 563: LENTE VS1.50 INCOLOR
+✓ Produto 564: LENTE PR NO LINE INCOLOR
+✓ Produto 565: LENTE BIF. ULTEX FOTO
+✓ Produto 566: LENTE AMPLUS 1.59 SENSITY
+✓ Produto 567: LENTE PR FREE LINE PLUS ACAB
+✓ Produto 568: LENTE VS1.49 FOTO / AR
+⏭️  Produto "LENTE VS1.56 AR" já existe (ID: 467)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 572: LENTE PR NO LINE SOLAR
+✓ Produto 573: LENTE BIF. ULTEX INC.
+⏭️  Produto "LENTE BIF. ULTEX FOTO" já existe (ID: 565)
+⏭️  Produto "LENTE PR NO LINE INC" já existe (ID: 528)
+⏭️  Produto "LENTE VS1.50 FOTO FUSION" já existe (ID: 177)
+⏭️  Produto "LENTE BIF. BIOVIS INC" já existe (ID: 129)
+✓ Produto 578: LENTE BIOVIS INC
+✓ Produto 579: LENTE VS1.50 FOTOFUSION / AR
+✓ Produto 580: LENTE VS1.50 HOYA SYNC III 9 AR NR/BC
+✓ Produto 581: LENTE VS1.53 SENSITY/AR
+✓ Produto 582: LENTE AMPLUS 1.59 AR
+⏭️  Produto "LENTE VS1.50 AR" já existe (ID: 552)
+✓ Produto 584: LENTE VS1.50 HOYA SYNC III 13 NR/BC
+✓ Produto 585: LENTE DE CONTATO COM GRAU -2,00
+✓ Produto 586: LENTE VS1.5 HOYA AR NR/BC
+✓ Produto 587: LENTE VS1.50 SURF TRANSITIONS
+⏭️  Produto "LENTE BIF. ULTEX FOTO" já existe (ID: 565)
+✓ Produto 589: LENTE P HOYALUX WIDE VXT PRO 1.50 AR
+✓ Produto 590: LENTE PR ESPACE1.50 ACLIMATES
+✓ Produto 591: ARMAÇÃO PROMOÇÃO
+✓ Produto 592: ARMAÇÃO PROMOÇÃO NYLON
+✓ Produto 593: LENTE VS1.67 INCOLOR
+✓ Produto 594: LENTE P HOYALUX WIDE VXT 1.50 PREMIUM
+✓ Produto 595: LENTE VS1.59 / AR C-4
+✓ Produto 596: LENTE VS1.50 AR BLUE
+⏭️  Produto "LENTE VS1.50 AR BLUE" já existe (ID: 596)
+⏭️  Produto "LENTE VS1.50 AR BLUE" já existe (ID: 596)
+✓ Produto 599: LENTE PROG KODAK UP 1.50 INC
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 602: LENTE ARGOS 1.50 SENSITY AR NR/BC
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+✓ Produto 604: LENTE PR1.59 AMPLUS INC
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 606: ARMAÇÃO PERSONAL
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇAO METAL" já existe (ID: 166)
+✓ Produto 612: LENTE BIF BIOVIS INC
+✓ Produto 613: LENTE PR 1.50 AR
+✓ Produto 615: LENTE PR NOLINE INC.
+✓ Produto 616: LENTE VS1.56 FOTO
+✓ Produto 617: ARMAÇAO OK ACETATO
+✓ Produto 618: LENTE P 1.50 NOLINE
+⏭️  Produto "ARMAÇAO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 621: ARMAÇAO OBEN
+⏭️  Produto "ARMAÇAO Z FORA DE LINHA" já existe (ID: 80)
+✓ Produto 623: LENTE HOYALUX WIDE VXT PREMIUM 1.59 AR CX
+✓ Produto 624: LENTE HOYALUX WIDE BKS PRO 1.50 AR NR+BC
+✓ Produto 625: LENTE VS1.59 FOTOFUSION / AR
+✓ Produto 626: LENTE PR MAX 1.50 FOTO / AR
+✓ Produto 627: ARMÇAO BALGRIF
+✓ Produto 628: LENTE VS VISIONMAX HD1.67 SUNPROTECT DURAMAX BLUE
+✓ Produto 629: ARMAÇÃO VISEL
+⏭️  Produto "ARMAÇÃO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+✓ Produto 632: LENTE DE CONTATO PL COLOR FRESHLOOK
+✓ Produto 633: BERINE SP
+✓ Produto 634: ATUALIZAR PRODUTO4
+✓ Produto 635: LENTE VS SOLAR PLANA DEGRADÊ
+✓ Produto 636: LENTE DE CONTATO
+✓ Produto 637: LENTE PR NO LINE FOTO
+✓ Produto 638: OCULO SOLAR METAL
+✓ Produto 640: OCULOS SOLAR VISEL
+✓ Produto 641: COLORAÇÃO MARRON DEGRADE
+✓ Produto 642: LENTE ARGOS 1.50 AR NR/BC
+⏭️  Produto "ARMAÇAO Z FORA DE LINHA" já existe (ID: 80)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+⏭️  Produto "LENTE VS1.59 AR" já existe (ID: 154)
+✓ Produto 647: LENTE VS1.67 SENSITY
+✓ Produto 648: LENTE VS1.50 FOTO
+⏭️  Produto "LENTE PR 1.50 AR" já existe (ID: 613)
+✓ Produto 650: LENTE VS1.50 FOTO/AR
+✓ Produto 651: LENTE BIF ULTEX INC
+⏭️  Produto "LENTE VS1.50 INC" já existe (ID: 134)
+✓ Produto 654: LENTE P HOYALUX WIDE VXT 1.50 SENSITY AR
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+✓ Produto 656: ARMAÇÃO AUGEN BALGRIF
+✓ Produto 657: ARMAÇÃO TOP LINE
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+⏭️  Produto "ARMAÇÃO BALGRIF" já existe (ID: 10)
+⏭️  Produto "ARMAÇÃO ACETATO" já existe (ID: 89)
+✓ Produto 661: ARMAÇÃO RENOMA
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "ARMAÇÃO METAL" já existe (ID: 166)
+✓ Produto 669: ARMAÇAO K&L
+✓ Produto 670: ARMAÇAO VLS PORT
+⏭️  Produto "LENTE VS1.50 AR" já existe (ID: 552)
+✓ Produto 673: LENTE VS1.56 AR BLUE
+⏭️  Produto "LENTE VS1.50 AR BLUE" já existe (ID: 596)
+✓ Produto 675: LENTE VS1.50 FOTO AR
+✓ Produto 676: LENTE VS1.67 FOTO FUSION
+✓ Produto 677: ESTOJO DE LENTE DE CONTATO
+✓ Produto 678: LENTE VS1.59 POLY INC
+✓ Produto 679: LENTE VS1.59 POLY AR
+⏭️  Produto "LENTE VS1.59 AR C-2" já existe (ID: 337)
+✓ Produto 681: LENTE PR 1.50 AR GREEN
+✓ Produto 682: LE
+✓ Produto 683: LENTE VS1.61 AR
+⏭️  Produto "ARMAÇÃO NYLON" já existe (ID: 8)
+⏭️  Produto "LENTE VS1.50 AR" já existe (ID: 552)
+✓ Produto 686: LENTE VS1.67 AR NO-RISK
+✓ Produto 687: OCULOS DE LEITURA SURFAÇADO
+✓ Produto 690: ARMAÇÃO VIZZANO
+✓ Produto 691: ARMAÇÃO MARESIA
+✓ Produto 693: ARMAÇÃO K2
+✓ Produto 694: ARMAÇÃO KEEPER BRASIL
+✓ Produto 695: LENTE VS 1.56 FOTO AR
+✓ Produto 696: LENTE VS1.59 POLI FOTOFUSION
+✓ Produto 697: LENTE PROG1.59 FOTO
+✓ Produto 698: LENTE PROG1.50 FOTO AR
+⏭️  Produto "LENTE VS1.67 AR" já existe (ID: 551)
+⏭️  Produto "LENTE BIF. BIOVIS FOTO" já existe (ID: 158)
+⏭️  Produto "LENTE BIF. BIOVIS INC" já existe (ID: 129)
+✓ Produto 702: LENTE PR VISION + 1.59 SUNPROTECT AR DURAMAX
+✓ Produto 703: LENTE P OPTI PRIME1.5 FOTO AR
+✓ Produto 704: LENTE SOLAR PLANA
+✓ Produto 705: ARMAÇÃO PAULO CARRARO
+✓ Produto 706: ARMAÇÃO VALENTINA GUERRA
+⏭️  Produto "LENTE VS1.59 AR" já existe (ID: 154)
+✓ Produto 708: LENTE VS1.50 TRUEFORM AR BLUE CONT
+✓ Produto 709: LENTE VS1.50 TRUEFORM SENSITY AR BC
+✓ Produto 710: LENTE HOYALUX WIDE BKS 1.50 SENSITY AR BC
+✓ Produto 711: LENTE HOYALUX WIDE VXT 1.67 AR CX
+✓ Produto 712: LENTE HOYALUX ID LIFE STYLE 1.67 AR CX
+⏭️  Produto "LENTE PR ESPACE 1.50 INC" já existe (ID: 560)
+✓ Produto 714: LENTE ARGOS 1.50 SENSITY AR NR
+✓ Produto 715: LENTE PROG1.50 FOTO
+⏭️  Produto "LENTE PR ESPACE1.5 ACLIMATES" já existe (ID: 558)
+✓ Produto 718: LENTE PR VISIONMAX 1.67 INC
+✓ Produto 719: LENTE VS1.59 POLI FOTO AR
+⏭️  Produto "LENTE PR 1.50 INC" já existe (ID: 553)
+✓ Produto 721: LENTE VS 1.74
+⏭️  Produto "LENTE VS1.50 INCOLOR" já existe (ID: 563)
+✓ Produto 723: LENTE DE CONTATO ANUAL TÓRICA COLORIDA
+✓ Produto 724: LENTE DE CONTATO ANUAL ESFERICA COLORIDA
+✓ Produto 725: LENTE PR ESPACE1.5 ACLIMATES AR
+✓ Produto 726: OCULOS SOLAR ROMANO
+✓ Produto 727: OCULOS SOLAR CARMEN VITTI
+✓ Produto 728: LENTE ESPACE AR
+✓ Produto 730: LENTE PROG 1.56 FOTO
+✓ Produto 731: ARMAÇÃO BURGUESE
+⏭️  Produto "LENTE VS1.56 FOTO AR" já existe (ID: 532)
+⏭️  Produto "LENTE PROG1.50 FOTO" já existe (ID: 715)
+✓ Produto 735: LENTE VS1.59 AR BLUE
+✓ Produto 736: LENTE VS1.67 ANTIRREFLEXO ACAB
+✓ Produto 737: VARILUX PHYSIO TRANSITIOS CRIZAL EASY PRO
+✓ Produto 738: LENTE PR NOLINE AR
+✓ Produto 739: ARMAÇÃO LOUGGE
+✓ Produto 740: LENTE PR ESPACE INC
+✓ Produto 741: LENTE PROG VISION MAX HD1.67 SAFEBLUE AR DURAVISION
+✓ Produto 742: LENTE PR AMPLUS 1.53 AR CE
+✓ Produto 743: LENTE PR NEXVISION FOTO AR
+✓ Produto 745: LENTE PR VISIONMAX 1.5 FOTO AR DURAMAX VD
+✓ Produto 746: ARMAÇÃO ECKO UNLTD
+✓ Produto 747: OCULOS SOLAR ECKO UNLTD
+✓ Produto 749: ARMAÇAO VERTZ
+✓ Produto 750: LENTE VS1.60 AR NO RISK
+✓ Produto 751: LENTE VS 1.56 SOLAR
+✓ Produto 753: LENTE PR VISIONMAX HD1.5 DURAMAX
+✓ Produto 754: LENTE PR VISION+1.50 INC
+✓ Produto 755: LENTE PR VISIONMAX SELF1.50 SELF SUNPROTEC
+✓ Produto 756: LENTE CONTATO TERAPEUTICA
+✓ Produto 757: LENTE PR 1.50 AR BLUE
+✓ Produto 758: LENTE PR VISION+1.50 SUNPROTEC
+✓ Produto 759: LENTE PR DAYNAMIC1.59 AR CX
+✓ Produto 760: LENTE PR VISIONMAX HD1.50 TANSIT. AR DURAMAX
+✓ Produto 761: LENTE VS1.56 FOTO AR BLUE
+✓ Produto 762: LENTE PR ARGOS1.5 SOLAR
+✓ Produto 763: LENTE PR ARGOS 1.60 SOLAR
+✓ Produto 764: LENTE PR VISION+1.50 AR DURAMAX
+⏭️  Produto "LENTE VS1.59 AR" já existe (ID: 154)
+✓ Produto 766: LENTE PR VISIONMAX HD1.59 AR DURAMAX
+✓ Produto 767: LENTE PR VISIONMAX HD1.50 SUNPROTEC
+✓ Produto 768: LENTE PR VISIONMAX 1.5 FILTRO AR DURAMAX AZ
+✓ Produto 769: LENTE PR LABO SYNC EASY 1.59 POLY INC
+✓ Produto 770: LENTE PR DAYNAMIC1.5 SOLAR
+✓ Produto 771: LENTE PR VISIONMAX HD1.50 TRASITIONS 8
+✓ Produto 772: LENTE VS 1.67 FOTO AR
+✓ Produto 774: LENTE PR HAYTEK TOP 1.56 AR VD
+✓ Produto 775: LENTE PR MULTI AR FILTRO AZUL
+✓ Produto 776: LENTE PR HAYTEK SMART 1.56 INC
+✓ Produto 777: LENTE PR VISION+ 1.59 SUNPROTEC
+✓ Produto 778: LENTE PR HAYTEK SMART 1.56 FOTO AR V
+✓ Produto 779: LENTE PR VISION+ 1.50 SAFE BLUE SUNPROTEC
+✓ Produto 780: LENTE PR HAYTEK TOP 1.59 AR V
+✓ Produto 781: LENTE VS1.50 SURF SOLAR
+✓ Produto 782: LENTE PR HAYTEK PRO ID FF FILTO AZUL AR BLUE
+✓ Produto 783: LENTE PR HAYTEK SMART 1.56 FF FOTO
+✓ Produto 784: LENTE PR VISIONMAX 1.50 FOTO FILTRO  AR DUR AZ
+✓ Produto 785: LENTE PR ESPACE TRANSITIONS 8
+✓ Produto 786: LENTE PR VISIONMAX 1.6 SAFEBLUE DURAMAX BLUE
+✓ Produto 787: LENTE VS HAYTEK 1.59 FILTRO AZUL AR BLUE
+✓ Produto 789: ARMAÇÃO POWER
+✓ Produto 790: LENTE PR HAYTEK LIGHT 1.56 AR VD
+✓ Produto 791: LENTE PR DAYNAMIC1.53 NORISK BLUE
+✓ Produto 792: LENTE PR DAYNAMIC1.5 NORISK BLUE
+✓ Produto 793: LENTE PR HAYTEK LIGHT1.56 FILTRO FOTO AR AZUL
+✓ Produto 794: LENTE PR HAYTEK SMART 1.56 FILTRO AR AZUL
+✓ Produto 795: LENTE VS 1.59 INC SURF
+✓ Produto 796: LENTE PR VISIONMAX UNUQUE DURAMAX GREEN
+✓ Produto 797: LENTE PR HAYTEK LIGHT1.56 FOTO AR VD
+⚠️  Produto 798: Marca 3 não existe. Usando marca padrão.
+✓ Produto 798: OCULOS SOLAR JEAN PIERRE
+✓ Produto 799: LENTE PR HAYTEK SMART 1.67 SOLAR DEG
+✓ Produto 800: LENTE VS HAYTEK 1.67 FILTO AR BLUE
+✓ Produto 801: LENTE PR HAYTEK SMART 1.56 AR AZUL
+✓ Produto 803: ARMAÇÃO TOP CLUB
+✓ Produto 804: LENTE VS HAYTEK 1.56 FOTO FILTRO AR AZUL
+✓ Produto 805: LENTE PR ARGOS TX 1.53 AR BLUE CONTROL
+✓ Produto 806: LENTE VS GOLD 1.56 AR
+✓ Produto 807: LENTE PR HAYTEK SMART 1.56 FOTO FILTRO AR AZUL
+✓ Produto 808: LENTE VS HAYTEK 1.56 FILTRO AR BLUE
+✓ Produto 809: LENTE PR HOYALUX LIFE STYLE3 ID PREMIO AR NORISK BLUE
+✓ Produto 810: LENTE PR HOYALUX LIFE STYLE3 ID PREMIO SOLAR
+✓ Produto 811: OCULOS PRONTO
+✓ Produto 812: LENTE PR VISION + TRANSITIONS 8
+✓ Produto 813: LENTE PR DAYNAMIC1.5 SENSITY AR BLUE
+✓ Produto 814: LENTE VS HAYTEK1.67 FF FOTO AR
+✓ Produto 815: LENTE PR VISIONMAX SELF1.74 INC
+✓ Produto 816: LENTE VS HAYTEK1.67 AR VERDE
+✓ Produto 817: LENTE PR HAYTEK SMART 1.56 AR VERDE
+✓ Produto 818: LENTE PR ORGALINE FOTO AR
+✓ Produto 820: LENTE BIFOCAL BIOVIS FOTO
+✓ Produto 821: LENTE PR MAXXEE INC
+✓ Produto 822: LENTE PR VISIONMAX SELF1.59 TRANSITIONS 8 AR GREEN VD
+✓ Produto 823: LENTE PR VISIONMAX SELF1.5 TRANSITIONS 8
+✓ Produto 824: LENTE PR VISIONMAX SELF1.5 SAFE BUE AR BLUE
+✓ Produto 825: LENTE PR DAYNAMIC1.5 SENSITY II
+✓ Produto 826: LENTE PR HAYTEK LIGHT 1.56 FILTRO AR AZUL
+✓ Produto 827: LENTE PR HAYTEK TOP 1.59 AR AZUL
+✓ Produto 828: LENTE VS HAYTEK 1.61 FF AR AZUL
+⏭️  Produto "LENTE PR 1.50 FOTO" já existe (ID: 481)
+✓ Produto 830: LENTE HAYTEK LIGHT 1.56 FOTO
+⏭️  Produto "LENTE PR ESPACE INC" já existe (ID: 740)
+✓ Produto 833: LENTE VS HAYTEK FOTO AR
+✓ Produto 834: LENTE PR VISIONMAX SELF 1.67 INC
+✓ Produto 835: LENTE PR STOK LUX FOTO
+✓ Produto 836: LENTE PR STOK LUX INC
+✓ Produto 837: LENTE PR HAYTEK SMART SOLAR CNZ 80%
+✓ Produto 838: LENTE PR BALANSIS AR NR/BC
+⏭️  Produto "LENTE VS HAYTEK 1.56 FOTO FILTRO AR AZUL" já existe (ID: 804)
+✓ Produto 840: LENTE PR HOYA AMPLUS 1.50 NR/BC
+✓ Produto 841: OCULOS SOLAR TECNOL
+✓ Produto 842: LENTE PR AMPLUS SENSITY AR NR/BC
+✓ Produto 843: LENTE PR GOLD FOTO AR
+✓ Produto 844: LENTE VS 1.56 FILTO AR AZUL
+✓ Produto 845: LENTE PR HAYTEK TOP 1.67 FILTRO AR AZUL
+✓ Produto 846: LENTE VS GOLD 1.56 FOTO FILTRO AR AZUL
+✓ Produto 848: LENTE BIFOCAL ULTEX FOTO
+✓ Produto 849: LENTE PR HAYTEK TOP 1.59 FOTO AR VD
+✓ Produto 850: LENTE VS1.67 HOYA INC
+✓ Produto 851: LENTE VS HAYTEK 1.56 FF AR VERDE
+✓ Produto 852: LENTE PR ARGOS AR NORISK
+✓ Produto 853: LENTE PR HAYTEK SMART 1.67 FILTRO AR ZUL
+✓ Produto 854: LENTE PR HAYTEK LIGHT 1.56 FF INC
+✓ Produto 856: LENTE VS HAYTEK 1.56 FILTRO AR AZUL
+✓ Produto 857: LENTE ARGOS 1.53 AR NR/BC
+✓ Produto 858: LENTE PR VISIONMAX SELF 1.74 AR DURAMAX
+✓ Produto 859: LENTE PR DAYNAMIC SENSITY AR NORISK
+✓ Produto 860: LENTE PR HAYTEK SMART 1.56 FOTO FILTRO AR VERDE
+✓ Produto 861: LENTE PR VISIONMAX SELF 1.59 AR DURAMAX
+✓ Produto 863: ARMAÇÃO DEBORAH SECCO FP
+✓ Produto 864: OCULOS DEBORAH SECCO FP
+✓ Produto 865: LENTE VS1.50 HOYA SENSITY AR LL/UV CTL
+✓ Produto 866: LENTE VS 1.67 HOYA AR LL/BC
+✓ Produto 867: LENTE PR ESPACE ACLIMATES
+✓ Produto 868: LENTE VS GOLD 1.59 POLY FOTO AR VERDE
+✓ Produto 869: LENTE VS1.53 HOYA SYNC III 9 AR NR/BC
+✓ Produto 870: LENTE PR SMART INCOLOR
+✓ Produto 871: LENTE PR SMART FOTO
+✓ Produto 872: LENTE PR DAYNAMIC1.60 AR NR/BC
+✓ Produto 873: LENTE PR DAYNAMIC1.60 SOLAR
+✓ Produto 874: LENTE VS1.56 INOVATION FOTO AR
+✓ Produto 875: LENTE PR HAYTEK CONV AR VERDE
+✓ Produto 876: LENTE PR HAYTEK LIGHT 1.61 SOLAR
+✓ Produto 877: LENTE VS 1.56 FOTO FILTRO AR AZUL
+✓ Produto 878: LENTE MIYOSMART CHAMELEON AR
+✓ Produto 879: LENTE PR MAXXEE AR VERDE
+✓ Produto 880: LENTE PR MAXXEE 1.56 FOTO AR VD
+✓ Produto 881: LENTE PR MAXXEE 1.56 FOTO
+✓ Produto 882: OCULOS SOLAR TOP CLUB
+✓ Produto 883: LENTE PR MAXXEE AR BLUE
+✓ Produto 884: LENTE PR MAXXEE 1.56 FOTO AR BLUE
+✓ Produto 885: LENTE MIYOSMART AR
+
+================================================================================
+RELATÓRIO DE MIGRAÇÃO
+================================================================================
+Total de registros: 783
+✓ Sucesso:          622
+⏭️  Ignorados:        161
+✗ Erros:            0
+================================================================================
+
+⚠️  Log de erros salvo em: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\logs\produtos-errors.json
+
+📊 Total de produtos no banco: 622
+
+📊 Produtos por categoria:
+   FRAME: 610
+   ACCESSORY: 12
+
+✅ Migração concluída com sucesso!

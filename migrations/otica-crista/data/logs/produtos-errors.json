@@ -1,0 +1,67 @@
+[
+  {
+    "produto": {
+      "prodId": 122,
+      "prodNome": "ARMAÇÃO JEAN PIERRE",
+      "prodMarca": 3,
+      "prodPrecoCompra": "200,00",
+      "prodPrecoVenda": "400,00",
+      "prodPercentual": "100",
+      "prodQtd": 6,
+      "prodTipo": "PRODUTO"
+    },
+    "error": "Marca 3 não encontrada. Usando marca padrão (1)"
+  },
+  {
+    "produto": {
+      "prodId": 418,
+      "prodNome": "NOVO ACORDO - OSMARIA",
+      "prodMarca": 109,
+      "prodPrecoCompra": "480,00",
+      "prodPrecoVenda": "600,00",
+      "prodPercentual": "25",
+      "prodQtd": 0,
+      "prodTipo": "PRODUTO"
+    },
+    "error": "Marca 109 não encontrada. Usando marca padrão (1)"
+  },
+  {
+    "produto": {
+      "prodId": 449,
+      "prodNome": "NOVO ACORDO - LUCIA MARIA",
+      "prodMarca": 109,
+      "prodPrecoCompra": "350,00",
+      "prodPrecoVenda": "700,00",
+      "prodPercentual": "100",
+      "prodQtd": 0,
+      "prodTipo": "PRODUTO"
+    },
+    "error": "Marca 109 não encontrada. Usando marca padrão (1)"
+  },
+  {
+    "produto": {
+      "prodId": 461,
+      "prodNome": "NOVO ACORDO - ROBERVAL NOV/14",
+      "prodMarca": 109,
+      "prodPrecoCompra": "650,00",
+      "prodPrecoVenda": "1300,00",
+      "prodPercentual": "100",
+      "prodQtd": 0,
+      "prodTipo": "PRODUTO"
+    },
+    "error": "Marca 109 não encontrada. Usando marca padrão (1)"
+  },
+  {
+    "produto": {
+      "prodId": 798,
+      "prodNome": "OCULOS SOLAR JEAN PIERRE",
+      "prodMarca": 3,
+      "prodPrecoCompra": "275,00",
+      "prodPrecoVenda": "550,00",
+      "prodPercentual": "100",
+      "prodQtd": 0,
+      "prodTipo": "PRODUTO"
+    },
+    "error": "Marca 3 não encontrada. Usando marca padrão (1)"
+  }
+]

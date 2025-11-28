@@ -1,0 +1,30 @@
+# Nixpacks build configuration for prismaflow-api
+# This file tells nixpacks how to build the image for this Node + TypeScript + Prisma project.
+
+[phases.setup]
+# Use Node 20.x from nixpkgs
+nixPkgs = [ 'nodejs-20_x' ]
+
+[phases.install]
+cmds = [
+  # Install JS dependencies
+  'npm ci'
+]
+
+[phases.build]
+cmds = [
+  # Generate Prisma client and compile TypeScript to /dist
+  'npx prisma generate',
+  'npm run build'
+]
+
+# Keep node_modules and prisma/ between builds to improve build performance
+cacheDirectories = ['node_modules', 'prisma']
+
+[start]
+# Command used by the final image to start the app
+cmd = 'node dist/server.js'
+
+[variables]
+NODE_ENV = 'production'
+PORT = '3000'

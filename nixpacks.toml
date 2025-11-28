@@ -14,8 +14,8 @@ cmds = [
   'npm run build'
 ]
 
-# Keep node_modules and prisma/ between builds to improve build performance
-cacheDirectories = ['node_modules', 'prisma']
+# Keep ONLY node_modules in cache - remove prisma from here
+cacheDirectories = ['node_modules']
 
 [start]
 # Command used by the final image to start the app

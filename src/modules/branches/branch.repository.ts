@@ -42,4 +42,15 @@ export class BranchRepository {
 
     return { items, total };
   }
+
+  async findAllSelectByTenant(tenantId: string) {
+    return prisma.branch.findMany({
+      where: { tenantId },
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: { name: "asc" },
+    });
+  }
 }

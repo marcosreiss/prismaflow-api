@@ -8,6 +8,7 @@ export class SaleRepository {
       hasProductItems: !!data.productItems,
       hasServiceItems: !!data.serviceItems,
     });
+
     return prisma.sale.create({
       data: withAuditData(userId, data),
       include: {
@@ -172,12 +173,7 @@ export class SaleRepository {
                 salePrice: true,
                 category: true,
                 stockQuantity: true,
-                brand: {
-                  select: {
-                    id: true,
-                    name: true,
-                  },
-                },
+                brand: { select: { id: true, name: true } },
               },
             },
             frameDetails: true,
@@ -207,10 +203,12 @@ export class SaleRepository {
         prescription: {
           select: {
             id: true,
+            clientId: true,
             prescriptionDate: true,
             doctorName: true,
             crm: true,
-            // Longe
+
+            // 🔹 Grau de longe (renomeados)
             odSphericalFar: true,
             odCylindricalFar: true,
             odAxisFar: true,
@@ -219,7 +217,8 @@ export class SaleRepository {
             oeCylindricalFar: true,
             oeAxisFar: true,
             oeDnpFar: true,
-            // Perto
+
+            // 🔹 Grau de perto (novos)
             odSphericalNear: true,
             odCylindricalNear: true,
             odAxisNear: true,
@@ -228,14 +227,29 @@ export class SaleRepository {
             oeCylindricalNear: true,
             oeAxisNear: true,
             oeDnpNear: true,
-            // Outros
+
+            // 🔹 Películas
+            odPellicleFar: true,
+            odPellicleNear: true,
+            oePellicleFar: true,
+            oePellicleNear: true,
+
+            // 🔹 Gerais
+            frameAndRef: true,
+            lensType: true,
+            notes: true,
+
             additionRight: true,
             additionLeft: true,
             opticalCenterRight: true,
             opticalCenterLeft: true,
             isActive: true,
-            // Você pode adicionar mais campos da prescrição aqui se precisar
-            // ex: frameAndRef, lensType, notes, etc.
+            tenantId: true,
+            branchId: true,
+            createdById: true,
+            updatedById: true,
+            createdAt: true,
+            updatedAt: true,
           },
         },
       },
@@ -284,9 +298,7 @@ export class SaleRepository {
   }
 
   async findProtocolBySale(saleId: number) {
-    return prisma.protocol.findFirst({
-      where: { saleId },
-    });
+    return prisma.protocol.findFirst({ where: { saleId } });
   }
 
   async findProductItemsBySale(saleId: number) {
@@ -300,9 +312,7 @@ export class SaleRepository {
   }
 
   async findFrameDetailsByItemProduct(itemProductId: number) {
-    return prisma.frameDetails.findFirst({
-      where: { itemProductId },
-    });
+    return prisma.frameDetails.findFirst({ where: { itemProductId } });
   }
 
   async findOpticalServiceItemsBySale(saleId: number) {

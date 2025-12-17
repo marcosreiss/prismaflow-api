@@ -69,11 +69,12 @@ export class PaymentRepository {
     // ✅ NOVOS FILTROS POR CLIENTE
     if (filters?.clientId || filters?.clientName) {
       where.sale = {
-        client: {}
+        client: {},
       };
 
       if (filters.clientId) where.sale.client.id = filters.clientId;
-      if (filters.clientName) where.sale.client.name = { contains: filters.clientName };
+      if (filters.clientName)
+        where.sale.client.name = { contains: filters.clientName };
     }
 
     const [items, total] = await Promise.all([
@@ -88,8 +89,8 @@ export class PaymentRepository {
               id: true,
               clientId: true,
               total: true,
-              client: { select: { id: true, name: true } } // ✅ Incluir dados do cliente
-            }
+              client: { select: { id: true, name: true } }, // ✅ Incluir dados do cliente
+            },
           },
           installments: true,
         },
@@ -137,6 +138,23 @@ export class PaymentRepository {
     return prisma.paymentInstallment.update({
       where: { id },
       data: withAuditData(userId, { isActive: false }, true),
+    });
+  }
+
+  async findInstallmentById(id: number) {
+    return prisma.paymentInstallment.findUnique({
+      where: { id },
+      include: {
+        payment: {
+          select: {
+            id: true,
+            saleId: true,
+            total: true,
+            status: true,
+            method: true,
+          },
+        },
+      },
     });
   }
 }

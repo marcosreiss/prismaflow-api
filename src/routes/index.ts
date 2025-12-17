@@ -11,6 +11,7 @@ import { clientRoutes } from "../modules/clients/client.routes";
 import { prescriptionRoutes } from "../modules/prescriptions/prescription.routes";
 import { saleRoutes } from "../modules/sales/sale.routes";
 import { paymentRoutes } from "../modules/payments/payment.routes";
+import { paymentInstallmentRoutes } from "../modules/payments/payment-installment.routes";
 
 export const router = Router();
 
@@ -33,3 +34,4 @@ router.use("/prescriptions", prescriptionRoutes);
 
 router.use("/sales", saleRoutes)
 router.use("/payments", paymentRoutes)
+router.use("/payments", paymentInstallmentRoutes);

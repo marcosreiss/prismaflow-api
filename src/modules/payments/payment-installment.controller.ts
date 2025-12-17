@@ -30,3 +30,16 @@ export async function getInstallmentById(req: Request, res: Response) {
     });
   }
 }
+
+// 🔹 Registrar pagamento de parcela
+export async function payInstallment(req: Request, res: Response) {
+  try {
+    const result = await service.payInstallment(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao registrar pagamento da parcela.",
+    });
+  }
+}

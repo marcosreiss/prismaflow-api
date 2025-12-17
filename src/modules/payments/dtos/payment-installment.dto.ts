@@ -62,3 +62,14 @@ export class UpdatePaymentInstallmentDto {
   @IsOptional()
   isActive?: boolean;
 }
+
+export class PayInstallmentDto {
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0.01)
+  paidAmount!: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  paidAt?: Date; // Se não informado, usa now()
+}

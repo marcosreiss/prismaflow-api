@@ -4,6 +4,7 @@ import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PaymentRepository } from "./payment.repository";
 import { PaymentStatus } from "@prisma/client";
+import { PagedResponse } from "../../responses/PagedResponse";
 
 export class PaymentInstallmentService {
   private repo = new PaymentRepository();
@@ -369,4 +370,60 @@ export class PaymentInstallmentService {
     return ApiResponse.success("Parcela atualizada com sucesso.", req, updated);
   }
 
+  // ======================================================
+  // LISTAR PARCELAS VENCIDAS
+  // ======================================================
+  async findOverdue(req: Request) {
+    const user = req.user!;
+    const { tenantId } = user;
+    const { page = 1, limit = 10 } = req.query;
+
+    const { items, total } = await this.repo.findOverdueInstallments(
+      tenantId,
+      Number(page),
+      Number(limit)
+    );
+
+    // Calcular dias de atraso
+    const now = new Date();
+    const enrichedItems = items.map((inst) => {
+      const dueDate = inst.dueDate ? new Date(inst.dueDate) : null;
+      const daysOverdue = dueDate
+        ? Math.floor(
+            (now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
+          )
+        : 0;
+
+      return {
+        ...inst,
+        daysOverdue,
+        remainingAmount: inst.amount - inst.paidAmount,
+        clientName: inst.payment.sale?.client?.name || "N/A",
+        clientPhone: inst.payment.sale?.client?.phone01 || null,
+      };
+    });
+
+    // Calcular estatísticas
+    const stats = {
+      totalOverdue: total,
+      totalAmount: enrichedItems.reduce((sum, i) => sum + i.remainingAmount, 0),
+      averageDaysOverdue:
+        enrichedItems.length > 0
+          ? Math.round(
+              enrichedItems.reduce((sum, i) => sum + i.daysOverdue, 0) /
+                enrichedItems.length
+            )
+          : 0,
+    };
+
+    return new PagedResponse(
+      "Parcelas vencidas listadas com sucesso.",
+      req,
+      enrichedItems,
+      Number(page),
+      Number(limit),
+      total,
+      stats
+    );
+  }
 }

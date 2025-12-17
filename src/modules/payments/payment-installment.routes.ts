@@ -6,11 +6,18 @@ import {
   getInstallmentById,
   payInstallment,
   updateInstallment,
+  listOverdueInstallments,
 } from "./payment-installment.controller";
 import { validateDto } from "../../middlewares/validation.middleware";
 import { PayInstallmentDto, UpdatePaymentInstallmentDto } from "./dtos/payment-installment.dto";
 
 export const paymentInstallmentRoutes = Router();
+
+paymentInstallmentRoutes.get(
+  "/installments/overdue",
+  authGuard,
+  listOverdueInstallments
+);
 
 // Rotas sem prefixo (será adicionado no routes/index.ts)
 paymentInstallmentRoutes.get(

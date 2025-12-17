@@ -56,3 +56,16 @@ export async function updateInstallment(req: Request, res: Response) {
     });
   }
 }
+
+// 🔹 Listar parcelas vencidas
+export async function listOverdueInstallments(req: Request, res: Response) {
+  try {
+    const result = await service.findOverdue(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao listar parcelas vencidas.",
+    });
+  }
+}

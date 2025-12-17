@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class PaymentRepository {
@@ -52,12 +53,15 @@ export class PaymentRepository {
       endDate?: Date;
       clientId?: number;
       clientName?: string;
+      hasOverdueInstallments?: boolean;
+      isPartiallyPaid?: boolean;
+      dueDaysAhead?: number;
     }
   ) {
     const skip = (page - 1) * limit;
     const where: any = { tenantId };
 
-    // ✅ Filtros existentes
+    // Filtros existentes
     if (filters?.status) where.status = filters.status;
     if (filters?.method) where.method = filters.method;
     if (filters?.startDate || filters?.endDate) {
@@ -66,7 +70,7 @@ export class PaymentRepository {
       if (filters.endDate) where.createdAt.lte = filters.endDate;
     }
 
-    // ✅ NOVOS FILTROS POR CLIENTE
+    // Filtros por cliente
     if (filters?.clientId || filters?.clientName) {
       where.sale = {
         client: {},
@@ -75,6 +79,44 @@ export class PaymentRepository {
       if (filters.clientId) where.sale.client.id = filters.clientId;
       if (filters.clientName)
         where.sale.client.name = { contains: filters.clientName };
+    }
+
+    // ✅ NOVOS FILTROS
+
+    // Filtro: Parcialmente pago
+    if (filters?.isPartiallyPaid) {
+      where.AND = where.AND || [];
+      where.AND.push({
+        installmentsPaid: { gt: 0 },
+        status: PaymentStatus.PENDING,
+      });
+    }
+
+    // Filtro: Com parcelas vencidas
+    if (filters?.hasOverdueInstallments) {
+      where.installments = {
+        some: {
+          dueDate: { lt: new Date() },
+          paidAmount: { lt: prisma.paymentInstallment.fields.amount },
+        },
+      };
+    }
+
+    // Filtro: Próximas a vencer
+    if (filters?.dueDaysAhead) {
+      const today = new Date();
+      const futureDate = new Date();
+      futureDate.setDate(today.getDate() + filters.dueDaysAhead);
+
+      where.installments = {
+        some: {
+          dueDate: {
+            gte: today,
+            lte: futureDate,
+          },
+          paidAmount: { lt: prisma.paymentInstallment.fields.amount },
+        },
+      };
     }
 
     const [items, total] = await Promise.all([
@@ -89,13 +131,62 @@ export class PaymentRepository {
               id: true,
               clientId: true,
               total: true,
-              client: { select: { id: true, name: true } }, // ✅ Incluir dados do cliente
+              client: { select: { id: true, name: true } },
             },
           },
-          installments: true,
+          installments: {
+            orderBy: { sequence: "asc" },
+          },
         },
       }),
       prisma.payment.count({ where }),
+    ]);
+
+    return { items, total };
+  }
+
+  // ✅ NOVO MÉTODO: Buscar parcelas vencidas
+  async findOverdueInstallments(tenantId: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    const now = new Date();
+
+    const where = {
+      tenantId,
+      dueDate: { lt: now },
+      paidAmount: { lt: prisma.paymentInstallment.fields.amount },
+      isActive: true,
+    };
+
+    const [items, total] = await Promise.all([
+      prisma.paymentInstallment.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { dueDate: "asc" },
+        include: {
+          payment: {
+            select: {
+              id: true,
+              saleId: true,
+              status: true,
+              method: true,
+              sale: {
+                select: {
+                  id: true,
+                  client: {
+                    select: {
+                      id: true,
+                      name: true,
+                      phone01: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }),
+      prisma.paymentInstallment.count({ where }),
     ]);
 
     return { items, total };

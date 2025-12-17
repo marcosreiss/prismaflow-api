@@ -1,4 +1,13 @@
-import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Max, Min } from "class-validator";
+import {
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Max,
+  Min,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { PaymentMethod, PaymentStatus } from "@prisma/client";
 
@@ -137,15 +146,15 @@ export class PaymentFilterDto {
 
   @IsOptional()
   @IsEnum(PaymentMethod)
-  method?: PaymentMethod; // ✅ Novo filtro
+  method?: PaymentMethod;
 
   @IsOptional()
   @Type(() => Date)
-  startDate?: Date; // ✅ Data de início
+  startDate?: Date;
 
   @IsOptional()
   @Type(() => Date)
-  endDate?: Date; // ✅ Data de fim
+  endDate?: Date;
 
   @IsOptional()
   @Type(() => Number)
@@ -163,9 +172,24 @@ export class PaymentFilterDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  clientId?: number; // ✅ Filtro por ID do cliente
+  clientId?: number;
 
   @IsOptional()
   @IsString()
-  clientName?: string; // ✅ Filtro por nome do cliente
+  clientName?: string;
+
+  // ✅ NOVOS FILTROS
+  @IsOptional()
+  @Type(() => Boolean)
+  hasOverdueInstallments?: boolean; // Pagamentos com parcelas em atraso
+
+  @IsOptional()
+  @Type(() => Boolean)
+  isPartiallyPaid?: boolean; // Pagamentos parcialmente pagos
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  dueDaysAhead?: number; // Próximas parcelas a vencer (próximos X dias)
 }

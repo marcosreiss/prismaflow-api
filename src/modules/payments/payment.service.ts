@@ -9,7 +9,7 @@ export class PaymentService {
   private repo = new PaymentRepository();
 
   // ======================================================
-  // LISTAR PAGAMENTOS (Paginado + Filtro por status)
+  // LISTAR PAGAMENTOS (Paginado + Filtros)
   // ======================================================
 
   async findAll(req: Request) {
@@ -24,6 +24,9 @@ export class PaymentService {
       endDate,
       clientId,
       clientName,
+      hasOverdueInstallments,
+      isPartiallyPaid,
+      dueDaysAhead,
     } = req.query;
 
     const { items, total } = await this.repo.findAllByTenant(
@@ -37,13 +40,47 @@ export class PaymentService {
         endDate: endDate ? new Date(String(endDate)) : undefined,
         clientId: clientId ? Number(clientId) : undefined,
         clientName: clientName ? String(clientName) : undefined,
+        hasOverdueInstallments: hasOverdueInstallments === "true",
+        isPartiallyPaid: isPartiallyPaid === "true",
+        dueDaysAhead: dueDaysAhead ? Number(dueDaysAhead) : undefined,
       }
     );
+
+    // Enriquecer dados com informações calculadas
+    const enrichedItems = items.map((payment) => {
+      const now = new Date();
+      const overdueInstallments = payment.installments.filter(
+        (inst) =>
+          inst.dueDate &&
+          new Date(inst.dueDate) < now &&
+          inst.paidAmount < inst.amount
+      );
+
+      const nextDueInstallment = payment.installments
+        .filter(
+          (inst) =>
+            inst.dueDate &&
+            new Date(inst.dueDate) >= now &&
+            inst.paidAmount < inst.amount
+        )
+        .sort(
+          (a, b) =>
+            new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime()
+        )[0];
+
+      return {
+        ...payment,
+        hasOverdueInstallments: overdueInstallments.length > 0,
+        overdueCount: overdueInstallments.length,
+        nextDueDate: nextDueInstallment?.dueDate || null,
+        nextDueAmount: nextDueInstallment?.amount || null,
+      };
+    });
 
     return new PagedResponse(
       "Pagamentos listados com sucesso.",
       req,
-      items,
+      enrichedItems,
       Number(page),
       Number(limit),
       total

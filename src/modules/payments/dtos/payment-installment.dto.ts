@@ -27,7 +27,6 @@ export class CreatePaymentInstallmentDto {
   branchId?: string;
 }
 
-// ✅ DTO separado para update (sem PartialType)
 export class UpdatePaymentInstallmentDto {
   @IsOptional()
   @IsInt()

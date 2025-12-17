@@ -148,38 +148,92 @@ export class PaymentService {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
 
-    // 2️⃣ Validar se pode ser atualizado
-    if (existing.status !== PaymentStatus.PENDING) {
+    // 2️⃣ Validar permissão (tenant)
+    if (existing.tenantId !== user.tenantId) {
       return ApiResponse.error(
-        "Somente pagamentos com status PENDING podem ser atualizados.",
+        "Você não tem permissão para acessar este pagamento.",
+        403,
+        req
+      );
+    }
+
+    // 3️⃣ Validar se pode ser atualizado (status deve ser PENDING para maioria das alterações)
+    if (existing.status === PaymentStatus.CANCELED) {
+      return ApiResponse.error(
+        "Não é possível atualizar um pagamento cancelado.",
         400,
         req
       );
     }
 
-    // 3️⃣ Verificar se já tem parcelas criadas
+    if (
+      existing.status === PaymentStatus.CONFIRMED &&
+      data.status !== PaymentStatus.CANCELED
+    ) {
+      // Pagamento confirmado só pode ser cancelado
+      const allowedFields = ["status"];
+      const attemptedFields = Object.keys(data);
+      const blockedFields = attemptedFields.filter(
+        (f) => !allowedFields.includes(f)
+      );
+
+      if (blockedFields.length > 0) {
+        return ApiResponse.error(
+          `Pagamento confirmado só pode ter o status alterado. Campos bloqueados: ${blockedFields.join(
+            ", "
+          )}`,
+          400,
+          req
+        );
+      }
+    }
+
+    // 4️⃣ Verificar se já tem parcelas criadas
     const existingInstallments = await this.repo.findInstallmentsByPayment(
       Number(id)
     );
     const hasInstallments = existingInstallments.length > 0;
 
-    // 4️⃣ Se já tem parcelas, validar o que pode ser alterado
+    // 5️⃣ VALIDAÇÕES SE JÁ TEM PARCELAS
     if (hasInstallments) {
       const hasPaidInstallments = existingInstallments.some(
         (inst) => inst.paidAmount > 0
       );
 
+      // 5.1 - Se alguma parcela foi paga
       if (hasPaidInstallments) {
-        // Se tem parcelas pagas, só pode mudar status
-        const allowedFields = ["status"];
+        const blockedFields = [
+          "method",
+          "installmentsTotal",
+          "total",
+          "discount",
+          "downPayment",
+          "firstDueDate",
+        ];
         const attemptedFields = Object.keys(data);
-        const blockedFields = attemptedFields.filter(
+        const invalidFields = attemptedFields.filter((f) =>
+          blockedFields.includes(f)
+        );
+
+        if (invalidFields.length > 0) {
+          return ApiResponse.error(
+            `Pagamento com parcelas já pagas não pode ter os seguintes campos alterados: ${invalidFields.join(
+              ", "
+            )}. Apenas o status pode ser modificado.`,
+            400,
+            req
+          );
+        }
+
+        // Apenas permite alterar status
+        const allowedFields = ["status"];
+        const notAllowedFields = attemptedFields.filter(
           (f) => !allowedFields.includes(f)
         );
 
-        if (blockedFields.length > 0) {
+        if (notAllowedFields.length > 0) {
           return ApiResponse.error(
-            `Pagamento com parcelas pagas não pode ter os seguintes campos alterados: ${blockedFields.join(
+            `Pagamento com parcelas pagas só permite alteração de status. Campos não permitidos: ${notAllowedFields.join(
               ", "
             )}`,
             400,
@@ -187,7 +241,7 @@ export class PaymentService {
           );
         }
       } else {
-        // Se tem parcelas mas nenhuma paga, bloqueia alteração de valores críticos
+        // 5.2 - Se tem parcelas mas nenhuma foi paga
         const blockedFields = [
           "total",
           "installmentsTotal",
@@ -201,9 +255,28 @@ export class PaymentService {
 
         if (invalidFields.length > 0) {
           return ApiResponse.error(
-            `Pagamento com parcelas já criadas não pode ter os seguintes campos alterados: ${invalidFields.join(
+            `Pagamento com parcelas criadas não pode ter os seguintes campos alterados: ${invalidFields.join(
               ", "
-            )}. Exclua as parcelas primeiro.`,
+            )}. Para modificar estes valores, exclua as parcelas primeiro ou edite-as individualmente.`,
+            400,
+            req
+          );
+        }
+
+        // Permite: method, status, firstDueDate
+        const allowedFields = ["method", "status", "firstDueDate"];
+        const notAllowedFields = attemptedFields.filter(
+          (f) =>
+            !allowedFields.includes(f) && !["tenantId", "branchId"].includes(f)
+        );
+
+        if (notAllowedFields.length > 0) {
+          return ApiResponse.error(
+            `Apenas os campos ${allowedFields.join(
+              ", "
+            )} podem ser alterados quando há parcelas criadas. Campos não permitidos: ${notAllowedFields.join(
+              ", "
+            )}`,
             400,
             req
           );
@@ -211,9 +284,19 @@ export class PaymentService {
       }
     }
 
-    // 5️⃣ Se método = INSTALLMENT, validar campos obrigatórios
-    if (data.method === PaymentMethod.INSTALLMENT) {
-      if (!data.installmentsTotal || data.installmentsTotal < 1) {
+    // 6️⃣ Se método = INSTALLMENT, validar campos obrigatórios
+    if (
+      data.method === PaymentMethod.INSTALLMENT ||
+      (existing.method === PaymentMethod.INSTALLMENT && !data.method)
+    ) {
+      const installmentsTotal =
+        data.installmentsTotal ?? existing.installmentsTotal;
+      const firstDueDate = data.firstDueDate ?? existing.firstDueDate;
+      const total = data.total ?? existing.total;
+      const discount = data.discount ?? existing.discount ?? 0;
+      const downPayment = data.downPayment ?? existing.downPayment ?? 0;
+
+      if (!installmentsTotal || installmentsTotal < 1) {
         return ApiResponse.error(
           "Para pagamento parcelado, é necessário informar o número de parcelas (mínimo 1).",
           400,
@@ -221,17 +304,13 @@ export class PaymentService {
         );
       }
 
-      if (!data.firstDueDate) {
+      if (!firstDueDate) {
         return ApiResponse.error(
           "Para pagamento parcelado, é necessário informar a data do primeiro vencimento (firstDueDate).",
           400,
           req
         );
       }
-
-      const total = data.total ?? existing.total;
-      const discount = data.discount ?? existing.discount ?? 0;
-      const downPayment = data.downPayment ?? existing.downPayment ?? 0;
 
       const amountToInstall = total - discount - downPayment;
 
@@ -244,18 +323,74 @@ export class PaymentService {
       }
     }
 
-    // 6️⃣ Atualizar o pagamento
+    // 7️⃣ Validar mudança de método se já tem parcelas
+    if (hasInstallments && data.method && data.method !== existing.method) {
+      return ApiResponse.error(
+        `Não é possível alterar o método de pagamento de ${existing.method} para ${data.method} quando já existem parcelas criadas. Exclua as parcelas primeiro.`,
+        400,
+        req
+      );
+    }
+
+    // 8️⃣ Atualizar o pagamento
     const updated = await this.repo.update(Number(id), data, userId);
 
-    // 7️⃣ Se método = INSTALLMENT e ainda não tem parcelas, gerar agora
+    // 9️⃣ Se método = INSTALLMENT e ainda não tem parcelas, gerar agora
     if (updated.method === PaymentMethod.INSTALLMENT && !hasInstallments) {
       await this.generateInstallments(updated, tenantId, branchId, userId);
     }
 
-    // 8️⃣ Recarregar com parcelas
+    // 🔟 Recarregar com parcelas
     const final = await this.repo.findById(Number(id));
 
     return ApiResponse.success("Pagamento atualizado com sucesso.", req, final);
+  }
+
+  // ======================================================
+  // GERAR PARCELAS AUTOMATICAMENTE
+  // ======================================================
+  private async generateInstallments(
+    payment: any,
+    tenantId: string,
+    branchId: string,
+    userId: string
+  ) {
+    const {
+      id,
+      total,
+      discount,
+      downPayment,
+      installmentsTotal,
+      firstDueDate,
+    } = payment;
+
+    const amountToInstall = total - (discount || 0) - (downPayment || 0);
+    const installmentValue = amountToInstall / installmentsTotal;
+
+    const installments = [];
+    const baseDueDate = new Date(firstDueDate);
+
+    for (let i = 1; i <= installmentsTotal; i++) {
+      const dueDate = new Date(baseDueDate);
+      dueDate.setDate(dueDate.getDate() + (i - 1) * 30);
+
+      const installment = await this.repo.createInstallment(
+        id,
+        {
+          sequence: i,
+          amount: parseFloat(installmentValue.toFixed(2)),
+          paidAmount: 0,
+          dueDate,
+          tenantId,
+          branchId,
+        },
+        userId
+      );
+
+      installments.push(installment);
+    }
+
+    return installments;
   }
 
   // ======================================================
@@ -338,58 +473,5 @@ export class PaymentService {
       req,
       updated
     );
-  }
-  
-  // ======================================================
-  // GERAR PARCELAS AUTOMATICAMENTE
-  // ======================================================
-  private async generateInstallments(
-    payment: any,
-    tenantId: string,
-    branchId: string,
-    userId: string
-  ) {
-    const {
-      id,
-      total,
-      discount,
-      downPayment,
-      installmentsTotal,
-      firstDueDate,
-    } = payment;
-
-    // Calcular valor total a parcelar
-    const amountToInstall = total - (discount || 0) - (downPayment || 0);
-
-    // Calcular valor de cada parcela
-    const installmentValue = amountToInstall / installmentsTotal;
-
-    // Gerar as parcelas
-    const installments = [];
-    const baseDueDate = new Date(firstDueDate);
-
-    for (let i = 1; i <= installmentsTotal; i++) {
-      // Calcular data de vencimento (incremento de 30 dias)
-      const dueDate = new Date(baseDueDate);
-      dueDate.setDate(dueDate.getDate() + (i - 1) * 30);
-
-      // Criar parcela
-      const installment = await this.repo.createInstallment(
-        id,
-        {
-          sequence: i,
-          amount: parseFloat(installmentValue.toFixed(2)),
-          paidAmount: 0,
-          dueDate,
-          tenantId,
-          branchId,
-        },
-        userId
-      );
-
-      installments.push(installment);
-    }
-
-    return installments;
   }
 }

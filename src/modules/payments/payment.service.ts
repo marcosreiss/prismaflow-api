@@ -390,7 +390,198 @@ export class PaymentService {
       installments.push(installment);
     }
 
+    // ✅ VALIDAR INTEGRIDADE APÓS CRIAR PARCELAS
+    const validation = await this.validateInstallmentsIntegrity(id);
+    if (!validation.valid) {
+      // Se houver inconsistência, logar erro mas não bloquear
+      console.error(
+        `[AVISO] Inconsistência detectada no pagamento ${id}: ${validation.error}`
+      );
+    }
+
     return installments;
+  }
+
+  // ======================================================
+  // VALIDAR INTEGRIDADE DAS PARCELAS
+  // ======================================================
+  private async validateInstallmentsIntegrity(paymentId: number) {
+    const payment = await this.repo.findById(paymentId);
+    if (!payment) {
+      return { valid: false, error: "Pagamento não encontrado." };
+    }
+
+    const installments = await this.repo.findInstallmentsByPayment(paymentId);
+
+    // Se não tem parcelas e não é parcelamento, está ok
+    if (installments.length === 0) {
+      if (payment.method === PaymentMethod.INSTALLMENT) {
+        return {
+          valid: false,
+          error: "Pagamento parcelado sem parcelas criadas.",
+        };
+      }
+      return { valid: true }; // Métodos não-parcelados não precisam de parcelas
+    }
+
+    const issues = [];
+
+    // 1️⃣ Validar quantidade de parcelas
+    if (installments.length !== payment.installmentsTotal) {
+      issues.push({
+        field: "installmentsTotal",
+        expected: payment.installmentsTotal,
+        found: installments.length,
+        message: `Número de parcelas incorreto. Esperado: ${payment.installmentsTotal}, Encontrado: ${installments.length}`,
+      });
+    }
+
+    // 2️⃣ Validar soma dos valores
+    const totalInstallments = installments.reduce(
+      (sum, inst) => sum + inst.amount,
+      0
+    );
+    const expectedTotal =
+      payment.total - (payment.discount || 0) - (payment.downPayment || 0);
+
+    // Tolerância de 1 centavo por arredondamento
+    if (Math.abs(totalInstallments - expectedTotal) > 0.01) {
+      issues.push({
+        field: "amount",
+        expected: expectedTotal,
+        found: totalInstallments,
+        difference: Math.abs(totalInstallments - expectedTotal),
+        message: `Soma das parcelas incorreta. Esperado: R$ ${expectedTotal.toFixed(
+          2
+        )}, Encontrado: R$ ${totalInstallments.toFixed(
+          2
+        )}, Diferença: R$ ${Math.abs(totalInstallments - expectedTotal).toFixed(
+          2
+        )}`,
+      });
+    }
+
+    // 3️⃣ Validar sequência das parcelas
+    const sequences = installments.map((i) => i.sequence).sort((a, b) => a - b);
+    const expectedSequences = Array.from(
+      { length: installments.length },
+      (_, i) => i + 1
+    );
+    const hasSequenceGap = !sequences.every(
+      (seq, idx) => seq === expectedSequences[idx]
+    );
+
+    if (hasSequenceGap) {
+      issues.push({
+        field: "sequence",
+        expected: expectedSequences,
+        found: sequences,
+        message: `Sequência de parcelas com lacunas ou duplicadas. Esperado: [${expectedSequences.join(
+          ", "
+        )}], Encontrado: [${sequences.join(", ")}]`,
+      });
+    }
+
+    // 4️⃣ Validar parcelas sem data de vencimento
+    const installmentsWithoutDueDate = installments.filter((i) => !i.dueDate);
+    if (installmentsWithoutDueDate.length > 0) {
+      issues.push({
+        field: "dueDate",
+        message: `${installmentsWithoutDueDate.length} parcela(s) sem data de vencimento.`,
+        installments: installmentsWithoutDueDate.map((i) => i.id),
+      });
+    }
+
+    if (issues.length > 0) {
+      return {
+        valid: false,
+        error: `${issues.length} inconsistência(s) detectada(s)`,
+        issues,
+      };
+    }
+
+    return { valid: true };
+  }
+
+  // ======================================================
+  // ENDPOINT DE VALIDAÇÃO DE INTEGRIDADE
+  // ======================================================
+  async validate(req: Request) {
+    const user = req.user!;
+    const { id } = req.params;
+
+    // 1️⃣ Buscar pagamento
+    const payment = await this.repo.findById(Number(id));
+    if (!payment) {
+      return ApiResponse.error("Pagamento não encontrado.", 404, req);
+    }
+
+    // 2️⃣ Verificar permissão
+    if (payment.tenantId !== user.tenantId) {
+      return ApiResponse.error(
+        "Você não tem permissão para acessar este pagamento.",
+        403,
+        req
+      );
+    }
+
+    // 3️⃣ Executar validação
+    const validation = await this.validateInstallmentsIntegrity(Number(id));
+
+    // 4️⃣ Buscar dados adicionais
+    const installments = await this.repo.findInstallmentsByPayment(Number(id));
+
+    // 5️⃣ Calcular estatísticas
+    const stats = {
+      paymentId: payment.id,
+      saleId: payment.saleId,
+      method: payment.method,
+      status: payment.status,
+      total: payment.total,
+      discount: payment.discount || 0,
+      downPayment: payment.downPayment || 0,
+      amountToInstall:
+        payment.total - (payment.discount || 0) - (payment.downPayment || 0),
+      installmentsTotal: payment.installmentsTotal,
+      installmentsCreated: installments.length,
+      installmentsPaid: payment.installmentsPaid,
+      paidAmount: payment.paidAmount,
+      sumOfInstallments: installments.reduce((sum, i) => sum + i.amount, 0),
+    };
+
+    if (validation.valid) {
+      return ApiResponse.success("Pagamento íntegro e consistente.", req, {
+        valid: true,
+        stats,
+        installments: installments.map((i) => ({
+          id: i.id,
+          sequence: i.sequence,
+          amount: i.amount,
+          paidAmount: i.paidAmount,
+          dueDate: i.dueDate,
+          isPaid: i.paidAmount >= i.amount,
+        })),
+      });
+    }
+
+    return ApiResponse.error(
+      validation.error || "Inconsistências detectadas no pagamento.",
+      400,
+      req,
+      {
+        valid: false,
+        stats,
+        issues: validation.issues,
+        installments: installments.map((i) => ({
+          id: i.id,
+          sequence: i.sequence,
+          amount: i.amount,
+          paidAmount: i.paidAmount,
+          dueDate: i.dueDate,
+          isPaid: i.paidAmount >= i.amount,
+        })),
+      }
+    );
   }
 
   // ======================================================

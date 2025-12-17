@@ -9,12 +9,10 @@ export async function createPayment(req: Request, res: Response) {
     const result = await service.create(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao criar pagamento.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao criar pagamento.",
+    });
   }
 }
 
@@ -24,12 +22,10 @@ export async function updatePayment(req: Request, res: Response) {
     const result = await service.update(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao atualizar pagamento.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao atualizar pagamento.",
+    });
   }
 }
 
@@ -39,12 +35,10 @@ export async function listPayments(req: Request, res: Response) {
     const result = await service.findAll(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao listar pagamentos.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao listar pagamentos.",
+    });
   }
 }
 
@@ -54,12 +48,10 @@ export async function getPaymentById(req: Request, res: Response) {
     const result = await service.findById(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao buscar pagamento.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao buscar pagamento.",
+    });
   }
 }
 
@@ -69,12 +61,10 @@ export async function getPaymentStatusBySale(req: Request, res: Response) {
     const result = await service.findStatusBySaleId(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao buscar status do pagamento.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao buscar status do pagamento.",
+    });
   }
 }
 
@@ -84,12 +74,10 @@ export async function deletePayment(req: Request, res: Response) {
     const result = await service.delete(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: error.message || "Erro ao excluir pagamento.",
-      });
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao excluir pagamento.",
+    });
   }
 }
 
@@ -102,6 +90,19 @@ export async function updatePaymentStatus(req: Request, res: Response) {
     res.status(400).json({
       success: false,
       message: error.message || "Erro ao atualizar status do pagamento.",
+    });
+  }
+}
+
+// 🔹 Validar integridade do pagamento
+export async function validatePayment(req: Request, res: Response) {
+  try {
+    const result = await service.validate(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao validar pagamento.",
     });
   }
 }

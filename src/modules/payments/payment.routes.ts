@@ -9,6 +9,7 @@ import {
   getPaymentStatusBySale,
   deletePayment,
   updatePaymentStatus,
+  validatePayment,
 } from "./payment.controller";
 import { CreatePaymentDto, UpdatePaymentDto, UpdatePaymentStatusDto } from "./dtos/payment.dto";
 
@@ -24,6 +25,8 @@ paymentRoutes.post(
 
 // 🔹 Listar pagamentos
 paymentRoutes.get("/", authGuard, listPayments);
+
+paymentRoutes.get("/:id/validate", authGuard, validatePayment);
 
 // 🔹 Buscar pagamento por ID
 paymentRoutes.get("/:id", authGuard, getPaymentById);
@@ -41,7 +44,6 @@ paymentRoutes.put(
 
 // 🔹 Excluir pagamento
 paymentRoutes.delete("/:id", authGuard, deletePayment);
-
 
 // 🔹 Atualizar status do pagamento (rota específica)
 paymentRoutes.patch(

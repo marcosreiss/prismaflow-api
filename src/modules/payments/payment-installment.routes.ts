@@ -5,9 +5,10 @@ import {
   listInstallmentsByPayment,
   getInstallmentById,
   payInstallment,
+  updateInstallment,
 } from "./payment-installment.controller";
 import { validateDto } from "../../middlewares/validation.middleware";
-import { PayInstallmentDto } from "./dtos/payment-installment.dto";
+import { PayInstallmentDto, UpdatePaymentInstallmentDto } from "./dtos/payment-installment.dto";
 
 export const paymentInstallmentRoutes = Router();
 
@@ -29,4 +30,11 @@ paymentInstallmentRoutes.patch(
   authGuard,
   validateDto(PayInstallmentDto, "body"),
   payInstallment
+);
+
+paymentInstallmentRoutes.put(
+  "/installments/:id",
+  authGuard,
+  validateDto(UpdatePaymentInstallmentDto, "body"),
+  updateInstallment
 );

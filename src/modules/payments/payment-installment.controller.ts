@@ -43,3 +43,16 @@ export async function payInstallment(req: Request, res: Response) {
     });
   }
 }
+
+// 🔹 Atualizar parcela
+export async function updateInstallment(req: Request, res: Response) {
+  try {
+    const result = await service.update(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erro ao atualizar parcela.",
+    });
+  }
+}

@@ -273,4 +273,100 @@ export class PaymentInstallmentService {
       userId
     );
   }
+
+  // ======================================================
+  // ATUALIZAR PARCELA
+  // ======================================================
+  async update(req: Request) {
+    const user = req.user!;
+    const { id } = req.params;
+    const data = req.body;
+    const userId = user.sub;
+
+    // 1️⃣ Buscar parcela
+    const installment = await this.repo.findInstallmentById(Number(id));
+    if (!installment) {
+      return ApiResponse.error("Parcela não encontrada.", 404, req);
+    }
+
+    // 2️⃣ Verificar permissão
+    if (installment.tenantId !== user.tenantId) {
+      return ApiResponse.error(
+        "Você não tem permissão para acessar esta parcela.",
+        403,
+        req
+      );
+    }
+
+    // 3️⃣ Validar se parcela já foi paga
+    if (installment.paidAmount > 0) {
+      return ApiResponse.error(
+        "Não é possível editar parcelas que já receberam pagamento.",
+        400,
+        req
+      );
+    }
+
+    // 4️⃣ Buscar payment associado
+    const payment = await this.repo.findById(installment.paymentId);
+    if (!payment) {
+      return ApiResponse.error("Pagamento associado não encontrado.", 404, req);
+    }
+
+    // 5️⃣ Se está alterando o valor (amount), validar soma total
+    if (data.amount !== undefined && data.amount !== installment.amount) {
+      // Buscar todas as parcelas do pagamento
+      const allInstallments = await this.repo.findInstallmentsByPayment(
+        installment.paymentId
+      );
+
+      // Calcular novo total das parcelas (substituindo o valor da parcela atual)
+      const newTotalInstallments = allInstallments.reduce((sum, inst) => {
+        if (inst.id === installment.id) {
+          return sum + data.amount; // Usar novo valor
+        }
+        return sum + inst.amount; // Manter valor existente
+      }, 0);
+
+      // Calcular valor esperado das parcelas
+      const expectedTotal =
+        payment.total - (payment.discount || 0) - (payment.downPayment || 0);
+
+      // Validar se a soma bate
+      if (Math.abs(newTotalInstallments - expectedTotal) > 0.01) {
+        // Tolerância de 1 centavo por arredondamento
+        return ApiResponse.error(
+          `A soma das parcelas (R$ ${newTotalInstallments.toFixed(
+            2
+          )}) deve ser igual ao valor a parcelar (R$ ${expectedTotal.toFixed(
+            2
+          )}).`,
+          400,
+          req
+        );
+      }
+    }
+
+    // 6️⃣ Validar data de vencimento (se informada)
+    if (data.dueDate) {
+      const dueDate = new Date(data.dueDate);
+      if (isNaN(dueDate.getTime())) {
+        return ApiResponse.error("Data de vencimento inválida.", 400, req);
+      }
+    }
+
+    // 7️⃣ Atualizar parcela
+    const updated = await this.repo.updateInstallment(
+      Number(id),
+      {
+        amount: data.amount,
+        dueDate: data.dueDate,
+        sequence: data.sequence,
+      },
+      userId
+    );
+
+    return ApiResponse.success("Parcela atualizada com sucesso.", req, updated);
+  }
+
 }

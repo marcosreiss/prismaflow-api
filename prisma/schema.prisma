@@ -396,6 +396,7 @@ model PaymentInstallment {
   sequence    Int
   amount      Float     @default(0)
   paidAmount  Float     @default(0)
+  dueDate     DateTime?
   paidAt      DateTime?
   isActive    Boolean   @default(true)
   tenantId    String

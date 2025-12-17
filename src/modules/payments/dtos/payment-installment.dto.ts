@@ -1,3 +1,5 @@
+// dtos/payment-installment.dto.ts
+
 import { IsInt, IsNumber, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
@@ -15,6 +17,10 @@ export class CreatePaymentInstallmentDto {
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   paidAmount?: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  dueDate?: Date; // ✅ ADICIONAR
 
   @IsOptional()
   @Type(() => Date)
@@ -44,6 +50,10 @@ export class UpdatePaymentInstallmentDto {
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   paidAmount?: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  dueDate?: Date; // ✅ ADICIONAR
 
   @IsOptional()
   @Type(() => Date)

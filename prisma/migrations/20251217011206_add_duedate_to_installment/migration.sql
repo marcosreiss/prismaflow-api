@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `paymentinstallment` ADD COLUMN `dueDate` DATETIME(3) NULL;
+ALTER TABLE `PaymentInstallment` ADD COLUMN `dueDate` DATETIME(3) NULL;

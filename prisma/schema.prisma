@@ -183,66 +183,54 @@ model Client {
 }
 
 model Prescription {
-  id                   Int      @id @default(autoincrement())
-  clientId             Int
-  prescriptionDate     DateTime
-  doctorName           String?
-  crm                  String?
-
-  // Grau de longe (campos antigos renomeados)
-  odSphericalFar       String?
-  odCylindricalFar     String?
-  odAxisFar            String?
-  odDnpFar             String?
-  oeSphericalFar       String?
-  oeCylindricalFar     String?
-  oeAxisFar            String?
-  oeDnpFar             String?
-
-  // Grau de perto (novos)
-  odSphericalNear      String?
-  odCylindricalNear    String?
-  odAxisNear           String?
-  odDnpNear            String?
-  oeSphericalNear      String?
-  oeCylindricalNear    String?
-  oeAxisNear           String?
-  oeDnpNear            String?
-
-  // Películas (adição de perto / bifocal / progressiva)
-  odPellicleFar        String?
-  odPellicleNear       String?
-  oePellicleFar        String?
-  oePellicleNear       String?
-
-  // Novos campos gerais
-  frameAndRef          String?  // Armação e referência
-  lensType             String?  // Tipo de lente
-  notes                String?  // Observações
-
-  additionRight        String?
-  additionLeft         String?
-  opticalCenterRight   String?
-  opticalCenterLeft    String?
-  isActive             Boolean  @default(true)
-  tenantId             String
-  branchId             String
-  createdById          String?
-  updatedById          String?
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-
-  // Relações
-  branch               Branch   @relation(fields: [branchId], references: [id])
-  client               Client   @relation(fields: [clientId], references: [id])
-  tenant               Tenant   @relation(fields: [tenantId], references: [id])
-  sales                Sale[]
+  id                 Int      @id @default(autoincrement())
+  clientId           Int
+  prescriptionDate   DateTime
+  doctorName         String?
+  crm                String?
+  odSphericalFar     String?
+  odCylindricalFar   String?
+  odAxisFar          String?
+  odDnpFar           String?
+  odSphericalNear    String?
+  odCylindricalNear  String?
+  odAxisNear         String?
+  odDnpNear          String?
+  oeSphericalFar     String?
+  oeCylindricalFar   String?
+  oeAxisFar          String?
+  oeDnpFar           String?
+  oeSphericalNear    String?
+  oeCylindricalNear  String?
+  oeAxisNear         String?
+  oeDnpNear          String?
+  odPellicleFar      String?
+  odPellicleNear     String?
+  oePellicleFar      String?
+  oePellicleNear     String?
+  frameAndRef        String?
+  lensType           String?
+  notes              String?
+  additionRight      String?
+  additionLeft       String?
+  opticalCenterRight String?
+  opticalCenterLeft  String?
+  isActive           Boolean  @default(true)
+  tenantId           String
+  branchId           String
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  branch             Branch   @relation(fields: [branchId], references: [id])
+  client             Client   @relation(fields: [clientId], references: [id])
+  tenant             Tenant   @relation(fields: [tenantId], references: [id])
+  sales              Sale[]
 
   @@index([branchId], map: "Prescription_branchId_fkey")
   @@index([clientId], map: "Prescription_clientId_fkey")
   @@index([tenantId], map: "Prescription_tenantId_fkey")
 }
-
 
 model Sale {
   id             Int                  @id @default(autoincrement())
@@ -396,7 +384,6 @@ model PaymentInstallment {
   sequence    Int
   amount      Float     @default(0)
   paidAmount  Float     @default(0)
-  dueDate     DateTime?
   paidAt      DateTime?
   isActive    Boolean   @default(true)
   tenantId    String
@@ -405,6 +392,7 @@ model PaymentInstallment {
   updatedById String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  dueDate     DateTime?
   branch      Branch    @relation(fields: [branchId], references: [id])
   payment     Payment   @relation(fields: [paymentId], references: [id])
   tenant      Tenant    @relation(fields: [tenantId], references: [id])

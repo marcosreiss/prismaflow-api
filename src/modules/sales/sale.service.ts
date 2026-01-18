@@ -596,19 +596,30 @@ export class SaleService {
   // ======================================================
   async findAll(req: Request) {
     logger.debug("📋 [SaleService] Listando vendas", { query: req.query });
+
     try {
       const user = req.user as any;
       const { tenantId } = user;
-      const { page = 1, limit = 10, clientId } = req.query;
+      const {
+        page = 1,
+        limit = 10,
+        clientId,
+        clientName, // Novo parâmetro
+      } = req.query;
 
       const { items, total } = await this.saleRepo.findAllByTenant(
         tenantId,
         Number(page),
         Number(limit),
         clientId ? Number(clientId) : undefined,
+        clientName ? String(clientName) : undefined, // Passar o nome
       );
 
-      logger.info("✅ [SaleService] Vendas listadas", { total });
+      logger.info("✅ [SaleService] Vendas listadas", {
+        total,
+        filters: { clientId, clientName },
+      });
+
       return new PagedResponse(
         "Vendas listadas com sucesso.",
         req,

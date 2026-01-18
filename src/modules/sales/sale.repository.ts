@@ -247,9 +247,26 @@ export class SaleRepository {
     page: number,
     limit: number,
     clientId?: number,
+    clientName?: string, // Novo parâmetro
   ) {
     const skip = (page - 1) * limit;
-    const where = clientId ? { tenantId, clientId } : { tenantId };
+
+    // Construir where dinamicamente
+    const where: any = { tenantId };
+
+    if (clientId) {
+      where.clientId = clientId;
+    }
+
+    // Adicionar filtro por nome do cliente
+    if (clientName) {
+      where.client = {
+        name: {
+          contains: clientName,
+          mode: "insensitive", // Case-insensitive
+        },
+      };
+    }
 
     const [items, total] = await Promise.all([
       prisma.sale.findMany({

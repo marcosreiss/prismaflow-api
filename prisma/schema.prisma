@@ -359,7 +359,6 @@ model Payment {
 model Protocol {
   id           Int      @id @default(autoincrement())
   saleId       Int?     @unique
-  recordNumber String?
   book         String?
   page         Int?
   os           String?

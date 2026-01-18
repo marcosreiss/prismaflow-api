@@ -51,6 +51,9 @@ export class SaleService {
         });
         return ApiResponse.error(errors.join("; "), 400, req);
       }
+      if (new Date(body.saleDate) > new Date()) {
+        errors.push("A data da venda não pode ser futura.");
+      }
 
       // 3️⃣ Criar venda
       logger.debug("🧩 [SaleService] Criando registro de venda", {
@@ -60,6 +63,7 @@ export class SaleService {
       const sale = await this.saleRepo.create(
         {
           clientId: body.clientId,
+          saleDate: body.saleDate,
           tenantId,
           branchId,
           prescriptionId: body.prescriptionId,
@@ -69,7 +73,7 @@ export class SaleService {
           notes: body.notes,
           isActive: true,
         },
-        userId
+        userId,
       );
       logger.info("✅ [SaleService] Venda criada", { saleId: sale.id });
 
@@ -89,7 +93,7 @@ export class SaleService {
             os: body.protocol.os,
             isActive: true,
           },
-          userId
+          userId,
         );
       }
 
@@ -107,7 +111,7 @@ export class SaleService {
             return ApiResponse.error(
               `Produto não encontrado: ${item.productId}`,
               404,
-              req
+              req,
             );
           }
 
@@ -118,7 +122,7 @@ export class SaleService {
             return ApiResponse.error(
               `Estoque insuficiente para ${product.name}`,
               409,
-              req
+              req,
             );
           }
 
@@ -126,7 +130,7 @@ export class SaleService {
           await this.productRepo.update(
             product.id,
             { stockQuantity: (product.stockQuantity ?? 0) - item.quantity },
-            userId
+            userId,
           );
 
           logger.debug("🧮 [SaleService] Estoque atualizado", {
@@ -185,7 +189,7 @@ export class SaleService {
             return ApiResponse.error(
               `Serviço não encontrado: ${item.serviceId}`,
               404,
-              req
+              req,
             );
           }
 
@@ -216,7 +220,7 @@ export class SaleService {
           paidAmount: 0,
           status: "PENDING",
         },
-        userId
+        userId,
       );
 
       logger.info("✅ [SaleService] Venda criada com sucesso", {
@@ -261,7 +265,8 @@ export class SaleService {
       const payment = await prisma.payment.findFirst({
         where: { saleId: Number(id) },
       });
-      if (!payment) throw new Error("Pagamento não encontrado para esta venda.");
+      if (!payment)
+        throw new Error("Pagamento não encontrado para esta venda.");
       if (payment.status !== "PENDING" || (payment.paidAmount ?? 0) > 0)
         throw new Error("Venda não pode ser editada com pagamento iniciado.");
 
@@ -277,13 +282,14 @@ export class SaleService {
           Number(id),
           {
             clientId: body.clientId ?? sale.clientId,
+            saleDate: body.saleDate ?? sale.saleDate,
             subtotal: body.subtotal ?? sale.subtotal ?? 0,
             discount: body.discount ?? sale.discount ?? 0,
             total: body.total ?? sale.total ?? 0,
             notes: body.notes ?? sale.notes,
             isActive: body.isActive ?? sale.isActive,
           },
-          userId
+          userId,
         );
 
         // 2️⃣ VALIDAÇÃO ANTECIPADA DOS NOVOS PRODUTOS
@@ -292,11 +298,13 @@ export class SaleService {
             // ✅ VALIDAR se quantity existe e é válida
             const quantity = item.quantity ?? 1;
             if (quantity < 1) {
-              throw new Error(`Quantidade deve ser pelo menos 1 para o produto ${item.productId}`);
+              throw new Error(
+                `Quantidade deve ser pelo menos 1 para o produto ${item.productId}`,
+              );
             }
 
             const product = await tx.product.findFirst({
-              where: { id: item.productId, tenantId }
+              where: { id: item.productId, tenantId },
             });
             if (!product) {
               throw new Error(`Produto ${item.productId} não encontrado`);
@@ -311,8 +319,10 @@ export class SaleService {
           });
 
           // Buscar itens antigos
-          const oldProductItems = await this.saleRepo.findProductItemsBySale(Number(id));
-          const newProductIds = body.productItems.map(item => item.productId);
+          const oldProductItems = await this.saleRepo.findProductItemsBySale(
+            Number(id),
+          );
+          const newProductIds = body.productItems.map((item) => item.productId);
 
           // 🔄 RESTAURAR estoque APENAS dos itens que SERÃO REMOVIDOS
           for (const oldItem of oldProductItems) {
@@ -322,37 +332,43 @@ export class SaleService {
                 where: { id: oldItem.productId },
                 data: {
                   stockQuantity: { increment: oldItem.quantity },
-                  updatedById: userId
-                }
+                  updatedById: userId,
+                },
               });
-              logger.debug("📥 [SaleService] Estoque restaurado para produto removido", {
-                productId: oldItem.productId,
-                quantity: oldItem.quantity
-              });
+              logger.debug(
+                "📥 [SaleService] Estoque restaurado para produto removido",
+                {
+                  productId: oldItem.productId,
+                  quantity: oldItem.quantity,
+                },
+              );
             }
           }
 
           // 🗑️ REMOVER todos os itens antigos (incluindo frameDetails)
           await tx.frameDetails.deleteMany({
-            where: { itemProduct: { saleId: Number(id) } }
+            where: { itemProduct: { saleId: Number(id) } },
           });
           await tx.itemProduct.deleteMany({
-            where: { saleId: Number(id) }
+            where: { saleId: Number(id) },
           });
 
           // ➕ CRIAR novos itens com GESTÃO INTELIGENTE DE ESTOQUE
           if (body.productItems.length > 0) {
             for (const item of body.productItems) {
               const product = await tx.product.findFirst({
-                where: { id: item.productId, tenantId }
+                where: { id: item.productId, tenantId },
               });
-              if (!product) throw new Error(`Produto ${item.productId} não encontrado`);
+              if (!product)
+                throw new Error(`Produto ${item.productId} não encontrado`);
 
               // ✅ GARANTIR que quantity existe
               const quantity = item.quantity ?? 1;
 
               // 🔍 IDENTIFICAR se é item NOVO ou EXISTENTE
-              const oldItem = oldProductItems.find(old => old.productId === item.productId);
+              const oldItem = oldProductItems.find(
+                (old) => old.productId === item.productId,
+              );
               const isNewItem = !oldItem;
               const isModifiedItem = oldItem && oldItem.quantity !== quantity;
 
@@ -360,21 +376,25 @@ export class SaleService {
               if (isNewItem) {
                 // NOVO PRODUTO: Baixar estoque completo
                 if ((product.stockQuantity ?? 0) < quantity) {
-                  throw new Error(`Estoque insuficiente para ${product.name}. Disponível: ${product.stockQuantity}, Necessário: ${quantity}`);
+                  throw new Error(
+                    `Estoque insuficiente para ${product.name}. Disponível: ${product.stockQuantity}, Necessário: ${quantity}`,
+                  );
                 }
 
                 await tx.product.update({
                   where: { id: product.id },
                   data: {
                     stockQuantity: { decrement: quantity },
-                    updatedById: userId
-                  }
+                    updatedById: userId,
+                  },
                 });
-                logger.debug("🆕 [SaleService] Estoque baixado para novo produto", {
-                  productId: product.id,
-                  quantity: quantity
-                });
-
+                logger.debug(
+                  "🆕 [SaleService] Estoque baixado para novo produto",
+                  {
+                    productId: product.id,
+                    quantity: quantity,
+                  },
+                );
               } else if (isModifiedItem) {
                 // PRODUTO EXISTENTE COM QUANTIDADE MODIFICADA
                 const quantityDifference = quantity - oldItem.quantity;
@@ -382,21 +402,25 @@ export class SaleService {
                 if (quantityDifference > 0) {
                   // AUMENTOU quantidade: baixar estoque adicional
                   if ((product.stockQuantity ?? 0) < quantityDifference) {
-                    throw new Error(`Estoque insuficiente para aumentar quantidade de ${product.name}. Disponível: ${product.stockQuantity}, Necessário adicional: ${quantityDifference}`);
+                    throw new Error(
+                      `Estoque insuficiente para aumentar quantidade de ${product.name}. Disponível: ${product.stockQuantity}, Necessário adicional: ${quantityDifference}`,
+                    );
                   }
 
                   await tx.product.update({
                     where: { id: product.id },
                     data: {
                       stockQuantity: { decrement: quantityDifference },
-                      updatedById: userId
-                    }
+                      updatedById: userId,
+                    },
                   });
-                  logger.debug("📈 [SaleService] Estoque baixado para quantidade aumentada", {
-                    productId: product.id,
-                    quantity: quantityDifference
-                  });
-
+                  logger.debug(
+                    "📈 [SaleService] Estoque baixado para quantidade aumentada",
+                    {
+                      productId: product.id,
+                      quantity: quantityDifference,
+                    },
+                  );
                 } else if (quantityDifference < 0) {
                   // DIMINUIU quantidade: restaurar estoque
                   const quantityToRestore = Math.abs(quantityDifference);
@@ -404,13 +428,16 @@ export class SaleService {
                     where: { id: product.id },
                     data: {
                       stockQuantity: { increment: quantityToRestore },
-                      updatedById: userId
-                    }
+                      updatedById: userId,
+                    },
                   });
-                  logger.debug("📉 [SaleService] Estoque restaurado para quantidade reduzida", {
-                    productId: product.id,
-                    quantity: quantityToRestore
-                  });
+                  logger.debug(
+                    "📉 [SaleService] Estoque restaurado para quantidade reduzida",
+                    {
+                      productId: product.id,
+                      quantity: quantityToRestore,
+                    },
+                  );
                 }
               }
 
@@ -456,15 +483,16 @@ export class SaleService {
           if (body.serviceItems.length > 0) {
             for (const item of body.serviceItems) {
               const service = await tx.opticalService.findFirst({
-                where: { id: item.serviceId, tenantId }
+                where: { id: item.serviceId, tenantId },
               });
-              if (!service) throw new Error(`Serviço ${item.serviceId} não encontrado`);
+              if (!service)
+                throw new Error(`Serviço ${item.serviceId} não encontrado`);
             }
           }
 
           // 🗑️ REMOVER itens antigos
           await tx.itemOpticalService.deleteMany({
-            where: { saleId: Number(id) }
+            where: { saleId: Number(id) },
           });
 
           // ➕ CRIAR novos itens
@@ -482,7 +510,7 @@ export class SaleService {
               });
             }
             logger.debug("✅ [SaleService] Itens de serviço criados", {
-              count: body.serviceItems.length
+              count: body.serviceItems.length,
             });
           }
         }
@@ -492,7 +520,9 @@ export class SaleService {
           logger.debug("📘 [SaleService] Atualizando ou criando protocolo", {
             saleId: id,
           });
-          const existingProtocol = await this.saleRepo.findProtocolBySale(Number(id));
+          const existingProtocol = await this.saleRepo.findProtocolBySale(
+            Number(id),
+          );
           if (!existingProtocol) {
             await this.saleRepo.createProtocol(
               {
@@ -504,7 +534,7 @@ export class SaleService {
                 page: body.protocol.page,
                 os: body.protocol.os,
               },
-              userId
+              userId,
             );
           } else {
             await this.saleRepo.updateProtocol(
@@ -515,7 +545,7 @@ export class SaleService {
                 page: body.protocol.page,
                 os: body.protocol.os,
               },
-              userId
+              userId,
             );
           }
         }
@@ -527,7 +557,7 @@ export class SaleService {
             total: Number(body.total ?? sale.total ?? 0),
             discount: body.discount ?? sale.discount ?? 0, // ← CORREÇÃO
             updatedById: userId,
-            updatedAt: new Date()
+            updatedAt: new Date(),
           },
         });
 
@@ -542,16 +572,20 @@ export class SaleService {
         logger.info("✅ [SaleService] Venda atualizada com sucesso", {
           saleId: id,
           productItemsCount: result.productItems.length,
-          serviceItemsCount: result.serviceItems.length
+          serviceItemsCount: result.serviceItems.length,
         });
 
-        return ApiResponse.success("Venda atualizada com sucesso.", req, result);
+        return ApiResponse.success(
+          "Venda atualizada com sucesso.",
+          req,
+          result,
+        );
       });
     } catch (error: any) {
       logger.error("❌ [SaleService] Erro ao atualizar venda", {
         message: error.message,
         stack: error.stack,
-        saleId: id
+        saleId: id,
       });
       throw error;
     }
@@ -571,7 +605,7 @@ export class SaleService {
         tenantId,
         Number(page),
         Number(limit),
-        clientId ? Number(clientId) : undefined
+        clientId ? Number(clientId) : undefined,
       );
 
       logger.info("✅ [SaleService] Vendas listadas", { total });
@@ -581,7 +615,7 @@ export class SaleService {
         items,
         Number(page),
         Number(limit),
-        total
+        total,
       );
     } catch (error: any) {
       logger.error("❌ [SaleService] Erro ao listar vendas", {
@@ -647,12 +681,12 @@ export class SaleService {
         return ApiResponse.error(
           "Não é possível excluir uma venda já paga ou parcialmente paga.",
           409,
-          req
+          req,
         );
       }
 
       const productItems = await this.saleRepo.findProductItemsBySale(
-        Number(id)
+        Number(id),
       );
       logger.debug("📦 [SaleService] Restaurando estoque de produtos", {
         count: productItems.length,
@@ -661,7 +695,7 @@ export class SaleService {
         await this.productRepo.update(
           item.productId,
           { stockQuantity: (item.product.stockQuantity ?? 0) + item.quantity },
-          userId
+          userId,
         );
         await prisma.frameDetails.deleteMany({
           where: { itemProductId: item.id },

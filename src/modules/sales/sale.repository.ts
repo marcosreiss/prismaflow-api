@@ -14,11 +14,6 @@ export class SaleRepository {
       include: {
         client: { select: { id: true, name: true } },
         protocol: true,
-        // 
-        // ❗️ CORREÇÃO AQUI: 
-        // Alterado de "data.prescriptionId" para um "select"
-        // para incluir os dados da prescrição relacionada.
-        // 
         prescription: {
           select: {
             id: true,
@@ -73,11 +68,6 @@ export class SaleRepository {
       include: {
         client: { select: { id: true, name: true } },
         protocol: true,
-        // 
-        // ❗️ ADIÇÃO (SUGESTÃO): 
-        // Adicionado para consistência, para que o update
-        // também retorne os dados da prescrição.
-        // 
         prescription: {
           select: {
             id: true,
@@ -141,6 +131,7 @@ export class SaleRepository {
       select: {
         id: true,
         clientId: true,
+        saleDate: true,
         prescriptionId: true,
         subtotal: true,
         discount: true,
@@ -195,11 +186,6 @@ export class SaleRepository {
             },
           },
         },
-        // 
-        // ❗️ CORREÇÃO PRINCIPAL AQUI:
-        // Os campos "odSpherical", "oeSpherical", etc., foram
-        // substituídos pelos campos corretos ("...Far", "...Near").
-        // 
         prescription: {
           select: {
             id: true,
@@ -260,7 +246,7 @@ export class SaleRepository {
     tenantId: string,
     page: number,
     limit: number,
-    clientId?: number
+    clientId?: number,
   ) {
     const skip = (page - 1) * limit;
     const where = clientId ? { tenantId, clientId } : { tenantId };
@@ -270,14 +256,44 @@ export class SaleRepository {
         where,
         skip,
         take: limit,
-        orderBy: { createdAt: "desc" },
-        include: {
-          client: { select: { id: true, name: true } },
-          protocol: true,
-          // ❗️ NOTA: Esta consulta "findAll" NÃO inclui a prescrição
-          // com todos os detalhes, apenas o ID. Se você precisar 
-          // dos detalhes na listagem, adicione o "include"
-          // ou "select" de prescrição aqui também.
+        orderBy: { saleDate: "desc" },
+        select: {
+          id: true,
+          clientId: true,
+          saleDate: true,
+          prescriptionId: true,
+          subtotal: true,
+          discount: true,
+          total: true,
+          notes: true,
+          isActive: true,
+          tenantId: true,
+          branchId: true,
+          createdAt: true,
+          updatedAt: true,
+          client: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phone01: true,
+            },
+          },
+          protocol: {
+            select: {
+              id: true,
+              book: true,
+              page: true,
+              os: true,
+            },
+          },
+          prescription: {
+            select: {
+              id: true,
+              prescriptionDate: true,
+              doctorName: true,
+            },
+          },
         },
       }),
       prisma.sale.count({ where }),
@@ -289,10 +305,65 @@ export class SaleRepository {
   async findByClientId(clientId: number, tenantId: string) {
     return prisma.sale.findMany({
       where: { tenantId, clientId },
-      orderBy: { createdAt: "desc" },
-      include: {
-        client: { select: { id: true, name: true } },
-        protocol: true,
+      orderBy: { saleDate: "desc" },
+      select: {
+        id: true,
+        clientId: true,
+        saleDate: true,
+        prescriptionId: true,
+        subtotal: true,
+        discount: true,
+        total: true,
+        notes: true,
+        isActive: true,
+        tenantId: true,
+        branchId: true,
+        createdAt: true,
+        updatedAt: true,
+        client: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone01: true,
+          },
+        },
+        protocol: {
+          select: {
+            id: true,
+            book: true,
+            page: true,
+            os: true,
+          },
+        },
+        productItems: {
+          select: {
+            id: true,
+            productId: true,
+            quantity: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                salePrice: true,
+                category: true,
+              },
+            },
+          },
+        },
+        serviceItems: {
+          select: {
+            id: true,
+            serviceId: true,
+            service: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              },
+            },
+          },
+        },
       },
     });
   }

@@ -235,6 +235,7 @@ model Prescription {
 model Sale {
   id             Int                  @id @default(autoincrement())
   clientId       Int
+  saleDate       DateTime?
   prescriptionId Int?
   subtotal       Float?               @default(0)
   discount       Float?               @default(0)

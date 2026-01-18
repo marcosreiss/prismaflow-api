@@ -258,12 +258,12 @@ export class SaleRepository {
       where.clientId = clientId;
     }
 
-    // Adicionar filtro por nome do cliente
+    // Adicionar filtro por nome do cliente (MySQL compatível)
     if (clientName) {
       where.client = {
         name: {
           contains: clientName,
-          mode: "insensitive", // Case-insensitive
+          // Remover 'mode: insensitive' - não suportado no MySQL
         },
       };
     }

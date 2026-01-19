@@ -25,7 +25,7 @@ export class ClientService {
       const existingCpf = await this.repo.findByCpf(data.cpf, tenantId);
       if (existingCpf) {
         return ApiResponse.error(
-          "Já existe um cliente cadastrado com esse CPF neste tenant.",
+          "Já existe um cliente cadastrado com esse CPF nesta ótica.",
           409,
           req,
         );

@@ -195,4 +195,16 @@ export class ClientRepository {
       throw error;
     }
   }
+
+  async findByCpf(cpf: string, tenantId: string) {
+  return prisma.client.findUnique({
+    where: {
+      cpf_tenantId: {
+        cpf,
+        tenantId,
+      },
+    },
+  });
+}
+
 }

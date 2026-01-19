@@ -141,7 +141,7 @@ model Client {
   id            Int            @id @default(autoincrement())
   name          String
   nickname      String?
-  cpf           String?        @unique
+  cpf           String?        
   rg            String?
   bornDate      DateTime?
   gender        Gender?
@@ -180,6 +180,7 @@ model Client {
 
   @@index([branchId], map: "Client_branchId_fkey")
   @@index([tenantId], map: "Client_tenantId_fkey")
+  @@unique([cpf, tenantId])
 }
 
 model Prescription {

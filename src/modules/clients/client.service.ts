@@ -20,16 +20,33 @@ export class ClientService {
       data.bornDate = new Date(data.bornDate);
     }
 
-    // 🔹 Verifica duplicidade no mesmo tenant (e opcionalmente na filial)
-    const exists = await this.repo.findByNameInTenant(tenantId, data.name);
-    if (exists) {
-      return ApiResponse.error("Já existe um cliente com esse nome.", 409, req);
+    // 🔹 Verifica duplicidade de CPF no mesmo tenant
+    if (data.cpf) {
+      const existingCpf = await this.repo.findByCpf(data.cpf, tenantId);
+      if (existingCpf) {
+        return ApiResponse.error(
+          "Já existe um cliente cadastrado com esse CPF neste tenant.",
+          409,
+          req,
+        );
+      }
     }
 
-    // 🔹 Criação do cliente no contexto do tenant/branch
-    const client = await this.repo.create(tenantId, branchId, data, user.sub);
-
-    return ApiResponse.success("Cliente criado com sucesso.", req, client);
+    try {
+      // 🔹 Criação do cliente no contexto do tenant/branch
+      const client = await this.repo.create(tenantId, branchId, data, user.sub);
+      return ApiResponse.success("Cliente criado com sucesso.", req, client);
+    } catch (error: any) {
+      // 🔹 Tratamento para race condition ou outros erros de constraint única
+      if (error.code === "P2002" && error.meta?.target?.includes("cpf")) {
+        return ApiResponse.error(
+          "Este CPF já está cadastrado no sistema.",
+          409,
+          req,
+        );
+      }
+      throw error; // Re-lança outros erros para o middleware global
+    }
   }
 
   async update(req: Request, clientId: number, data: any) {
@@ -41,13 +58,42 @@ export class ClientService {
       data.bornDate = new Date(data.bornDate);
     }
 
+    // 🔹 Verifica se o cliente existe
     const existing = await this.repo.findById(clientId, tenantId);
     if (!existing) {
       return ApiResponse.error("Cliente não encontrado.", 404, req);
     }
 
-    const client = await this.repo.update(clientId, data, user.sub);
-    return ApiResponse.success("Cliente atualizado com sucesso.", req, client);
+    // 🔹 Se está alterando o CPF, verifica se já não existe outro cliente com esse CPF
+    if (data.cpf && data.cpf !== existing.cpf) {
+      const existingCpf = await this.repo.findByCpf(data.cpf, tenantId);
+      if (existingCpf && existingCpf.id !== clientId) {
+        return ApiResponse.error(
+          "Já existe outro cliente cadastrado com esse CPF neste tenant.",
+          409,
+          req,
+        );
+      }
+    }
+
+    try {
+      const client = await this.repo.update(clientId, data, user.sub);
+      return ApiResponse.success(
+        "Cliente atualizado com sucesso.",
+        req,
+        client,
+      );
+    } catch (error: any) {
+      // 🔹 Tratamento para race condition ou outros erros de constraint única
+      if (error.code === "P2002" && error.meta?.target?.includes("cpf")) {
+        return ApiResponse.error(
+          "Este CPF já está cadastrado no sistema.",
+          409,
+          req,
+        );
+      }
+      throw error; // Re-lança outros erros para o middleware global
+    }
   }
 
   async getById(req: Request, clientId: number) {
@@ -80,7 +126,7 @@ export class ClientService {
       branchId,
       page,
       limit,
-      search
+      search,
     );
 
     return new PagedResponse(
@@ -89,7 +135,7 @@ export class ClientService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -106,12 +152,12 @@ export class ClientService {
     const clients = await this.repo.findByNameForSelect(
       tenantId,
       branchId,
-      name
+      name,
     );
     return ApiResponse.success(
       "Clientes encontrados com sucesso.",
       req,
-      clients
+      clients,
     );
   }
 
@@ -131,7 +177,7 @@ export class ClientService {
       branchId,
       page,
       limit,
-      targetDate // ← repassa a data
+      targetDate,
     );
 
     return new PagedResponse(
@@ -142,7 +188,7 @@ export class ClientService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 }

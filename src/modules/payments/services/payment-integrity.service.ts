@@ -1,4 +1,4 @@
-import { PaymentRepository } from "../payment.repository";
+import { PaymentRepository } from "../repository/payment.repository";
 
 export class PaymentIntegrityService {
   private repo = new PaymentRepository();

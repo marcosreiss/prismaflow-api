@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { ApiResponse } from "../../../responses/ApiResponse";
 import { PagedResponse } from "../../../responses/PagedResponse";
-import { PaymentRepository } from "../payment.repository";
+import { PaymentRepository } from "../repository/payment.repository";
 
 export class PaymentInstallmentService {
   private repo = new PaymentRepository();

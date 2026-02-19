@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { ApiResponse } from "../../../responses/ApiResponse";
-import { PaymentRepository } from "../payment.repository";
+import { PaymentRepository } from "../repository/payment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
 import { prisma } from "../../../config/prisma";
 

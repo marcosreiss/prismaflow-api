@@ -37,6 +37,8 @@
     "@types/node": "^24.10.1",
     "prisma": "^6.16.3",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }

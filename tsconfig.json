@@ -9,17 +9,15 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "typeRoots": [
       "./node_modules/@types",
       "./src/types"
     ]
   },
-  "include": [
-    "src",
-    "prisma/seeds"
-  ],
-  "exclude": [
-    "node_modules",
-    "prisma/seeds"
-  ]
+  "include": ["src", "prisma/seeds"],
+  "exclude": ["node_modules", "prisma/seeds"]
 }

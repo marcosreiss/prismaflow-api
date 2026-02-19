@@ -22,7 +22,6 @@ model Tenant {
   itemProducts        ItemProduct[]
   OpticalService      OpticalService[]
   payments            Payment[]
-  paymentInstallments PaymentInstallment[]
   Prescription        Prescription[]
   products            Product[]
   protocols           Protocol[]
@@ -332,29 +331,24 @@ model ItemOpticalService {
 }
 
 model Payment {
-  id                Int                  @id @default(autoincrement())
-  saleId            Int                  @unique
-  method            PaymentMethod?
-  status            PaymentStatus        @default(PENDING)
-  total             Float                @default(0)
-  discount          Float                @default(0)
-  downPayment       Float                @default(0)
-  installmentsTotal Int?
-  paidAmount        Float                @default(0)
-  installmentsPaid  Int                  @default(0)
-  lastPaymentAt     DateTime?
-  firstDueDate      DateTime?
-  isActive          Boolean              @default(true)
-  tenantId          String
-  branchId          String
-  createdById       String?
-  updatedById       String?
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
-  branch            Branch               @relation(fields: [branchId], references: [id])
-  sale              Sale                 @relation("SalePayment", fields: [saleId], references: [id])
-  tenant            Tenant               @relation(fields: [tenantId], references: [id])
-  installments      PaymentInstallment[]
+  id               Int                  @id @default(autoincrement())
+  saleId           Int                  @unique
+  status           PaymentStatus        @default(PENDING)
+  total            Float                @default(0)
+  discount         Float                @default(0)
+  paidAmount       Float                @default(0)
+  installmentsPaid Int                  @default(0)
+  lastPaymentAt    DateTime?
+  isActive         Boolean              @default(true)
+  tenantId         String
+  branchId         String
+  createdById      String?
+  updatedById      String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  branch           Branch               @relation(fields: [branchId], references: [id])
+  sale             Sale                 @relation("SalePayment", fields: [saleId], references: [id])
+  tenant           Tenant               @relation(fields: [tenantId], references: [id])
   methods          PaymentMethodItem[]
 
   @@index([branchId], map: "Payment_branchId_fkey")
@@ -406,30 +400,27 @@ model PaymentMethodItem {
 }
 
 model PaymentInstallment {
-  id          Int       @id @default(autoincrement())
-  paymentId   Int
-  paymentMethodItemId Int?
-  sequence    Int
-  amount      Float     @default(0)
-  paidAmount  Float     @default(0)
-  paidAt      DateTime?
-  isActive    Boolean   @default(true)
-  tenantId    String
-  branchId    String
-  createdById String?
-  updatedById String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  dueDate     DateTime?
-  branch      Branch    @relation(fields: [branchId], references: [id])
-  payment     Payment   @relation(fields: [paymentId], references: [id])
-  tenant      Tenant    @relation(fields: [tenantId], references: [id])
-  paymentMethodItem   PaymentMethodItem? @relation(fields: [paymentMethodItemId], references: [id])
+  id                  Int               @id @default(autoincrement())
+  paymentMethodItemId Int
+  sequence            Int
+  amount              Float             @default(0)
+  paidAmount          Float             @default(0)
+  dueDate             DateTime?
+  paidAt              DateTime?
+  isActive            Boolean           @default(true)
+  tenantId            String
+  branchId            String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  paymentMethodItem   PaymentMethodItem @relation(fields: [paymentMethodItemId], references: [id])
+  tenant              Tenant            @relation(fields: [tenantId], references: [id])
+  branch              Branch            @relation(fields: [branchId], references: [id])
 
-  @@index([branchId], map: "PaymentInstallment_branchId_fkey")
-  @@index([paymentId], map: "PaymentInstallment_paymentId_fkey")
-  @@index([tenantId], map: "PaymentInstallment_tenantId_fkey")
   @@index([paymentMethodItemId], map: "PaymentInstallment_paymentMethodItemId_fkey")
+  @@index([tenantId], map: "PaymentInstallment_tenantId_fkey")
+  @@index([branchId], map: "PaymentInstallment_branchId_fkey")
 }
 
 enum Role {

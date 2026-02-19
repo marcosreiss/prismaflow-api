@@ -28,6 +28,7 @@ model Tenant {
   protocols           Protocol[]
   sales               Sale[]
   users               User[]
+  paymentMethodItems PaymentMethodItem[]
 }
 
 model Branch {
@@ -51,6 +52,7 @@ model Branch {
   protocols           Protocol[]
   sales               Sale[]
   users               User[]
+  paymentMethodItems PaymentMethodItem[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -353,6 +355,7 @@ model Payment {
   sale              Sale                 @relation("SalePayment", fields: [saleId], references: [id])
   tenant            Tenant               @relation(fields: [tenantId], references: [id])
   installments      PaymentInstallment[]
+  methods          PaymentMethodItem[]
 
   @@index([branchId], map: "Payment_branchId_fkey")
   @@index([tenantId], map: "Payment_tenantId_fkey")
@@ -379,9 +382,33 @@ model Protocol {
   @@index([tenantId], map: "Protocol_tenantId_fkey")
 }
 
+model PaymentMethodItem {
+  id           Int                  @id @default(autoincrement())
+  paymentId    Int
+  method       PaymentMethod
+  amount       Float                @default(0)
+  installments Int?
+  firstDueDate DateTime?
+  tenantId     String
+  branchId     String
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  payment      Payment              @relation(fields: [paymentId], references: [id])
+  tenant       Tenant               @relation(fields: [tenantId], references: [id])
+  branch       Branch               @relation(fields: [branchId], references: [id])
+  installmentItems PaymentInstallment[]
+
+  @@index([paymentId], map: "PaymentMethodItem_paymentId_fkey")
+  @@index([tenantId], map: "PaymentMethodItem_tenantId_fkey")
+  @@index([branchId], map: "PaymentMethodItem_branchId_fkey")
+}
+
 model PaymentInstallment {
   id          Int       @id @default(autoincrement())
   paymentId   Int
+  paymentMethodItemId Int?
   sequence    Int
   amount      Float     @default(0)
   paidAmount  Float     @default(0)
@@ -397,10 +424,12 @@ model PaymentInstallment {
   branch      Branch    @relation(fields: [branchId], references: [id])
   payment     Payment   @relation(fields: [paymentId], references: [id])
   tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  paymentMethodItem   PaymentMethodItem? @relation(fields: [paymentMethodItemId], references: [id])
 
   @@index([branchId], map: "PaymentInstallment_branchId_fkey")
   @@index([paymentId], map: "PaymentInstallment_paymentId_fkey")
   @@index([tenantId], map: "PaymentInstallment_tenantId_fkey")
+  @@index([paymentMethodItemId], map: "PaymentInstallment_paymentMethodItemId_fkey")
 }
 
 enum Role {

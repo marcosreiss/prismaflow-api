@@ -3,6 +3,7 @@ import { ApiResponse } from "../../../responses/ApiResponse";
 import { PaymentRepository } from "../payment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
 import { PaymentStatus } from "@prisma/client";
+import { prisma } from "../../../config/prisma-context";
 
 export class PaymentUpdateService {
   private repo = new PaymentRepository();
@@ -25,7 +26,7 @@ export class PaymentUpdateService {
       return ApiResponse.error(
         "Você não tem permissão para acessar este pagamento.",
         403,
-        req
+        req,
       );
     }
 
@@ -33,7 +34,7 @@ export class PaymentUpdateService {
       return ApiResponse.error(
         "Não é possível atualizar um pagamento cancelado.",
         400,
-        req
+        req,
       );
     }
 
@@ -47,62 +48,116 @@ export class PaymentUpdateService {
         return ApiResponse.error(
           `Pagamento confirmado só pode ter o status alterado. Campos bloqueados: ${blockedFields.join(", ")}`,
           400,
-          req
+          req,
         );
       }
     }
 
-    // Validar alterações em methods[] se fornecido
-    if (data.methods) {
-      const allInstallments = existing.methods.flatMap((m) => m.installmentItems);
+    // ─── Replace completo de methods[] ───────────────────────────────────────
+
+    if (data.methods?.length) {
+      const allInstallments = existing.methods.flatMap(
+        (m) => m.installmentItems,
+      );
       const hasPaidInstallments = allInstallments.some(
-        (inst) => inst.paidAt !== null
+        (inst) => inst.paidAt !== null,
       );
 
       if (hasPaidInstallments) {
         return ApiResponse.error(
           "Não é possível alterar os métodos de pagamento quando já existem parcelas pagas.",
           400,
-          req
+          req,
         );
       }
 
-      // Validar soma dos métodos === total informado
+      // Validar soma dos métodos === total
       const newTotal = data.total ?? existing.total;
       const sumMethods = data.methods.reduce(
         (sum: number, m: any) => sum + m.amount,
-        0
+        0,
       );
 
       if (Math.abs(sumMethods - newTotal) > 0.01) {
         return ApiResponse.error(
-          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total do pagamento (R$ ${newTotal.toFixed(2)}).`,
+          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total (R$ ${newTotal.toFixed(2)}).`,
           400,
-          req
+          req,
         );
       }
-    }
 
-    const updated = await this.repo.update(Number(id), data, userId);
+      // Validar campos obrigatórios em métodos parcelados
+      for (const method of data.methods) {
+        if (
+          method.installments &&
+          method.installments > 0 &&
+          !method.firstDueDate
+        ) {
+          return ApiResponse.error(
+            `O método ${method.method} é parcelado mas não possui firstDueDate.`,
+            400,
+            req,
+          );
+        }
+      }
 
-    // Gerar parcelas para novos métodos parcelados sem parcelas ainda
-    if (data.methods) {
-      for (const methodItem of updated.methods) {
-        const hasInstallments = methodItem.installmentItems.length > 0;
+      // Remover parcelas e métodos antigos dentro de uma transaction
+      await prisma.$transaction(async (tx) => {
+        const existingMethodIds = existing.methods.map((m) => m.id);
 
-        if (methodItem.installments && methodItem.installments > 0 && !hasInstallments) {
+        // Deletar parcelas dos métodos antigos
+        await tx.paymentInstallment.deleteMany({
+          where: { paymentMethodItemId: { in: existingMethodIds } },
+        });
+
+        // Deletar métodos antigos
+        await tx.paymentMethodItem.deleteMany({
+          where: { paymentId: Number(id) },
+        });
+
+        // Criar novos métodos
+        for (const method of data.methods) {
+          await tx.paymentMethodItem.create({
+            data: {
+              paymentId: Number(id),
+              method: method.method,
+              amount: method.amount,
+              installments: method.installments || null,
+              firstDueDate: method.firstDueDate
+                ? new Date(method.firstDueDate)
+                : null,
+              tenantId,
+              branchId,
+              createdById: userId,
+            },
+          });
+        }
+      });
+
+      // Gerar parcelas para métodos parcelados após a transaction
+      const updatedPayment = await this.repo.findById(Number(id));
+      for (const methodItem of updatedPayment!.methods) {
+        if (
+          methodItem.installments &&
+          methodItem.installments > 0 &&
+          methodItem.firstDueDate
+        ) {
           await this.integrityService.generateInstallments(
             {
               id: methodItem.id,
               amount: methodItem.amount,
               installments: methodItem.installments,
-              firstDueDate: methodItem.firstDueDate!,
+              firstDueDate: methodItem.firstDueDate,
             },
-            { tenantId, branchId, userId }
+            { tenantId, branchId, userId },
           );
         }
       }
     }
+
+    // Atualizar campos do Payment (exceto methods, tratado acima)
+    const { methods, ...paymentData } = data;
+    await this.repo.update(Number(id), paymentData, userId);
 
     const final = await this.repo.findById(Number(id));
 
@@ -129,7 +184,7 @@ export class PaymentUpdateService {
       return ApiResponse.error(
         "Não é possível reabrir um pagamento já confirmado.",
         400,
-        req
+        req,
       );
     }
 
@@ -140,7 +195,7 @@ export class PaymentUpdateService {
       return ApiResponse.error(
         "Não é possível modificar um pagamento cancelado.",
         400,
-        req
+        req,
       );
     }
 
@@ -161,7 +216,7 @@ export class PaymentUpdateService {
     return ApiResponse.success(
       "Status do pagamento atualizado com sucesso.",
       req,
-      updated
+      updated,
     );
   }
 
@@ -180,11 +235,13 @@ export class PaymentUpdateService {
       return ApiResponse.error(
         "Você não tem permissão para acessar este pagamento.",
         403,
-        req
+        req,
       );
     }
 
-    const validation = await this.integrityService.validatePaymentIntegrity(Number(id));
+    const validation = await this.integrityService.validatePaymentIntegrity(
+      Number(id),
+    );
 
     // Estatísticas calculadas a partir dos métodos
     const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
@@ -230,7 +287,7 @@ export class PaymentUpdateService {
         valid: false,
         stats,
         issues: validation.issues,
-      }
+      },
     );
   }
 }

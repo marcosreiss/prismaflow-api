@@ -1,108 +1,175 @@
 import { Request, Response } from "express";
 import { PaymentService } from "./services/payment.service";
+import { PaymentUpdateService } from "./services/payment-update.service";
+import { PaymentMethodItemService } from "./services/payment-method-item.service";
+import { PaymentInstallmentService } from "./services/payment-installment.service";
+import { PaymentInstallmentPayService } from "./services/payment-installment-pay.service";
 
-const service = new PaymentService();
+const paymentService = new PaymentService();
+const updateService = new PaymentUpdateService();
+const methodItemService = new PaymentMethodItemService();
+const installmentService = new PaymentInstallmentService();
+const installmentPayService = new PaymentInstallmentPayService();
 
-// 🔹 Criar pagamento
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function handleError(res: Response, error: any, fallbackMessage: string) {
+  res.status(400).json({
+    success: false,
+    message: error.message || fallbackMessage,
+  });
+}
+
+// ─── Payment ─────────────────────────────────────────────────────────────────
+
 export async function createPayment(req: Request, res: Response) {
   try {
-    const result = await service.create(req);
+    const result = await paymentService.create(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao criar pagamento.",
-    });
+    handleError(res, error, "Erro ao criar pagamento.");
   }
 }
 
-// 🔹 Atualizar pagamento
-export async function updatePayment(req: Request, res: Response) {
-  try {
-    const result = await service.update(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao atualizar pagamento.",
-    });
-  }
-}
-
-// 🔹 Listar pagamentos (paginado)
 export async function listPayments(req: Request, res: Response) {
   try {
-    const result = await service.findAll(req);
+    const result = await paymentService.findAll(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao listar pagamentos.",
-    });
+    handleError(res, error, "Erro ao listar pagamentos.");
   }
 }
 
-// 🔹 Buscar pagamento por ID
 export async function getPaymentById(req: Request, res: Response) {
   try {
-    const result = await service.findById(req);
+    const result = await paymentService.findById(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao buscar pagamento.",
-    });
+    handleError(res, error, "Erro ao buscar pagamento.");
   }
 }
 
-// 🔹 Buscar status do pagamento por saleId
 export async function getPaymentStatusBySale(req: Request, res: Response) {
   try {
-    const result = await service.findStatusBySaleId(req);
+    const result = await paymentService.findStatusBySaleId(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao buscar status do pagamento.",
-    });
+    handleError(res, error, "Erro ao buscar status do pagamento.");
   }
 }
 
-// 🔹 Excluir pagamento
 export async function deletePayment(req: Request, res: Response) {
   try {
-    const result = await service.delete(req);
+    const result = await paymentService.delete(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao excluir pagamento.",
-    });
+    handleError(res, error, "Erro ao excluir pagamento.");
   }
 }
 
-// payment.controller.ts - Adicione esta função
+// ─── Payment Update ───────────────────────────────────────────────────────────
+
+export async function updatePayment(req: Request, res: Response) {
+  try {
+    const result = await updateService.update(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao atualizar pagamento.");
+  }
+}
+
 export async function updatePaymentStatus(req: Request, res: Response) {
   try {
-    const result = await service.updateStatus(req);
+    const result = await updateService.updateStatus(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao atualizar status do pagamento.",
-    });
+    handleError(res, error, "Erro ao atualizar status do pagamento.");
   }
 }
 
-// 🔹 Validar integridade do pagamento
 export async function validatePayment(req: Request, res: Response) {
   try {
-    const result = await service.validate(req);
+    const result = await updateService.validate(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao validar pagamento.",
-    });
+    handleError(res, error, "Erro ao validar pagamento.");
+  }
+}
+
+// ─── PaymentMethodItem ────────────────────────────────────────────────────────
+
+export async function createPaymentMethodItem(req: Request, res: Response) {
+  try {
+    const result = await methodItemService.create(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao adicionar método de pagamento.");
+  }
+}
+
+export async function updatePaymentMethodItem(req: Request, res: Response) {
+  try {
+    const result = await methodItemService.update(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao atualizar método de pagamento.");
+  }
+}
+
+export async function deletePaymentMethodItem(req: Request, res: Response) {
+  try {
+    const result = await methodItemService.delete(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao remover método de pagamento.");
+  }
+}
+
+// ─── PaymentInstallment ───────────────────────────────────────────────────────
+
+export async function listInstallmentsByPayment(req: Request, res: Response) {
+  try {
+    const result = await installmentService.findByPaymentId(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao listar parcelas.");
+  }
+}
+
+export async function getInstallmentById(req: Request, res: Response) {
+  try {
+    const result = await installmentService.findById(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao buscar parcela.");
+  }
+}
+
+export async function updateInstallment(req: Request, res: Response) {
+  try {
+    const result = await installmentService.update(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao atualizar parcela.");
+  }
+}
+
+export async function listOverdueInstallments(req: Request, res: Response) {
+  try {
+    const result = await installmentService.findOverdue(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao listar parcelas vencidas.");
+  }
+}
+
+// ─── PaymentInstallment Pay ───────────────────────────────────────────────────
+
+export async function payInstallment(req: Request, res: Response) {
+  try {
+    const result = await installmentPayService.payInstallment(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao registrar pagamento da parcela.");
   }
 }

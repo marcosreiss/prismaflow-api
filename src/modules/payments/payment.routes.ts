@@ -10,45 +10,107 @@ import {
   deletePayment,
   updatePaymentStatus,
   validatePayment,
+  createPaymentMethodItem,
+  updatePaymentMethodItem,
+  deletePaymentMethodItem,
+  listInstallmentsByPayment,
+  getInstallmentById,
+  updateInstallment,
+  listOverdueInstallments,
+  payInstallment,
 } from "./payment.controller";
-import { CreatePaymentDto, UpdatePaymentDto, UpdatePaymentStatusDto } from "./dtos/payment.dto";
+import {
+  CreatePaymentDto,
+  UpdatePaymentDto,
+  UpdatePaymentStatusDto,
+  PaymentMethodItemDto,
+} from "./dtos/payment.dto";
+import {
+  UpdatePaymentInstallmentDto,
+  PayInstallmentDto,
+} from "./dtos/payment-installment.dto";
 
 export const paymentRoutes = Router();
 
-// 🔹 Criar pagamento
+// ─── Rotas Estáticas (sem parâmetros) ────────────────────────────────────────
+
 paymentRoutes.post(
   "/",
   authGuard,
   validateDto(CreatePaymentDto, "body"),
-  createPayment
+  createPayment,
 );
 
-// 🔹 Listar pagamentos
 paymentRoutes.get("/", authGuard, listPayments);
 
-paymentRoutes.get("/:id/validate", authGuard, validatePayment);
+// Parcelas vencidas — estático, antes de /:id
+paymentRoutes.get("/installments/overdue", authGuard, listOverdueInstallments);
 
-// 🔹 Buscar pagamento por ID
-paymentRoutes.get("/:id", authGuard, getPaymentById);
+// ─── Rotas por Sale ───────────────────────────────────────────────────────────
 
-// 🔹 Buscar status por saleId
+// Estático com prefixo — antes de /:id para não colidir
 paymentRoutes.get("/by-sale/:saleId", authGuard, getPaymentStatusBySale);
 
-// 🔹 Atualizar pagamento
-paymentRoutes.put(
-  "/:id",
-  authGuard,
-  validateDto(UpdatePaymentDto, "body"),
-  updatePayment
-);
+// ─── Rotas por Payment ID ─────────────────────────────────────────────────────
 
-// 🔹 Excluir pagamento
-paymentRoutes.delete("/:id", authGuard, deletePayment);
+// Subrotas específicas de /:id antes da rota genérica /:id
+paymentRoutes.get("/:id/validate", authGuard, validatePayment);
 
-// 🔹 Atualizar status do pagamento (rota específica)
 paymentRoutes.patch(
   "/:id/status",
   authGuard,
   validateDto(UpdatePaymentStatusDto, "body"),
-  updatePaymentStatus
+  updatePaymentStatus,
+);
+
+// Parcelas de um pagamento
+paymentRoutes.get("/:id/installments", authGuard, listInstallmentsByPayment);
+
+// Métodos de um pagamento
+paymentRoutes.post(
+  "/:paymentId/methods",
+  authGuard,
+  validateDto(PaymentMethodItemDto, "body"),
+  createPaymentMethodItem,
+);
+
+// Rota genérica /:id — sempre por último no grupo
+paymentRoutes.get("/:id", authGuard, getPaymentById);
+
+paymentRoutes.put(
+  "/:id",
+  authGuard,
+  validateDto(UpdatePaymentDto, "body"),
+  updatePayment,
+);
+
+paymentRoutes.delete("/:id", authGuard, deletePayment);
+
+// ─── Rotas de PaymentMethodItem ───────────────────────────────────────────────
+
+paymentRoutes.put(
+  "/methods/:id",
+  authGuard,
+  validateDto(PaymentMethodItemDto, "body"),
+  updatePaymentMethodItem,
+);
+
+paymentRoutes.delete("/methods/:id", authGuard, deletePaymentMethodItem);
+
+// ─── Rotas de PaymentInstallment ──────────────────────────────────────────────
+
+paymentRoutes.get("/installments/:id", authGuard, getInstallmentById);
+
+paymentRoutes.put(
+  "/installments/:id",
+  authGuard,
+  validateDto(UpdatePaymentInstallmentDto, "body"),
+  updateInstallment,
+);
+
+paymentRoutes.patch(
+  "/installments/:id/pay",
+  authGuard,
+  validateDto(PayInstallmentDto, "body"),
+  payInstallment,
 );

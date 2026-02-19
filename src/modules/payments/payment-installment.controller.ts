@@ -1,71 +1,64 @@
-// payment-installment.controller.ts
-
 import { Request, Response } from "express";
-import { PaymentInstallmentService } from "./payment-installment.service";
+import { PaymentInstallmentService } from "./services/payment-installment.service";
+import { PaymentInstallmentPayService } from "./services/payment-installment-pay.service";
 
-const service = new PaymentInstallmentService();
+const installmentService = new PaymentInstallmentService();
+const installmentPayService = new PaymentInstallmentPayService();
 
-// 🔹 Listar parcelas de um pagamento
+// ─── Helper ───────────────────────────────────────────────────────────────────
+
+function handleError(res: Response, error: any, fallbackMessage: string) {
+  res.status(400).json({
+    success: false,
+    message: error.message || fallbackMessage,
+  });
+}
+
+// ─── Leitura ──────────────────────────────────────────────────────────────────
+
 export async function listInstallmentsByPayment(req: Request, res: Response) {
   try {
-    const result = await service.findByPaymentId(req);
+    const result = await installmentService.findByPaymentId(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao listar parcelas.",
-    });
+    handleError(res, error, "Erro ao listar parcelas.");
   }
 }
 
-// 🔹 Buscar parcela por ID
 export async function getInstallmentById(req: Request, res: Response) {
   try {
-    const result = await service.findById(req);
+    const result = await installmentService.findById(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao buscar parcela.",
-    });
+    handleError(res, error, "Erro ao buscar parcela.");
   }
 }
 
-// 🔹 Registrar pagamento de parcela
-export async function payInstallment(req: Request, res: Response) {
-  try {
-    const result = await service.payInstallment(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao registrar pagamento da parcela.",
-    });
-  }
-}
-
-// 🔹 Atualizar parcela
-export async function updateInstallment(req: Request, res: Response) {
-  try {
-    const result = await service.update(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao atualizar parcela.",
-    });
-  }
-}
-
-// 🔹 Listar parcelas vencidas
 export async function listOverdueInstallments(req: Request, res: Response) {
   try {
-    const result = await service.findOverdue(req);
+    const result = await installmentService.findOverdue(req);
     res.status(result.status || 200).json(result);
   } catch (error: any) {
-    res.status(400).json({
-      success: false,
-      message: error.message || "Erro ao listar parcelas vencidas.",
-    });
+    handleError(res, error, "Erro ao listar parcelas vencidas.");
+  }
+}
+
+// ─── Escrita ──────────────────────────────────────────────────────────────────
+
+export async function updateInstallment(req: Request, res: Response) {
+  try {
+    const result = await installmentService.update(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao atualizar parcela.");
+  }
+}
+
+export async function payInstallment(req: Request, res: Response) {
+  try {
+    const result = await installmentPayService.payInstallment(req);
+    res.status(result.status || 200).json(result);
+  } catch (error: any) {
+    handleError(res, error, "Erro ao registrar pagamento da parcela.");
   }
 }

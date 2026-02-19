@@ -1,17 +1,17 @@
 import { Router } from "express";
-import { authGuard } from "../../middlewares/auth.middleware";
-import { validateDto } from "../../middlewares/validation.middleware";
+import { authGuard } from "../../../middlewares/auth.middleware";
+import { validateDto } from "../../../middlewares/validation.middleware";
 import {
   listInstallmentsByPayment,
   getInstallmentById,
   payInstallment,
   updateInstallment,
   listOverdueInstallments,
-} from "./payment-installment.controller";
+} from "../controller/payment-installment.controller";
 import {
   PayInstallmentDto,
   UpdatePaymentInstallmentDto,
-} from "./dtos/payment-installment.dto";
+} from "../dtos/payment-installment.dto";
 
 export const paymentInstallmentRoutes = Router();
 

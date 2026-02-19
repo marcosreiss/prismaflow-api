@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
-import { PaymentService } from "./services/payment.service";
-import { PaymentUpdateService } from "./services/payment-update.service";
-import { PaymentMethodItemService } from "./services/payment-method-item.service";
+import { PaymentService } from "../services/payment.service";
+import { PaymentUpdateService } from "../services/payment-update.service";
 
 const paymentService = new PaymentService();
 const updateService = new PaymentUpdateService();
-const methodItemService = new PaymentMethodItemService();
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
 
@@ -89,34 +87,5 @@ export async function validatePayment(req: Request, res: Response) {
     res.status(result.status || 200).json(result);
   } catch (error: any) {
     handleError(res, error, "Erro ao validar pagamento.");
-  }
-}
-
-// ─── PaymentMethodItem ────────────────────────────────────────────────────────
-
-export async function createPaymentMethodItem(req: Request, res: Response) {
-  try {
-    const result = await methodItemService.create(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao adicionar método de pagamento.");
-  }
-}
-
-export async function updatePaymentMethodItem(req: Request, res: Response) {
-  try {
-    const result = await methodItemService.update(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao atualizar método de pagamento.");
-  }
-}
-
-export async function deletePaymentMethodItem(req: Request, res: Response) {
-  try {
-    const result = await methodItemService.delete(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao remover método de pagamento.");
   }
 }

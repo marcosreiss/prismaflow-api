@@ -53,7 +53,6 @@ model Branch {
   sales               Sale[]
   users               User[]
   paymentMethodItems PaymentMethodItem[]
-  paymentInstallments PaymentInstallment[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }

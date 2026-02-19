@@ -1,7 +1,9 @@
-import { PaymentRepository } from "../repository/payment.repository";
+import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
+import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 
 export class PaymentIntegrityService {
-  private repo = new PaymentRepository();
+  private paymentRepo = new PaymentRepository();
+  private installmentRepo = new PaymentInstallmentRepository();
 
   // ─── Gerar Parcelas por PaymentMethodItem ────────────────────────────────────
 
@@ -30,7 +32,7 @@ export class PaymentIntegrityService {
       const dueDate = new Date(baseDueDate);
       dueDate.setDate(dueDate.getDate() + (i - 1) * 30);
 
-      const installment = await this.repo.createInstallment(
+      const installment = await this.installmentRepo.create(
         paymentMethodItemId,
         {
           sequence: i,
@@ -46,7 +48,6 @@ export class PaymentIntegrityService {
       created.push(installment);
     }
 
-    // Validar integridade logo após geração
     const validation =
       await this.validateMethodItemIntegrity(paymentMethodItemId);
     if (!validation.valid) {
@@ -62,15 +63,14 @@ export class PaymentIntegrityService {
 
   async validateMethodItemIntegrity(paymentMethodItemId: number) {
     const installments =
-      await this.repo.findInstallmentsByMethodItem(paymentMethodItemId);
+      await this.installmentRepo.findByMethodItemId(paymentMethodItemId);
 
     if (installments.length === 0) {
-      return { valid: true }; // Métodos não-parcelados não têm parcelas
+      return { valid: true };
     }
 
     const issues = [];
 
-    // Validar sequência contínua sem lacunas
     const sequences = installments.map((i) => i.sequence).sort((a, b) => a - b);
     const expectedSequences = Array.from(
       { length: installments.length },
@@ -89,7 +89,6 @@ export class PaymentIntegrityService {
       });
     }
 
-    // Validar parcelas sem data de vencimento
     const withoutDueDate = installments.filter((i) => !i.dueDate);
     if (withoutDueDate.length > 0) {
       issues.push({
@@ -113,19 +112,17 @@ export class PaymentIntegrityService {
   // ─── Validar Integridade Completa de um Payment ──────────────────────────────
 
   async validatePaymentIntegrity(paymentId: number) {
-    const payment = await this.repo.findById(paymentId);
+    const payment = await this.paymentRepo.findById(paymentId);
     if (!payment) {
       return { valid: false, error: "Pagamento não encontrado." };
     }
 
     const issues = [];
 
-    // Validar se há métodos cadastrados
     if (!payment.methods || payment.methods.length === 0) {
       return { valid: false, error: "Pagamento sem métodos cadastrados." };
     }
 
-    // Validar soma dos métodos === payment.total
     const sumMethods = payment.methods.reduce((sum, m) => sum + m.amount, 0);
     if (Math.abs(sumMethods - payment.total) > 0.01) {
       issues.push({
@@ -137,7 +134,6 @@ export class PaymentIntegrityService {
       });
     }
 
-    // Validar integridade de cada método parcelado
     for (const method of payment.methods) {
       if (method.installments && method.installments > 0) {
         const methodValidation = await this.validateMethodItemIntegrity(
@@ -151,7 +147,6 @@ export class PaymentIntegrityService {
           });
         }
 
-        // Validar soma das parcelas === amount do método
         const sumInstallments = method.installmentItems.reduce(
           (sum, i) => sum + i.amount,
           0,
@@ -178,29 +173,24 @@ export class PaymentIntegrityService {
     return { valid: true, payment };
   }
 
-  // ─── Recalcular Status do Payment com base em todos os métodos ───────────────
+  // ─── Recalcular Status do Payment ────────────────────────────────────────────
 
   async recalculatePaymentStatus(paymentId: number, userId: string) {
-    const payment = await this.repo.findById(paymentId);
+    const payment = await this.paymentRepo.findById(paymentId);
     if (!payment || !payment.methods) return;
 
-    // Achatar todas as parcelas de todos os métodos
     const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
-
     if (allInstallments.length === 0) return;
 
     const installmentsPaid = allInstallments.filter(
       (inst) => inst.paidAt !== null,
     ).length;
-
     const totalPaidAmount = allInstallments.reduce(
       (sum, inst) => sum + inst.paidAmount,
       0,
     );
-
     const allPaid = allInstallments.every((inst) => inst.paidAt !== null);
 
-    // Buscar última data de pagamento entre todas as parcelas
     const paidInstallments = allInstallments.filter((inst) => inst.paidAt);
     const lastPaymentAt =
       paidInstallments.length > 0
@@ -210,15 +200,13 @@ export class PaymentIntegrityService {
           }, new Date(paidInstallments[0].paidAt!))
         : null;
 
-    const newStatus = allPaid ? "CONFIRMED" : "PENDING";
-
-    await this.repo.update(
+    await this.paymentRepo.update(
       paymentId,
       {
         installmentsPaid,
         paidAmount: totalPaidAmount,
         lastPaymentAt,
-        status: newStatus,
+        status: allPaid ? "CONFIRMED" : "PENDING",
       },
       userId,
     );

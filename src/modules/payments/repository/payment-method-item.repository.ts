@@ -9,8 +9,8 @@ export class PaymentMethodItemRepository {
       paymentId: number;
       method: PaymentMethod;
       amount: number;
-      installments?: number;
-      firstDueDate?: Date;
+      installments?: number | null;
+      firstDueDate?: Date | null;
       tenantId: string;
       branchId: string;
     },

@@ -1,7 +1,7 @@
 import { Request } from "express";
-import { ApiResponse } from "../../../responses/ApiResponse";
-import { PagedResponse } from "../../../responses/PagedResponse";
-import { PaymentRepository } from "../repository/payment.repository";
+import { ApiResponse } from "@/responses/ApiResponse";
+import { PagedResponse } from "@/responses/PagedResponse";
+import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
 import { PaymentStatus } from "@prisma/client";
 
@@ -42,19 +42,18 @@ export class PaymentService {
         hasOverdueInstallments: hasOverdueInstallments === "true",
         isPartiallyPaid: isPartiallyPaid === "true",
         dueDaysAhead: dueDaysAhead ? Number(dueDaysAhead) : undefined,
-      }
+      },
     );
 
-    // Enriquecer cada pagamento com métricas calculadas a partir dos métodos
     const now = new Date();
     const enrichedItems = items.map((payment) => {
-      const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
+      const allInstallments = payment.methods.flatMap(
+        (m) => m.installmentItems,
+      );
 
       const overdueInstallments = allInstallments.filter(
         (inst) =>
-          inst.dueDate &&
-          new Date(inst.dueDate) < now &&
-          inst.paidAt === null
+          inst.dueDate && new Date(inst.dueDate) < now && inst.paidAt === null,
       );
 
       const nextDueInstallment = allInstallments
@@ -62,11 +61,11 @@ export class PaymentService {
           (inst) =>
             inst.dueDate &&
             new Date(inst.dueDate) >= now &&
-            inst.paidAt === null
+            inst.paidAt === null,
         )
         .sort(
           (a, b) =>
-            new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime()
+            new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime(),
         )[0];
 
       return {
@@ -84,7 +83,7 @@ export class PaymentService {
       enrichedItems,
       Number(page),
       Number(limit),
-      total
+      total,
     );
   }
 
@@ -98,7 +97,11 @@ export class PaymentService {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
 
-    return ApiResponse.success("Pagamento encontrado com sucesso.", req, payment);
+    return ApiResponse.success(
+      "Pagamento encontrado com sucesso.",
+      req,
+      payment,
+    );
   }
 
   // ─── Status do Pagamento por Sale ID ────────────────────────────────────────
@@ -111,7 +114,7 @@ export class PaymentService {
       return ApiResponse.error(
         "Pagamento não encontrado para esta venda.",
         404,
-        req
+        req,
       );
     }
 
@@ -129,30 +132,33 @@ export class PaymentService {
     const { sub: userId, tenantId, branchId } = user;
     const data = req.body;
 
-    // Validar soma dos métodos === total
     if (data.methods?.length) {
       const sumMethods = data.methods.reduce(
         (sum: number, m: any) => sum + m.amount,
-        0
+        0,
       );
 
       if (Math.abs(sumMethods - data.total) > 0.01) {
         return ApiResponse.error(
           `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total (R$ ${data.total.toFixed(2)}).`,
           400,
-          req
+          req,
         );
       }
     }
 
     const payment = await this.repo.create(
       { ...data, tenantId, branchId },
-      userId
+      userId,
     );
 
     // Gerar parcelas para métodos parcelados
     for (const methodItem of payment.methods) {
-      if (methodItem.installments && methodItem.installments > 0 && methodItem.firstDueDate) {
+      if (
+        methodItem.installments &&
+        methodItem.installments > 0 &&
+        methodItem.firstDueDate
+      ) {
         await this.integrityService.generateInstallments(
           {
             id: methodItem.id,
@@ -160,7 +166,7 @@ export class PaymentService {
             installments: methodItem.installments,
             firstDueDate: methodItem.firstDueDate,
           },
-          { tenantId, branchId, userId }
+          { tenantId, branchId, userId },
         );
       }
     }
@@ -182,12 +188,11 @@ export class PaymentService {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
 
-    // Somente pagamentos PENDING podem ser removidos
     if (payment.status !== PaymentStatus.PENDING) {
       return ApiResponse.error(
         "Somente pagamentos com status PENDING podem ser excluídos.",
         400,
-        req
+        req,
       );
     }
 

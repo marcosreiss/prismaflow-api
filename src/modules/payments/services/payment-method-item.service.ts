@@ -1,11 +1,14 @@
 import { Request } from "express";
-import { ApiResponse } from "../../../responses/ApiResponse";
-import { PaymentRepository } from "../repository/payment.repository";
+import { ApiResponse } from "@/responses/ApiResponse";
+import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
+import { PaymentMethodItemRepository } from "@/modules/payments/repository/payment-method-item.repository";
+import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
-import { prisma } from "../../../config/prisma";
 
 export class PaymentMethodItemService {
-  private repo = new PaymentRepository();
+  private paymentRepo = new PaymentRepository();
+  private methodItemRepo = new PaymentMethodItemRepository();
+  private installmentRepo = new PaymentInstallmentRepository();
   private integrityService = new PaymentIntegrityService();
 
   // ─── Criar Método em um Payment Existente ────────────────────────────────────
@@ -16,8 +19,7 @@ export class PaymentMethodItemService {
     const { paymentId } = req.params;
     const { method, amount, installments, firstDueDate } = req.body;
 
-    // Verificar se o payment existe e pertence ao tenant
-    const payment = await this.repo.findById(Number(paymentId));
+    const payment = await this.paymentRepo.findById(Number(paymentId));
     if (!payment) {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
@@ -26,22 +28,20 @@ export class PaymentMethodItemService {
       return ApiResponse.error(
         "Você não tem permissão para acessar este pagamento.",
         403,
-        req
+        req,
       );
     }
 
-    // Validar campos obrigatórios para métodos parcelados
     if (installments && installments > 0 && !firstDueDate) {
       return ApiResponse.error(
         "Para método parcelado, é necessário informar firstDueDate.",
         400,
-        req
+        req,
       );
     }
 
-    // Criar o PaymentMethodItem
-    const methodItem = await prisma.paymentMethodItem.create({
-      data: {
+    const methodItem = await this.methodItemRepo.create(
+      {
         paymentId: Number(paymentId),
         method,
         amount,
@@ -49,11 +49,10 @@ export class PaymentMethodItemService {
         firstDueDate: firstDueDate ? new Date(firstDueDate) : null,
         tenantId,
         branchId,
-        createdById: userId,
       },
-    });
+      userId,
+    );
 
-    // Gerar parcelas automaticamente se for método parcelado
     if (installments && installments > 0 && firstDueDate) {
       await this.integrityService.generateInstallments(
         {
@@ -62,13 +61,17 @@ export class PaymentMethodItemService {
           installments,
           firstDueDate: new Date(firstDueDate),
         },
-        { tenantId, branchId, userId }
+        { tenantId, branchId, userId },
       );
     }
 
-    const updated = await this.repo.findById(Number(paymentId));
+    const updated = await this.paymentRepo.findById(Number(paymentId));
 
-    return ApiResponse.success("Método de pagamento adicionado com sucesso.", req, updated);
+    return ApiResponse.success(
+      "Método de pagamento adicionado com sucesso.",
+      req,
+      updated,
+    );
   }
 
   // ─── Atualizar Método ────────────────────────────────────────────────────────
@@ -79,11 +82,7 @@ export class PaymentMethodItemService {
     const { id } = req.params;
     const data = req.body;
 
-    const methodItem = await prisma.paymentMethodItem.findUnique({
-      where: { id: Number(id) },
-      include: { installmentItems: true },
-    });
-
+    const methodItem = await this.methodItemRepo.findById(Number(id));
     if (!methodItem) {
       return ApiResponse.error("Método de pagamento não encontrado.", 404, req);
     }
@@ -92,47 +91,39 @@ export class PaymentMethodItemService {
       return ApiResponse.error(
         "Você não tem permissão para acessar este método.",
         403,
-        req
+        req,
       );
     }
 
-    // Bloquear alteração se já existem parcelas pagas
     const hasPaidInstallments = methodItem.installmentItems.some(
-      (inst) => inst.paidAt !== null
+      (inst) => inst.paidAt !== null,
     );
 
     if (hasPaidInstallments) {
       return ApiResponse.error(
         "Não é possível alterar um método que já possui parcelas pagas.",
         400,
-        req
+        req,
       );
     }
 
-    const updated = await prisma.paymentMethodItem.update({
-      where: { id: Number(id) },
-      data: {
-        ...data,
-        updatedById: userId,
-      },
-      include: { installmentItems: true },
-    });
+    const updated = await this.methodItemRepo.update(Number(id), data, userId);
 
-    return ApiResponse.success("Método de pagamento atualizado com sucesso.", req, updated);
+    return ApiResponse.success(
+      "Método de pagamento atualizado com sucesso.",
+      req,
+      updated,
+    );
   }
 
   // ─── Remover Método ──────────────────────────────────────────────────────────
 
   async delete(req: Request) {
     const user = req.user!;
-    const { sub: userId, tenantId } = user;
+    const { tenantId } = user;
     const { id } = req.params;
 
-    const methodItem = await prisma.paymentMethodItem.findUnique({
-      where: { id: Number(id) },
-      include: { installmentItems: true },
-    });
-
+    const methodItem = await this.methodItemRepo.findById(Number(id));
     if (!methodItem) {
       return ApiResponse.error("Método de pagamento não encontrado.", 404, req);
     }
@@ -141,32 +132,28 @@ export class PaymentMethodItemService {
       return ApiResponse.error(
         "Você não tem permissão para acessar este método.",
         403,
-        req
+        req,
       );
     }
 
-    // Bloquear remoção se há parcelas pagas
     const hasPaidInstallments = methodItem.installmentItems.some(
-      (inst) => inst.paidAt !== null
+      (inst) => inst.paidAt !== null,
     );
 
     if (hasPaidInstallments) {
       return ApiResponse.error(
         "Não é possível remover um método que já possui parcelas pagas.",
         400,
-        req
+        req,
       );
     }
 
-    // Remover parcelas do método antes de remover o método
-    await prisma.paymentInstallment.deleteMany({
-      where: { paymentMethodItemId: Number(id) },
-    });
+    await this.installmentRepo.deleteByMethodItemId(Number(id));
+    await this.methodItemRepo.delete(Number(id));
 
-    await prisma.paymentMethodItem.delete({
-      where: { id: Number(id) },
-    });
-
-    return ApiResponse.success("Método de pagamento removido com sucesso.", req);
+    return ApiResponse.success(
+      "Método de pagamento removido com sucesso.",
+      req,
+    );
   }
 }

@@ -1,12 +1,16 @@
 import { Request } from "express";
-import { ApiResponse } from "../../../responses/ApiResponse";
-import { PaymentRepository } from "../repository/payment.repository";
+import { ApiResponse } from "@/responses/ApiResponse";
+import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
+import { PaymentMethodItemRepository } from "@/modules/payments/repository/payment-method-item.repository";
+import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
 import { PaymentStatus } from "@prisma/client";
-import { prisma } from "../../../config/prisma-context";
+import { prisma } from "@/config/prisma-context";
 
 export class PaymentUpdateService {
   private repo = new PaymentRepository();
+  private methodItemRepo = new PaymentMethodItemRepository();
+  private installmentRepo = new PaymentInstallmentRepository();
   private integrityService = new PaymentIntegrityService();
 
   // ─── Atualizar Pagamento ─────────────────────────────────────────────────────
@@ -38,7 +42,6 @@ export class PaymentUpdateService {
       );
     }
 
-    // Pagamento confirmado só permite cancelamento
     if (
       existing.status === PaymentStatus.CONFIRMED &&
       data.status !== PaymentStatus.CANCELED
@@ -71,7 +74,6 @@ export class PaymentUpdateService {
         );
       }
 
-      // Validar soma dos métodos === total
       const newTotal = data.total ?? existing.total;
       const sumMethods = data.methods.reduce(
         (sum: number, m: any) => sum + m.amount,
@@ -86,7 +88,6 @@ export class PaymentUpdateService {
         );
       }
 
-      // Validar campos obrigatórios em métodos parcelados
       for (const method of data.methods) {
         if (
           method.installments &&
@@ -101,21 +102,18 @@ export class PaymentUpdateService {
         }
       }
 
-      // Remover parcelas e métodos antigos dentro de uma transaction
+      // Remover parcelas e métodos antigos e recriar dentro de uma transaction
       await prisma.$transaction(async (tx) => {
         const existingMethodIds = existing.methods.map((m) => m.id);
 
-        // Deletar parcelas dos métodos antigos
         await tx.paymentInstallment.deleteMany({
           where: { paymentMethodItemId: { in: existingMethodIds } },
         });
 
-        // Deletar métodos antigos
         await tx.paymentMethodItem.deleteMany({
           where: { paymentId: Number(id) },
         });
 
-        // Criar novos métodos
         for (const method of data.methods) {
           await tx.paymentMethodItem.create({
             data: {
@@ -155,7 +153,6 @@ export class PaymentUpdateService {
       }
     }
 
-    // Atualizar campos do Payment (exceto methods, tratado acima)
     const { methods, ...paymentData } = data;
     await this.repo.update(Number(id), paymentData, userId);
 
@@ -243,7 +240,6 @@ export class PaymentUpdateService {
       Number(id),
     );
 
-    // Estatísticas calculadas a partir dos métodos
     const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
     const stats = {
       paymentId: payment.id,
@@ -283,11 +279,7 @@ export class PaymentUpdateService {
       validation.error || "Inconsistências detectadas no pagamento.",
       400,
       req,
-      {
-        valid: false,
-        stats,
-        issues: validation.issues,
-      },
+      { valid: false, stats, issues: validation.issues },
     );
   }
 }

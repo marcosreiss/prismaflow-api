@@ -1,10 +1,10 @@
 import { Request } from "express";
-import { ApiResponse } from "../../../responses/ApiResponse";
-import { PaymentRepository } from "../repository/payment.repository";
+import { ApiResponse } from "@/responses/ApiResponse";
+import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
 
 export class PaymentInstallmentPayService {
-  private repo = new PaymentRepository();
+  private repo = new PaymentInstallmentRepository();
   private integrityService = new PaymentIntegrityService();
 
   // ─── Registrar Pagamento de Parcela ──────────────────────────────────────────
@@ -15,7 +15,7 @@ export class PaymentInstallmentPayService {
     const { paidAmount, paidAt } = req.body;
     const userId = user.sub;
 
-    const installment = await this.repo.findInstallmentById(Number(id));
+    const installment = await this.repo.findById(Number(id));
     if (!installment) {
       return ApiResponse.error("Parcela não encontrada.", 404, req);
     }
@@ -24,26 +24,20 @@ export class PaymentInstallmentPayService {
       return ApiResponse.error(
         "Você não tem permissão para acessar esta parcela.",
         403,
-        req,
+        req
       );
     }
 
-    // Bloquear pagamento de parcela já quitada
     if (installment.paidAt !== null) {
-      return ApiResponse.error(
-        "Esta parcela já foi paga completamente.",
-        400,
-        req,
-      );
+      return ApiResponse.error("Esta parcela já foi paga completamente.", 400, req);
     }
 
-    // Validar valor informado contra o saldo restante
     const remainingAmount = installment.amount - installment.paidAmount;
     if (paidAmount > remainingAmount) {
       return ApiResponse.error(
         `O valor pago (${paidAmount}) não pode ser maior que o valor restante da parcela (${remainingAmount.toFixed(2)}).`,
         400,
-        req,
+        req
       );
     }
 
@@ -51,21 +45,19 @@ export class PaymentInstallmentPayService {
     const isFullyPaid = newPaidAmount >= installment.amount;
     const paymentDate = paidAt ? new Date(paidAt) : new Date();
 
-    // Marcar paidAt apenas quando quitada completamente
-    const updatedInstallment = await this.repo.updateInstallment(
+    await this.repo.update(
       Number(id),
       {
         paidAmount: newPaidAmount,
         paidAt: isFullyPaid ? paymentDate : null,
       },
-      userId,
+      userId
     );
 
-    // Recalcular status do Payment via todos os métodos
     const paymentId = installment.paymentMethodItem.payment.id;
     await this.integrityService.recalculatePaymentStatus(paymentId, userId);
 
-    const final = await this.repo.findInstallmentById(Number(id));
+    const final = await this.repo.findById(Number(id));
 
     return ApiResponse.success(
       "Pagamento da parcela registrado com sucesso.",
@@ -75,7 +67,7 @@ export class PaymentInstallmentPayService {
         message: isFullyPaid
           ? "Parcela paga completamente."
           : `Pagamento parcial registrado. Restante: R$ ${(installment.amount - newPaidAmount).toFixed(2)}`,
-      },
+      }
     );
   }
 }

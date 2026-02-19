@@ -1,8 +1,8 @@
 import { PaymentStatus } from "@prisma/client";
-import { prisma, withAuditData } from "../../config/prisma-context";
+import { prisma, withAuditData } from "@/config/prisma-context";
 
 export class PaymentRepository {
-  // ─── Payment CRUD ───────────────────────────────────────────────────────────
+  // ─── CRUD ─────────────────────────────────────────────────────────────────
 
   async create(data: any, userId?: string) {
     return prisma.payment.create({
@@ -59,7 +59,7 @@ export class PaymentRepository {
     });
   }
 
-  // ─── Listagem e Filtros ──────────────────────────────────────────────────────
+  // ─── Listagem e Filtros ───────────────────────────────────────────────────
 
   async findAllByTenant(
     tenantId: string,
@@ -88,7 +88,6 @@ export class PaymentRepository {
       if (filters.endDate) where.createdAt.lte = filters.endDate;
     }
 
-    // Filtro por cliente via Sale
     if (filters?.clientId || filters?.clientName) {
       where.sale = { client: {} };
       if (filters.clientId) where.sale.client.id = filters.clientId;
@@ -96,12 +95,10 @@ export class PaymentRepository {
         where.sale.client.name = { contains: filters.clientName };
     }
 
-    // Filtro por método dentro de PaymentMethodItem
     if (filters?.method) {
       where.methods = { some: { method: filters.method } };
     }
 
-    // Filtro: Parcialmente pago (possui parcelas pagas mas ainda PENDING)
     if (filters?.isPartiallyPaid) {
       where.AND = where.AND || [];
       where.AND.push({
@@ -110,22 +107,16 @@ export class PaymentRepository {
       });
     }
 
-    // Filtro: Com parcelas vencidas e não totalmente pagas
     if (filters?.hasOverdueInstallments) {
       where.methods = {
         some: {
           installmentItems: {
-            some: {
-              dueDate: { lt: new Date() },
-              isActive: true,
-              paidAt: null,
-            },
+            some: { dueDate: { lt: new Date() }, isActive: true, paidAt: null },
           },
         },
       };
     }
 
-    // Filtro: Parcelas a vencer nos próximos X dias
     if (filters?.dueDaysAhead) {
       const today = new Date();
       const futureDate = new Date();
@@ -168,121 +159,5 @@ export class PaymentRepository {
     ]);
 
     return { items, total };
-  }
-
-  // ─── Parcelas Vencidas ───────────────────────────────────────────────────────
-
-  async findOverdueInstallments(tenantId: string, page: number, limit: number) {
-    const skip = (page - 1) * limit;
-    const now = new Date();
-
-    const where = {
-      tenantId,
-      dueDate: { lt: now },
-      paidAt: null,
-      isActive: true,
-    };
-
-    const [items, total] = await Promise.all([
-      prisma.paymentInstallment.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: { dueDate: "asc" },
-        include: {
-          paymentMethodItem: {
-            include: {
-              payment: {
-                select: {
-                  id: true,
-                  saleId: true,
-                  status: true,
-                  sale: {
-                    select: {
-                      id: true,
-                      client: {
-                        select: { id: true, name: true, phone01: true },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      }),
-      prisma.paymentInstallment.count({ where }),
-    ]);
-
-    return { items, total };
-  }
-
-  // ─── Installment CRUD ────────────────────────────────────────────────────────
-
-  async findInstallmentsByMethodItem(paymentMethodItemId: number) {
-    return prisma.paymentInstallment.findMany({
-      where: { paymentMethodItemId },
-      orderBy: { sequence: "asc" },
-    });
-  }
-
-  async createInstallment(
-    paymentMethodItemId: number,
-    data: any,
-    userId?: string,
-  ) {
-    return prisma.paymentInstallment.create({
-      data: withAuditData(userId, { ...data, paymentMethodItemId }),
-      include: {
-        paymentMethodItem: {
-          select: {
-            id: true,
-            method: true,
-            payment: { select: { id: true, saleId: true } },
-          },
-        },
-      },
-    });
-  }
-
-  async updateInstallment(id: number, data: any, userId?: string) {
-    return prisma.paymentInstallment.update({
-      where: { id },
-      data: withAuditData(userId, data, true),
-      include: {
-        paymentMethodItem: {
-          select: {
-            id: true,
-            method: true,
-            payment: { select: { id: true, saleId: true } },
-          },
-        },
-      },
-    });
-  }
-
-  async findInstallmentById(id: number) {
-    return prisma.paymentInstallment.findUnique({
-      where: { id },
-      include: {
-        paymentMethodItem: {
-          select: {
-            id: true,
-            method: true,
-            amount: true,
-            payment: {
-              select: { id: true, saleId: true, total: true, status: true },
-            },
-          },
-        },
-      },
-    });
-  }
-
-  async softDeleteInstallment(id: number, userId?: string) {
-    return prisma.paymentInstallment.update({
-      where: { id },
-      data: withAuditData(userId, { isActive: false }, true),
-    });
   }
 }

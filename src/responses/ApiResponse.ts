@@ -27,7 +27,6 @@ export class ApiResponse<T> {
     return new ApiResponse<T>(200, message, req, data, token);
   }
 
-  // ✅ MODIFICAR: Adicionar parâmetro data
   static error<T>(message: string, status: number, req: Request, data?: T) {
     return new ApiResponse<T>(status, message, req, data);
   }

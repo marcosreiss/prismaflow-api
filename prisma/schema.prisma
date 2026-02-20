@@ -384,6 +384,8 @@ model PaymentMethodItem {
   amount       Float                @default(0)
   installments Int?
   firstDueDate DateTime?
+  isPaid       Boolean              @default(false)
+  paidAt       DateTime?
   tenantId     String
   branchId     String
   createdById  String?

@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsDate,
   IsEnum,
   IsInt,
   IsNumber,
@@ -29,7 +30,13 @@ export class PaymentMethodItemDto {
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   firstDueDate?: Date;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  paidAt?: Date;
 }
 
 export class CreatePaymentDto {
@@ -65,6 +72,7 @@ export class CreatePaymentDto {
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   lastPaymentAt?: Date;
 
   @IsArray()
@@ -112,6 +120,7 @@ export class UpdatePaymentDto {
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   lastPaymentAt?: Date;
 
   @IsOptional()
@@ -130,7 +139,7 @@ export class UpdatePaymentStatusDto {
 
   @IsOptional()
   @IsString()
-  reason?: string; // Para justificativa de cancelamento
+  reason?: string;
 }
 
 export class PaymentFilterDto {
@@ -140,14 +149,16 @@ export class PaymentFilterDto {
 
   @IsOptional()
   @IsEnum(PaymentMethod)
-  method?: PaymentMethod; // Filtra por método dentro de PaymentMethodItem
+  method?: PaymentMethod;
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   startDate?: Date;
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   endDate?: Date;
 
   @IsOptional()
@@ -174,15 +185,15 @@ export class PaymentFilterDto {
 
   @IsOptional()
   @Type(() => Boolean)
-  hasOverdueInstallments?: boolean; // Pagamentos com parcelas em atraso
+  hasOverdueInstallments?: boolean;
 
   @IsOptional()
   @Type(() => Boolean)
-  isPartiallyPaid?: boolean; // Pagamentos parcialmente pagos
+  isPartiallyPaid?: boolean;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  dueDaysAhead?: number; // Próximas parcelas a vencer (próximos X dias)
+  dueDaysAhead?: number;
 }

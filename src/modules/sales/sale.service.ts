@@ -3,13 +3,13 @@ import { Request } from "express";
 import { SaleRepository } from "./sale.repository";
 import { ProductRepository } from "../products/product.repository";
 import { OpticalServiceRepository } from "../optical-services/optical-service.repository";
-import { PaymentRepository } from "../payments/payment.repository";
 import { ClientRepository } from "../clients/client.repository";
 import { prisma, withAuditData } from "../../config/prisma-context";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { UpdateSaleDto } from "./dtos/sale.dto";
 import logger from "../../utils/logger";
+import { PaymentRepository } from "../payments/repository/payment.repository";
 
 export class SaleService {
   private saleRepo = new SaleRepository();

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { PaymentInstallmentService } from "./services/payment-installment.service";
-import { PaymentInstallmentPayService } from "./services/payment-installment-pay.service";
+import { PaymentInstallmentPayService } from "../services/payment-installment-pay.service";
+import { PaymentInstallmentService } from "../services/payment-installment.service";
 
 const installmentService = new PaymentInstallmentService();
 const installmentPayService = new PaymentInstallmentPayService();

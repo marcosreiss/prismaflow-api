@@ -2,8 +2,6 @@ import { PaymentMethod } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 
 export class PaymentMethodItemRepository {
-  // ─── CRUD ─────────────────────────────────────────────────────────────────
-
   async create(
     data: {
       paymentId: number;
@@ -11,6 +9,8 @@ export class PaymentMethodItemRepository {
       amount: number;
       installments?: number | null;
       firstDueDate?: Date | null;
+      isPaid?: boolean;
+      paidAt?: Date | null;
       tenantId: string;
       branchId: string;
     },

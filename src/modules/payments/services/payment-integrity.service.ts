@@ -1,5 +1,13 @@
 import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
 import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
+import { PaymentMethod } from "@prisma/client";
+
+const INSTANT_METHODS: PaymentMethod[] = [
+  PaymentMethod.PIX,
+  PaymentMethod.MONEY,
+  PaymentMethod.DEBIT,
+  PaymentMethod.CREDIT,
+];
 
 export class PaymentIntegrityService {
   private paymentRepo = new PaymentRepository();
@@ -179,31 +187,53 @@ export class PaymentIntegrityService {
     const payment = await this.paymentRepo.findById(paymentId);
     if (!payment || !payment.methods) return;
 
-    const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
-    if (allInstallments.length === 0) return;
+    // Soma dos métodos à vista já pagos
+    const instantPaidAmount = payment.methods
+      .filter((m) => INSTANT_METHODS.includes(m.method) && m.isPaid)
+      .reduce((sum, m) => sum + m.amount, 0);
 
-    const installmentsPaid = allInstallments.filter(
-      (inst) => inst.paidAt !== null,
+    // Soma dos pagamentos registrados em parcelas
+    const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
+    const installmentsPaidCount = allInstallments.filter(
+      (i) => i.paidAt !== null,
     ).length;
-    const totalPaidAmount = allInstallments.reduce(
-      (sum, inst) => sum + inst.paidAmount,
+    const installmentPaidAmount = allInstallments.reduce(
+      (sum, i) => sum + i.paidAmount,
       0,
     );
-    const allPaid = allInstallments.every((inst) => inst.paidAt !== null);
 
-    const paidInstallments = allInstallments.filter((inst) => inst.paidAt);
+    const totalPaidAmount = instantPaidAmount + installmentPaidAmount;
+
+    // Todos os métodos à vista estão pagos E todas as parcelas estão quitadas
+    const allInstantPaid = payment.methods
+      .filter((m) => INSTANT_METHODS.includes(m.method))
+      .every((m) => m.isPaid);
+
+    const allInstallmentsPaid =
+      allInstallments.length === 0 ||
+      allInstallments.every((i) => i.paidAt !== null);
+
+    const allPaid = allInstantPaid && allInstallmentsPaid;
+
+    // Última data de pagamento entre métodos à vista e parcelas
+    const instantDates = payment.methods
+      .filter((m) => m.isPaid && m.paidAt)
+      .map((m) => new Date(m.paidAt!));
+
+    const installmentDates = allInstallments
+      .filter((i) => i.paidAt)
+      .map((i) => new Date(i.paidAt!));
+
+    const allDates = [...instantDates, ...installmentDates];
     const lastPaymentAt =
-      paidInstallments.length > 0
-        ? paidInstallments.reduce((latest, inst) => {
-            const instDate = new Date(inst.paidAt!);
-            return instDate > latest ? instDate : latest;
-          }, new Date(paidInstallments[0].paidAt!))
+      allDates.length > 0
+        ? allDates.reduce((latest, d) => (d > latest ? d : latest), allDates[0])
         : null;
 
     await this.paymentRepo.update(
       paymentId,
       {
-        installmentsPaid,
+        installmentsPaid: installmentsPaidCount,
         paidAmount: totalPaidAmount,
         lastPaymentAt,
         status: allPaid ? "CONFIRMED" : "PENDING",

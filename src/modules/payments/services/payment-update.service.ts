@@ -4,8 +4,15 @@ import { PaymentRepository } from "@/modules/payments/repository/payment.reposit
 import { PaymentMethodItemRepository } from "@/modules/payments/repository/payment-method-item.repository";
 import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
-import { PaymentStatus } from "@prisma/client";
+import { PaymentStatus, PaymentMethod } from "@prisma/client";
 import { prisma } from "@/config/prisma-context";
+
+const INSTANT_METHODS: PaymentMethod[] = [
+  PaymentMethod.PIX,
+  PaymentMethod.MONEY,
+  PaymentMethod.DEBIT,
+  PaymentMethod.CREDIT,
+];
 
 export class PaymentUpdateService {
   private repo = new PaymentRepository();
@@ -65,10 +72,11 @@ export class PaymentUpdateService {
       const hasPaidInstallments = allInstallments.some(
         (inst) => inst.paidAt !== null,
       );
+      const hasPaidMethodItems = existing.methods.some((m) => m.isPaid);
 
-      if (hasPaidInstallments) {
+      if (hasPaidInstallments || hasPaidMethodItems) {
         return ApiResponse.error(
-          "Não é possível alterar os métodos de pagamento quando já existem parcelas pagas.",
+          "Não é possível alterar os métodos de pagamento quando já existem pagamentos registrados.",
           400,
           req,
         );
@@ -100,9 +108,17 @@ export class PaymentUpdateService {
             req,
           );
         }
+
+        // Métodos à vista exigem paidAt informado pelo front
+        if (INSTANT_METHODS.includes(method.method) && !method.paidAt) {
+          return ApiResponse.error(
+            `O método ${method.method} requer a data de pagamento (paidAt).`,
+            400,
+            req,
+          );
+        }
       }
 
-      // Remover parcelas e métodos antigos e recriar dentro de uma transaction
       await prisma.$transaction(async (tx) => {
         const existingMethodIds = existing.methods.map((m) => m.id);
 
@@ -115,6 +131,8 @@ export class PaymentUpdateService {
         });
 
         for (const method of data.methods) {
+          const isInstant = INSTANT_METHODS.includes(method.method);
+
           await tx.paymentMethodItem.create({
             data: {
               paymentId: Number(id),
@@ -124,6 +142,8 @@ export class PaymentUpdateService {
               firstDueDate: method.firstDueDate
                 ? new Date(method.firstDueDate)
                 : null,
+              isPaid: isInstant,
+              paidAt: isInstant ? new Date(method.paidAt) : null,
               tenantId,
               branchId,
               createdById: userId,
@@ -151,6 +171,9 @@ export class PaymentUpdateService {
           );
         }
       }
+
+      // Recalcular paidAmount após configurar métodos
+      await this.integrityService.recalculatePaymentStatus(Number(id), userId);
     }
 
     const { methods, ...paymentData } = data;
@@ -202,9 +225,10 @@ export class PaymentUpdateService {
       updateData.cancelReason = reason;
     }
 
-    // Confirmação manual: consolidar paidAmount pelo total líquido
+    // Confirmação manual: recalcular com base nos métodos e parcelas reais
     if (status === PaymentStatus.CONFIRMED) {
-      updateData.paidAmount = existing.total - (existing.discount || 0);
+      await this.integrityService.recalculatePaymentStatus(Number(id), userId);
+      updateData.status = PaymentStatus.CONFIRMED;
       updateData.lastPaymentAt = new Date();
     }
 
@@ -217,7 +241,7 @@ export class PaymentUpdateService {
     );
   }
 
-  // ─── Validar Integridade (endpoint público) ──────────────────────────────────
+  // ─── Validar Integridade ─────────────────────────────────────────────────────
 
   async validate(req: Request) {
     const user = req.user!;
@@ -249,6 +273,7 @@ export class PaymentUpdateService {
       discount: payment.discount || 0,
       methodsCount: payment.methods.length,
       sumMethods: payment.methods.reduce((sum, m) => sum + m.amount, 0),
+      instantMethodsPaid: payment.methods.filter((m) => m.isPaid).length,
       installmentsCreated: allInstallments.length,
       installmentsPaid: payment.installmentsPaid,
       paidAmount: payment.paidAmount,
@@ -262,6 +287,8 @@ export class PaymentUpdateService {
           id: m.id,
           method: m.method,
           amount: m.amount,
+          isPaid: m.isPaid,
+          paidAt: m.paidAt,
           installments: m.installments,
           installmentItems: m.installmentItems.map((i) => ({
             id: i.id,
@@ -270,6 +297,7 @@ export class PaymentUpdateService {
             paidAmount: i.paidAmount,
             dueDate: i.dueDate,
             isPaid: i.paidAt !== null,
+            paidAt: i.paidAt,
           })),
         })),
       });

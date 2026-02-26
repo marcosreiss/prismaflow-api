@@ -83,7 +83,7 @@ export class AuthService {
         const { password, ...userSafe } = user;
 
         return ApiResponse.success(
-          "Login realizado com sucesso (filial única detectada).",
+          "Login realizado com sucesso!",
           req,
           { ...userSafe, branch, branchId: branch.id },
           token
@@ -125,7 +125,7 @@ export class AuthService {
     const { password, ...userSafe } = user;
 
     return ApiResponse.success(
-      "Login realizado com sucesso.",
+      "Login realizado com sucesso!",
       req,
       userSafe,
       token

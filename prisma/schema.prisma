@@ -147,7 +147,7 @@ model Client {
   nickname      String?
   cpf           String?        
   rg            String?
-  bornDate      DateTime?
+  bornDate      Date?
   gender        Gender?
   fatherName    String?
   motherName    String?

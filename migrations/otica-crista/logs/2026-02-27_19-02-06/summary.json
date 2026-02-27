@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dataPath": "C:\\Work\\prismaflow\\prismaflow-api\\migrations\\otica-crista\\data\\pessoa.xlsx",
+  "scannedCpfs": 2228,
+  "updatedClients": 267,
+  "changes": 267,
+  "errors": 63,
+  "ranAt": "2026-02-27T22:02:06.083Z"
+}

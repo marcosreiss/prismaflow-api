@@ -1,0 +1,9 @@
+[
+  {
+    "marca": {
+      "marcaId": 16,
+      "marcaNome": "VISARD"
+    },
+    "error": "\nInvalid `prisma.brand.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-api\\migrations\\otica-crista\\scripts\\01-migrate-brands.ts:137:28\n\n  134 }\n  135 \n  136 // Criar marca\n→ 137 await prisma.brand.create(\nUnique constraint failed on the constraint: `PRIMARY`"
+  }
+]

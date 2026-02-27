@@ -20,7 +20,7 @@ clientRoutes.post(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   validateDto(CreateClientDto, "body"),
-  createClient
+  createClient,
 );
 
 clientRoutes.put(
@@ -28,7 +28,7 @@ clientRoutes.put(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   validateDto(UpdateClientDto, "body"),
-  updateClient
+  updateClient,
 );
 
 // 🔹 ROTAS MAIS ESPECÍFICAS PRIMEIRO
@@ -36,27 +36,27 @@ clientRoutes.get(
   "/select",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  selectClients
+  selectClients,
 );
 
 clientRoutes.get(
   "/:clientId/prescriptions",
   authGuard,
-  getPrescriptionsByClientId
+  getPrescriptionsByClientId,
 );
 
 clientRoutes.get(
   "/birthdays",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listBirthdays
+  listBirthdays,
 );
 
 clientRoutes.get(
   "/",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listClients
+  listClients,
 );
 
 // 🔹 SOMENTE DEPOIS as rotas genéricas
@@ -64,5 +64,5 @@ clientRoutes.get(
   "/:id",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  getClientById
+  getClientById,
 );

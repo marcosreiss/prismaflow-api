@@ -30,7 +30,7 @@ export class CreateClientDto {
   @IsOptional()
   @IsDateString(
     {},
-    { message: "A data de nascimento deve estar em formato válido." }
+    { message: "A data de nascimento deve estar em formato válido." },
   )
   bornDate?: string;
 

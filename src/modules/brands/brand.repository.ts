@@ -30,7 +30,7 @@ export class BrandRepository {
     tenantId: string,
     page: number,
     limit: number,
-    search?: string
+    search?: string,
   ) {
     const skip = (page - 1) * limit;
 

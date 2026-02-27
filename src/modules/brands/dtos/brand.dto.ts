@@ -1,9 +1,17 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString, MaxLength } from "class-validator";
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from "class-validator";
 
 export class CreateBrandDto {
   @IsString()
   @IsNotEmpty({ message: "O nome da marca é obrigatório." })
-  @MaxLength(100, { message: "O nome da marca deve ter no máximo 100 caracteres." })
+  @MaxLength(100, {
+    message: "O nome da marca deve ter no máximo 100 caracteres.",
+  })
   name!: string;
 
   @IsOptional()
@@ -14,7 +22,9 @@ export class CreateBrandDto {
 export class UpdateBrandDto {
   @IsOptional()
   @IsString()
-  @MaxLength(100, { message: "O nome da marca deve ter no máximo 100 caracteres." })
+  @MaxLength(100, {
+    message: "O nome da marca deve ter no máximo 100 caracteres.",
+  })
   name?: string;
 
   @IsOptional()

@@ -9,12 +9,14 @@ export class ExpenseService {
   async create(req: Request, data: any) {
     const user = req.user!;
 
+    const branchId = user.branchId;
+
     if (data.dueDate) data.dueDate = new Date(data.dueDate);
     if (data.paymentDate) data.paymentDate = new Date(data.paymentDate);
 
     const expense = await this.repo.create(
       user.tenantId,
-      data.branchId,
+      branchId,
       data,
       user.sub,
     );

@@ -10,7 +10,7 @@ export interface JwtPayload {
   sub: string; // ID do usuário
   email: string;
   tenantId: string;
-  branchId: string; // ✅ agora obrigatório
+  branchId: string;
   role: "ADMIN" | "MANAGER" | "EMPLOYEE";
   iat?: number;
   exp?: number;
@@ -37,7 +37,7 @@ export function authGuard(req: Request, res: Response, next: NextFunction) {
       sub: payload.sub,
       email: payload.email,
       tenantId: payload.tenantId,
-      branchId: payload.branchId, // ✅ agora sempre existe
+      branchId: payload.branchId,
       role: payload.role,
       iat: payload.iat,
       exp: payload.exp,

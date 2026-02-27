@@ -7,7 +7,7 @@ import {
   IsOptional,
   IsEnum,
 } from "class-validator";
-import { PaymentMethod } from "@prisma/client";
+import { ExpenseStatus, PaymentMethod } from "@prisma/client";
 
 export class CreateExpenseDto {
   @IsString()
@@ -22,14 +22,14 @@ export class CreateExpenseDto {
   dueDate!: string;
 
   @IsOptional()
+  @IsEnum(ExpenseStatus)
+  status?: ExpenseStatus;
+
+  @IsOptional()
   @IsDateString()
   paymentDate?: string;
 
   @IsOptional()
   @IsEnum(PaymentMethod)
   paymentMethod?: PaymentMethod;
-
-  @IsString()
-  @IsNotEmpty()
-  branchId!: string;
 }

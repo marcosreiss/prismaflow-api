@@ -18,14 +18,14 @@ brandRoutes.post(
   authGuard,
   requireRoles("ADMIN"),
   validateDto(CreateBrandDto, "body"),
-  createBrand
+  createBrand,
 );
 
 brandRoutes.get(
   "/",
   authGuard,
   requireRoles("ADMIN"),
-  listBrands // suporta ?page=&limit=&search=
+  listBrands, // suporta ?page=&limit=&search=
 );
 
 brandRoutes.get("/:id", authGuard, requireRoles("ADMIN"), getBrandById);
@@ -35,7 +35,7 @@ brandRoutes.put(
   authGuard,
   requireRoles("ADMIN"),
   validateDto(UpdateBrandDto, "body"),
-  updateBrand
+  updateBrand,
 );
 
 brandRoutes.delete("/:id", authGuard, requireRoles("ADMIN"), deleteBrand);

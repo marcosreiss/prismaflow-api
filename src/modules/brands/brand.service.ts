@@ -12,7 +12,7 @@ export class BrandService {
       return ApiResponse.error(
         "Apenas administradores podem criar marcas.",
         403,
-        req
+        req,
       );
     }
 
@@ -31,7 +31,7 @@ export class BrandService {
       return ApiResponse.error(
         "Apenas administradores podem atualizar marcas.",
         403,
-        req
+        req,
       );
     }
 
@@ -58,7 +58,7 @@ export class BrandService {
       user.tenantId,
       page,
       limit,
-      search
+      search,
     );
     return new PagedResponse(
       "Marcas listadas com sucesso.",
@@ -66,7 +66,7 @@ export class BrandService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -90,7 +90,7 @@ export class BrandService {
       return ApiResponse.error(
         "Apenas administradores podem excluir marcas.",
         403,
-        req
+        req,
       );
     }
 

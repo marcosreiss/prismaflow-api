@@ -7,6 +7,7 @@ export interface PageData<T> {
   totalElements: number;
   limit: number;
   content: T[];
+  stats?: any; // ✅ Adicionar campo stats opcional
 }
 
 export class PagedResponse<T> extends ApiResponse<PageData<T>> {
@@ -16,7 +17,8 @@ export class PagedResponse<T> extends ApiResponse<PageData<T>> {
     items: T[],
     page: number,
     limit: number,
-    total: number
+    total: number,
+    stats?: any // ✅ Adicionar parâmetro stats opcional
   ) {
     const totalPages = Math.ceil(total / limit);
 
@@ -27,6 +29,11 @@ export class PagedResponse<T> extends ApiResponse<PageData<T>> {
       limit,
       content: items,
     };
+
+    // ✅ Incluir stats se fornecido
+    if (stats) {
+      data.stats = stats;
+    }
 
     super(200, message, req, data);
   }

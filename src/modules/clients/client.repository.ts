@@ -44,7 +44,7 @@ export class ClientRepository {
     tenantId: string,
     page: number,
     limit: number,
-    search?: string
+    search?: string,
   ) {
     const skip = (page - 1) * limit;
     const where = {
@@ -72,7 +72,7 @@ export class ClientRepository {
     branchId?: string,
     page = 1,
     limit = 10,
-    search?: string
+    search?: string,
   ) {
     const skip = (page - 1) * limit;
     const where: any = { tenantId };
@@ -110,7 +110,7 @@ export class ClientRepository {
     branchId?: string,
     page = 1,
     limit = 10,
-    targetDate?: string // ← nova data opcional (ISO)
+    targetDate?: string, // ← nova data opcional (ISO)
   ) {
     logger.debug("🟦 [ClientRepository] Iniciando busca de aniversariantes", {
       tenantId,
@@ -130,7 +130,7 @@ export class ClientRepository {
       } else {
         const nowUtc = new Date();
         referenceDate = new Date(
-          nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+          nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
         );
       }
 
@@ -158,7 +158,7 @@ export class ClientRepository {
           AND bornDate IS NOT NULL
           AND DAY(bornDate) = ${day}
           AND MONTH(bornDate) = ${month}
-      `
+      `,
       );
 
       const total =
@@ -183,7 +183,7 @@ export class ClientRepository {
           AND MONTH(bornDate) = ${month}
         ORDER BY name ASC
         LIMIT ${limit} OFFSET ${skip}
-      `
+      `,
       );
 
       return { items, total, page, limit };
@@ -194,5 +194,16 @@ export class ClientRepository {
       });
       throw error;
     }
+  }
+
+  async findByCpf(cpf: string, tenantId: string) {
+    return prisma.client.findUnique({
+      where: {
+        cpf_tenantId: {
+          cpf,
+          tenantId,
+        },
+      },
+    });
   }
 }

@@ -6,7 +6,7 @@ const service = new BrandService();
 export const createBrand = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.create(req, req.body);
@@ -19,7 +19,7 @@ export const createBrand = async (
 export const updateBrand = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -33,7 +33,7 @@ export const updateBrand = async (
 export const listBrands = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.list(req);
@@ -46,7 +46,7 @@ export const listBrands = async (
 export const getBrandById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -60,7 +60,7 @@ export const getBrandById = async (
 export const deleteBrand = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);

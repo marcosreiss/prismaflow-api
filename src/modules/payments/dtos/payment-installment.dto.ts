@@ -1,3 +1,5 @@
+// dtos/payment-installment.dto.ts
+
 import { IsInt, IsNumber, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
@@ -18,6 +20,10 @@ export class CreatePaymentInstallmentDto {
 
   @IsOptional()
   @Type(() => Date)
+  dueDate?: Date; // ✅ ADICIONAR
+
+  @IsOptional()
+  @Type(() => Date)
   paidAt?: Date;
 
   @IsOptional()
@@ -27,7 +33,6 @@ export class CreatePaymentInstallmentDto {
   branchId?: string;
 }
 
-// ✅ DTO separado para update (sem PartialType)
 export class UpdatePaymentInstallmentDto {
   @IsOptional()
   @IsInt()
@@ -48,8 +53,23 @@ export class UpdatePaymentInstallmentDto {
 
   @IsOptional()
   @Type(() => Date)
+  dueDate?: Date; // ✅ ADICIONAR
+
+  @IsOptional()
+  @Type(() => Date)
   paidAt?: Date;
 
   @IsOptional()
   isActive?: boolean;
+}
+
+export class PayInstallmentDto {
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0.01)
+  paidAmount!: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  paidAt?: Date; // Se não informado, usa now()
 }

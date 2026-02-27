@@ -1,15 +1,48 @@
-import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Max, Min } from "class-validator";
+import {
+  IsArray,
+  IsDate,
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Max,
+  Min,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { PaymentMethod, PaymentStatus } from "@prisma/client";
+
+export class PaymentMethodItemDto {
+  @IsEnum(PaymentMethod)
+  method!: PaymentMethod;
+
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  amount!: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  installments?: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  firstDueDate?: Date;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  paidAt?: Date;
+}
 
 export class CreatePaymentDto {
   @IsInt()
   @IsPositive()
   saleId!: number;
-
-  @IsOptional()
-  @IsEnum(PaymentMethod)
-  method?: PaymentMethod;
 
   @IsOptional()
   @IsEnum(PaymentStatus)
@@ -20,21 +53,13 @@ export class CreatePaymentDto {
   @Min(0)
   total!: number;
 
+  @IsOptional()
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   discount?: number;
 
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  downPayment?: number;
-
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  installmentsTotal?: number;
-
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
@@ -47,11 +72,13 @@ export class CreatePaymentDto {
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   lastPaymentAt?: Date;
 
-  @IsOptional()
-  @Type(() => Date)
-  firstDueDate?: Date;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PaymentMethodItemDto)
+  methods!: PaymentMethodItemDto[];
 
   @IsOptional()
   isActive?: boolean = true;
@@ -63,12 +90,7 @@ export class CreatePaymentDto {
   branchId?: string;
 }
 
-// ✅ Versão para atualização (sem Nest)
 export class UpdatePaymentDto {
-  @IsOptional()
-  @IsEnum(PaymentMethod)
-  method?: PaymentMethod;
-
   @IsOptional()
   @IsEnum(PaymentStatus)
   status?: PaymentStatus;
@@ -89,17 +111,6 @@ export class UpdatePaymentDto {
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  downPayment?: number;
-
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  installmentsTotal?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
   paidAmount?: number;
 
   @IsOptional()
@@ -109,27 +120,28 @@ export class UpdatePaymentDto {
 
   @IsOptional()
   @Type(() => Date)
+  @IsDate()
   lastPaymentAt?: Date;
 
   @IsOptional()
-  @Type(() => Date)
-  firstDueDate?: Date;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PaymentMethodItemDto)
+  methods?: PaymentMethodItemDto[];
 
   @IsOptional()
   isActive?: boolean;
 }
 
-// payment.dto.ts - Adicione este DTO
 export class UpdatePaymentStatusDto {
   @IsEnum(PaymentStatus)
   status!: PaymentStatus;
 
   @IsOptional()
   @IsString()
-  reason?: string; // Para justificativa de cancelamento
+  reason?: string;
 }
 
-// payment.dto.ts - Adicione este DTO
 export class PaymentFilterDto {
   @IsOptional()
   @IsEnum(PaymentStatus)
@@ -137,15 +149,17 @@ export class PaymentFilterDto {
 
   @IsOptional()
   @IsEnum(PaymentMethod)
-  method?: PaymentMethod; // ✅ Novo filtro
+  method?: PaymentMethod;
 
   @IsOptional()
   @Type(() => Date)
-  startDate?: Date; // ✅ Data de início
+  @IsDate()
+  startDate?: Date;
 
   @IsOptional()
   @Type(() => Date)
-  endDate?: Date; // ✅ Data de fim
+  @IsDate()
+  endDate?: Date;
 
   @IsOptional()
   @Type(() => Number)
@@ -163,9 +177,23 @@ export class PaymentFilterDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  clientId?: number; // ✅ Filtro por ID do cliente
+  clientId?: number;
 
   @IsOptional()
   @IsString()
-  clientName?: string; // ✅ Filtro por nome do cliente
+  clientName?: string;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  hasOverdueInstallments?: boolean;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  isPartiallyPaid?: boolean;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  dueDaysAhead?: number;
 }

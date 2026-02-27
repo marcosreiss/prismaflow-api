@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsBoolean,
+  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -24,11 +25,14 @@ export class CreateSaleDto {
   // @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
   // branchId!: string;
 
-  // 🔹 Nova relação opcional com Prescription
+  @IsNotEmpty({ message: "O campo 'saleDate' é obrigatório." })
+  @Type(() => Date)
+  @IsDate({ message: "O campo 'saleDate' deve ser uma data válida." })
+  saleDate!: Date;
+
   @IsOptional()
   @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
   prescriptionId?: number;
-
 
   @IsOptional()
   @IsString()
@@ -78,7 +82,11 @@ export class UpdateSaleDto {
   @IsNumber()
   clientId?: number;
 
-  // 🔹 Nova relação opcional com Prescription
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate({ message: "O campo 'saleDate' deve ser uma data válida." })
+  saleDate?: Date;
+
   @IsOptional()
   @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
   prescriptionId?: number;

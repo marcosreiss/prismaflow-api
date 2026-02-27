@@ -6,7 +6,7 @@ const service = new ClientService();
 export const createClient = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.create(req, req.body);
@@ -19,7 +19,7 @@ export const createClient = async (
 export const updateClient = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -33,7 +33,7 @@ export const updateClient = async (
 export const getClientById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -47,7 +47,7 @@ export const getClientById = async (
 export const listClients = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.list(req);
@@ -60,7 +60,7 @@ export const listClients = async (
 export const selectClients = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.select(req);
@@ -73,7 +73,7 @@ export const selectClients = async (
 export const listBirthdays = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.listBirthdays(req);

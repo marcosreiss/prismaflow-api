@@ -29,6 +29,7 @@ model Tenant {
   users               User[]
   paymentMethodItems PaymentMethodItem[]
   paymentInstallments PaymentInstallment[]
+  expenses Expense[]
 }
 
 model Branch {
@@ -53,6 +54,7 @@ model Branch {
   sales               Sale[]
   users               User[]
   paymentMethodItems PaymentMethodItem[]
+  expenses Expense[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -467,3 +469,31 @@ enum PaymentStatus {
   CONFIRMED
   CANCELED
 }
+
+model Expense {
+  id            Int       @id @default(autoincrement())
+  description   String
+  amount        Float
+  dueDate       DateTime
+  status        ExpenseStatus @default(SCHEDULED)
+  paymentDate   DateTime?
+  paymentMethod PaymentMethod?
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  branch        Branch    @relation(fields: [branchId], references: [id])
+  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Expense_branchId_fkey")
+  @@index([tenantId], map: "Expense_tenantId_fkey")
+}
+
+enum ExpenseStatus {
+  SCHEDULED
+  PAID
+}
+

@@ -16,7 +16,7 @@ import {
   extractFatherName,
   extractMotherName,
   mapGender,
-} from "./utils/converters";
+} from "../utils/converters";
 
 const prisma = new PrismaClient();
 

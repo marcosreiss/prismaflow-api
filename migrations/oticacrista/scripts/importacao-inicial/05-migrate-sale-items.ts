@@ -11,7 +11,7 @@ import { PrismaClient } from "@prisma/client";
 import * as fs from "fs";
 import * as path from "path";
 import * as XLSX from "xlsx";
-import { convertToDecimal } from "./utils/converters";
+import { convertToDecimal } from "../utils/converters";
 
 const prisma = new PrismaClient();
 

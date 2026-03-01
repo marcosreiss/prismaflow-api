@@ -147,7 +147,7 @@ model Client {
   nickname      String?
   cpf           String?        
   rg            String?
-  bornDate      Date?
+  bornDate  DateTime?  @db.Date
   gender        Gender?
   fatherName    String?
   motherName    String?

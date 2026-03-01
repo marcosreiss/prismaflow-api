@@ -61,13 +61,15 @@ export class ProductService {
     const limit = Number(req.query.limit) || 10;
     const search = (req.query.search as string) || "";
     const category = (req.query.category as ProductCategory) || undefined;
+    const brandId = req.query.brandId ? Number(req.query.brandId) : undefined;
 
     const { items, total } = await this.repo.findAllByTenant(
       user.tenantId,
       page,
       limit,
       search,
-      category
+      category,
+      brandId,
     );
 
     return new PagedResponse(
@@ -76,7 +78,7 @@ export class ProductService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -92,9 +94,6 @@ export class ProductService {
     return ApiResponse.success("Produto excluído com sucesso.", req);
   }
 
-  /**
-   * 🔹 Retorna a quantidade em estoque de um produto
-   */
   async getStock(req: Request, id: number) {
     const user = req.user!;
 

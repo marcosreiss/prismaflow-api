@@ -47,7 +47,8 @@ export class ProductRepository {
     page: number,
     limit: number,
     search?: string,
-    category?: ProductCategory
+    category?: ProductCategory,
+    brandId?: number,
   ) {
     const skip = (page - 1) * limit;
 
@@ -55,6 +56,7 @@ export class ProductRepository {
       tenantId,
       ...(search ? { name: { contains: search } } : {}),
       ...(category ? { category } : {}),
+      ...(brandId ? { brandId } : {}),
     };
 
     const [items, total] = await Promise.all([

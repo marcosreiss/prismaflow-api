@@ -11,6 +11,7 @@ import { saleRoutes } from "../modules/sales/sale.routes";
 import { paymentRoutes } from "../modules/payments/routes/payment.routes";
 import { paymentInstallmentRoutes } from "../modules/payments/routes/payment-installment.routes";
 import { expenseRoutes } from "../modules/expenses/expense.routes";
+import { dashboardRoutes } from "@/modules/dashboard/dashboard.routes";
 
 export const router = Router();
 
@@ -30,3 +31,4 @@ router.use("/sales", saleRoutes);
 router.use("/payments", paymentRoutes);
 router.use("/payment-installments", paymentInstallmentRoutes);
 router.use("/expenses", expenseRoutes);
+router.use("/dashboard", dashboardRoutes);

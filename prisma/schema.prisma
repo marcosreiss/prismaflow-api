@@ -190,7 +190,7 @@ model Client {
 model Prescription {
   id                 Int      @id @default(autoincrement())
   clientId           Int
-  prescriptionDate   DateTime
+  prescriptionDate   DateTime?  @db.Date
   doctorName         String?
   crm                String?
   odSphericalFar     String?
@@ -240,7 +240,7 @@ model Prescription {
 model Sale {
   id             Int                  @id @default(autoincrement())
   clientId       Int
-  saleDate       DateTime
+  saleDate       DateTime?  @db.Date
   prescriptionId Int?
   subtotal       Float?               @default(0)
   discount       Float?               @default(0)
@@ -341,7 +341,7 @@ model Payment {
   discount         Float                @default(0)
   paidAmount       Float                @default(0)
   installmentsPaid Int                  @default(0)
-  lastPaymentAt    DateTime?
+  lastPaymentAt    DateTime?  @db.Date
   isActive         Boolean              @default(true)
   tenantId         String
   branchId         String
@@ -385,9 +385,9 @@ model PaymentMethodItem {
   method       PaymentMethod
   amount       Float                @default(0)
   installments Int?
-  firstDueDate DateTime?
+  firstDueDate DateTime?  @db.Date
   isPaid       Boolean              @default(false)
-  paidAt       DateTime?
+  paidAt       DateTime?  @db.Date
   tenantId     String
   branchId     String
   createdById  String?
@@ -410,8 +410,8 @@ model PaymentInstallment {
   sequence            Int
   amount              Float             @default(0)
   paidAmount          Float             @default(0)
-  dueDate             DateTime?
-  paidAt              DateTime?
+  dueDate             DateTime?  @db.Date
+  paidAt              DateTime?  @db.Date
   isActive            Boolean           @default(true)
   tenantId            String
   branchId            String

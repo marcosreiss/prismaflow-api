@@ -1,5 +1,9 @@
 import { Prisma } from "@prisma/client";
-import { prisma, withAuditData } from "../../config/prisma-context";
+import {
+  formatDateOnlyFieldsForModel,
+  prisma,
+  withAuditData,
+} from "../../config/prisma-context";
 import logger from "../../utils/logger";
 
 export class ClientRepository {
@@ -186,7 +190,12 @@ export class ClientRepository {
       `,
       );
 
-      return { items, total, page, limit };
+      return {
+        items: formatDateOnlyFieldsForModel("Client", items),
+        total,
+        page,
+        limit,
+      };
     } catch (error: any) {
       logger.error("❌ [ClientRepository] Erro ao buscar aniversariantes", {
         message: error?.message,

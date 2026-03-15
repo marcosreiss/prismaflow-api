@@ -1,3 +1,4 @@
+// product.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 import { ProductCategory } from "@prisma/client";
 
@@ -38,6 +39,20 @@ export class ProductRepository {
       where: {
         tenantId,
         name: { contains: name },
+      },
+    });
+  }
+
+  async findByNameAndBrandInTenant(
+    tenantId: string,
+    name: string,
+    brandId: number,
+  ) {
+    return prisma.product.findFirst({
+      where: {
+        tenantId,
+        name,
+        brandId,
       },
     });
   }

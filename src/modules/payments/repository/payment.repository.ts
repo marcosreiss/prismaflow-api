@@ -1,18 +1,27 @@
 import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 
+const paymentDetailsInclude = {
+  sale: {
+    select: {
+      id: true,
+      clientId: true,
+      total: true,
+      client: { select: { id: true, name: true } },
+    },
+  },
+  methods: {
+    include: { installmentItems: { orderBy: { sequence: "asc" } } },
+  },
+} as const;
+
 export class PaymentRepository {
   // ─── CRUD ─────────────────────────────────────────────────────────────────
 
   async create(data: any, userId?: string) {
     return prisma.payment.create({
       data: withAuditData(userId, data),
-      include: {
-        sale: { select: { id: true, clientId: true, total: true } },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentDetailsInclude,
     });
   }
 
@@ -20,24 +29,14 @@ export class PaymentRepository {
     return prisma.payment.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: {
-        sale: { select: { id: true, clientId: true, total: true } },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentDetailsInclude,
     });
   }
 
   async findById(id: number) {
     return prisma.payment.findUnique({
       where: { id },
-      include: {
-        sale: { select: { id: true, clientId: true, total: true } },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentDetailsInclude,
     });
   }
 
@@ -141,19 +140,7 @@ export class PaymentRepository {
         skip,
         take: limit,
         orderBy: { createdAt: "desc" },
-        include: {
-          sale: {
-            select: {
-              id: true,
-              clientId: true,
-              total: true,
-              client: { select: { id: true, name: true } },
-            },
-          },
-          methods: {
-            include: { installmentItems: { orderBy: { sequence: "asc" } } },
-          },
-        },
+        include: paymentDetailsInclude,
       }),
       prisma.payment.count({ where }),
     ]);

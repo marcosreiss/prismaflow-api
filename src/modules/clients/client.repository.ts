@@ -127,23 +127,28 @@ export class ClientRepository {
     try {
       const skip = (page - 1) * limit;
 
-      // 📅 Define data-base: se vier na request, usa ela; senão, pega data atual do Brasil
-      let referenceDate: Date;
-      if (targetDate) {
-        referenceDate = new Date(targetDate);
-      } else {
-        const nowUtc = new Date();
-        referenceDate = new Date(
-          nowUtc.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }),
-        );
-      }
+      let day: number;
+      let month: number;
 
-      const day = referenceDate.getDate() + 1;
-      const month = referenceDate.getMonth() + 1;
+      if (targetDate) {
+        // Parse direto da string "YYYY-MM-DD" sem criar Date
+        const [, monthStr, dayStr] = targetDate.split("-");
+        day = parseInt(dayStr, 10);
+        month = parseInt(monthStr, 10);
+      } else {
+        // Fallback: data atual no fuso de São Paulo
+        const nowUtc = new Date();
+        const localStr = nowUtc.toLocaleDateString("en-CA", {
+          timeZone: "America/Sao_Paulo",
+        }); // retorna "YYYY-MM-DD"
+        const [, mStr, dStr] = localStr.split("-");
+        day = parseInt(dStr, 10);
+        month = parseInt(mStr, 10);
+      }
 
       logger.debug("🕐 [ClientRepository] Datas de referência", {
         targetDate,
-        referenceDate: referenceDate.toISOString(),
+        referenceDate: targetDate || "data atual (São Paulo)",
         day,
         month,
       });

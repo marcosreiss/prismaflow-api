@@ -604,7 +604,7 @@ export class SaleService {
         page = 1,
         limit = 10,
         clientId,
-        clientName, // Novo parâmetro
+        clientName,
       } = req.query;
 
       const { items, total } = await this.saleRepo.findAllByTenant(

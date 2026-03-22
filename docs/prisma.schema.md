@@ -1,0 +1,502 @@
+```
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id                  String               @id @default(cuid())
+  name                String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  branches            Branch[]
+  brands              Brand[]
+  Client              Client[]
+  frameDetails        FrameDetails[]
+  itemOpticalServices ItemOpticalService[]
+  itemProducts        ItemProduct[]
+  OpticalService      OpticalService[]
+  payments            Payment[]
+  Prescription        Prescription[]
+  products            Product[]
+  protocols           Protocol[]
+  sales               Sale[]
+  users               User[]
+  paymentMethodItems PaymentMethodItem[]
+  paymentInstallments PaymentInstallment[]
+  expenses Expense[]
+}
+
+model Branch {
+  id                  String               @id @default(cuid())
+  name                String
+  tenantId            String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  tenant              Tenant               @relation(fields: [tenantId], references: [id])
+  Client              Client[]
+  frameDetails        FrameDetails[]
+  itemOpticalServices ItemOpticalService[]
+  itemProducts        ItemProduct[]
+  OpticalService      OpticalService[]
+  payments            Payment[]
+  paymentInstallments PaymentInstallment[]
+  Prescription        Prescription[]
+  Product             Product[]
+  protocols           Protocol[]
+  sales               Sale[]
+  users               User[]
+  paymentMethodItems PaymentMethodItem[]
+  expenses Expense[]
+
+  @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        Role
+  tenantId    String
+  branchId    String?
+  createdById String?
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  branch      Branch?  @relation(fields: [branchId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "User_branchId_fkey")
+  @@index([tenantId], map: "User_tenantId_fkey")
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  isActive    Boolean   @default(true)
+  tenantId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  products    Product[]
+
+  @@index([tenantId], map: "Brand_tenantId_fkey")
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String?
+  costPrice     Float?
+  markup        Float?
+  salePrice     Float?
+  stockQuantity Int?            @default(0)
+  minimumStock  Int?            @default(0)
+  category      ProductCategory
+  isActive      Boolean         @default(true)
+  tenantId      String
+  branchId      String?
+  brandId       Int?
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  ItemProduct   ItemProduct[]
+  branch        Branch?         @relation(fields: [branchId], references: [id])
+  brand         Brand?          @relation(fields: [brandId], references: [id])
+  tenant        Tenant          @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Product_branchId_fkey")
+  @@index([brandId], map: "Product_brandId_fkey")
+  @@index([tenantId], map: "Product_tenantId_fkey")
+}
+
+model OpticalService {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String?
+  price              Float
+  isActive           Boolean              @default(true)
+  tenantId           String
+  branchId           String
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  ItemOpticalService ItemOpticalService[]
+  branch             Branch               @relation(fields: [branchId], references: [id])
+  tenant             Tenant               @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "OpticalService_branchId_fkey")
+  @@index([tenantId], map: "OpticalService_tenantId_fkey")
+}
+
+model Client {
+  id            Int            @id @default(autoincrement())
+  name          String
+  nickname      String?
+  cpf           String?        
+  rg            String?
+  bornDate  DateTime?  @db.Date
+  gender        Gender?
+  fatherName    String?
+  motherName    String?
+  spouse        String?
+  email         String?
+  company       String?
+  occupation    String?
+  street        String?
+  number        String?
+  neighborhood  String?
+  city          String?
+  uf            String?
+  cep           String?
+  complement    String?
+  isBlacklisted Boolean?       @default(false)
+  obs           String?
+  phone01       String?
+  phone02       String?
+  phone03       String?
+  reference01   String?
+  reference02   String?
+  reference03   String?
+  isActive      Boolean        @default(true)
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  branch        Branch         @relation(fields: [branchId], references: [id])
+  tenant        Tenant         @relation(fields: [tenantId], references: [id])
+  prescriptions Prescription[]
+  Sale          Sale[]
+
+  @@index([branchId], map: "Client_branchId_fkey")
+  @@index([tenantId], map: "Client_tenantId_fkey")
+  @@unique([cpf, tenantId])
+}
+
+model Prescription {
+  id                 Int      @id @default(autoincrement())
+  clientId           Int
+  prescriptionDate   DateTime?  @db.Date
+  doctorName         String?
+  crm                String?
+  odSphericalFar     String?
+  odCylindricalFar   String?
+  odAxisFar          String?
+  odDnpFar           String?
+  odSphericalNear    String?
+  odCylindricalNear  String?
+  odAxisNear         String?
+  odDnpNear          String?
+  oeSphericalFar     String?
+  oeCylindricalFar   String?
+  oeAxisFar          String?
+  oeDnpFar           String?
+  oeSphericalNear    String?
+  oeCylindricalNear  String?
+  oeAxisNear         String?
+  oeDnpNear          String?
+  odPellicleFar      String?
+  odPellicleNear     String?
+  oePellicleFar      String?
+  oePellicleNear     String?
+  frameAndRef        String?
+  lensType           String?
+  notes              String?
+  additionRight      String?
+  additionLeft       String?
+  opticalCenterRight String?
+  opticalCenterLeft  String?
+  isActive           Boolean  @default(true)
+  tenantId           String
+  branchId           String
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  branch             Branch   @relation(fields: [branchId], references: [id])
+  client             Client   @relation(fields: [clientId], references: [id])
+  tenant             Tenant   @relation(fields: [tenantId], references: [id])
+  sales              Sale[]
+
+  @@index([branchId], map: "Prescription_branchId_fkey")
+  @@index([clientId], map: "Prescription_clientId_fkey")
+  @@index([tenantId], map: "Prescription_tenantId_fkey")
+}
+
+model Sale {
+  id             Int                  @id @default(autoincrement())
+  clientId       Int
+  saleDate       DateTime?  @db.Date
+  prescriptionId Int?
+  subtotal       Float?               @default(0)
+  discount       Float?               @default(0)
+  total          Float?               @default(0)
+  notes          String?
+  isActive       Boolean              @default(true)
+  tenantId       String
+  branchId       String
+  createdById    String?
+  updatedById    String?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  serviceItems   ItemOpticalService[]
+  productItems   ItemProduct[]
+  payment        Payment?             @relation("SalePayment")
+  protocol       Protocol?            @relation("SaleProtocol")
+  branch         Branch               @relation(fields: [branchId], references: [id])
+  client         Client               @relation(fields: [clientId], references: [id])
+  prescription   Prescription?        @relation(fields: [prescriptionId], references: [id])
+  tenant         Tenant               @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Sale_branchId_fkey")
+  @@index([clientId], map: "Sale_clientId_fkey")
+  @@index([prescriptionId], map: "Sale_prescriptionId_fkey")
+  @@index([tenantId], map: "Sale_tenantId_fkey")
+}
+
+model ItemProduct {
+  id           Int           @id @default(autoincrement())
+  saleId       Int
+  productId    Int
+  quantity     Int           @default(1)
+  tenantId     String
+  branchId     String
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  frameDetails FrameDetails?
+  branch       Branch        @relation(fields: [branchId], references: [id])
+  product      Product       @relation(fields: [productId], references: [id])
+  sale         Sale          @relation(fields: [saleId], references: [id])
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "ItemProduct_branchId_fkey")
+  @@index([productId], map: "ItemProduct_productId_fkey")
+  @@index([saleId], map: "ItemProduct_saleId_fkey")
+  @@index([tenantId], map: "ItemProduct_tenantId_fkey")
+}
+
+model FrameDetails {
+  id            Int               @id @default(autoincrement())
+  itemProductId Int               @unique
+  material      FrameMaterialType
+  reference     String?
+  color         String?
+  isActive      Boolean           @default(true)
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  branch        Branch            @relation(fields: [branchId], references: [id])
+  itemProduct   ItemProduct       @relation(fields: [itemProductId], references: [id])
+  tenant        Tenant            @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "FrameDetails_branchId_fkey")
+  @@index([tenantId], map: "FrameDetails_tenantId_fkey")
+}
+
+model ItemOpticalService {
+  id          Int            @id @default(autoincrement())
+  saleId      Int
+  serviceId   Int
+  tenantId    String
+  branchId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  branch      Branch         @relation(fields: [branchId], references: [id])
+  sale        Sale           @relation(fields: [saleId], references: [id])
+  service     OpticalService @relation(fields: [serviceId], references: [id])
+  tenant      Tenant         @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "ItemOpticalService_branchId_fkey")
+  @@index([saleId], map: "ItemOpticalService_saleId_fkey")
+  @@index([serviceId], map: "ItemOpticalService_serviceId_fkey")
+  @@index([tenantId], map: "ItemOpticalService_tenantId_fkey")
+}
+
+model Payment {
+  id               Int                  @id @default(autoincrement())
+  saleId           Int                  @unique
+  status           PaymentStatus        @default(PENDING)
+  total            Float                @default(0)
+  discount         Float                @default(0)
+  paidAmount       Float                @default(0)
+  installmentsPaid Int                  @default(0)
+  lastPaymentAt    DateTime?  @db.Date
+  isActive         Boolean              @default(true)
+  tenantId         String
+  branchId         String
+  createdById      String?
+  updatedById      String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  branch           Branch               @relation(fields: [branchId], references: [id])
+  sale             Sale                 @relation("SalePayment", fields: [saleId], references: [id])
+  tenant           Tenant               @relation(fields: [tenantId], references: [id])
+  methods          PaymentMethodItem[]
+
+  @@index([branchId], map: "Payment_branchId_fkey")
+  @@index([tenantId], map: "Payment_tenantId_fkey")
+}
+
+model Protocol {
+  id           Int      @id @default(autoincrement())
+  saleId       Int?     @unique
+  book         String?
+  page         Int?
+  os           String?
+  isActive     Boolean  @default(true)
+  tenantId     String
+  branchId     String
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  branch       Branch   @relation(fields: [branchId], references: [id])
+  sale         Sale?    @relation("SaleProtocol", fields: [saleId], references: [id])
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Protocol_branchId_fkey")
+  @@index([tenantId], map: "Protocol_tenantId_fkey")
+}
+
+model PaymentMethodItem {
+  id           Int                  @id @default(autoincrement())
+  paymentId    Int
+  method       PaymentMethod
+  amount       Float                @default(0)
+  installments Int?
+  firstDueDate DateTime?  @db.Date
+  isPaid       Boolean              @default(false)
+  paidAt       DateTime?  @db.Date
+  tenantId     String
+  branchId     String
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  payment      Payment              @relation(fields: [paymentId], references: [id])
+  tenant       Tenant               @relation(fields: [tenantId], references: [id])
+  branch       Branch               @relation(fields: [branchId], references: [id])
+  installmentItems PaymentInstallment[]
+
+  @@index([paymentId], map: "PaymentMethodItem_paymentId_fkey")
+  @@index([tenantId], map: "PaymentMethodItem_tenantId_fkey")
+  @@index([branchId], map: "PaymentMethodItem_branchId_fkey")
+}
+
+model PaymentInstallment {
+  id                  Int               @id @default(autoincrement())
+  paymentMethodItemId Int
+  sequence            Int
+  amount              Float             @default(0)
+  paidAmount          Float             @default(0)
+  dueDate             DateTime?  @db.Date
+  paidAt              DateTime?  @db.Date
+  isActive            Boolean           @default(true)
+  tenantId            String
+  branchId            String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  paymentMethodItem   PaymentMethodItem @relation(fields: [paymentMethodItemId], references: [id])
+  tenant              Tenant            @relation(fields: [tenantId], references: [id])
+  branch              Branch            @relation(fields: [branchId], references: [id])
+
+  @@index([paymentMethodItemId], map: "PaymentInstallment_paymentMethodItemId_fkey")
+  @@index([tenantId], map: "PaymentInstallment_tenantId_fkey")
+  @@index([branchId], map: "PaymentInstallment_branchId_fkey")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+}
+
+enum ProductCategory {
+  FRAME
+  LENS
+  ACCESSORY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum FrameMaterialType {
+  ACETATE
+  METAL
+  RIMLESS
+  NYLON
+  TITANIUM
+  WOOD
+  OTHERS
+}
+
+enum PaymentMethod {
+  PIX
+  MONEY
+  DEBIT
+  CREDIT
+  INSTALLMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+}
+
+model Expense {
+  id            Int       @id @default(autoincrement())
+  description   String
+  amount        Float
+  dueDate       DateTime
+  status        ExpenseStatus @default(SCHEDULED)
+  paymentDate   DateTime?
+  paymentMethod PaymentMethod?
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  branch        Branch    @relation(fields: [branchId], references: [id])
+  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Expense_branchId_fkey")
+  @@index([tenantId], map: "Expense_tenantId_fkey")
+}
+
+enum ExpenseStatus {
+  SCHEDULED
+  PAID
+}
+
+
+```

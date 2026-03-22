@@ -196,4 +196,8 @@ export class PaymentFilterDto {
   @IsInt()
   @Min(1)
   dueDaysAhead?: number;
+
+  @IsOptional()
+  @IsString()
+  sortOrder?: "asc" | "desc";
 }

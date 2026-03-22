@@ -99,6 +99,7 @@ export class PaymentRepository {
       hasOverdueInstallments?: boolean;
       isPartiallyPaid?: boolean;
       dueDaysAhead?: number;
+      sortOrder?: "asc" | "desc";
     },
   ) {
     const skip = (page - 1) * limit;
@@ -165,7 +166,7 @@ export class PaymentRepository {
         where,
         skip,
         take: limit,
-        orderBy: { sale: { saleDate: "desc" } },
+        orderBy: { sale: { saleDate: filters?.sortOrder ?? "desc" } },
         include: {
           sale: {
             select: {

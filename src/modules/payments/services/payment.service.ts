@@ -26,6 +26,7 @@ export class PaymentService {
       hasOverdueInstallments,
       isPartiallyPaid,
       dueDaysAhead,
+      sortOrder,
     } = req.query;
 
     const { items, total } = await this.repo.findAllByTenant(
@@ -42,6 +43,7 @@ export class PaymentService {
         hasOverdueInstallments: hasOverdueInstallments === "true",
         isPartiallyPaid: isPartiallyPaid === "true",
         dueDaysAhead: dueDaysAhead ? Number(dueDaysAhead) : undefined,
+        sortOrder: sortOrder === "asc" ? "asc" : "desc",
       },
     );
 

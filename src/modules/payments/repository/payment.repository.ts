@@ -8,7 +8,7 @@ export class PaymentRepository {
     return prisma.payment.create({
       data: withAuditData(userId, data),
       include: {
-        sale: { select: { id: true, clientId: true, total: true } },
+        sale: { select: { id: true, saleDate: true, clientId: true, total: true } },
         methods: {
           include: { installmentItems: { orderBy: { sequence: "asc" } } },
         },
@@ -21,7 +21,7 @@ export class PaymentRepository {
       where: { id },
       data: withAuditData(userId, data, true),
       include: {
-        sale: { select: { id: true, clientId: true, total: true } },
+        sale: { select: { id: true, saleDate: true, clientId: true, total: true } },
         methods: {
           include: { installmentItems: { orderBy: { sequence: "asc" } } },
         },
@@ -33,7 +33,7 @@ export class PaymentRepository {
     return prisma.payment.findUnique({
       where: { id },
       include: {
-        sale: { select: { id: true, clientId: true, total: true } },
+        sale: { select: { id: true, saleDate: true, clientId: true, total: true } },
         methods: {
           include: { installmentItems: { orderBy: { sequence: "asc" } } },
         },

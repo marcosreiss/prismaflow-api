@@ -131,14 +131,15 @@ export class PaymentIntegrityService {
       return { valid: false, error: "Pagamento sem métodos cadastrados." };
     }
 
+    const expectedMethodsTotal = payment.total - (payment.discount || 0);
     const sumMethods = payment.methods.reduce((sum, m) => sum + m.amount, 0);
-    if (Math.abs(sumMethods - payment.total) > 0.01) {
+    if (Math.abs(sumMethods - expectedMethodsTotal) > 0.01) {
       issues.push({
         field: "total",
-        expected: payment.total,
+        expected: expectedMethodsTotal,
         found: sumMethods,
-        difference: Math.abs(sumMethods - payment.total),
-        message: `Soma dos métodos (R$ ${sumMethods.toFixed(2)}) diverge do total (R$ ${payment.total.toFixed(2)})`,
+        difference: Math.abs(sumMethods - expectedMethodsTotal),
+        message: `Soma dos métodos (R$ ${sumMethods.toFixed(2)}) diverge do total com desconto (R$ ${expectedMethodsTotal.toFixed(2)})`,
       });
     }
 

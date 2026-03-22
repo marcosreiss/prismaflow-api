@@ -136,14 +136,16 @@ export class PaymentService {
     const data = req.body;
 
     if (data.methods?.length) {
+      const paymentDiscount = Number(data.discount ?? 0);
+      const expectedMethodsTotal = Number(data.total) - paymentDiscount;
       const sumMethods = data.methods.reduce(
         (sum: number, m: any) => sum + m.amount,
         0,
       );
 
-      if (Math.abs(sumMethods - data.total) > 0.01) {
+      if (Math.abs(sumMethods - expectedMethodsTotal) > 0.01) {
         return ApiResponse.error(
-          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total (R$ ${data.total.toFixed(2)}).`,
+          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total com desconto (R$ ${expectedMethodsTotal.toFixed(2)}).`,
           400,
           req,
         );

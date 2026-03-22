@@ -83,14 +83,16 @@ export class PaymentUpdateService {
       }
 
       const newTotal = data.total ?? existing.total;
+      const newDiscount = data.discount ?? existing.discount ?? 0;
+      const expectedMethodsTotal = Number(newTotal) - Number(newDiscount);
       const sumMethods = data.methods.reduce(
         (sum: number, m: any) => sum + m.amount,
         0,
       );
 
-      if (Math.abs(sumMethods - newTotal) > 0.01) {
+      if (Math.abs(sumMethods - expectedMethodsTotal) > 0.01) {
         return ApiResponse.error(
-          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total (R$ ${newTotal.toFixed(2)}).`,
+          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total com desconto (R$ ${expectedMethodsTotal.toFixed(2)}).`,
           400,
           req,
         );
@@ -271,6 +273,7 @@ export class PaymentUpdateService {
       status: payment.status,
       total: payment.total,
       discount: payment.discount || 0,
+      expectedMethodsTotal: payment.total - (payment.discount || 0),
       methodsCount: payment.methods.length,
       sumMethods: payment.methods.reduce((sum, m) => sum + m.amount, 0),
       instantMethodsPaid: payment.methods.filter((m) => m.isPaid).length,

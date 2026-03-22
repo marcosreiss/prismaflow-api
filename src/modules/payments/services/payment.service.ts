@@ -70,6 +70,7 @@ export class PaymentService {
 
       return {
         ...payment,
+        saleDate: payment.sale?.saleDate || null,
         hasOverdueInstallments: overdueInstallments.length > 0,
         overdueCount: overdueInstallments.length,
         nextDueDate: nextDueInstallment?.dueDate || null,

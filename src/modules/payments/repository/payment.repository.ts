@@ -79,17 +79,18 @@ export class PaymentRepository {
   ) {
     const skip = (page - 1) * limit;
     const where: any = { tenantId };
+    where.sale = where.sale || {};
 
     if (filters?.status) where.status = filters.status;
 
     if (filters?.startDate || filters?.endDate) {
-      where.createdAt = {};
-      if (filters.startDate) where.createdAt.gte = filters.startDate;
-      if (filters.endDate) where.createdAt.lte = filters.endDate;
+      where.sale.saleDate = {};
+      if (filters.startDate) where.sale.saleDate.gte = filters.startDate;
+      if (filters.endDate) where.sale.saleDate.lte = filters.endDate;
     }
 
     if (filters?.clientId || filters?.clientName) {
-      where.sale = { client: {} };
+      where.sale.client = where.sale.client || {};
       if (filters.clientId) where.sale.client.id = filters.clientId;
       if (filters.clientName)
         where.sale.client.name = { contains: filters.clientName };
@@ -140,11 +141,12 @@ export class PaymentRepository {
         where,
         skip,
         take: limit,
-        orderBy: { createdAt: "desc" },
+        orderBy: { sale: { saleDate: "desc" } },
         include: {
           sale: {
             select: {
               id: true,
+              saleDate: true,
               clientId: true,
               total: true,
               client: { select: { id: true, name: true } },

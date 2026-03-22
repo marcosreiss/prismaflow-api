@@ -10,22 +10,31 @@ export class ProductService {
   async create(req: Request, data: any) {
     const user = req.user!;
 
-    // 🔹 Preenche automaticamente os campos de contexto
+    // Preenche automaticamente os campos de contexto
     data.tenantId = user.tenantId;
     data.branchId = user.branchId;
 
-    // 🔹 Validação de campos obrigatórios
+    // Validação de campos obrigatórios
     if (!data.brandId) {
       return ApiResponse.error("O campo 'brandId' é obrigatório.", 400, req);
     }
 
-    // 🔹 Verifica duplicidade dentro do mesmo tenant
-    const exists = await this.repo.findByNameInTenant(user.tenantId, data.name);
-    if (exists) {
-      return ApiResponse.error("Já existe um produto com esse nome.", 409, req);
+    //  Verifica duplicidade de nome + marca dentro do mesmo tenant
+    const sameNameAndBrand = await this.repo.findByNameAndBrandInTenant(
+      user.tenantId,
+      data.name,
+      data.brandId,
+    );
+
+    if (sameNameAndBrand) {
+      return ApiResponse.error(
+        "Já existe um produto com esse nome para essa marca.",
+        409,
+        req,
+      );
     }
 
-    // 🔹 Criação do produto
+    //  Criação do produto
     const product = await this.repo.create(user.tenantId, data, user.sub);
 
     return ApiResponse.success("Produto criado com sucesso.", req, product);
@@ -61,13 +70,15 @@ export class ProductService {
     const limit = Number(req.query.limit) || 10;
     const search = (req.query.search as string) || "";
     const category = (req.query.category as ProductCategory) || undefined;
+    const brandId = req.query.brandId ? Number(req.query.brandId) : undefined;
 
     const { items, total } = await this.repo.findAllByTenant(
       user.tenantId,
       page,
       limit,
       search,
-      category
+      category,
+      brandId,
     );
 
     return new PagedResponse(
@@ -76,7 +87,7 @@ export class ProductService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -92,9 +103,6 @@ export class ProductService {
     return ApiResponse.success("Produto excluído com sucesso.", req);
   }
 
-  /**
-   * 🔹 Retorna a quantidade em estoque de um produto
-   */
   async getStock(req: Request, id: number) {
     const user = req.user!;
 

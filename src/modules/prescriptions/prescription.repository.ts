@@ -1,4 +1,8 @@
-import { prisma, withAuditData } from "../../config/prisma-context";
+import {
+  formatDateOnlyFieldsForModel,
+  prisma,
+  withAuditData,
+} from "../../config/prisma-context";
 import { Prisma } from "@prisma/client";
 import logger from "../../utils/logger";
 
@@ -189,7 +193,12 @@ export class PrescriptionRepository {
         returned: items.length,
       });
 
-      return { items, total, page, limit };
+      return {
+        items: formatDateOnlyFieldsForModel("Prescription", items),
+        total,
+        page,
+        limit,
+      };
     } catch (error: any) {
       logger.error(
         "❌ [PrescriptionRepository] Erro ao buscar receitas vencidas",

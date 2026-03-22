@@ -1,6 +1,20 @@
 import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 
+const paymentDetailsInclude = {
+  sale: {
+    select: {
+      id: true,
+      clientId: true,
+      total: true,
+      client: { select: { id: true, name: true } },
+    },
+  },
+  methods: {
+    include: { installmentItems: { orderBy: { sequence: "asc" } } },
+  },
+} as const;
+
 export class PaymentRepository {
   // ─── CRUD ─────────────────────────────────────────────────────────────────
 

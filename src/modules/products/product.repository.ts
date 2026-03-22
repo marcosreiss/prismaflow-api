@@ -1,3 +1,4 @@
+// product.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 import { ProductCategory } from "@prisma/client";
 
@@ -42,12 +43,27 @@ export class ProductRepository {
     });
   }
 
+  async findByNameAndBrandInTenant(
+    tenantId: string,
+    name: string,
+    brandId: number,
+  ) {
+    return prisma.product.findFirst({
+      where: {
+        tenantId,
+        name,
+        brandId,
+      },
+    });
+  }
+
   async findAllByTenant(
     tenantId: string,
     page: number,
     limit: number,
     search?: string,
-    category?: ProductCategory
+    category?: ProductCategory,
+    brandId?: number,
   ) {
     const skip = (page - 1) * limit;
 
@@ -55,6 +71,7 @@ export class ProductRepository {
       tenantId,
       ...(search ? { name: { contains: search } } : {}),
       ...(category ? { category } : {}),
+      ...(brandId ? { brandId } : {}),
     };
 
     const [items, total] = await Promise.all([

@@ -56,7 +56,7 @@ O isolamento principal entre dados é feito por `tenantId`, com uso adicional fr
 
 Alguns pontos relevantes da implementação atual:
 
-- existe uma pasta histórica `docs/` no projeto, mas esta documentação nova foi criada em `doc/` conforme solicitado
+- existe uma pasta histórica `docs/` no projeto, mas esta documentação nova foi criada em `doc-codex/` conforme solicitado
 - `AuthService.registerUser` e o módulo `users` coexistem e tratam criação de usuários por caminhos diferentes
 - o módulo de pagamentos tem a arquitetura mais elaborada do projeto, com múltiplos services especializados
 - o módulo de vendas concentra lógica relevante de estoque, itens, protocolo e pagamento inicial

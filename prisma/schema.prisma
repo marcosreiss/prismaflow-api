@@ -80,7 +80,7 @@ model User {
 
 model Brand {
   id          Int       @id @default(autoincrement())
-  name        String    @unique
+  name        String
   isActive    Boolean   @default(true)
   tenantId    String
   createdById String?
@@ -90,6 +90,7 @@ model Brand {
   tenant      Tenant    @relation(fields: [tenantId], references: [id])
   products    Product[]
 
+  @@unique([tenantId, name])
   @@index([tenantId], map: "Brand_tenantId_fkey")
 }
 
@@ -474,9 +475,9 @@ model Expense {
   id            Int            @id @default(autoincrement())
   description   String
   amount        Float
-  dueDate       DateTime
+  dueDate       DateTime       @db.Date
   status        ExpenseStatus  @default(SCHEDULED)
-  paymentDate   DateTime?
+  paymentDate   DateTime?      @db.Date
   paymentMethod PaymentMethod?
   tenantId      String
   branchId      String

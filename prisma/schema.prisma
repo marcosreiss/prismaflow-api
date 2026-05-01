@@ -273,6 +273,7 @@ model ItemProduct {
   id           Int           @id @default(autoincrement())
   saleId       Int
   productId    Int
+  unitPrice    Float
   quantity     Int           @default(1)
   tenantId     String
   branchId     String
@@ -317,6 +318,7 @@ model ItemOpticalService {
   id          Int            @id @default(autoincrement())
   saleId      Int
   serviceId   Int
+  unitPrice   Float
   tenantId    String
   branchId    String
   createdById String?

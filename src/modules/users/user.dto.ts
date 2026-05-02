@@ -1,9 +1,11 @@
+// src/modules/users/user.dto.ts
 import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   MinLength,
 } from "class-validator";
 import { Role } from "@prisma/client";

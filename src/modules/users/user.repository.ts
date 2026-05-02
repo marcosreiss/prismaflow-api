@@ -1,3 +1,4 @@
+// src/modules/users/user.repository.ts
 import { prisma } from "../../config/prisma";
 import { Role } from "@prisma/client";
 import { withAuditData } from "../../config/prisma-context";

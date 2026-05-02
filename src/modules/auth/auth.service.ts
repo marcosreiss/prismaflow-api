@@ -11,7 +11,7 @@ import {
   ChangePasswordDto,
   RegisterUserDto,
   SelectBranchDto,
-} from "./dtos/auth.dto";
+} from "./auth.dto";
 
 export class AuthService {
   private repository = new AuthRepository();

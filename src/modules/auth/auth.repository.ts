@@ -1,8 +1,9 @@
+// src/modules/auth/auth.repository.ts
 import { prisma } from "../../config/prisma";
 import { PasswordUtils } from "../../utils/password";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { Request } from "express";
-import { RegisterAdminDto, RegisterUserDto } from "./dtos/auth.dto";
+import { RegisterAdminDto, RegisterUserDto } from "./auth.dto";
 
 export class AuthRepository {
   async createTenantWithAdmin(dto: RegisterAdminDto, req: Request) {

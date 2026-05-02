@@ -1,3 +1,4 @@
+// src/modules/auth/auth.dto.ts
 import { Role } from "@prisma/client";
 import {
   IsEmail,

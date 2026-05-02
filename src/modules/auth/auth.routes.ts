@@ -1,3 +1,4 @@
+// src/modules/auth/auth.routes.ts
 import { Router } from "express";
 import {
   registerAdmin,
@@ -14,7 +15,7 @@ import {
   ChangePasswordDto,
   RegisterUserDto,
   SelectBranchDto,
-} from "./dtos/auth.dto";
+} from "./auth.dto";
 import { Role } from "@prisma/client";
 import { requireRoles } from "../../middlewares/authorize.middleware";
 

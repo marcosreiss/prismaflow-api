@@ -1,3 +1,4 @@
+// src/modules/auth/auth.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
 import {
@@ -6,7 +7,7 @@ import {
   ChangePasswordDto,
   RegisterUserDto,
   SelectBranchDto,
-} from "./dtos/auth.dto";
+} from "./auth.dto";
 
 const service = new AuthService();
 

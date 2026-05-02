@@ -1,24 +1,22 @@
 // src/modules/auth/auth.repository.ts
 import { prisma } from "../../config/prisma";
 import { PasswordUtils } from "../../utils/password";
-import { ApiResponse } from "../../responses/ApiResponse";
-import { Request } from "express";
-import { RegisterAdminDto, RegisterUserDto } from "./auth.dto";
+import { AppError } from "../../utils/app-error";
+import { RegisterAdminDto } from "./auth.dto";
+import { Role } from "@prisma/client";
 
 export class AuthRepository {
-  async createTenantWithAdmin(dto: RegisterAdminDto, req: Request) {
-    // Verificar se o e-mail já está em uso
+  async createTenantWithAdmin(dto: RegisterAdminDto) {
     const existing = await prisma.user.findUnique({
       where: { email: dto.email },
     });
     if (existing) {
-      throw ApiResponse.error("E-mail já está em uso.", 400, req);
+      throw new AppError("E-mail já está em uso.", 400);
     }
 
     const hash = await PasswordUtils.hash(dto.password);
 
-    // Transação Prisma para garantir atomicidade
-    const result = await prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx) => {
       const tenant = await tx.tenant.create({
         data: {
           name: dto.tenantName,
@@ -31,58 +29,54 @@ export class AuthRepository {
               email: dto.email,
               password: hash,
               role: "ADMIN",
+              // branchId intencialmente null: ADMIN sem filial fixa inicia fluxo de seleção
             },
           },
         },
         include: {
           branches: true,
           users: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              role: true,
-            },
+            select: { id: true, name: true, email: true, role: true },
           },
         },
       });
 
-      const branch = tenant.branches[0];
-      const admin = tenant.users[0];
-
       return {
         tenantId: tenant.id,
-        branchId: branch.id,
-        admin,
+        branchId: tenant.branches[0].id,
+        admin: tenant.users[0],
       };
     });
-
-    return result;
   }
 
-  async createUser(dto: RegisterUserDto, req: Request) {
-    // 🔹 Verifica se o e-mail já está em uso
+  async createUser(data: {
+    name: string;
+    email: string;
+    password: string;
+    role: Role;
+    tenantId: string;
+    branchId: string;
+    createdById: string;
+  }) {
     const existing = await prisma.user.findUnique({
-      where: { email: dto.email },
+      where: { email: data.email },
     });
     if (existing) {
-      throw ApiResponse.error("E-mail já está em uso.", 400, req);
+      throw new AppError("E-mail já está em uso.", 400);
     }
 
-    // 🔹 Gera o hash da senha
-    const hash = await PasswordUtils.hash(dto.password);
+    const hash = await PasswordUtils.hash(data.password);
 
-    // 🔹 Cria o usuário dentro do tenant e branch existentes
-    const user = await prisma.user.create({
+    return prisma.user.create({
       data: {
-        name: dto.name,
-        email: dto.email,
+        name: data.name,
+        email: data.email,
         password: hash,
-        role: dto.role,
-        tenant: { connect: { id: dto.tenantId } },
-        branch: { connect: { id: dto.branchId } },
-        createdById: dto.createdById, // 👈 substitui o antigo connect
-        updatedById: dto.createdById,
+        role: data.role,
+        tenantId: data.tenantId,
+        branchId: data.branchId,
+        createdById: data.createdById,
+        updatedById: data.createdById,
       },
       select: {
         id: true,
@@ -94,23 +88,17 @@ export class AuthRepository {
         createdAt: true,
       },
     });
-
-    return user;
   }
 
   async findUserByEmail(email: string) {
     return prisma.user.findUnique({
       where: { email },
-      include: {
-        tenant: true,
-        branch: true,
-      },
+      include: { tenant: true, branch: true },
     });
   }
 
   async updatePassword(userId: string, newPassword: string) {
     const hash = await PasswordUtils.hash(newPassword);
-
     await prisma.user.update({
       where: { id: userId },
       data: { password: hash },
@@ -120,17 +108,12 @@ export class AuthRepository {
   async findBranchesByTenantId(tenantId: string) {
     return prisma.branch.findMany({
       where: { tenantId },
-      select: {
-        id: true,
-        name: true,
-      },
+      select: { id: true, name: true },
       orderBy: { name: "asc" },
     });
   }
 
   async findUserById(userId: string) {
-    return prisma.user.findUnique({
-      where: { id: userId },
-    });
+    return prisma.user.findUnique({ where: { id: userId } });
   }
 }

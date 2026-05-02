@@ -26,7 +26,9 @@ authRoutes.post(
   validateDto(RegisterAdminDto, "body"),
   registerAdmin
 );
+
 authRoutes.post("/login", validateDto(LoginDto, "body"), login);
+
 authRoutes.post(
   "/branch-selection",
   validateDto(SelectBranchDto, "body"),

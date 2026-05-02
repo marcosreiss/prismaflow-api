@@ -1,10 +1,8 @@
 // src/modules/auth/auth.dto.ts
-import { Role } from "@prisma/client";
 import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
-  IsOptional,
   IsString,
   MinLength,
 } from "class-validator";
@@ -68,24 +66,11 @@ export class RegisterUserDto {
   @IsNotEmpty({ message: "A senha é obrigatória." })
   password!: string;
 
-  @IsEnum(Role, {
-    message: "O papel do usuário deve ser Gerente ou Funcionário.",
+  @IsEnum(["MANAGER", "EMPLOYEE"], {
+    message: "O papel do usuário deve ser MANAGER ou EMPLOYEE.",
   })
   @IsNotEmpty({ message: "O papel do usuário é obrigatório." })
-  role!: Role; // Deve ser MANAGER ou EMPLOYEE
-
-  @IsString({ message: "O ID do tenant deve ser uma string válida." })
-  @IsNotEmpty({ message: "O ID do tenant é obrigatório." })
-  tenantId!: string;
-
-  @IsString({ message: "O ID da filial (branch) deve ser uma string válida." })
-  @IsNotEmpty({ message: "O ID da filial (branch) é obrigatório." })
-  branchId!: string;
-
-  // opcionalmente, caso deseje permitir que o admin informe o criador
-  @IsOptional()
-  @IsString({ message: "O ID do criador deve ser uma string válida." })
-  createdById?: string;
+  role!: "MANAGER" | "EMPLOYEE";
 }
 
 export class SelectBranchDto {

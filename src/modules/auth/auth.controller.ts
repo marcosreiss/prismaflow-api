@@ -14,11 +14,13 @@ const service = new AuthService();
 export const registerAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const dto: RegisterAdminDto = req.body;
-    const result = await service.registerAdmin(req, dto);
+    const result = await service.registerAdmin(
+      req,
+      req.body as RegisterAdminDto,
+    );
     res.status(201).json(result);
   } catch (err) {
     next(err);
@@ -28,11 +30,10 @@ export const registerAdmin = async (
 export const login = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const dto: LoginDto = req.body;
-    const result = await service.login(req, dto);
+    const result = await service.login(req, req.body as LoginDto);
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -42,11 +43,10 @@ export const login = async (
 export const selectBranch = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const dto: SelectBranchDto = req.body;
-    const result = await service.selectBranch(req, dto);
+    const result = await service.selectBranch(req, req.body as SelectBranchDto);
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -56,11 +56,13 @@ export const selectBranch = async (
 export const changePassword = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const dto: ChangePasswordDto = req.body;
-    const result = await service.changePassword(req, dto);
+    const result = await service.changePassword(
+      req,
+      req.body as ChangePasswordDto,
+    );
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -70,11 +72,10 @@ export const changePassword = async (
 export const registerUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const dto: RegisterUserDto = req.body;
-    const result = await service.registerUser(req, dto);
+    const result = await service.registerUser(req, req.body as RegisterUserDto);
     res.status(201).json(result);
   } catch (err) {
     next(err);

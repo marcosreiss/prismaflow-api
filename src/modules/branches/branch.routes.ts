@@ -1,9 +1,10 @@
+// src/modules/branches/branch.routes.ts
 import { Router } from "express";
 import { createBranch, listBranches, selectBranches } from "./branch.controller";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { requireRoles } from "../../middlewares/authorize.middleware";
 import { validateDto } from "../../middlewares/validation.middleware";
-import { CreateBranchDto } from "./dtos/create-branch.dto";
+import { CreateBranchDto } from "./branch.dto";
 
 export const branchRoutes = Router();
 

@@ -1,3 +1,4 @@
+// src/middlewares/auth.middleware.ts
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
@@ -32,7 +33,7 @@ export function authGuard(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
 
-    // ✅ injeta o usuário autenticado na requisição
+    // injeta o usuário autenticado na requisição
     req.user = {
       sub: payload.sub,
       email: payload.email,

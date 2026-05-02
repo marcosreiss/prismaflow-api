@@ -1,3 +1,4 @@
+// src/modules/auth/auth.service.ts
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import { ApiResponse } from "../../responses/ApiResponse";
@@ -45,7 +46,6 @@ export class AuthService {
     return ApiResponse.success("Usuário criado com sucesso.", req, user);
   }
 
-  // 🔹 Novo fluxo de login com token temporário e seleção de branch
   async login(req: Request, dto: LoginDto) {
     const user = await this.repository.findUserByEmail(dto.email);
     if (!user) {
@@ -132,7 +132,6 @@ export class AuthService {
     );
   }
 
-  // 🔹 Novo método: seleção de filial (branch-selection)
   async selectBranch(req: Request, dto: SelectBranchDto) {
     const secret = env.JWT_SECRET || "chave-padrao";
     const header = req.headers.authorization;

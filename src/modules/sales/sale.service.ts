@@ -143,7 +143,8 @@ export class SaleService {
             data: {
               saleId: sale.id,
               productId: item.productId,
-              quantity: item.quantity,
+              quantity: item.quantity ?? 1,
+              unitPrice: product.salePrice ?? 0,
               tenantId,
               branchId,
               createdById: userId,
@@ -197,6 +198,7 @@ export class SaleService {
             data: {
               saleId: sale.id,
               serviceId: item.serviceId,
+              unitPrice: service.price ?? 0,
               tenantId,
               branchId,
               createdById: userId,
@@ -441,12 +443,13 @@ export class SaleService {
                 }
               }
 
-              // 🆕 CRIAR item de produto
+              // CRIAR item de produto
               const itemProduct = await tx.itemProduct.create({
                 data: {
                   saleId: Number(id),
                   productId: item.productId,
                   quantity: quantity,
+                  unitPrice: product.salePrice ?? 0, // ← ADICIONAR
                   tenantId,
                   branchId,
                   createdById: userId,
@@ -498,10 +501,18 @@ export class SaleService {
           // ➕ CRIAR novos itens
           if (body.serviceItems.length > 0) {
             for (const item of body.serviceItems) {
+              // Busca novamente para ter acesso ao price no create
+              const service = await tx.opticalService.findFirst({
+                where: { id: item.serviceId, tenantId },
+              });
+              if (!service)
+                throw new Error(`Serviço ${item.serviceId} não encontrado`);
+
               await tx.itemOpticalService.create({
                 data: {
                   saleId: Number(id),
                   serviceId: item.serviceId,
+                  unitPrice: service.price ?? 0,
                   tenantId,
                   branchId,
                   createdById: userId,
@@ -529,7 +540,6 @@ export class SaleService {
                 saleId: Number(id),
                 tenantId,
                 branchId,
-                recordNumber: body.protocol.recordNumber,
                 book: body.protocol.book,
                 page: body.protocol.page,
                 os: body.protocol.os,
@@ -540,7 +550,6 @@ export class SaleService {
             await this.saleRepo.updateProtocol(
               existingProtocol.id,
               {
-                recordNumber: body.protocol.recordNumber,
                 book: body.protocol.book,
                 page: body.protocol.page,
                 os: body.protocol.os,
@@ -600,12 +609,7 @@ export class SaleService {
     try {
       const user = req.user as any;
       const { tenantId } = user;
-      const {
-        page = 1,
-        limit = 10,
-        clientId,
-        clientName,
-      } = req.query;
+      const { page = 1, limit = 10, clientId, clientName } = req.query;
 
       const { items, total } = await this.saleRepo.findAllByTenant(
         tenantId,

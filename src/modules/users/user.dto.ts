@@ -5,10 +5,8 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
   MinLength,
 } from "class-validator";
-import { Role } from "@prisma/client";
 
 export class CreateUserDto {
   @IsString({ message: "O nome deve ser uma string válida." })
@@ -24,8 +22,11 @@ export class CreateUserDto {
   @IsNotEmpty({ message: "A senha é obrigatória." })
   password!: string;
 
-  @IsEnum(Role, { message: "O perfil (role) informado é inválido." })
-  role!: Role;
+  @IsEnum(["MANAGER", "EMPLOYEE"], {
+    message: "O perfil deve ser MANAGER ou EMPLOYEE.",
+  })
+  @IsNotEmpty({ message: "O perfil (role) é obrigatório." })
+  role!: "MANAGER" | "EMPLOYEE";
 
   @IsOptional()
   @IsString({ message: "O branchId deve ser uma string válida." })

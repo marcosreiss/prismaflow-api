@@ -4,16 +4,16 @@ import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { UserRepository } from "./user.repository";
 import { BranchRepository } from "../branches/branch.repository";
-import bcrypt from "bcryptjs";
+import { AppError } from "../../utils/app-error";
+import { PasswordUtils } from "../../utils/password";
 import { Role } from "@prisma/client";
 
 export class UserService {
   private users = new UserRepository();
   private branches = new BranchRepository();
 
-  private canCreate(creator: Role, target: Role) {
-    if (creator === "ADMIN")
-      return target === "MANAGER" || target === "EMPLOYEE";
+  private canCreate(creator: Role, target: "MANAGER" | "EMPLOYEE") {
+    if (creator === "ADMIN") return true;
     if (creator === "MANAGER") return target === "EMPLOYEE";
     return false;
   }
@@ -24,70 +24,66 @@ export class UserService {
       name: string;
       email: string;
       password: string;
-      role: Role;
+      role: "MANAGER" | "EMPLOYEE";
       branchId?: string;
-    }
+    },
   ) {
-    const actor = req.user!;
+    const actor = req.user;
+    if (!actor) throw new AppError("Usuário não autenticado.", 401);
+
     const { name, email, password, role, branchId } = dto;
 
     if (!this.canCreate(actor.role, role)) {
-      return ApiResponse.error(
+      throw new AppError(
         "Acesso negado para criar usuário com esse perfil.",
         403,
-        req
       );
     }
 
     const needsBranch = role === "MANAGER" || role === "EMPLOYEE";
     if (needsBranch && !branchId) {
-      return ApiResponse.error(
+      throw new AppError(
         "branchId é obrigatório para MANAGER e EMPLOYEE.",
         400,
-        req
       );
     }
 
-    let branch = null;
+    let resolvedBranchId: string | null = null;
+
     if (branchId) {
-      branch = await this.branches.findByIdInTenant(actor.tenantId, branchId);
-      if (!branch) {
-        return ApiResponse.error(
-          "Filial não encontrada no seu tenant.",
-          404,
-          req
-        );
-      }
+      const branch = await this.branches.findByIdInTenant(
+        actor.tenantId,
+        branchId,
+      );
+      if (!branch)
+        throw new AppError("Filial não encontrada no seu tenant.", 404);
+      resolvedBranchId = branch.id;
     }
 
-    if (actor.role === "MANAGER" && role === "EMPLOYEE") {
-      if (!actor.branchId || actor.branchId !== branchId) {
-        return ApiResponse.error(
+    if (actor.role === "MANAGER") {
+      if (!actor.branchId)
+        throw new AppError("Gerente sem filial associada no token.", 403);
+      if (actor.branchId !== branchId) {
+        throw new AppError(
           "Gerente só pode criar funcionários na sua própria filial.",
           403,
-          req
         );
       }
     }
 
     const emailTaken = await this.users.findByEmail(email);
-    if (emailTaken) {
-      return ApiResponse.error(
-        "Já existe um usuário com esse e-mail.",
-        409,
-        req
-      );
-    }
+    if (emailTaken)
+      throw new AppError("Já existe um usuário com esse e-mail.", 409);
 
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await PasswordUtils.hash(password);
     const created = await this.users.create({
       name,
       email,
       password: hash,
       role,
       tenantId: actor.tenantId,
-      branchId: branch?.id ?? null,
-      userId: actor.sub
+      branchId: resolvedBranchId,
+      userId: actor.sub,
     });
 
     const { password: _, ...safe } = created;
@@ -95,16 +91,17 @@ export class UserService {
   }
 
   async list(req: Request) {
-    const actor = req.user!;
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const actor = req.user;
+    if (!actor) throw new AppError("Usuário não autenticado.", 401);
 
-    // ADMIN: todos do tenant
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
+
     if (actor.role === "ADMIN") {
       const { items, total } = await this.users.findAllByTenant(
         actor.tenantId,
         page,
-        limit
+        limit,
       );
       return new PagedResponse(
         "Usuários listados com sucesso.",
@@ -112,20 +109,18 @@ export class UserService {
         items,
         page,
         limit,
-        total
+        total,
       );
     }
 
-    // MANAGER: apenas employees da sua branch
     if (actor.role === "MANAGER") {
-      if (!actor.branchId) {
-        return ApiResponse.error("Gerente sem filial associada.", 400, req);
-      }
+      if (!actor.branchId)
+        throw new AppError("Gerente sem filial associada no token.", 403);
       const { items, total } = await this.users.findEmployeesByBranch(
         actor.tenantId,
         actor.branchId,
         page,
-        limit
+        limit,
       );
       return new PagedResponse(
         "Funcionários listados com sucesso.",
@@ -133,11 +128,10 @@ export class UserService {
         items,
         page,
         limit,
-        total
+        total,
       );
     }
 
-    // EMPLOYEE: sem permissão
-    return ApiResponse.error("Acesso negado.", 403, req);
+    throw new AppError("Acesso negado.", 403);
   }
 }

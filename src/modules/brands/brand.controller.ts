@@ -1,3 +1,4 @@
+// src/modules/brands/brand.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { BrandService } from "./brand.service";
 

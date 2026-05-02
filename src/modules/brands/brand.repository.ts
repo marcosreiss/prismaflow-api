@@ -1,3 +1,4 @@
+// src/modules/brands/brand.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class BrandRepository {

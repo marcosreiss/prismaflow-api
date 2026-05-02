@@ -1,3 +1,4 @@
+// src/modules/brands/brand.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { requireRoles } from "../../middlewares/authorize.middleware";
@@ -9,7 +10,7 @@ import {
   getBrandById,
   deleteBrand,
 } from "./brand.controller";
-import { CreateBrandDto, UpdateBrandDto } from "./dtos/brand.dto";
+import { CreateBrandDto, UpdateBrandDto } from "./brand.dto";
 
 export const brandRoutes = Router();
 

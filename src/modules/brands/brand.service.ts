@@ -1,3 +1,4 @@
+// src/modules/brands/brand.service.ts
 import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";

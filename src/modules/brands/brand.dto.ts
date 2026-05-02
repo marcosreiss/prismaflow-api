@@ -1,3 +1,4 @@
+// src/modules/brands/brand.dto.ts
 import {
   IsBoolean,
   IsNotEmpty,

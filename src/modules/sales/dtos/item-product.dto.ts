@@ -1,12 +1,17 @@
+// src/modules/sales/dtos/item-product.dto.ts
 import {
   IsBoolean,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { CreateFrameDetailsDto, UpdateFrameDetailsDto } from "./frame-details.dto";
+import {
+  CreateFrameDetailsDto,
+  UpdateFrameDetailsDto,
+} from "./frame-details.dto";
 
 export class CreateItemProductDto {
   @IsInt()
@@ -16,6 +21,10 @@ export class CreateItemProductDto {
   @IsOptional()
   @IsInt()
   quantity?: number = 1;
+
+  @IsOptional()
+  @IsNumber({}, { message: "O campo 'unitPrice' deve ser numérico." })
+  unitPrice?: number;
 
   @IsOptional()
   @ValidateNested()
@@ -29,10 +38,17 @@ export class CreateItemProductDto {
 
 export class UpdateItemProductDto {
   @IsOptional() @IsInt() productId?: number;
+
   @IsOptional() @IsInt() quantity?: number;
+
+  @IsOptional()
+  @IsNumber({}, { message: "O campo 'unitPrice' deve ser numérico." })
+  unitPrice?: number;
+
   @IsOptional()
   @ValidateNested()
   @Type(() => UpdateFrameDetailsDto)
   frameDetails?: UpdateFrameDetailsDto;
+
   @IsOptional() @IsBoolean() isActive?: boolean;
 }

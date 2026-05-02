@@ -1,3 +1,4 @@
+// src/modules/sales/dtos/sale.dto.ts
 import {
   IsArray,
   IsBoolean,
@@ -20,10 +21,6 @@ export class CreateSaleDto {
   @IsNumber()
   @IsNotEmpty({ message: "O campo 'clientId' é obrigatório." })
   clientId!: number;
-
-  // @IsString()
-  // @IsNotEmpty({ message: "O campo 'branchId' é obrigatório." })
-  // branchId!: string;
 
   @IsNotEmpty({ message: "O campo 'saleDate' é obrigatório." })
   @Type(() => Date)

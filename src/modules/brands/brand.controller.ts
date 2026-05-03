@@ -1,8 +1,16 @@
 // src/modules/brands/brand.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { BrandService } from "./brand.service";
+import { AppError } from "../../utils/app-error";
+import { CreateBrandDto, UpdateBrandDto } from "./brand.dto";
 
 const service = new BrandService();
+
+function parseId(param: string): number {
+  const id = Number(param);
+  if (!Number.isInteger(id) || id <= 0) throw new AppError("ID inválido.", 400);
+  return id;
+}
 
 export const createBrand = async (
   req: Request,
@@ -10,8 +18,8 @@ export const createBrand = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await service.create(req, req.body);
-    res.status(result.status).json(result);
+    const result = await service.create(req, req.body as CreateBrandDto);
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }
@@ -23,8 +31,11 @@ export const updateBrand = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.update(req, id, req.body);
+    const result = await service.update(
+      req,
+      parseId(req.params.id),
+      req.body as UpdateBrandDto,
+    );
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -50,8 +61,7 @@ export const getBrandById = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.getById(req, id);
+    const result = await service.getById(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -64,8 +74,7 @@ export const deleteBrand = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.delete(req, id);
+    const result = await service.delete(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

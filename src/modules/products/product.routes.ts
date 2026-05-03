@@ -1,3 +1,4 @@
+// src/modules/products/product.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { validateDto } from "../../middlewares/validation.middleware";
@@ -18,7 +19,7 @@ productRoutes.post(
   "/",
   authGuard,
   validateDto(CreateProductDto, "body"),
-  createProduct
+  createProduct,
 );
 
 // 🔹 Listar produtos com paginação, busca e filtro
@@ -32,12 +33,10 @@ productRoutes.put(
   "/:id",
   authGuard,
   validateDto(UpdateProductDto, "body"),
-  updateProduct
+  updateProduct,
 );
 
 // 🔹 Excluir produto
 productRoutes.delete("/:id", authGuard, deleteProduct);
 
-
 productRoutes.get("/:id/stock", authGuard, getProductStock);
-

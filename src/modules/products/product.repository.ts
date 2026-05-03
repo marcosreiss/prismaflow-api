@@ -1,4 +1,4 @@
-// product.repository.ts
+// src/modules/products/product.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 import { ProductCategory } from "@prisma/client";
 

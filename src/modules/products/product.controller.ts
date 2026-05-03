@@ -1,3 +1,4 @@
+// src/modules/products/product.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { ProductService } from "./product.service";
 
@@ -9,7 +10,7 @@ const service = new ProductService();
 export const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.create(req, req.body);
@@ -25,7 +26,7 @@ export const createProduct = async (
 export const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -42,7 +43,7 @@ export const updateProduct = async (
 export const listProducts = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.list(req);
@@ -58,7 +59,7 @@ export const listProducts = async (
 export const getProductById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -75,7 +76,7 @@ export const getProductById = async (
 export const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -92,7 +93,7 @@ export const deleteProduct = async (
 export const getProductStock = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);

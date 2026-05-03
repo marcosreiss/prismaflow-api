@@ -1,3 +1,4 @@
+// src/modules/products/product.dto.ts
 import {
   IsEnum,
   IsInt,
@@ -29,7 +30,7 @@ export class CreateProductDto {
 
   @IsNumber(
     { maxDecimalPlaces: 2 },
-    { message: "O preço de custo deve ser numérico." }
+    { message: "O preço de custo deve ser numérico." },
   )
   @Min(0, { message: "O preço de custo não pode ser negativo." })
   costPrice!: number;
@@ -40,7 +41,7 @@ export class CreateProductDto {
 
   @IsNumber(
     { maxDecimalPlaces: 2 },
-    { message: "O preço de venda deve ser numérico." }
+    { message: "O preço de venda deve ser numérico." },
   )
   @Min(0, { message: "O preço de venda não pode ser negativo." })
   salePrice!: number;

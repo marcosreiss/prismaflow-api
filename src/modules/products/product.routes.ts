@@ -8,13 +8,13 @@ import {
   listProducts,
   getProductById,
   deleteProduct,
+  getProductStock,
 } from "./product.controller";
 import { CreateProductDto, UpdateProductDto } from "./product.dto";
-import { getProductStock } from "./product.controller";
 
 export const productRoutes = Router();
 
-// 🔹 Criar produto
+//  Criar produto
 productRoutes.post(
   "/",
   authGuard,
@@ -22,13 +22,16 @@ productRoutes.post(
   createProduct,
 );
 
-// 🔹 Listar produtos com paginação, busca e filtro
+//  Listar produtos com paginação, busca e filtro
 productRoutes.get("/", authGuard, listProducts);
 
-// 🔹 Buscar produto por ID
+//  Buscar estoque de um produto
+productRoutes.get("/:id/stock", authGuard, getProductStock);
+
+// Buscar produto por ID
 productRoutes.get("/:id", authGuard, getProductById);
 
-// 🔹 Atualizar produto
+// Atualizar produto
 productRoutes.put(
   "/:id",
   authGuard,
@@ -36,7 +39,5 @@ productRoutes.put(
   updateProduct,
 );
 
-// 🔹 Excluir produto
+// Excluir produto
 productRoutes.delete("/:id", authGuard, deleteProduct);
-
-productRoutes.get("/:id/stock", authGuard, getProductStock);

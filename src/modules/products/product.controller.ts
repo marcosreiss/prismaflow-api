@@ -1,8 +1,16 @@
 // src/modules/products/product.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { ProductService } from "./product.service";
+import { AppError } from "../../utils/app-error";
+import { CreateProductDto, UpdateProductDto } from "./product.dto";
 
 const service = new ProductService();
+
+function parseId(param: string): number {
+  const id = Number(param);
+  if (!Number.isInteger(id) || id <= 0) throw new AppError("ID inválido.", 400);
+  return id;
+}
 
 /**
  * Cria um novo produto
@@ -13,8 +21,8 @@ export const createProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await service.create(req, req.body);
-    res.status(result.status).json(result);
+    const result = await service.create(req, req.body as CreateProductDto);
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }
@@ -29,8 +37,11 @@ export const updateProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.update(req, id, req.body);
+    const result = await service.update(
+      req,
+      parseId(req.params.id),
+      req.body as UpdateProductDto,
+    );
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -62,8 +73,7 @@ export const getProductById = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.getById(req, id);
+    const result = await service.getById(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -79,8 +89,7 @@ export const deleteProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.delete(req, id);
+    const result = await service.delete(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -96,8 +105,7 @@ export const getProductStock = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.getStock(req, id);
+    const result = await service.getStock(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

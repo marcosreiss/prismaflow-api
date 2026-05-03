@@ -1,3 +1,4 @@
+// src/modules/optical-services/optical-service.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class OpticalServiceRepository {
@@ -47,7 +48,7 @@ export class OpticalServiceRepository {
     tenantId: string,
     page: number,
     limit: number,
-    search?: string
+    search?: string,
   ) {
     const skip = (page - 1) * limit;
 

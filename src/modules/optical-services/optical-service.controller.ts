@@ -1,3 +1,4 @@
+// src/modules/optical-services/optical-service.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { OpticalServiceService } from "./optical-service.service";
 
@@ -6,7 +7,7 @@ const service = new OpticalServiceService();
 export const createOpticalService = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.create(req, req.body);
@@ -19,7 +20,7 @@ export const createOpticalService = async (
 export const updateOpticalService = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -33,7 +34,7 @@ export const updateOpticalService = async (
 export const listOpticalServices = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.list(req);
@@ -46,7 +47,7 @@ export const listOpticalServices = async (
 export const getOpticalServiceById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -60,7 +61,7 @@ export const getOpticalServiceById = async (
 export const deleteOpticalService = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);

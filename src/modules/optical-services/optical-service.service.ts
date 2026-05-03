@@ -1,3 +1,4 @@
+// src/modules/optical-services/optical-service.service.ts
 import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
@@ -14,7 +15,7 @@ export class OpticalServiceService {
       return ApiResponse.error(
         "Usuário não está associado a nenhuma filial (branchId).",
         400,
-        req
+        req,
       );
     }
 
@@ -68,7 +69,7 @@ export class OpticalServiceService {
       user.tenantId,
       page,
       limit,
-      search
+      search,
     );
 
     return new PagedResponse(
@@ -77,7 +78,7 @@ export class OpticalServiceService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 

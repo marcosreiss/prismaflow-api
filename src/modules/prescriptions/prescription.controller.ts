@@ -1,8 +1,19 @@
 // src/modules/prescriptions/prescription.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { PrescriptionService } from "./prescription.service";
+import { AppError } from "../../utils/app-error";
+import {
+  CreatePrescriptionDto,
+  UpdatePrescriptionDto,
+} from "./prescription.dto";
 
 const service = new PrescriptionService();
+
+function parseId(param: string): number {
+  const id = Number(param);
+  if (!Number.isInteger(id) || id <= 0) throw new AppError("ID inválido.", 400);
+  return id;
+}
 
 export const createPrescription = async (
   req: Request,
@@ -10,8 +21,8 @@ export const createPrescription = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await service.create(req, req.body);
-    res.status(result.status).json(result);
+    const result = await service.create(req, req.body as CreatePrescriptionDto);
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }
@@ -23,8 +34,11 @@ export const updatePrescription = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.update(req, id, req.body);
+    const result = await service.update(
+      req,
+      parseId(req.params.id),
+      req.body as UpdatePrescriptionDto,
+    );
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -37,8 +51,7 @@ export const getPrescriptionById = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.getById(req, id);
+    const result = await service.getById(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);
@@ -64,10 +77,9 @@ export const getPrescriptionsByClientId = async (
   next: NextFunction,
 ) => {
   try {
-    const clientId = Number(req.params.clientId);
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
+    const clientId = parseId(req.params.clientId);
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
     const result = await service.getByClientId(req, clientId, page, limit);
     res.status(result.status).json(result);
   } catch (err) {
@@ -94,8 +106,7 @@ export const deletePrescription = async (
   next: NextFunction,
 ) => {
   try {
-    const id = Number(req.params.id);
-    const result = await service.delete(req, id);
+    const result = await service.delete(req, parseId(req.params.id));
     res.status(result.status).json(result);
   } catch (err) {
     next(err);

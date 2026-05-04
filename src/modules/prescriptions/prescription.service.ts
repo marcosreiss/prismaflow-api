@@ -3,25 +3,39 @@ import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { PrescriptionRepository } from "./prescription.repository";
+import { ClientRepository } from "../clients/client.repository";
+import { AppError } from "../../utils/app-error";
+import {
+  CreatePrescriptionDto,
+  UpdatePrescriptionDto,
+} from "./prescription.dto";
 
 export class PrescriptionService {
   private repo = new PrescriptionRepository();
+  private clientRepo = new ClientRepository();
 
-  // =========================================================
-  // 🔹 CREATE
-  // =========================================================
-  async create(req: Request, data: any) {
-    const user = req.user!;
-    const { tenantId, branchId, sub: userId } = user;
+  async create(req: Request, dto: CreatePrescriptionDto) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
+    if (!user.branchId)
+      throw new AppError("Usuário não está associado a nenhuma filial.", 403);
 
-    // 🔸 Sempre injeta tenantId e branchId no payload
-    const payload = {
-      ...data,
-      tenantId,
-      branchId,
-    };
+    // Valida que o cliente pertence ao tenant
+    const client = await this.clientRepo.findById(dto.clientId, user.tenantId);
+    if (!client) throw new AppError("Cliente não encontrado.", 404);
 
-    const prescription = await this.repo.create(tenantId, payload, userId);
+    const prescription = await this.repo.create(
+      user.tenantId,
+      {
+        ...dto,
+        prescriptionDate: dto.prescriptionDate
+          ? new Date(dto.prescriptionDate)
+          : undefined,
+        branchId: user.branchId,
+      },
+      user.sub,
+    );
+
     return ApiResponse.success(
       "Receita criada com sucesso.",
       req,
@@ -29,40 +43,40 @@ export class PrescriptionService {
     );
   }
 
-  // =========================================================
-  // 🔹 UPDATE
-  // =========================================================
-  async update(req: Request, prescriptionId: number, data: any) {
-    const user = req.user!;
-    const { tenantId, branchId, sub: userId } = user;
+  async update(
+    req: Request,
+    prescriptionId: number,
+    dto: UpdatePrescriptionDto,
+  ) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const existing = await this.repo.findById(prescriptionId, tenantId);
-    if (!existing) {
-      return ApiResponse.error("Receita não encontrada.", 404, req);
-    }
+    const existing = await this.repo.findById(prescriptionId, user.tenantId);
+    if (!existing) throw new AppError("Receita não encontrada.", 404);
 
-    // 🔸 Garante tenantId e branchId também na atualização
-    const payload = {
-      ...data,
-      tenantId,
-      branchId,
-    };
+    const updated = await this.repo.update(
+      prescriptionId,
+      {
+        ...dto,
+        prescriptionDate: dto.prescriptionDate
+          ? new Date(dto.prescriptionDate)
+          : undefined,
+      },
+      user.sub,
+    );
 
-    const updated = await this.repo.update(prescriptionId, payload, userId);
     return ApiResponse.success("Receita atualizada com sucesso.", req, updated);
   }
 
-  // =========================================================
-  // 🔹 FIND BY ID
-  // =========================================================
   async getById(req: Request, prescriptionId: number) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const prescription = await this.repo.findById(prescriptionId, tenantId);
-    if (!prescription) {
-      return ApiResponse.error("Receita não encontrada.", 404, req);
-    }
+    const prescription = await this.repo.findById(
+      prescriptionId,
+      user.tenantId,
+    );
+    if (!prescription) throw new AppError("Receita não encontrada.", 404);
 
     return ApiResponse.success(
       "Receita encontrada com sucesso.",
@@ -71,24 +85,29 @@ export class PrescriptionService {
     );
   }
 
-  // =========================================================
-  // 🔹 LIST (com paginação e filtro por cliente)
-  // =========================================================
   async list(req: Request) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
     const clientId = req.query.clientId
       ? Number(req.query.clientId)
       : undefined;
 
+    const branchId =
+      user.role === "EMPLOYEE"
+        ? user.branchId
+        : req.query.branchId
+          ? String(req.query.branchId)
+          : undefined;
+
     const { items, total } = await this.repo.findAllByTenant(
-      tenantId,
+      user.tenantId,
       page,
       limit,
       clientId,
+      branchId,
     );
 
     return new PagedResponse(
@@ -101,23 +120,20 @@ export class PrescriptionService {
     );
   }
 
-  // =========================================================
-  // 🔹 LIST BY CLIENT
-  // =========================================================
   async getByClientId(
     req: Request,
     clientId: number,
     page: number,
     limit: number,
   ) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
     const { items, total } = await this.repo.findByClientId(
-      tenantId,
+      user.tenantId,
       clientId,
-      page,
-      limit,
+      Math.max(1, page),
+      Math.max(1, Math.min(100, limit)),
     );
 
     return new PagedResponse(
@@ -131,28 +147,30 @@ export class PrescriptionService {
   }
 
   async listExpiringPrescriptions(req: Request) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
-    const branchId = user.branchId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    // 🗓️ Data opcional (ISO)
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
     const targetDate = req.query.date ? String(req.query.date) : undefined;
 
+    const branchId =
+      user.role === "EMPLOYEE"
+        ? user.branchId
+        : req.query.branchId
+          ? String(req.query.branchId)
+          : undefined;
+
     const { items, total } = await this.repo.findExpiringPrescriptions(
-      tenantId,
-      branchId,
+      user.tenantId,
       page,
       limit,
       targetDate,
+      branchId,
     );
 
     return new PagedResponse(
-      `Receitas vencidas listadas com sucesso${
-        targetDate ? ` para ${targetDate}` : ""
-      }.`,
+      `Receitas vencidas listadas com sucesso${targetDate ? ` para ${targetDate}` : ""}.`,
       req,
       items,
       page,
@@ -161,20 +179,20 @@ export class PrescriptionService {
     );
   }
 
-  // =========================================================
-  // 🔹 DELETE
-  // =========================================================
   async delete(req: Request, prescriptionId: number) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
-    const userId = user.sub;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const existing = await this.repo.findById(prescriptionId, tenantId);
-    if (!existing) {
-      return ApiResponse.error("Receita não encontrada.", 404, req);
+    const existing = await this.repo.findById(prescriptionId, user.tenantId);
+    if (!existing) throw new AppError("Receita não encontrada.", 404);
+
+    const hasRelations = await this.repo.hasSales(prescriptionId);
+
+    if (hasRelations) {
+      await this.repo.softDelete(prescriptionId, user.sub);
+    } else {
+      await this.repo.hardDelete(prescriptionId);
     }
-
-    await this.repo.delete(prescriptionId, tenantId, userId);
 
     return ApiResponse.success("Receita deletada com sucesso.", req);
   }

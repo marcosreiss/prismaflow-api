@@ -1,3 +1,4 @@
+// src/modules/prescriptions/prescription.dto.ts
 import {
   IsBoolean,
   IsDateString,
@@ -12,7 +13,7 @@ export class CreatePrescriptionDto {
 
   @IsDateString(
     {},
-    { message: "A data da receita deve estar em formato válido." }
+    { message: "A data da receita deve estar em formato válido." },
   )
   prescriptionDate!: string;
 

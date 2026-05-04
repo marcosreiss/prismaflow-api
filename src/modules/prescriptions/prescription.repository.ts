@@ -1,3 +1,4 @@
+// src/modules/prescriptions/prescription.repository.ts
 import {
   formatDateOnlyFieldsForModel,
   prisma,
@@ -10,7 +11,7 @@ export class PrescriptionRepository {
   async create(
     tenantId: string,
     data: Prisma.PrescriptionUncheckedCreateInput,
-    userId?: string
+    userId?: string,
   ) {
     if (!data.branchId) {
       throw new Error("branchId é obrigatório para criar a prescrição.");
@@ -34,7 +35,7 @@ export class PrescriptionRepository {
   async update(
     prescriptionId: number,
     data: Prisma.PrescriptionUpdateInput,
-    userId?: string
+    userId?: string,
   ) {
     return prisma.prescription.update({
       where: { id: prescriptionId },
@@ -58,7 +59,7 @@ export class PrescriptionRepository {
     tenantId: string,
     page: number,
     limit: number,
-    clientId?: number
+    clientId?: number,
   ) {
     const skip = (page - 1) * limit;
     const where: Prisma.PrescriptionWhereInput = {
@@ -86,7 +87,7 @@ export class PrescriptionRepository {
     tenantId: string,
     clientId: number,
     page: number,
-    limit: number
+    limit: number,
   ) {
     const skip = (page - 1) * limit;
     const where: Prisma.PrescriptionWhereInput = { tenantId, clientId };
@@ -112,7 +113,7 @@ export class PrescriptionRepository {
     branchId?: string,
     page = 1,
     limit = 10,
-    targetDate?: string
+    targetDate?: string,
   ) {
     logger.debug("🟦 [PrescriptionRepository] Buscando receitas vencidas", {
       tenantId,
@@ -131,7 +132,7 @@ export class PrescriptionRepository {
         : new Date(
             new Date().toLocaleString("en-US", {
               timeZone: "America/Sao_Paulo",
-            })
+            }),
           );
 
       // 📆 Um ano antes
@@ -205,7 +206,7 @@ export class PrescriptionRepository {
         {
           message: error?.message,
           stack: error?.stack,
-        }
+        },
       );
       throw error;
     }
@@ -219,7 +220,7 @@ export class PrescriptionRepository {
 
       if (!existing) {
         throw new Error(
-          "Receita não encontrada ou não pertence ao tenant informado."
+          "Receita não encontrada ou não pertence ao tenant informado.",
         );
       }
 

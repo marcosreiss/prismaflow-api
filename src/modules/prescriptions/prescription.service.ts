@@ -1,3 +1,4 @@
+// src/modules/prescriptions/prescription.service.ts
 import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
@@ -24,7 +25,7 @@ export class PrescriptionService {
     return ApiResponse.success(
       "Receita criada com sucesso.",
       req,
-      prescription
+      prescription,
     );
   }
 
@@ -66,7 +67,7 @@ export class PrescriptionService {
     return ApiResponse.success(
       "Receita encontrada com sucesso.",
       req,
-      prescription
+      prescription,
     );
   }
 
@@ -87,7 +88,7 @@ export class PrescriptionService {
       tenantId,
       page,
       limit,
-      clientId
+      clientId,
     );
 
     return new PagedResponse(
@@ -96,7 +97,7 @@ export class PrescriptionService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -107,7 +108,7 @@ export class PrescriptionService {
     req: Request,
     clientId: number,
     page: number,
-    limit: number
+    limit: number,
   ) {
     const user = req.user!;
     const tenantId = user.tenantId;
@@ -116,7 +117,7 @@ export class PrescriptionService {
       tenantId,
       clientId,
       page,
-      limit
+      limit,
     );
 
     return new PagedResponse(
@@ -125,7 +126,7 @@ export class PrescriptionService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 
@@ -145,7 +146,7 @@ export class PrescriptionService {
       branchId,
       page,
       limit,
-      targetDate
+      targetDate,
     );
 
     return new PagedResponse(
@@ -156,7 +157,7 @@ export class PrescriptionService {
       items,
       page,
       limit,
-      total
+      total,
     );
   }
 

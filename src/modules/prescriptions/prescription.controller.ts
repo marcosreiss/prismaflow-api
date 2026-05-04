@@ -1,3 +1,4 @@
+// src/modules/prescriptions/prescription.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { PrescriptionService } from "./prescription.service";
 
@@ -6,7 +7,7 @@ const service = new PrescriptionService();
 export const createPrescription = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.create(req, req.body);
@@ -19,7 +20,7 @@ export const createPrescription = async (
 export const updatePrescription = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -33,7 +34,7 @@ export const updatePrescription = async (
 export const getPrescriptionById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -47,7 +48,7 @@ export const getPrescriptionById = async (
 export const listPrescriptions = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.list(req);
@@ -60,7 +61,7 @@ export const listPrescriptions = async (
 export const getPrescriptionsByClientId = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const clientId = Number(req.params.clientId);
@@ -77,7 +78,7 @@ export const getPrescriptionsByClientId = async (
 export const listExpiringPrescriptions = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const result = await service.listExpiringPrescriptions(req);
@@ -90,7 +91,7 @@ export const listExpiringPrescriptions = async (
 export const deletePrescription = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const id = Number(req.params.id);
@@ -100,4 +101,3 @@ export const deletePrescription = async (
     next(err);
   }
 };
- 

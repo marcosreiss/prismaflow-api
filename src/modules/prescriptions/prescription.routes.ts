@@ -1,3 +1,4 @@
+// src/modules/prescriptions/prescription.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { requireRoles } from "../../middlewares/authorize.middleware";
@@ -23,7 +24,7 @@ prescriptionRoutes.post(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   validateDto(CreatePrescriptionDto, "body"),
-  createPrescription
+  createPrescription,
 );
 
 prescriptionRoutes.put(
@@ -31,33 +32,33 @@ prescriptionRoutes.put(
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
   validateDto(UpdatePrescriptionDto, "body"),
-  updatePrescription
+  updatePrescription,
 );
 
 prescriptionRoutes.get(
   "/expired",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listExpiringPrescriptions
+  listExpiringPrescriptions,
 );
 
 prescriptionRoutes.get(
   "/:id",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  getPrescriptionById
+  getPrescriptionById,
 );
 
 prescriptionRoutes.delete(
   "/:id",
   authGuard,
   requireRoles("ADMIN", "MANAGER"),
-  deletePrescription
+  deletePrescription,
 );
 
 prescriptionRoutes.get(
   "/",
   authGuard,
   requireRoles("ADMIN", "MANAGER", "EMPLOYEE"),
-  listPrescriptions
+  listPrescriptions,
 );

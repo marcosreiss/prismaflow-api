@@ -3,67 +3,81 @@ import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { OpticalServiceRepository } from "./optical-service.repository";
+import { AppError } from "../../utils/app-error";
+import {
+  CreateOpticalServiceDto,
+  UpdateOpticalServiceDto,
+} from "./optical-service.dto";
 
 export class OpticalServiceService {
   private repo = new OpticalServiceRepository();
 
-  async create(req: Request, data: any) {
-    const user = req.user!;
+  async create(req: Request, dto: CreateOpticalServiceDto) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    // 🔸 Garante que o usuário tenha um branchId associado
+    // branchId obrigatório no schema — garante antes de chegar ao Prisma
     if (!user.branchId) {
-      return ApiResponse.error(
-        "Usuário não está associado a nenhuma filial (branchId).",
-        400,
-        req,
-      );
+      throw new AppError("Usuário não está associado a nenhuma filial.", 403);
     }
 
-    // 🔸 Força o uso do branchId do token, ignorando qualquer valor vindo do body
-    data.branchId = user.branchId;
+    const exists = await this.repo.findByNameInTenant(user.tenantId, dto.name);
+    if (exists) throw new AppError("Já existe um serviço com esse nome.", 409);
 
-    const exists = await this.repo.findByNameInTenant(user.tenantId, data.name);
-    if (exists) {
-      return ApiResponse.error("Já existe um serviço com esse nome.", 409, req);
-    }
+    const created = await this.repo.create(
+      user.tenantId,
+      {
+        ...dto,
+        branchId: user.branchId, // sempre do token, nunca do body
+      },
+      user.sub,
+    );
 
-    const service = await this.repo.create(user.tenantId, data, user.sub);
-    return ApiResponse.success("Serviço criado com sucesso.", req, service);
+    return ApiResponse.success("Serviço criado com sucesso.", req, created);
   }
 
-  async update(req: Request, id: number, data: any) {
-    const user = req.user!;
-    const service = await this.repo.findById(id);
+  async update(req: Request, id: number, dto: UpdateOpticalServiceDto) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    if (!service) {
-      return ApiResponse.error("Serviço não encontrado.", 404, req);
+    const existing = await this.repo.findById(id, user.tenantId);
+    if (!existing) throw new AppError("Serviço não encontrado.", 404);
+
+    // Verifica duplicidade de nome se está sendo alterado
+    if (dto.name && dto.name !== existing.name) {
+      const conflict = await this.repo.findByNameInTenant(
+        user.tenantId,
+        dto.name,
+      );
+      if (conflict)
+        throw new AppError("Já existe um serviço com esse nome.", 409);
     }
 
-    // 🔒 Garante que só atualize dentro do mesmo tenant
-    if (service.tenantId !== user.tenantId) {
-      return ApiResponse.error("Acesso negado a este serviço.", 403, req);
-    }
-
-    const updated = await this.repo.update(id, data, user.sub);
+    const updated = await this.repo.update(id, dto, user.sub);
     return ApiResponse.success("Serviço atualizado com sucesso.", req, updated);
   }
 
   async getById(req: Request, id: number) {
-    const user = req.user!;
-    const service = await this.repo.findById(id);
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    if (!service || service.tenantId !== user.tenantId) {
-      return ApiResponse.error("Serviço não encontrado.", 404, req);
-    }
+    const existing = await this.repo.findById(id, user.tenantId);
+    if (!existing) throw new AppError("Serviço não encontrado.", 404);
 
-    return ApiResponse.success("Serviço encontrado com sucesso.", req, service);
+    return ApiResponse.success(
+      "Serviço encontrado com sucesso.",
+      req,
+      existing,
+    );
   }
 
   async list(req: Request) {
-    const user = req.user!;
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-    const search = (req.query.search as string) || "";
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
+
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
+    const search = (req.query.search as string) || undefined;
 
     const { items, total } = await this.repo.findAllByTenant(
       user.tenantId,
@@ -83,14 +97,20 @@ export class OpticalServiceService {
   }
 
   async delete(req: Request, id: number) {
-    const user = req.user!;
-    const service = await this.repo.findById(id);
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    if (!service || service.tenantId !== user.tenantId) {
-      return ApiResponse.error("Serviço não encontrado.", 404, req);
+    const existing = await this.repo.findById(id, user.tenantId);
+    if (!existing) throw new AppError("Serviço não encontrado.", 404);
+
+    const hasRelations = await this.repo.hasItemOpticalServices(id);
+
+    if (hasRelations) {
+      await this.repo.softDelete(id, user.sub);
+    } else {
+      await this.repo.hardDelete(id);
     }
 
-    await this.repo.delete(id);
     return ApiResponse.success("Serviço excluído com sucesso.", req);
   }
 }

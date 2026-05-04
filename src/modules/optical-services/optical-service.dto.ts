@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsPositive,
   IsString,
   MaxLength,
   Min,
@@ -20,17 +19,14 @@ export class CreateOpticalServiceDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(255)
+  @MaxLength(255, {
+    message: "A descrição do serviço deve ter no máximo 255 caracteres.",
+  })
   description?: string;
 
   @IsNumber({ maxDecimalPlaces: 2 }, { message: "O preço deve ser numérico." })
   @Min(0, { message: "O preço não pode ser negativo." })
   price!: number;
-
-  // 🔸 branchId agora é opcional e não deve ser enviado pelo cliente
-  @IsOptional()
-  @IsString()
-  branchId?: string;
 
   @IsOptional()
   @IsBoolean()
@@ -40,17 +36,21 @@ export class CreateOpticalServiceDto {
 export class UpdateOpticalServiceDto {
   @IsOptional()
   @IsString()
-  @MaxLength(100)
+  @MaxLength(100, {
+    message: "O nome do serviço deve ter no máximo 100 caracteres.",
+  })
   name?: string;
 
   @IsOptional()
   @IsString()
-  @MaxLength(255)
+  @MaxLength(255, {
+    message: "A descrição do serviço deve ter no máximo 255 caracteres.",
+  })
   description?: string;
 
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: "O preço deve ser numérico." })
+  @Min(0, { message: "O preço não pode ser negativo." })
   price?: number;
 
   @IsOptional()

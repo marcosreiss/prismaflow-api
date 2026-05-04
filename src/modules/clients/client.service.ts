@@ -3,131 +3,119 @@ import { Request } from "express";
 import { ApiResponse } from "../../responses/ApiResponse";
 import { PagedResponse } from "../../responses/PagedResponse";
 import { ClientRepository } from "./client.repository";
+import { AppError } from "../../utils/app-error";
+import { CreateClientDto, UpdateClientDto } from "./client.dto";
 
 export class ClientService {
   private repo = new ClientRepository();
 
-  async create(req: Request, data: any) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
-    const branchId = user.branchId;
+  async create(req: Request, dto: CreateClientDto) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    // 🔹 Preenche automaticamente os campos de contexto
-    data.tenantId = tenantId;
-    data.branchId = branchId;
+    if (!user.branchId)
+      throw new AppError("Usuário não está associado a nenhuma filial.", 403);
 
-    // 🔹 Corrige campos de data (ex: bornDate)
-    if (data.bornDate) {
-      data.bornDate = new Date(data.bornDate);
-    }
-
-    // 🔹 Verifica duplicidade de CPF no mesmo tenant
-    if (data.cpf) {
-      const existingCpf = await this.repo.findByCpf(data.cpf, tenantId);
+    if (dto.cpf) {
+      const existingCpf = await this.repo.findByCpf(dto.cpf, user.tenantId);
       if (existingCpf) {
-        return ApiResponse.error(
+        throw new AppError(
           "Já existe um cliente cadastrado com esse CPF nesta ótica.",
           409,
-          req,
         );
       }
     }
 
     try {
-      // 🔹 Criação do cliente no contexto do tenant/branch
-      const client = await this.repo.create(tenantId, branchId, data, user.sub);
+      const client = await this.repo.create(
+        user.tenantId,
+        user.branchId,
+        {
+          ...dto,
+          bornDate: dto.bornDate ? new Date(dto.bornDate) : undefined,
+        },
+        user.sub,
+      );
       return ApiResponse.success("Cliente criado com sucesso.", req, client);
     } catch (error: any) {
-      // 🔹 Tratamento para race condition ou outros erros de constraint única
       if (error.code === "P2002" && error.meta?.target?.includes("cpf")) {
-        return ApiResponse.error(
-          "Este CPF já está cadastrado no sistema.",
-          409,
-          req,
-        );
+        throw new AppError("Este CPF já está cadastrado no sistema.", 409);
       }
-      throw error; // Re-lança outros erros para o middleware global
+      throw error;
     }
   }
 
-  async update(req: Request, clientId: number, data: any) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+  async update(req: Request, clientId: number, dto: UpdateClientDto) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    // 🔹 Corrige campos de data (ex: bornDate)
-    if (data.bornDate) {
-      data.bornDate = new Date(data.bornDate);
-    }
+    const existing = await this.repo.findById(clientId, user.tenantId);
+    if (!existing) throw new AppError("Cliente não encontrado.", 404);
 
-    // 🔹 Verifica se o cliente existe
-    const existing = await this.repo.findById(clientId, tenantId);
-    if (!existing) {
-      return ApiResponse.error("Cliente não encontrado.", 404, req);
-    }
-
-    // 🔹 Se está alterando o CPF, verifica se já não existe outro cliente com esse CPF
-    if (data.cpf && data.cpf !== existing.cpf) {
-      const existingCpf = await this.repo.findByCpf(data.cpf, tenantId);
+    if (dto.cpf && dto.cpf !== existing.cpf) {
+      const existingCpf = await this.repo.findByCpf(dto.cpf, user.tenantId);
       if (existingCpf && existingCpf.id !== clientId) {
-        return ApiResponse.error(
-          "Já existe outro cliente cadastrado com esse CPF neste tenant.",
+        throw new AppError(
+          "Já existe outro cliente cadastrado com esse CPF nesta ótica.",
           409,
-          req,
         );
       }
     }
 
     try {
-      const client = await this.repo.update(clientId, data, user.sub);
+      const client = await this.repo.update(
+        clientId,
+        {
+          ...dto,
+          bornDate: dto.bornDate ? new Date(dto.bornDate) : undefined,
+        },
+        user.sub,
+      );
       return ApiResponse.success(
         "Cliente atualizado com sucesso.",
         req,
         client,
       );
     } catch (error: any) {
-      // 🔹 Tratamento para race condition ou outros erros de constraint única
       if (error.code === "P2002" && error.meta?.target?.includes("cpf")) {
-        return ApiResponse.error(
-          "Este CPF já está cadastrado no sistema.",
-          409,
-          req,
-        );
+        throw new AppError("Este CPF já está cadastrado no sistema.", 409);
       }
-      throw error; // Re-lança outros erros para o middleware global
+      throw error;
     }
   }
 
   async getById(req: Request, clientId: number) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const client = await this.repo.findById(clientId, tenantId);
-    if (!client) {
-      return ApiResponse.error("Cliente não encontrado.", 404, req);
-    }
+    const client = await this.repo.findById(clientId, user.tenantId);
+    if (!client) throw new AppError("Cliente não encontrado.", 404);
 
     return ApiResponse.success("Cliente encontrado com sucesso.", req, client);
   }
 
   async list(req: Request) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    // 🔹 Se branchId vier na query, usa ele; senão, undefined (retorna todos do tenant)
-    const branchId = req.query.branchId
-      ? String(req.query.branchId)
-      : undefined;
-
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
     const search = req.query.search ? String(req.query.search) : undefined;
 
-    const { items, total } = await this.repo.findAllByTenantAndBranch(
-      tenantId,
-      branchId,
+    // EMPLOYEE só vê a própria filial; ADMIN/MANAGER veem o tenant com filtro opcional
+    const branchId =
+      user.role === "EMPLOYEE"
+        ? user.branchId
+        : req.query.branchId
+          ? String(req.query.branchId)
+          : undefined;
+
+    const { items, total } = await this.repo.findAllByTenant(
+      user.tenantId,
       page,
       limit,
       search,
+      branchId,
     );
 
     return new PagedResponse(
@@ -141,20 +129,21 @@ export class ClientService {
   }
 
   async select(req: Request) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
-    const branchId = user.branchId;
-    const name = String(req.query.name || "").trim();
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    if (!name) {
-      return ApiResponse.error("O parâmetro 'name' é obrigatório.", 400, req);
-    }
+    const name = String(req.query.name || "").trim();
+    if (!name) throw new AppError("O parâmetro 'name' é obrigatório.", 400);
+
+    // EMPLOYEE filtra pela própria filial; ADMIN/MANAGER buscam no tenant
+    const branchId = user.role === "EMPLOYEE" ? user.branchId : undefined;
 
     const clients = await this.repo.findByNameForSelect(
-      tenantId,
-      branchId,
+      user.tenantId,
       name,
+      branchId,
     );
+
     return ApiResponse.success(
       "Clientes encontrados com sucesso.",
       req,
@@ -163,33 +152,54 @@ export class ClientService {
   }
 
   async listBirthdays(req: Request) {
-    const user = req.user!;
-    const tenantId = user.tenantId;
-    const branchId = user.branchId;
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
 
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    // 🗓️ Nova query param opcional: date=YYYY-MM-DD ou ISO
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
     const targetDate = req.query.date ? String(req.query.date) : undefined;
 
+    // EMPLOYEE só vê a própria filial; ADMIN/MANAGER veem o tenant com filtro opcional
+    const branchId =
+      user.role === "EMPLOYEE"
+        ? user.branchId
+        : req.query.branchId
+          ? String(req.query.branchId)
+          : undefined;
+
     const { items, total } = await this.repo.findBirthdays(
-      tenantId,
-      branchId,
+      user.tenantId,
       page,
       limit,
       targetDate,
+      branchId,
     );
 
     return new PagedResponse(
-      `Aniversariantes listados com sucesso${
-        targetDate ? ` para ${targetDate}` : ""
-      }.`,
+      `Aniversariantes listados com sucesso${targetDate ? ` para ${targetDate}` : ""}.`,
       req,
       items,
       page,
       limit,
       total,
     );
+  }
+
+  async delete(req: Request, clientId: number) {
+    const user = req.user;
+    if (!user) throw new AppError("Usuário não autenticado.", 401);
+
+    const client = await this.repo.findById(clientId, user.tenantId);
+    if (!client) throw new AppError("Cliente não encontrado.", 404);
+
+    const hasRelations = await this.repo.hasRelations(clientId);
+
+    if (hasRelations) {
+      await this.repo.softDelete(clientId, user.sub);
+    } else {
+      await this.repo.hardDelete(clientId);
+    }
+
+    return ApiResponse.success("Cliente excluído com sucesso.", req);
   }
 }

@@ -1,5 +1,5 @@
 // src/modules/clients/client.repository.ts
-import { Prisma } from "@prisma/client";
+import { Prisma, Gender } from "@prisma/client";
 import {
   formatDateOnlyFieldsForModel,
   prisma,
@@ -7,20 +7,52 @@ import {
 } from "../../config/prisma-context";
 import logger from "../../utils/logger";
 
-export class ClientRepository {
-  async create(tenantId: string, branchId: string, data: any, userId?: string) {
-    const { tenant, branch, ...safeData } = data;
+type ClientCreateData = {
+  name: string;
+  nickname?: string;
+  cpf?: string;
+  rg?: string;
+  bornDate?: Date;
+  gender?: Gender;
+  fatherName?: string;
+  motherName?: string;
+  spouse?: string;
+  email?: string;
+  company?: string;
+  occupation?: string;
+  street?: string;
+  number?: string;
+  neighborhood?: string;
+  city?: string;
+  uf?: string;
+  cep?: string;
+  complement?: string;
+  isBlacklisted?: boolean;
+  obs?: string;
+  phone01?: string;
+  phone02?: string;
+  phone03?: string;
+  reference01?: string;
+  reference02?: string;
+  reference03?: string;
+  isActive?: boolean;
+};
 
+type ClientUpdateData = Partial<ClientCreateData>;
+
+export class ClientRepository {
+  async create(
+    tenantId: string,
+    branchId: string,
+    data: ClientCreateData,
+    userId?: string,
+  ) {
     return prisma.client.create({
-      data: withAuditData(userId, {
-        ...safeData,
-        tenantId,
-        branchId,
-      }),
+      data: withAuditData(userId, { ...data, tenantId, branchId }),
     });
   }
 
-  async update(clientId: number, data: any, userId?: string) {
+  async update(clientId: number, data: ClientUpdateData, userId?: string) {
     return prisma.client.update({
       where: { id: clientId },
       data: withAuditData(userId, data, true),
@@ -29,19 +61,20 @@ export class ClientRepository {
 
   async findById(clientId: number, tenantId: string) {
     return prisma.client.findFirst({
-      where: { id: clientId, tenantId },
+      where: { id: clientId, tenantId, isActive: true },
       include: {
-        prescriptions: true,
+        prescriptions: {
+          where: { isActive: true },
+          orderBy: { prescriptionDate: "desc" },
+        },
       },
     });
   }
 
-  async findByNameInTenant(tenantId: string, name: string) {
+  // Busca ignorando isActive — para relacionamentos históricos
+  async findByIdRaw(clientId: number, tenantId: string) {
     return prisma.client.findFirst({
-      where: {
-        tenantId,
-        name: { contains: name },
-      },
+      where: { id: clientId, tenantId },
     });
   }
 
@@ -50,13 +83,14 @@ export class ClientRepository {
     page: number,
     limit: number,
     search?: string,
+    branchId?: string, // opcional: ADMIN/MANAGER podem filtrar por filial
   ) {
     const skip = (page - 1) * limit;
     const where = {
       tenantId,
-      ...(search && {
-        name: { contains: search },
-      }),
+      isActive: true,
+      ...(branchId ? { branchId } : {}),
+      ...(search ? { name: { contains: search } } : {}),
     };
 
     const [items, total] = await Promise.all([
@@ -72,36 +106,16 @@ export class ClientRepository {
     return { items, total };
   }
 
-  async findAllByTenantAndBranch(
+  async findByNameForSelect(
     tenantId: string,
-    branchId?: string,
-    page = 1,
-    limit = 10,
-    search?: string,
+    name: string,
+    branchId?: string, // opcional: EMPLOYEE passa branchId, ADMIN/MANAGER não
   ) {
-    const skip = (page - 1) * limit;
-    const where: any = { tenantId };
-    if (branchId) where.branchId = branchId;
-    if (search) where.name = { contains: search };
-
-    const [items, total] = await Promise.all([
-      prisma.client.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: { name: "asc" },
-      }),
-      prisma.client.count({ where }),
-    ]);
-
-    return { items, total };
-  }
-
-  async findByNameForSelect(tenantId: string, branchId: string, name: string) {
     return prisma.client.findMany({
       where: {
         tenantId,
-        branchId,
+        isActive: true,
+        ...(branchId ? { branchId } : {}),
         name: { contains: name },
       },
       select: { id: true, name: true },
@@ -112,10 +126,10 @@ export class ClientRepository {
 
   async findBirthdays(
     tenantId: string,
+    page: number,
+    limit: number,
+    targetDate?: string,
     branchId?: string,
-    page = 1,
-    limit = 10,
-    targetDate?: string, // ← nova data opcional (ISO)
   ) {
     logger.debug("🟦 [ClientRepository] Iniciando busca de aniversariantes", {
       tenantId,
@@ -132,43 +146,33 @@ export class ClientRepository {
       let month: number;
 
       if (targetDate) {
-        // Parse direto da string "YYYY-MM-DD" sem criar Date
         const [, monthStr, dayStr] = targetDate.split("-");
         day = parseInt(dayStr, 10);
         month = parseInt(monthStr, 10);
       } else {
-        // Fallback: data atual no fuso de São Paulo
-        const nowUtc = new Date();
-        const localStr = nowUtc.toLocaleDateString("en-CA", {
+        const localStr = new Date().toLocaleDateString("en-CA", {
           timeZone: "America/Sao_Paulo",
-        }); // retorna "YYYY-MM-DD"
+        });
         const [, mStr, dStr] = localStr.split("-");
         day = parseInt(dStr, 10);
         month = parseInt(mStr, 10);
       }
 
-      logger.debug("🕐 [ClientRepository] Datas de referência", {
-        targetDate,
-        referenceDate: targetDate || "data atual (São Paulo)",
-        day,
-        month,
-      });
-
       const branchFilter = branchId
         ? Prisma.sql`AND branchId = ${branchId}`
         : Prisma.empty;
 
-      // 📊 COUNT total
       const totalRows = await prisma.$queryRaw<{ total: bigint }[]>(
         Prisma.sql`
-        SELECT COUNT(*) AS total
-        FROM Client
-        WHERE tenantId = ${tenantId}
-          ${branchFilter}
-          AND bornDate IS NOT NULL
-          AND DAY(bornDate) = ${day}
-          AND MONTH(bornDate) = ${month}
-      `,
+          SELECT COUNT(*) AS total
+          FROM Client
+          WHERE tenantId = ${tenantId}
+            ${branchFilter}
+            AND isActive = 1
+            AND bornDate IS NOT NULL
+            AND DAY(bornDate) = ${day}
+            AND MONTH(bornDate) = ${month}
+        `,
       );
 
       const total =
@@ -176,24 +180,23 @@ export class ClientRepository {
           ? Number(totalRows[0].total)
           : 0;
 
-      if (total === 0) {
-        return { items: [], total: 0, page, limit };
-      }
+      if (total === 0) return { items: [], total: 0, page, limit };
 
       const items = await prisma.$queryRaw<any[]>(
         Prisma.sql`
-        SELECT 
-          id, name, nickname, email, phone01, phone02, phone03,
-          bornDate, isActive, tenantId, branchId, createdAt, updatedAt
-        FROM Client
-        WHERE tenantId = ${tenantId}
-          ${branchFilter}
-          AND bornDate IS NOT NULL
-          AND DAY(bornDate) = ${day}
-          AND MONTH(bornDate) = ${month}
-        ORDER BY name ASC
-        LIMIT ${limit} OFFSET ${skip}
-      `,
+          SELECT
+            id, name, nickname, email, phone01, phone02, phone03,
+            bornDate, isActive, tenantId, branchId, createdAt, updatedAt
+          FROM Client
+          WHERE tenantId = ${tenantId}
+            ${branchFilter}
+            AND isActive = 1
+            AND bornDate IS NOT NULL
+            AND DAY(bornDate) = ${day}
+            AND MONTH(bornDate) = ${month}
+          ORDER BY name ASC
+          LIMIT ${limit} OFFSET ${skip}
+        `,
       );
 
       return {
@@ -213,12 +216,26 @@ export class ClientRepository {
 
   async findByCpf(cpf: string, tenantId: string) {
     return prisma.client.findUnique({
-      where: {
-        cpf_tenantId: {
-          cpf,
-          tenantId,
-        },
-      },
+      where: { cpf_tenantId: { cpf, tenantId } },
     });
+  }
+
+  async hasRelations(clientId: number) {
+    const [sales, prescriptions] = await Promise.all([
+      prisma.sale.count({ where: { clientId } }),
+      prisma.prescription.count({ where: { clientId } }),
+    ]);
+    return sales > 0 || prescriptions > 0;
+  }
+
+  async softDelete(clientId: number, userId?: string) {
+    return prisma.client.update({
+      where: { id: clientId },
+      data: withAuditData(userId, { isActive: false }, true),
+    });
+  }
+
+  async hardDelete(clientId: number) {
+    return prisma.client.delete({ where: { id: clientId } });
   }
 }

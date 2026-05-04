@@ -1,3 +1,4 @@
+// src/modules/clients/client.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { requireRoles } from "../../middlewares/authorize.middleware";

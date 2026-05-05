@@ -340,8 +340,9 @@ model Payment {
   id               Int                 @id @default(autoincrement())
   saleId           Int                 @unique
   status           PaymentStatus       @default(PENDING)
-  total            Float               @default(0)
+  subtotal         Float               @default(0)
   discount         Float               @default(0)
+  total            Float               @default(0)
   paidAmount       Float               @default(0)
   installmentsPaid Int                 @default(0)
   lastPaymentAt    DateTime?           @db.Date

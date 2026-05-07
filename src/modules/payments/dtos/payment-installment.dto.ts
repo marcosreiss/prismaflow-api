@@ -1,4 +1,4 @@
-// dtos/payment-installment.dto.ts
+// src/modules/payments/dtos/payment-installment.dto.ts
 
 import { IsInt, IsNumber, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";

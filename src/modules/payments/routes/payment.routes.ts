@@ -1,3 +1,4 @@
+// src/modules/payments/routes/payment.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../../middlewares/auth.middleware";
 import { validateDto } from "../../../middlewares/validation.middleware";

@@ -1,3 +1,4 @@
+// src/modules/payments/services/payment-integrity.service.ts
 import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
 import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
 import { PaymentMethod } from "@prisma/client";

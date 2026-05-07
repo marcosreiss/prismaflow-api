@@ -1,3 +1,4 @@
+// src/modules/payments/controller/payment-installment.controller.ts
 import { Request, Response } from "express";
 import { PaymentInstallmentPayService } from "../services/payment-installment-pay.service";
 import { PaymentInstallmentService } from "../services/payment-installment.service";

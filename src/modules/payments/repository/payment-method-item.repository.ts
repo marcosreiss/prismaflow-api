@@ -1,3 +1,4 @@
+// src/modules/payments/repository/payment-method-item.repository.ts
 import { PaymentMethod } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 

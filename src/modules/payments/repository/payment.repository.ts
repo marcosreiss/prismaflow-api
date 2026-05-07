@@ -1,3 +1,4 @@
+// src/modules/payments/repository/payment.repository.ts
 import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 

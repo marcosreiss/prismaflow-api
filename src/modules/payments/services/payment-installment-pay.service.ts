@@ -1,3 +1,4 @@
+// src/modules/payments/services/payment-installment-pay.service.ts
 import { Request } from "express";
 import { ApiResponse } from "@/responses/ApiResponse";
 import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
@@ -24,12 +25,16 @@ export class PaymentInstallmentPayService {
       return ApiResponse.error(
         "Você não tem permissão para acessar esta parcela.",
         403,
-        req
+        req,
       );
     }
 
     if (installment.paidAt !== null) {
-      return ApiResponse.error("Esta parcela já foi paga completamente.", 400, req);
+      return ApiResponse.error(
+        "Esta parcela já foi paga completamente.",
+        400,
+        req,
+      );
     }
 
     const remainingAmount = installment.amount - installment.paidAmount;
@@ -37,7 +42,7 @@ export class PaymentInstallmentPayService {
       return ApiResponse.error(
         `O valor pago (${paidAmount}) não pode ser maior que o valor restante da parcela (${remainingAmount.toFixed(2)}).`,
         400,
-        req
+        req,
       );
     }
 
@@ -51,7 +56,7 @@ export class PaymentInstallmentPayService {
         paidAmount: newPaidAmount,
         paidAt: isFullyPaid ? paymentDate : null,
       },
-      userId
+      userId,
     );
 
     const paymentId = installment.paymentMethodItem.payment.id;
@@ -67,7 +72,7 @@ export class PaymentInstallmentPayService {
         message: isFullyPaid
           ? "Parcela paga completamente."
           : `Pagamento parcial registrado. Restante: R$ ${(installment.amount - newPaidAmount).toFixed(2)}`,
-      }
+      },
     );
   }
 }

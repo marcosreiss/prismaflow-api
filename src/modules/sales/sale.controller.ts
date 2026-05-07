@@ -88,7 +88,7 @@ export async function getSaleById(req: Request, res: Response) {
     "🔍 [SaleController] Requisição recebida - Buscar venda por ID",
     {
       id: req.params.id,
-    }
+    },
   );
 
   try {

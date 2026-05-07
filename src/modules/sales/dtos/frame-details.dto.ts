@@ -1,3 +1,4 @@
+// src/modules/sales/dtos/frame-details.dto.ts
 import {
   IsBoolean,
   IsEnum,

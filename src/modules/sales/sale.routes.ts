@@ -1,3 +1,4 @@
+// src/modules/sales/sale.routes.ts
 import { Router } from "express";
 import { authGuard } from "../../middlewares/auth.middleware";
 import { validateDto } from "../../middlewares/validation.middleware";
@@ -26,7 +27,7 @@ saleRoutes.put(
   "/:id",
   authGuard,
   validateDto(UpdateSaleDto, "body"),
-  updateSale
+  updateSale,
 );
 
 // 🔹 Excluir venda

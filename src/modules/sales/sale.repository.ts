@@ -1,3 +1,4 @@
+// src/modules/sales/sale.repository.ts
 import { prisma, withAuditData } from "../../config/prisma-context";
 
 export class SaleRepository {

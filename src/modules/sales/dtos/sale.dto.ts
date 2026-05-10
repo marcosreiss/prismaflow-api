@@ -1,34 +1,35 @@
 // src/modules/sales/dtos/sale.dto.ts
 import {
   IsArray,
-  IsBoolean,
   IsDate,
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
+  Min,
   ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { CreateItemOpticalServiceDto } from "./item-optical-service.dto";
-import { CreateItemProductDto } from "./item-product.dto";
-import { CreateProtocolDto } from "./protocol.dto";
+import {
+  CreateItemOpticalServiceDto,
+  UpdateItemOpticalServiceDto,
+} from "./item-optical-service.dto";
+import { CreateItemProductDto, UpdateItemProductDto } from "./item-product.dto";
+import { CreateProtocolDto, UpdateProtocolDto } from "./protocol.dto";
 
-/**
- * DTO para criação de vendas
- */
 export class CreateSaleDto {
-  @IsNumber()
-  @IsNotEmpty({ message: "O campo 'clientId' é obrigatório." })
+  @IsInt()
+  @IsNotEmpty({ message: "O campo clientId é obrigatório." })
   clientId!: number;
 
-  @IsNotEmpty({ message: "O campo 'saleDate' é obrigatório." })
+  @IsNotEmpty({ message: "O campo saleDate é obrigatório." })
   @Type(() => Date)
-  @IsDate({ message: "O campo 'saleDate' deve ser uma data válida." })
+  @IsDate({ message: "O campo saleDate deve ser uma data válida." })
   saleDate!: Date;
 
   @IsOptional()
-  @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
+  @IsInt({ message: "O campo prescriptionId deve ser inteiro." })
   prescriptionId?: number;
 
   @IsOptional()
@@ -37,55 +38,37 @@ export class CreateSaleDto {
 
   @IsOptional()
   @IsNumber()
-  subtotal?: number;
-
-  @IsOptional()
-  @IsNumber()
+  @Min(0)
   discount?: number;
 
-  @IsOptional()
-  @IsNumber()
-  total?: number;
-
-  @IsOptional()
-  @IsBoolean()
-  isActive?: boolean = true;
-
-  // Itens de produto
-  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateItemProductDto)
-  productItems?: CreateItemProductDto[];
+  productItems!: CreateItemProductDto[];
 
-  // Itens de serviço
-  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateItemOpticalServiceDto)
-  serviceItems?: CreateItemOpticalServiceDto[];
+  serviceItems!: CreateItemOpticalServiceDto[];
 
-  // Protocolo (opcional)
   @IsOptional()
   @ValidateNested()
   @Type(() => CreateProtocolDto)
   protocol?: CreateProtocolDto;
 }
-/**
- * DTO para atualização de vendas
- */
+
 export class UpdateSaleDto {
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   clientId?: number;
 
   @IsOptional()
   @Type(() => Date)
-  @IsDate({ message: "O campo 'saleDate' deve ser uma data válida." })
+  @IsDate({ message: "O campo saleDate deve ser uma data válida." })
   saleDate?: Date;
 
   @IsOptional()
-  @IsNumber({}, { message: "O campo 'prescriptionId' deve ser numérico." })
+  @IsInt({ message: "O campo prescriptionId deve ser inteiro." })
   prescriptionId?: number;
 
   @IsOptional()
@@ -94,37 +77,23 @@ export class UpdateSaleDto {
 
   @IsOptional()
   @IsNumber()
-  subtotal?: number;
-
-  @IsOptional()
-  @IsNumber()
+  @Min(0)
   discount?: number;
 
   @IsOptional()
-  @IsNumber()
-  total?: number;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => UpdateItemProductDto)
+  productItems?: UpdateItemProductDto[];
 
-  @IsOptional()
-  @IsBoolean()
-  isActive?: boolean;
-
-  // Itens de produto
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreateItemProductDto)
-  productItems?: CreateItemProductDto[];
+  @Type(() => UpdateItemOpticalServiceDto)
+  serviceItems?: UpdateItemOpticalServiceDto[];
 
-  // Itens de serviço
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateItemOpticalServiceDto)
-  serviceItems?: CreateItemOpticalServiceDto[];
-
-  // Protocolo (opcional)
   @IsOptional()
   @ValidateNested()
-  @Type(() => CreateProtocolDto)
-  protocol?: CreateProtocolDto;
+  @Type(() => UpdateProtocolDto)
+  protocol?: UpdateProtocolDto;
 }

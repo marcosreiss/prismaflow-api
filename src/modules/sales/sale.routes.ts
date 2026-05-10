@@ -1,28 +1,32 @@
 // src/modules/sales/sale.routes.ts
 import { Router } from "express";
-import { authGuard } from "../../middlewares/auth.middleware";
-import { validateDto } from "../../middlewares/validation.middleware";
 import {
   createSale,
-  updateSale,
-  listSales,
-  getSaleById,
   deleteSale,
+  getSaleById,
+  getSalesByClient,
+  listSales,
+  updateSale,
 } from "./sale.controller";
 import { CreateSaleDto, UpdateSaleDto } from "./dtos/sale.dto";
+import { authGuard } from "@/middlewares/auth.middleware";
+import { validateDto } from "@/middlewares/validation.middleware";
 
 export const saleRoutes = Router();
 
-// 🔹 Criar venda
-saleRoutes.post("/", authGuard, validateDto(CreateSaleDto, "body"), createSale);
+saleRoutes.post(
+  "/",
+  authGuard,
+  validateDto(CreateSaleDto, "body"),
+  createSale,
+);
 
-// 🔹 Listar vendas
 saleRoutes.get("/", authGuard, listSales);
 
-// 🔹 Buscar venda por ID
+saleRoutes.get("/by-client/:clientId", authGuard, getSalesByClient);
+
 saleRoutes.get("/:id", authGuard, getSaleById);
 
-// 🔹 Atualizar venda
 saleRoutes.put(
   "/:id",
   authGuard,
@@ -30,5 +34,4 @@ saleRoutes.put(
   updateSale,
 );
 
-// 🔹 Excluir venda
 saleRoutes.delete("/:id", authGuard, deleteSale);

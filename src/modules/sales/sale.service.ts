@@ -1,744 +1,981 @@
 // src/modules/sales/sale.service.ts
 import { Request } from "express";
+import { Prisma } from "@prisma/client";
 import { SaleRepository } from "./sale.repository";
 import { ProductRepository } from "../products/product.repository";
 import { OpticalServiceRepository } from "../optical-services/optical-service.repository";
 import { ClientRepository } from "../clients/client.repository";
-import { prisma, withAuditData } from "../../config/prisma-context";
-import { ApiResponse } from "../../responses/ApiResponse";
-import { PagedResponse } from "../../responses/PagedResponse";
-import { UpdateSaleDto } from "./dtos/sale.dto";
-import logger from "../../utils/logger";
-import { PaymentRepository } from "../payments/repository/payment.repository";
+import { prisma } from "@/config/prisma-context";
+import { ApiResponse } from "@/responses/ApiResponse";
+import { PagedResponse } from "@/responses/PagedResponse";
+import { CreateSaleDto, UpdateSaleDto } from "./dtos/sale.dto";
+import {
+  CreateItemProductDto,
+  UpdateItemProductDto,
+} from "./dtos/item-product.dto";
+import { AppError } from "@/utils/app-error";
+import logger from "@/utils/logger";
+
+type TxClient = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
 
 export class SaleService {
   private saleRepo = new SaleRepository();
   private productRepo = new ProductRepository();
   private opticalRepo = new OpticalServiceRepository();
-  private paymentRepo = new PaymentRepository();
   private clientRepo = new ClientRepository();
 
-  // ======================================================
-  // CREATE SALE
-  // ======================================================
-  async create(req: Request) {
-    logger.debug("🟦 [SaleService] Iniciando criação de venda", {
-      body: req.body,
-    });
-    const user = req.user as any;
-    const { sub: userId, tenantId, branchId } = user;
-    const body = req.body;
-    const errors: string[] = [];
+  private extractUser(req: Request) {
+    const user = req.user;
 
-    try {
-      // 1️⃣ Cliente
-      logger.debug("🔹 [SaleService] Buscando cliente", {
-        clientId: body.clientId,
-      });
-      const client = await this.clientRepo.findById(body.clientId, tenantId);
-      if (!client) errors.push("Cliente não encontrado.");
+    if (!user?.sub || !user?.tenantId || !user?.branchId) {
+      throw new AppError("Usuário autenticado inválido.", 401);
+    }
 
-      // 2️⃣ Itens obrigatórios
-      const hasItems =
-        (body.productItems && body.productItems.length > 0) ||
-        (body.serviceItems && body.serviceItems.length > 0);
-      if (!hasItems)
-        errors.push("É necessário pelo menos um produto ou serviço.");
+    return {
+      userId: user.sub,
+      tenantId: user.tenantId,
+      branchId: user.branchId,
+    };
+  }
 
-      if (errors.length) {
-        logger.warn("⚠️ [SaleService] Erros de validação ao criar venda", {
-          errors,
-        });
-        return ApiResponse.error(errors.join("; "), 400, req);
-      }
-      if (new Date(body.saleDate) > new Date()) {
-        errors.push("A data da venda não pode ser futura.");
-      }
+  private validateSaleId(idParam: string) {
+    const id = Number(idParam);
 
-      // 3️⃣ Criar venda
-      logger.debug("🧩 [SaleService] Criando registro de venda", {
+    if (Number.isNaN(id) || id <= 0) {
+      throw new AppError("ID inválido.", 400);
+    }
+
+    return id;
+  }
+
+  private validateSaleDate(saleDate: Date) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const normalizedSaleDate = new Date(saleDate);
+    normalizedSaleDate.setHours(0, 0, 0, 0);
+
+    if (normalizedSaleDate > today) {
+      throw new AppError("A data da venda não pode ser futura.", 400);
+    }
+  }
+
+  private async validateClient(clientId: number, tenantId: string) {
+    const client = await this.clientRepo.findById(clientId, tenantId);
+
+    if (!client) {
+      throw new AppError("Cliente não encontrado.", 404);
+    }
+
+    return client;
+  }
+
+  private async validatePrescription(
+    prescriptionId: number,
+    clientId: number,
+    tenantId: string,
+  ) {
+    const prescription = await prisma.prescription.findFirst({
+      where: {
+        id: prescriptionId,
+        clientId,
         tenantId,
-        branchId,
-      });
-      const sale = await this.saleRepo.create(
-        {
-          clientId: body.clientId,
-          saleDate: body.saleDate,
+        isActive: true,
+      },
+    });
+
+    if (!prescription) {
+      throw new AppError(
+        "Receita não encontrada ou não pertence a este cliente.",
+        404,
+      );
+    }
+
+    return prescription;
+  }
+
+  private async resolveProductItems(
+    items: CreateItemProductDto[] | UpdateItemProductDto[],
+    tenantId: string,
+    tx: TxClient,
+  ) {
+    const resolved: Array<{
+      item: CreateItemProductDto | UpdateItemProductDto;
+      product: {
+        id: number;
+        name: string;
+        salePrice: number | null;
+        stockQuantity: number | null;
+        category: Prisma.ProductScalarFieldEnum | any;
+      };
+      quantity: number;
+    }> = [];
+
+    for (const item of items) {
+      const quantity = item.quantity ?? 1;
+
+      if (quantity < 1) {
+        throw new AppError(
+          `Quantidade inválida para o produto ${item.productId}.`,
+          400,
+        );
+      }
+
+      const product = await tx.product.findFirst({
+        where: {
+          id: item.productId,
           tenantId,
-          branchId,
-          prescriptionId: body.prescriptionId,
-          subtotal: body.subtotal,
-          discount: body.discount ?? 0,
-          total: body.total,
-          notes: body.notes,
           isActive: true,
         },
-        userId,
-      );
-      logger.info("✅ [SaleService] Venda criada", { saleId: sale.id });
-
-      // 4️⃣ Protocolo (opcional)
-      if (body.protocol) {
-        logger.debug("📘 [SaleService] Criando protocolo vinculado", {
-          saleId: sale.id,
-        });
-        await this.saleRepo.createProtocol(
-          {
-            saleId: sale.id,
-            tenantId,
-            branchId,
-            recordNumber: body.protocol.recordNumber,
-            book: body.protocol.book,
-            page: body.protocol.page,
-            os: body.protocol.os,
-            isActive: true,
-          },
-          userId,
-        );
-      }
-
-      // 5️⃣ Itens de produto
-      if (body.productItems?.length) {
-        logger.debug("📦 [SaleService] Criando itens de produto", {
-          count: body.productItems.length,
-        });
-        for (const item of body.productItems) {
-          const product = await this.productRepo.findById(item.productId, tenantId);
-          if (!product) {
-            logger.warn("⚠️ [SaleService] Produto não encontrado", {
-              productId: item.productId,
-            });
-            return ApiResponse.error(
-              `Produto não encontrado: ${item.productId}`,
-              404,
-              req,
-            );
-          }
-
-          if ((product.stockQuantity ?? 0) < item.quantity) {
-            logger.warn("⚠️ [SaleService] Estoque insuficiente", {
-              productId: product.id,
-            });
-            return ApiResponse.error(
-              `Estoque insuficiente para ${product.name}`,
-              409,
-              req,
-            );
-          }
-
-          // Baixa de estoque
-          await this.productRepo.update(
-            product.id,
-            { stockQuantity: (product.stockQuantity ?? 0) - item.quantity },
-            userId,
-          );
-
-          logger.debug("🧮 [SaleService] Estoque atualizado", {
-            productId: product.id,
-            newStock: (product.stockQuantity ?? 0) - item.quantity,
-          });
-
-          // Criação do item
-          const itemProduct = await prisma.itemProduct.create({
-            data: {
-              saleId: sale.id,
-              productId: item.productId,
-              quantity: item.quantity ?? 1,
-              unitPrice: product.salePrice ?? 0,
-              tenantId,
-              branchId,
-              createdById: userId,
-              updatedById: userId,
-            },
-          });
-          logger.debug("✅ [SaleService] Item de produto criado", {
-            itemProductId: itemProduct.id,
-          });
-
-          // Frame details se necessário
-          if (product.category === "FRAME" && item.frameDetails) {
-            logger.debug("🖼️ [SaleService] Criando detalhes de armação", {
-              itemProductId: itemProduct.id,
-            });
-            await prisma.frameDetails.create({
-              data: {
-                itemProductId: itemProduct.id,
-                material: item.frameDetails.material,
-                reference: item.frameDetails.reference,
-                color: item.frameDetails.color,
-                tenantId,
-                branchId,
-                createdById: userId,
-                updatedById: userId,
-              },
-            });
-          }
-        }
-      }
-
-      // 6️⃣ Itens de serviço
-      if (body.serviceItems?.length) {
-        logger.debug("🧰 [SaleService] Criando itens de serviço", {
-          count: body.serviceItems.length,
-        });
-        for (const item of body.serviceItems) {
-          const service = await this.opticalRepo.findById(item.serviceId, tenantId);
-          if (!service) {
-            logger.warn("⚠️ [SaleService] Serviço não encontrado", {
-              serviceId: item.serviceId,
-            });
-            return ApiResponse.error(
-              `Serviço não encontrado: ${item.serviceId}`,
-              404,
-              req,
-            );
-          }
-
-          await prisma.itemOpticalService.create({
-            data: {
-              saleId: sale.id,
-              serviceId: item.serviceId,
-              unitPrice: service.price ?? 0,
-              tenantId,
-              branchId,
-              createdById: userId,
-              updatedById: userId,
-            },
-          });
-        }
-      }
-
-      // 7️⃣ Pagamento inicial
-      logger.debug("💰 [SaleService] Criando pagamento inicial", {
-        saleId: sale.id,
+        select: {
+          id: true,
+          name: true,
+          salePrice: true,
+          stockQuantity: true,
+          category: true,
+        },
       });
-      const payment = await this.paymentRepo.create(
-        {
-          saleId: sale.id,
+
+      if (!product) {
+        throw new AppError(`Produto ${item.productId} não encontrado.`, 404);
+      }
+
+      resolved.push({
+        item,
+        product,
+        quantity,
+      });
+    }
+
+    return resolved;
+  }
+
+  private async resolveServiceItems(
+    items: Array<{ serviceId: number }>,
+    tenantId: string,
+    tx: TxClient,
+  ) {
+    const resolved: Array<{
+      item: { serviceId: number };
+      service: {
+        id: number;
+        name: string;
+        price: number;
+      };
+    }> = [];
+
+    for (const item of items) {
+      const service = await tx.opticalService.findFirst({
+        where: {
+          id: item.serviceId,
+          tenantId,
+          isActive: true,
+        },
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      });
+
+      if (!service) {
+        throw new AppError(`Serviço ${item.serviceId} não encontrado.`, 404);
+      }
+
+      resolved.push({ item, service });
+    }
+
+    return resolved;
+  }
+
+  private async calculateCreateTotals(
+    productItems: CreateItemProductDto[],
+    serviceItems: Array<{ serviceId: number }>,
+    tenantId: string,
+    tx: TxClient,
+  ) {
+    const resolvedProducts = await this.resolveProductItems(
+      productItems,
+      tenantId,
+      tx,
+    );
+    const resolvedServices = await this.resolveServiceItems(
+      serviceItems,
+      tenantId,
+      tx,
+    );
+
+    const productSubtotal = resolvedProducts.reduce((acc, current) => {
+      return acc + (current.product.salePrice ?? 0) * current.quantity;
+    }, 0);
+
+    const serviceSubtotal = resolvedServices.reduce((acc, current) => {
+      return acc + current.service.price;
+    }, 0);
+
+    return {
+      subtotal: productSubtotal + serviceSubtotal,
+      resolvedProducts,
+      resolvedServices,
+    };
+  }
+
+  private async createProductItems(
+    saleId: number,
+    items: CreateItemProductDto[],
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const resolvedProducts = await this.resolveProductItems(
+      items,
+      tenantId,
+      tx,
+    );
+
+    for (const { item, product, quantity } of resolvedProducts) {
+      if ((product.stockQuantity ?? 0) < quantity) {
+        throw new AppError(`Estoque insuficiente para ${product.name}.`, 409);
+      }
+
+      await tx.product.update({
+        where: { id: product.id },
+        data: {
+          stockQuantity: {
+            decrement: quantity,
+          },
+          updatedById: userId,
+        },
+      });
+
+      const itemProduct = await tx.itemProduct.create({
+        data: {
+          saleId,
+          productId: product.id,
+          quantity,
+          unitPrice: product.salePrice ?? 0,
           tenantId,
           branchId,
-          total: sale.total,
-          discount: sale.discount ?? 0,
-          paidAmount: 0,
-          status: "PENDING",
+          createdById: userId,
+          updatedById: userId,
         },
-        userId,
-      );
-
-      logger.info("✅ [SaleService] Venda criada com sucesso", {
-        saleId: sale.id,
       });
-      return ApiResponse.success("Venda criada com sucesso.", req, {
-        saleId: sale.id,
-        clientId: sale.clientId,
-        precripitonId: sale.prescriptionId,
-        subtotal: sale.subtotal,
-        discount: sale.discount,
-        total: sale.total,
-        payment,
-      });
-    } catch (error: any) {
-      logger.error("❌ [SaleService] Erro ao criar venda", {
-        message: error.message,
-        stack: error.stack,
-      });
-      throw error;
-    }
-  }
 
-  // ======================================================
-  // UPDATE SALE
-  // ======================================================
-  async updateSale(req: Request) {
-    logger.debug("🟨 [SaleService] Iniciando atualização de venda", {
-      id: req.params.id,
-      body: req.body,
-    });
-    const { id } = req.params;
-    const body = req.body as UpdateSaleDto;
-    const userId = req.user?.sub;
-    const tenantId = req.user?.tenantId!;
-    const branchId = req.user?.branchId!;
-
-    try {
-      const sale = await this.saleRepo.findById(Number(id), tenantId);
-      if (!sale) throw new Error(`Venda ${id} não encontrada`);
-
-      const payment = await prisma.payment.findFirst({
-        where: { saleId: Number(id) },
-      });
-      if (!payment)
-        throw new Error("Pagamento não encontrado para esta venda.");
-      if (payment.status !== "PENDING" || (payment.paidAmount ?? 0) > 0)
-        throw new Error("Venda não pode ser editada com pagamento iniciado.");
-
-      if (body.clientId) {
-        const client = await this.clientRepo.findById(body.clientId, tenantId);
-        if (!client) throw new Error("Cliente não encontrado.");
-      }
-
-      // 🔥 USAR TRANSAÇÃO PARA ATOMICIDADE
-      return await prisma.$transaction(async (tx) => {
-        // 1️⃣ Atualizar venda básica
-        const updatedSale = await this.saleRepo.update(
-          Number(id),
-          {
-            clientId: body.clientId ?? sale.clientId,
-            saleDate: body.saleDate ?? sale.saleDate,
-            subtotal: body.subtotal ?? sale.subtotal ?? 0,
-            discount: body.discount ?? sale.discount ?? 0,
-            total: body.total ?? sale.total ?? 0,
-            notes: body.notes ?? sale.notes,
-            isActive: body.isActive ?? sale.isActive,
-          },
-          userId,
-        );
-
-        // 2️⃣ VALIDAÇÃO ANTECIPADA DOS NOVOS PRODUTOS
-        if (body.productItems !== undefined && body.productItems.length > 0) {
-          for (const item of body.productItems) {
-            // ✅ VALIDAR se quantity existe e é válida
-            const quantity = item.quantity ?? 1;
-            if (quantity < 1) {
-              throw new Error(
-                `Quantidade deve ser pelo menos 1 para o produto ${item.productId}`,
-              );
-            }
-
-            const product = await tx.product.findFirst({
-              where: { id: item.productId, tenantId },
-            });
-            if (!product) {
-              throw new Error(`Produto ${item.productId} não encontrado`);
-            }
-          }
-        }
-
-        // 3️⃣ ATUALIZAR ITENS DE PRODUTO (ESTOQUE INTELIGENTE)
-        if (body.productItems !== undefined) {
-          logger.debug("📦 [SaleService] Atualizando itens de produto", {
-            count: body.productItems.length,
-          });
-
-          // Buscar itens antigos
-          const oldProductItems = await this.saleRepo.findProductItemsBySale(
-            Number(id),
+      if (product.category === "FRAME" && item.frameDetails) {
+        if (!item.frameDetails.material) {
+          throw new AppError(
+            "O campo material é obrigatório para frameDetails.",
+            400,
           );
-          const newProductIds = body.productItems.map((item) => item.productId);
-
-          // 🔄 RESTAURAR estoque APENAS dos itens que SERÃO REMOVIDOS
-          for (const oldItem of oldProductItems) {
-            // Se o produto NÃO está na nova lista, restaura estoque
-            if (!newProductIds.includes(oldItem.productId)) {
-              await tx.product.update({
-                where: { id: oldItem.productId },
-                data: {
-                  stockQuantity: { increment: oldItem.quantity },
-                  updatedById: userId,
-                },
-              });
-              logger.debug(
-                "📥 [SaleService] Estoque restaurado para produto removido",
-                {
-                  productId: oldItem.productId,
-                  quantity: oldItem.quantity,
-                },
-              );
-            }
-          }
-
-          // 🗑️ REMOVER todos os itens antigos (incluindo frameDetails)
-          await tx.frameDetails.deleteMany({
-            where: { itemProduct: { saleId: Number(id) } },
-          });
-          await tx.itemProduct.deleteMany({
-            where: { saleId: Number(id) },
-          });
-
-          // ➕ CRIAR novos itens com GESTÃO INTELIGENTE DE ESTOQUE
-          if (body.productItems.length > 0) {
-            for (const item of body.productItems) {
-              const product = await tx.product.findFirst({
-                where: { id: item.productId, tenantId },
-              });
-              if (!product)
-                throw new Error(`Produto ${item.productId} não encontrado`);
-
-              // ✅ GARANTIR que quantity existe
-              const quantity = item.quantity ?? 1;
-
-              // 🔍 IDENTIFICAR se é item NOVO ou EXISTENTE
-              const oldItem = oldProductItems.find(
-                (old) => old.productId === item.productId,
-              );
-              const isNewItem = !oldItem;
-              const isModifiedItem = oldItem && oldItem.quantity !== quantity;
-
-              // 📊 CALCULAR ajuste de estoque necessário
-              if (isNewItem) {
-                // NOVO PRODUTO: Baixar estoque completo
-                if ((product.stockQuantity ?? 0) < quantity) {
-                  throw new Error(
-                    `Estoque insuficiente para ${product.name}. Disponível: ${product.stockQuantity}, Necessário: ${quantity}`,
-                  );
-                }
-
-                await tx.product.update({
-                  where: { id: product.id },
-                  data: {
-                    stockQuantity: { decrement: quantity },
-                    updatedById: userId,
-                  },
-                });
-                logger.debug(
-                  "🆕 [SaleService] Estoque baixado para novo produto",
-                  {
-                    productId: product.id,
-                    quantity: quantity,
-                  },
-                );
-              } else if (isModifiedItem) {
-                // PRODUTO EXISTENTE COM QUANTIDADE MODIFICADA
-                const quantityDifference = quantity - oldItem.quantity;
-
-                if (quantityDifference > 0) {
-                  // AUMENTOU quantidade: baixar estoque adicional
-                  if ((product.stockQuantity ?? 0) < quantityDifference) {
-                    throw new Error(
-                      `Estoque insuficiente para aumentar quantidade de ${product.name}. Disponível: ${product.stockQuantity}, Necessário adicional: ${quantityDifference}`,
-                    );
-                  }
-
-                  await tx.product.update({
-                    where: { id: product.id },
-                    data: {
-                      stockQuantity: { decrement: quantityDifference },
-                      updatedById: userId,
-                    },
-                  });
-                  logger.debug(
-                    "📈 [SaleService] Estoque baixado para quantidade aumentada",
-                    {
-                      productId: product.id,
-                      quantity: quantityDifference,
-                    },
-                  );
-                } else if (quantityDifference < 0) {
-                  // DIMINUIU quantidade: restaurar estoque
-                  const quantityToRestore = Math.abs(quantityDifference);
-                  await tx.product.update({
-                    where: { id: product.id },
-                    data: {
-                      stockQuantity: { increment: quantityToRestore },
-                      updatedById: userId,
-                    },
-                  });
-                  logger.debug(
-                    "📉 [SaleService] Estoque restaurado para quantidade reduzida",
-                    {
-                      productId: product.id,
-                      quantity: quantityToRestore,
-                    },
-                  );
-                }
-              }
-
-              // CRIAR item de produto
-              const itemProduct = await tx.itemProduct.create({
-                data: {
-                  saleId: Number(id),
-                  productId: item.productId,
-                  quantity: quantity,
-                  unitPrice: product.salePrice ?? 0, // ← ADICIONAR
-                  tenantId,
-                  branchId,
-                  createdById: userId,
-                  updatedById: userId,
-                },
-              });
-
-              // 🖼️ Frame details se necessário
-              if (product.category === "FRAME" && item.frameDetails) {
-                await tx.frameDetails.create({
-                  data: {
-                    itemProductId: itemProduct.id,
-                    material: item.frameDetails.material,
-                    reference: item.frameDetails.reference,
-                    color: item.frameDetails.color,
-                    tenantId,
-                    branchId,
-                    createdById: userId,
-                    updatedById: userId,
-                  },
-                });
-              }
-            }
-          }
         }
 
-        // 4️⃣ ATUALIZAR ITENS DE SERVIÇO
-        if (body.serviceItems !== undefined) {
-          logger.debug("🧰 [SaleService] Atualizando itens de serviço", {
-            count: body.serviceItems.length,
-          });
-
-          // VALIDAR serviços antes de remover
-          if (body.serviceItems.length > 0) {
-            for (const item of body.serviceItems) {
-              const service = await tx.opticalService.findFirst({
-                where: { id: item.serviceId, tenantId },
-              });
-              if (!service)
-                throw new Error(`Serviço ${item.serviceId} não encontrado`);
-            }
-          }
-
-          // 🗑️ REMOVER itens antigos
-          await tx.itemOpticalService.deleteMany({
-            where: { saleId: Number(id) },
-          });
-
-          // ➕ CRIAR novos itens
-          if (body.serviceItems.length > 0) {
-            for (const item of body.serviceItems) {
-              // Busca novamente para ter acesso ao price no create
-              const service = await tx.opticalService.findFirst({
-                where: { id: item.serviceId, tenantId },
-              });
-              if (!service)
-                throw new Error(`Serviço ${item.serviceId} não encontrado`);
-
-              await tx.itemOpticalService.create({
-                data: {
-                  saleId: Number(id),
-                  serviceId: item.serviceId,
-                  unitPrice: service.price ?? 0,
-                  tenantId,
-                  branchId,
-                  createdById: userId,
-                  updatedById: userId,
-                },
-              });
-            }
-            logger.debug("✅ [SaleService] Itens de serviço criados", {
-              count: body.serviceItems.length,
-            });
-          }
-        }
-
-        // 5️⃣ ATUALIZAR PROTOCOLO
-        if (body.protocol) {
-          logger.debug("📘 [SaleService] Atualizando ou criando protocolo", {
-            saleId: id,
-          });
-          const existingProtocol = await this.saleRepo.findProtocolBySale(
-            Number(id),
-          );
-          if (!existingProtocol) {
-            await this.saleRepo.createProtocol(
-              {
-                saleId: Number(id),
-                tenantId,
-                branchId,
-                book: body.protocol.book,
-                page: body.protocol.page,
-                os: body.protocol.os,
-              },
-              userId,
-            );
-          } else {
-            await this.saleRepo.updateProtocol(
-              existingProtocol.id,
-              {
-                book: body.protocol.book,
-                page: body.protocol.page,
-                os: body.protocol.os,
-              },
-              userId,
-            );
-          }
-        }
-
-        // 6️⃣ ATUALIZAR PAGAMENTO (CORRIGIDO)
-        await tx.payment.update({
-          where: { saleId: Number(id) },
+        await tx.frameDetails.create({
           data: {
-            total: Number(body.total ?? sale.total ?? 0),
-            discount: body.discount ?? sale.discount ?? 0, // ← CORREÇÃO
+            itemProductId: itemProduct.id,
+            material: item.frameDetails.material,
+            reference: item.frameDetails.reference,
+            color: item.frameDetails.color,
+            tenantId,
+            branchId,
+            createdById: userId,
             updatedById: userId,
-            updatedAt: new Date(),
           },
         });
+      }
+    }
+  }
 
-        // 7️⃣ BUSCAR VENDA ATUALIZADA (CORRIGIDO)
-        const result = await this.saleRepo.findById(Number(id), tenantId);
+  private async replaceProductItems(
+    saleId: number,
+    items: UpdateItemProductDto[],
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const oldItems = await tx.itemProduct.findMany({
+      where: { saleId },
+      include: {
+        product: {
+          select: {
+            id: true,
+            name: true,
+            stockQuantity: true,
+          },
+        },
+        frameDetails: true,
+      },
+    });
 
-        // ✅ VALIDAR que result não é null
-        if (!result) {
-          throw new Error("Venda não encontrada após atualização");
+    const resolvedProducts = await this.resolveProductItems(
+      items,
+      tenantId,
+      tx,
+    );
+    const incomingMap = new Map(
+      resolvedProducts.map((entry) => [entry.product.id, entry.quantity]),
+    );
+
+    for (const oldItem of oldItems) {
+      const newQuantity = incomingMap.get(oldItem.productId);
+
+      if (newQuantity === undefined) {
+        await tx.product.update({
+          where: { id: oldItem.productId },
+          data: {
+            stockQuantity: {
+              increment: oldItem.quantity,
+            },
+            updatedById: userId,
+          },
+        });
+        continue;
+      }
+
+      const diff = newQuantity - oldItem.quantity;
+
+      if (diff > 0) {
+        if ((oldItem.product.stockQuantity ?? 0) < diff) {
+          throw new AppError(
+            `Estoque insuficiente para ${oldItem.product.name}.`,
+            409,
+          );
         }
 
-        logger.info("✅ [SaleService] Venda atualizada com sucesso", {
-          saleId: id,
-          productItemsCount: result.productItems.length,
-          serviceItemsCount: result.serviceItems.length,
+        await tx.product.update({
+          where: { id: oldItem.productId },
+          data: {
+            stockQuantity: {
+              decrement: diff,
+            },
+            updatedById: userId,
+          },
         });
+      }
 
-        return ApiResponse.success(
-          "Venda atualizada com sucesso.",
-          req,
-          result,
-        );
+      if (diff < 0) {
+        await tx.product.update({
+          where: { id: oldItem.productId },
+          data: {
+            stockQuantity: {
+              increment: Math.abs(diff),
+            },
+            updatedById: userId,
+          },
+        });
+      }
+    }
+
+    const oldProductIds = new Set(oldItems.map((item) => item.productId));
+
+    for (const { product, quantity } of resolvedProducts) {
+      if (oldProductIds.has(product.id)) continue;
+
+      if ((product.stockQuantity ?? 0) < quantity) {
+        throw new AppError(`Estoque insuficiente para ${product.name}.`, 409);
+      }
+
+      await tx.product.update({
+        where: { id: product.id },
+        data: {
+          stockQuantity: {
+            decrement: quantity,
+          },
+          updatedById: userId,
+        },
       });
-    } catch (error: any) {
-      logger.error("❌ [SaleService] Erro ao atualizar venda", {
-        message: error.message,
-        stack: error.stack,
-        saleId: id,
+    }
+
+    await tx.frameDetails.deleteMany({
+      where: {
+        itemProduct: {
+          saleId,
+        },
+      },
+    });
+
+    await tx.itemProduct.deleteMany({
+      where: { saleId },
+    });
+
+    for (const { item, product, quantity } of resolvedProducts) {
+      const itemProduct = await tx.itemProduct.create({
+        data: {
+          saleId,
+          productId: product.id,
+          quantity,
+          unitPrice: product.salePrice ?? 0,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
       });
-      throw error;
+
+      if (product.category === "FRAME" && item.frameDetails) {
+        if (!item.frameDetails.material) {
+          throw new AppError(
+            "O campo material é obrigatório para frameDetails.",
+            400,
+          );
+        }
+
+        await tx.frameDetails.create({
+          data: {
+            itemProductId: itemProduct.id,
+            material: item.frameDetails.material,
+            reference: item.frameDetails.reference,
+            color: item.frameDetails.color,
+            tenantId,
+            branchId,
+            createdById: userId,
+            updatedById: userId,
+          },
+        });
+      }
     }
   }
 
-  // ======================================================
-  // LIST SALES
-  // ======================================================
-  async findAll(req: Request) {
-    logger.debug("📋 [SaleService] Listando vendas", { query: req.query });
+  private async createServiceItems(
+    saleId: number,
+    items: Array<{ serviceId: number }>,
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const resolvedServices = await this.resolveServiceItems(
+      items,
+      tenantId,
+      tx,
+    );
 
-    try {
-      const user = req.user as any;
-      const { tenantId } = user;
-      const { page = 1, limit = 10, clientId, clientName } = req.query;
+    for (const { service } of resolvedServices) {
+      await tx.itemOpticalService.create({
+        data: {
+          saleId,
+          serviceId: service.id,
+          unitPrice: service.price,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
+      });
+    }
+  }
 
-      const { items, total } = await this.saleRepo.findAllByTenant(
+  private async replaceServiceItems(
+    saleId: number,
+    items: Array<{ serviceId: number }>,
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const resolvedServices = await this.resolveServiceItems(
+      items,
+      tenantId,
+      tx,
+    );
+
+    await tx.itemOpticalService.deleteMany({
+      where: { saleId },
+    });
+
+    for (const { service } of resolvedServices) {
+      await tx.itemOpticalService.create({
+        data: {
+          saleId,
+          serviceId: service.id,
+          unitPrice: service.price,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
+      });
+    }
+  }
+
+  private async upsertProtocol(
+    saleId: number,
+    protocol: {
+      book?: string;
+      page?: number;
+      os?: string;
+    },
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const existingProtocol = await tx.protocol.findFirst({
+      where: { saleId },
+    });
+
+    if (!existingProtocol) {
+      await tx.protocol.create({
+        data: {
+          saleId,
+          book: protocol.book,
+          page: protocol.page,
+          os: protocol.os,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
+      });
+      return;
+    }
+
+    await tx.protocol.update({
+      where: { id: existingProtocol.id },
+      data: {
+        book: protocol.book,
+        page: protocol.page,
+        os: protocol.os,
+        updatedById: userId,
+      },
+    });
+  }
+
+  private async calculateCurrentSaleSubtotal(saleId: number, tx: TxClient) {
+    const [productItems, serviceItems] = await Promise.all([
+      tx.itemProduct.findMany({
+        where: { saleId },
+        select: {
+          quantity: true,
+          unitPrice: true,
+        },
+      }),
+      tx.itemOpticalService.findMany({
+        where: { saleId },
+        select: {
+          unitPrice: true,
+        },
+      }),
+    ]);
+
+    const productSubtotal = productItems.reduce((acc, item) => {
+      return acc + item.unitPrice * item.quantity;
+    }, 0);
+
+    const serviceSubtotal = serviceItems.reduce((acc, item) => {
+      return acc + item.unitPrice;
+    }, 0);
+
+    return productSubtotal + serviceSubtotal;
+  }
+
+  async create(req: Request) {
+    const { userId, tenantId, branchId } = this.extractUser(req);
+    const body = req.body as CreateSaleDto;
+
+    const hasItems =
+      (body.productItems?.length ?? 0) > 0 ||
+      (body.serviceItems?.length ?? 0) > 0;
+
+    if (!hasItems) {
+      throw new AppError("É necessário pelo menos um produto ou serviço.", 400);
+    }
+
+    await this.validateClient(body.clientId, tenantId);
+    this.validateSaleDate(body.saleDate);
+
+    if (body.prescriptionId) {
+      await this.validatePrescription(
+        body.prescriptionId,
+        body.clientId,
         tenantId,
-        Number(page),
-        Number(limit),
-        clientId ? Number(clientId) : undefined,
-        clientName ? String(clientName) : undefined, // Passar o nome
       );
-
-      logger.info("✅ [SaleService] Vendas listadas", {
-        total,
-        filters: { clientId, clientName },
-      });
-
-      return new PagedResponse(
-        "Vendas listadas com sucesso.",
-        req,
-        items,
-        Number(page),
-        Number(limit),
-        total,
-      );
-    } catch (error: any) {
-      logger.error("❌ [SaleService] Erro ao listar vendas", {
-        message: error.message,
-        stack: error.stack,
-      });
-      throw error;
     }
-  }
 
-  // ======================================================
-  // FIND BY ID
-  // ======================================================
-  async findById(req: Request) {
-    logger.debug("🔍 [SaleService] Buscando venda por ID", {
-      id: req.params.id,
-    });
-    try {
-      const user = req.user as any;
-      const { tenantId } = user;
-      const { id } = req.params;
-
-      const sale = await this.saleRepo.findById(Number(id), tenantId);
-      if (!sale) {
-        logger.warn("⚠️ [SaleService] Venda não encontrada", { id });
-        return ApiResponse.error("Venda não encontrada.", 404, req);
-      }
-
-      logger.info("✅ [SaleService] Venda encontrada", { saleId: id });
-      return ApiResponse.success("Venda encontrada.", req, sale);
-    } catch (error: any) {
-      logger.error("❌ [SaleService] Erro ao buscar venda", {
-        message: error.message,
-        stack: error.stack,
-      });
-      throw error;
-    }
-  }
-
-  // ======================================================
-  // DELETE SALE
-  // ======================================================
-  async delete(req: Request) {
-    logger.debug("🗑️ [SaleService] Iniciando exclusão de venda", {
-      id: req.params.id,
-    });
-    const user = req.user as any;
-    const { sub: userId, tenantId } = user;
-    const { id } = req.params;
-
-    try {
-      const sale = await this.saleRepo.findById(Number(id), tenantId);
-      if (!sale) return ApiResponse.error("Venda não encontrada.", 404, req);
-
-      const payment = await this.paymentRepo.findBySaleId(Number(id));
-      if (!payment)
-        return ApiResponse.error("Pagamento não encontrado.", 404, req);
-
-      if (payment.status === "CONFIRMED" || payment.paidAmount > 0) {
-        logger.warn("⚠️ [SaleService] Tentativa de exclusão de venda paga", {
-          saleId: id,
-        });
-        return ApiResponse.error(
-          "Não é possível excluir uma venda já paga ou parcialmente paga.",
-          409,
-          req,
-        );
-      }
-
-      const productItems = await this.saleRepo.findProductItemsBySale(
-        Number(id),
+    return prisma.$transaction(async (tx) => {
+      const { subtotal } = await this.calculateCreateTotals(
+        body.productItems ?? [],
+        body.serviceItems ?? [],
+        tenantId,
+        tx,
       );
-      logger.debug("📦 [SaleService] Restaurando estoque de produtos", {
-        count: productItems.length,
+
+      const discount = body.discount ?? 0;
+      const total = subtotal - discount;
+
+      const sale = await tx.sale.create({
+        data: {
+          clientId: body.clientId,
+          saleDate: body.saleDate,
+          prescriptionId: body.prescriptionId ?? null,
+          subtotal,
+          discount,
+          total,
+          notes: body.notes ?? null,
+          isActive: true,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
       });
-      for (const item of productItems) {
-        await this.productRepo.update(
-          item.productId,
-          { stockQuantity: (item.product.stockQuantity ?? 0) + item.quantity },
+
+      if (body.productItems?.length) {
+        await this.createProductItems(
+          sale.id,
+          body.productItems,
+          tenantId,
+          branchId,
           userId,
+          tx,
         );
-        await prisma.frameDetails.deleteMany({
-          where: { itemProductId: item.id },
-        });
-        await prisma.itemProduct.delete({ where: { id: item.id } });
       }
 
-      await prisma.itemOpticalService.deleteMany({
-        where: { saleId: Number(id) },
+      if (body.serviceItems?.length) {
+        await this.createServiceItems(
+          sale.id,
+          body.serviceItems,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      }
+
+      if (body.protocol) {
+        await this.upsertProtocol(
+          sale.id,
+          body.protocol,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      }
+
+      await tx.payment.create({
+        data: {
+          saleId: sale.id,
+          status: "PENDING",
+          subtotal: total,
+          discount: 0,
+          total,
+          paidAmount: 0,
+          installmentsPaid: 0,
+          lastPaymentAt: null,
+          isActive: true,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
       });
 
-      const protocol = await this.saleRepo.findProtocolBySale(Number(id));
-      if (protocol)
-        await prisma.protocol.delete({ where: { id: protocol.id } });
+      logger.info("Sale criada com sucesso", { saleId: sale.id });
 
-      await prisma.payment.delete({ where: { saleId: Number(id) } });
-      await this.saleRepo.softDelete(Number(id), userId);
+      const createdSale = await this.saleRepo.findById(sale.id, tenantId);
 
-      logger.info("✅ [SaleService] Venda removida com sucesso", {
-        saleId: id,
-      });
-      return ApiResponse.success("Venda removida com sucesso.", req);
-    } catch (error: any) {
-      logger.error("❌ [SaleService] Erro ao excluir venda", {
-        message: error.message,
-        stack: error.stack,
-      });
-      throw error;
+      return ApiResponse.success("Venda criada com sucesso.", req, createdSale);
+    });
+  }
+
+  async update(req: Request) {
+    const { userId, tenantId, branchId } = this.extractUser(req);
+    const saleId = this.validateSaleId(req.params.id);
+    const body = req.body as UpdateSaleDto;
+
+    const sale = await this.saleRepo.findById(saleId, tenantId);
+
+    if (!sale) {
+      throw new AppError("Venda não encontrada.", 404);
     }
+
+    const payment = await prisma.payment.findFirst({
+      where: {
+        saleId,
+        tenantId,
+      },
+    });
+
+    if (!payment) {
+      throw new AppError("Pagamento não encontrado para esta venda.", 404);
+    }
+
+    const hasPaidMethod = await prisma.paymentMethodItem.findFirst({
+      where: {
+        paymentId: payment.id,
+        isPaid: true,
+      },
+    });
+
+    const hasPaidInstallment = await prisma.paymentInstallment.findFirst({
+      where: {
+        paymentMethodItem: {
+          paymentId: payment.id,
+        },
+        paidAt: {
+          not: null,
+        },
+      },
+    });
+
+    if (
+      payment.status !== "PENDING" ||
+      payment.paidAmount > 0 ||
+      hasPaidMethod ||
+      hasPaidInstallment
+    ) {
+      throw new AppError(
+        "Venda não pode ser editada porque o pagamento já foi iniciado, confirmado ou cancelado.",
+        409,
+      );
+    }
+
+    const nextClientId = body.clientId ?? sale.clientId;
+
+    if (body.clientId) {
+      await this.validateClient(body.clientId, tenantId);
+    }
+
+    if (body.saleDate) {
+      this.validateSaleDate(body.saleDate);
+    }
+
+    if (body.prescriptionId) {
+      await this.validatePrescription(
+        body.prescriptionId,
+        nextClientId,
+        tenantId,
+      );
+    }
+
+    return prisma.$transaction(async (tx) => {
+      if (body.productItems !== undefined) {
+        await this.replaceProductItems(
+          saleId,
+          body.productItems,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      }
+
+      if (body.serviceItems !== undefined) {
+        await this.replaceServiceItems(
+          saleId,
+          body.serviceItems,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      }
+
+      if (body.protocol) {
+        await this.upsertProtocol(
+          saleId,
+          body.protocol,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      }
+
+      const subtotal = await this.calculateCurrentSaleSubtotal(saleId, tx);
+      const discount = body.discount ?? sale.discount ?? 0;
+      const total = subtotal - discount;
+
+      await tx.sale.update({
+        where: { id: saleId },
+        data: {
+          clientId: nextClientId,
+          saleDate: body.saleDate ?? sale.saleDate ?? undefined,
+          prescriptionId:
+            body.prescriptionId !== undefined
+              ? body.prescriptionId
+              : sale.prescriptionId,
+          notes: body.notes ?? sale.notes,
+          subtotal,
+          discount,
+          total,
+          updatedById: userId,
+        },
+      });
+
+      await tx.payment.update({
+        where: { saleId },
+        data: {
+          subtotal: total,
+          total,
+          updatedById: userId,
+        },
+      });
+
+      const updatedSale = await this.saleRepo.findById(saleId, tenantId);
+
+      logger.info("Sale atualizada com sucesso", { saleId });
+
+      return ApiResponse.success(
+        "Venda atualizada com sucesso.",
+        req,
+        updatedSale,
+      );
+    });
+  }
+
+  async findAll(req: Request) {
+    const { tenantId } = this.extractUser(req);
+
+    const page = Number(req.query.page ?? 1);
+    const limit = Number(req.query.limit ?? 10);
+    const clientId = req.query.clientId
+      ? Number(req.query.clientId)
+      : undefined;
+    const clientName = req.query.clientName
+      ? String(req.query.clientName)
+      : undefined;
+
+    const { items, total } = await this.saleRepo.findAllByTenant(
+      tenantId,
+      page,
+      limit,
+      clientId,
+      clientName,
+    );
+
+    return new PagedResponse(
+      "Vendas listadas com sucesso.",
+      req,
+      items,
+      page,
+      limit,
+      total,
+    );
+  }
+
+  async findById(req: Request) {
+    const { tenantId } = this.extractUser(req);
+    const saleId = this.validateSaleId(req.params.id);
+
+    const sale = await this.saleRepo.findById(saleId, tenantId);
+
+    if (!sale) {
+      throw new AppError("Venda não encontrada.", 404);
+    }
+
+    return ApiResponse.success("Venda encontrada.", req, sale);
+  }
+
+  async findByClient(req: Request) {
+    const { tenantId } = this.extractUser(req);
+    const clientId = this.validateSaleId(req.params.clientId);
+
+    await this.validateClient(clientId, tenantId);
+
+    const sales = await this.saleRepo.findByClientId(clientId, tenantId);
+
+    return ApiResponse.success(
+      "Vendas do cliente listadas com sucesso.",
+      req,
+      sales,
+    );
+  }
+
+  async delete(req: Request) {
+    const { userId, tenantId } = this.extractUser(req);
+    const saleId = this.validateSaleId(req.params.id);
+
+    const sale = await this.saleRepo.findById(saleId, tenantId);
+
+    if (!sale) {
+      throw new AppError("Venda não encontrada.", 404);
+    }
+
+    const payment = await prisma.payment.findFirst({
+      where: {
+        saleId,
+        tenantId,
+      },
+    });
+
+    if (!payment) {
+      throw new AppError("Pagamento não encontrado para esta venda.", 404);
+    }
+
+    await prisma.$transaction(async (tx) => {
+      const productItems = await tx.itemProduct.findMany({
+        where: { saleId },
+        include: {
+          product: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+
+      for (const item of productItems) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: {
+            stockQuantity: {
+              increment: item.quantity,
+            },
+            updatedById: userId,
+          },
+        });
+      }
+
+      await tx.paymentInstallment.deleteMany({
+        where: {
+          paymentMethodItem: {
+            paymentId: payment.id,
+          },
+        },
+      });
+
+      await tx.paymentMethodItem.deleteMany({
+        where: {
+          paymentId: payment.id,
+        },
+      });
+
+      await tx.payment.delete({
+        where: {
+          id: payment.id,
+        },
+      });
+
+      await tx.frameDetails.deleteMany({
+        where: {
+          itemProduct: {
+            saleId,
+          },
+        },
+      });
+
+      await tx.itemProduct.deleteMany({
+        where: { saleId },
+      });
+
+      await tx.itemOpticalService.deleteMany({
+        where: { saleId },
+      });
+
+      await tx.protocol.deleteMany({
+        where: { saleId },
+      });
+
+      await tx.sale.delete({
+        where: { id: saleId },
+      });
+    });
+
+    logger.info("Sale removida com sucesso", { saleId });
+
+    return ApiResponse.success("Venda removida com sucesso.", req, null);
   }
 }

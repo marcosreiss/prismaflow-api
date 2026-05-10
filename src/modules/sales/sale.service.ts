@@ -103,7 +103,7 @@ export class SaleService {
           count: body.productItems.length,
         });
         for (const item of body.productItems) {
-          const product = await this.productRepo.findById(item.productId);
+          const product = await this.productRepo.findById(item.productId, tenantId);
           if (!product) {
             logger.warn("⚠️ [SaleService] Produto não encontrado", {
               productId: item.productId,
@@ -182,7 +182,7 @@ export class SaleService {
           count: body.serviceItems.length,
         });
         for (const item of body.serviceItems) {
-          const service = await this.opticalRepo.findById(item.serviceId);
+          const service = await this.opticalRepo.findById(item.serviceId, tenantId);
           if (!service) {
             logger.warn("⚠️ [SaleService] Serviço não encontrado", {
               serviceId: item.serviceId,

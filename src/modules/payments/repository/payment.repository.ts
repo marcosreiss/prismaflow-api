@@ -3,7 +3,7 @@
 import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 
-const paymentInclude = {
+const paymentListInclude = {
   sale: {
     select: {
       id: true,
@@ -18,11 +18,29 @@ const paymentInclude = {
   },
 } as const;
 
+const paymentDetailInclude = {
+  sale: {
+    select: {
+      id: true,
+      saleDate: true,
+      clientId: true,
+      subtotal: true,
+      discount: true,
+      total: true,
+      notes: true,
+      client: { select: { id: true, name: true, phone01: true } },
+    },
+  },
+  methods: {
+    include: { installmentItems: { orderBy: { sequence: "asc" } } },
+  },
+} as const;
+
 export class PaymentRepository {
   async create(data: any, userId?: string) {
     return prisma.payment.create({
       data: withAuditData(userId, data),
-      include: paymentInclude,
+      include: paymentDetailInclude,
     });
   }
 
@@ -30,21 +48,21 @@ export class PaymentRepository {
     return prisma.payment.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: paymentInclude,
+      include: paymentDetailInclude,
     });
   }
 
   async findById(id: number, tenantId?: string) {
     return prisma.payment.findFirst({
       where: { id, ...(tenantId ? { tenantId } : {}) },
-      include: paymentInclude,
+      include: paymentDetailInclude,
     });
   }
 
   async findBySaleId(saleId: number) {
     return prisma.payment.findUnique({
       where: { saleId },
-      include: paymentInclude,
+      include: paymentDetailInclude,
     });
   }
 
@@ -67,9 +85,9 @@ export class PaymentRepository {
   ) {
     const skip = (page - 1) * limit;
     const where: any = { tenantId, sale: {} };
+    const andConditions: any[] = [];
 
     if (filters?.status) where.status = filters.status;
-    if (filters?.method) where.methods = { some: { method: filters.method } };
 
     if (filters?.startDate || filters?.endDate) {
       where.sale.saleDate = {};
@@ -85,36 +103,50 @@ export class PaymentRepository {
     }
 
     if (filters?.isPartiallyPaid) {
-      where.AND = [
+      andConditions.push(
         { installmentsPaid: { gt: 0 }, status: PaymentStatus.PENDING },
-      ];
+      );
+    }
+
+    if (filters?.method) {
+      andConditions.push({
+        methods: { some: { method: filters.method } },
+      });
     }
 
     if (filters?.hasOverdueInstallments) {
-      where.methods = {
-        some: {
-          installmentItems: {
-            some: { dueDate: { lt: new Date() }, isActive: true, paidAt: null },
+      andConditions.push({
+        methods: {
+          some: {
+            installmentItems: {
+              some: { dueDate: { lt: new Date() }, isActive: true, paidAt: null },
+            },
           },
         },
-      };
+      });
     }
 
     if (filters?.dueDaysAhead) {
       const today = new Date();
       const futureDate = new Date();
       futureDate.setDate(today.getDate() + filters.dueDaysAhead);
-      where.methods = {
-        some: {
-          installmentItems: {
-            some: {
-              dueDate: { gte: today, lte: futureDate },
-              isActive: true,
-              paidAt: null,
+      andConditions.push({
+        methods: {
+          some: {
+            installmentItems: {
+              some: {
+                dueDate: { gte: today, lte: futureDate },
+                isActive: true,
+                paidAt: null,
+              },
             },
           },
         },
-      };
+      });
+    }
+
+    if (andConditions.length > 0) {
+      where.AND = andConditions;
     }
 
     const [items, total] = await Promise.all([
@@ -123,7 +155,7 @@ export class PaymentRepository {
         skip,
         take: limit,
         orderBy: { sale: { saleDate: filters?.sortOrder ?? "desc" } },
-        include: paymentInclude,
+        include: paymentListInclude,
       }),
       prisma.payment.count({ where }),
     ]);

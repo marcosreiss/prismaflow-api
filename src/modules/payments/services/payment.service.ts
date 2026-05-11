@@ -10,6 +10,34 @@ export class PaymentService {
   private repo = new PaymentRepository();
   private integrityService = new PaymentIntegrityService();
 
+  private validateCompatibleFilters(req: Request) {
+    const { method, hasOverdueInstallments, dueDaysAhead } = req.query;
+    const hasOverdue = hasOverdueInstallments === "true";
+    const hasDueAhead = dueDaysAhead !== undefined;
+
+    if (hasOverdue && hasDueAhead) {
+      return ApiResponse.error(
+        "Os filtros 'parcelas vencidas' e 'vence nos próximos dias' não podem ser usados juntos.",
+        400,
+        req,
+      );
+    }
+
+    if (
+      method &&
+      String(method) !== "INSTALLMENT" &&
+      (hasOverdue || hasDueAhead)
+    ) {
+      return ApiResponse.error(
+        "Filtros de vencimento só podem ser combinados com o método INSTALLMENT.",
+        400,
+        req,
+      );
+    }
+
+    return null;
+  }
+
   async findAll(req: Request) {
     const { tenantId } = req.user!;
     const {
@@ -26,6 +54,11 @@ export class PaymentService {
       dueDaysAhead,
       sortOrder,
     } = req.query;
+
+    const invalidFilters = this.validateCompatibleFilters(req);
+    if (invalidFilters) {
+      return invalidFilters;
+    }
 
     const { items, total } = await this.repo.findAllByTenant(
       tenantId,

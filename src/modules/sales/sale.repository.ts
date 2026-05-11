@@ -45,8 +45,15 @@ const prescriptionSelect = {
 } satisfies Prisma.PrescriptionSelect;
 
 const saleIncludeFull = {
-  client: { select: { id: true, name: true, email: true, phone01: true } },
+  client: {
+    select: { id: true, name: true, cpf: true, email: true, phone01: true },
+  },
   protocol: true,
+  payment: {
+    select: {
+      status: true,
+    },
+  },
   prescription: { select: prescriptionSelect },
   productItems: {
     select: {
@@ -150,7 +157,7 @@ export class SaleRepository {
           createdAt: true,
           updatedAt: true,
           client: {
-            select: { id: true, name: true, email: true, phone01: true },
+            select: { id: true, name: true, cpf: true, email: true, phone01: true },
           },
           protocol: { select: { id: true, book: true, page: true, os: true } },
           prescription: {

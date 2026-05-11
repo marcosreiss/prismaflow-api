@@ -1,7 +1,9 @@
 // src/modules/payments/services/payment-integrity.service.ts
+
+import { prisma } from "@/config/prisma-context";
 import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
 import { PaymentInstallmentRepository } from "@/modules/payments/repository/payment-installment.repository";
-import { PaymentMethod } from "@prisma/client";
+import { PaymentMethod, PaymentStatus } from "@prisma/client";
 
 const INSTANT_METHODS: PaymentMethod[] = [
   PaymentMethod.PIX,
@@ -14,7 +16,7 @@ export class PaymentIntegrityService {
   private paymentRepo = new PaymentRepository();
   private installmentRepo = new PaymentInstallmentRepository();
 
-  // ─── Gerar Parcelas por PaymentMethodItem ────────────────────────────────────
+  // ─── Gerar Parcelas ───────────────────────────────────────────────────────────
 
   async generateInstallments(
     methodItem: {
@@ -33,19 +35,36 @@ export class PaymentIntegrityService {
     } = methodItem;
     const { tenantId, branchId, userId } = context;
 
-    const installmentValue = amount / installments;
-    const baseDueDate = new Date(firstDueDate);
+    const installmentValue = Math.floor((amount / installments) * 100) / 100;
+    const remainder = parseFloat(
+      (amount - installmentValue * installments).toFixed(2),
+    );
+
+    const baseDate = new Date(firstDueDate);
     const created = [];
 
     for (let i = 1; i <= installments; i++) {
-      const dueDate = new Date(baseDueDate);
-      dueDate.setDate(dueDate.getDate() + (i - 1) * 30);
+      const dueDate = new Date(
+        baseDate.getFullYear(),
+        baseDate.getMonth() + (i - 1),
+        baseDate.getDate(),
+      );
+
+      // Se o dia não existir no mês destino (ex: 31 em fevereiro), usa último dia do mês
+      if (dueDate.getDate() !== baseDate.getDate()) {
+        dueDate.setDate(0);
+      }
+
+      const isLast = i === installments;
+      const installmentAmount = parseFloat(
+        (installmentValue + (isLast ? remainder : 0)).toFixed(2),
+      );
 
       const installment = await this.installmentRepo.create(
         paymentMethodItemId,
         {
           sequence: i,
-          amount: parseFloat(installmentValue.toFixed(2)),
+          amount: installmentAmount,
           paidAmount: 0,
           dueDate,
           tenantId,
@@ -57,15 +76,43 @@ export class PaymentIntegrityService {
       created.push(installment);
     }
 
-    const validation =
-      await this.validateMethodItemIntegrity(paymentMethodItemId);
-    if (!validation.valid) {
-      console.error(
-        `[AVISO] Inconsistência no PaymentMethodItem ${paymentMethodItemId}: ${validation.error}`,
-      );
-    }
-
     return created;
+  }
+
+  // ─── Recalcular Status do Payment ────────────────────────────────────────────
+
+  async recalculatePaymentStatus(paymentId: number, userId?: string) {
+    const payment = await this.paymentRepo.findById(paymentId);
+    if (!payment) return;
+
+    const paidFromInstant = payment.methods
+      .filter(
+        (m) => INSTANT_METHODS.includes(m.method as PaymentMethod) && m.isPaid,
+      )
+      .reduce((sum, m) => sum + m.amount, 0);
+
+    const paidFromInstallments = payment.methods
+      .flatMap((m) => m.installmentItems)
+      .reduce((sum, i) => sum + (i.paidAmount ?? 0), 0);
+
+    const paidAmount = parseFloat(
+      (paidFromInstant + paidFromInstallments).toFixed(2),
+    );
+
+    const installmentsPaid = payment.methods
+      .flatMap((m) => m.installmentItems)
+      .filter((i) => i.paidAt !== null).length;
+
+    const status =
+      paidAmount >= payment.total
+        ? PaymentStatus.CONFIRMED
+        : PaymentStatus.PENDING;
+
+    await this.paymentRepo.update(
+      paymentId,
+      { paidAmount, installmentsPaid, status },
+      userId,
+    );
   }
 
   // ─── Validar Integridade de um PaymentMethodItem ─────────────────────────────
@@ -73,27 +120,18 @@ export class PaymentIntegrityService {
   async validateMethodItemIntegrity(paymentMethodItemId: number) {
     const installments =
       await this.installmentRepo.findByMethodItemId(paymentMethodItemId);
+    if (installments.length === 0) return { valid: true };
 
-    if (installments.length === 0) {
-      return { valid: true };
-    }
-
-    const issues = [];
+    const issues: any[] = [];
 
     const sequences = installments.map((i) => i.sequence).sort((a, b) => a - b);
     const expectedSequences = Array.from(
       { length: installments.length },
       (_, i) => i + 1,
     );
-    const hasSequenceGap = !sequences.every(
-      (seq, idx) => seq === expectedSequences[idx],
-    );
-
-    if (hasSequenceGap) {
+    if (!sequences.every((seq, idx) => seq === expectedSequences[idx])) {
       issues.push({
         field: "sequence",
-        expected: expectedSequences,
-        found: sequences,
         message: `Sequência com lacunas. Esperado: [${expectedSequences.join(", ")}], Encontrado: [${sequences.join(", ")}]`,
       });
     }
@@ -103,144 +141,53 @@ export class PaymentIntegrityService {
       issues.push({
         field: "dueDate",
         message: `${withoutDueDate.length} parcela(s) sem data de vencimento.`,
-        installments: withoutDueDate.map((i) => i.id),
       });
     }
 
-    if (issues.length > 0) {
-      return {
-        valid: false,
-        error: `${issues.length} inconsistência(s) detectada(s)`,
-        issues,
-      };
-    }
-
-    return { valid: true };
+    return issues.length > 0 ? { valid: false, issues } : { valid: true };
   }
 
-  // ─── Validar Integridade Completa de um Payment ──────────────────────────────
+  // ─── Validar Integridade Completa do Payment ─────────────────────────────────
 
   async validatePaymentIntegrity(paymentId: number) {
     const payment = await this.paymentRepo.findById(paymentId);
-    if (!payment) {
-      return { valid: false, error: "Pagamento não encontrado." };
-    }
+    if (!payment) return { valid: false, error: "Pagamento não encontrado." };
 
-    const issues = [];
+    const issues: any[] = [];
 
-    if (!payment.methods || payment.methods.length === 0) {
-      return { valid: false, error: "Pagamento sem métodos cadastrados." };
-    }
-
-    const expectedMethodsTotal = payment.total - (payment.discount || 0);
     const sumMethods = payment.methods.reduce((sum, m) => sum + m.amount, 0);
-    if (Math.abs(sumMethods - expectedMethodsTotal) > 0.01) {
+    if (Math.abs(sumMethods - payment.total) > 0.01) {
       issues.push({
-        field: "total",
-        expected: expectedMethodsTotal,
-        found: sumMethods,
-        difference: Math.abs(sumMethods - expectedMethodsTotal),
-        message: `Soma dos métodos (R$ ${sumMethods.toFixed(2)}) diverge do total com desconto (R$ ${expectedMethodsTotal.toFixed(2)})`,
+        field: "methods",
+        message: `Soma dos métodos (${sumMethods.toFixed(2)}) difere do total (${payment.total.toFixed(2)}).`,
+      });
+    }
+
+    const paidFromInstant = payment.methods
+      .filter((m) => m.isPaid)
+      .reduce((sum, m) => sum + m.amount, 0);
+
+    const paidFromInstallments = payment.methods
+      .flatMap((m) => m.installmentItems)
+      .reduce((sum, i) => sum + (i.paidAmount ?? 0), 0);
+
+    const realPaidAmount = parseFloat(
+      (paidFromInstant + paidFromInstallments).toFixed(2),
+    );
+    if (Math.abs(realPaidAmount - payment.paidAmount) > 0.01) {
+      issues.push({
+        field: "paidAmount",
+        message: `paidAmount registrado (${payment.paidAmount}) difere do calculado (${realPaidAmount}).`,
       });
     }
 
     for (const method of payment.methods) {
-      if (method.installments && method.installments > 0) {
-        const methodValidation = await this.validateMethodItemIntegrity(
-          method.id,
-        );
-        if (!methodValidation.valid) {
-          issues.push({
-            field: `methodItem#${method.id}`,
-            method: method.method,
-            ...methodValidation,
-          });
-        }
-
-        const sumInstallments = method.installmentItems.reduce(
-          (sum, i) => sum + i.amount,
-          0,
-        );
-        if (Math.abs(sumInstallments - method.amount) > 0.01) {
-          issues.push({
-            field: `methodItem#${method.id}.amount`,
-            expected: method.amount,
-            found: sumInstallments,
-            message: `Soma das parcelas do método ${method.method} (R$ ${sumInstallments.toFixed(2)}) diverge do amount (R$ ${method.amount.toFixed(2)})`,
-          });
-        }
-      }
+      const methodIssues = await this.validateMethodItemIntegrity(method.id);
+      if (!methodIssues.valid) issues.push(...(methodIssues.issues ?? []));
     }
 
-    if (issues.length > 0) {
-      return {
-        valid: false,
-        error: `${issues.length} inconsistência(s) detectada(s)`,
-        issues,
-      };
-    }
-
-    return { valid: true, payment };
-  }
-
-  // ─── Recalcular Status do Payment ────────────────────────────────────────────
-
-  async recalculatePaymentStatus(paymentId: number, userId: string) {
-    const payment = await this.paymentRepo.findById(paymentId);
-    if (!payment || !payment.methods) return;
-
-    // Soma dos métodos à vista já pagos
-    const instantPaidAmount = payment.methods
-      .filter((m) => INSTANT_METHODS.includes(m.method) && m.isPaid)
-      .reduce((sum, m) => sum + m.amount, 0);
-
-    // Soma dos pagamentos registrados em parcelas
-    const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
-    const installmentsPaidCount = allInstallments.filter(
-      (i) => i.paidAt !== null,
-    ).length;
-    const installmentPaidAmount = allInstallments.reduce(
-      (sum, i) => sum + i.paidAmount,
-      0,
-    );
-
-    const totalPaidAmount = instantPaidAmount + installmentPaidAmount;
-
-    // Todos os métodos à vista estão pagos E todas as parcelas estão quitadas
-    const allInstantPaid = payment.methods
-      .filter((m) => INSTANT_METHODS.includes(m.method))
-      .every((m) => m.isPaid);
-
-    const allInstallmentsPaid =
-      allInstallments.length === 0 ||
-      allInstallments.every((i) => i.paidAt !== null);
-
-    const allPaid = allInstantPaid && allInstallmentsPaid;
-
-    // Última data de pagamento entre métodos à vista e parcelas
-    const instantDates = payment.methods
-      .filter((m) => m.isPaid && m.paidAt)
-      .map((m) => new Date(m.paidAt!));
-
-    const installmentDates = allInstallments
-      .filter((i) => i.paidAt)
-      .map((i) => new Date(i.paidAt!));
-
-    const allDates = [...instantDates, ...installmentDates];
-    const lastPaymentAt =
-      allDates.length > 0
-        ? allDates.reduce((latest, d) => (d > latest ? d : latest), allDates[0])
-        : null;
-
-    await this.paymentRepo.update(
-      paymentId,
-      {
-        installmentsPaid: installmentsPaidCount,
-        paidAmount: totalPaidAmount,
-        lastPaymentAt,
-        status: allPaid ? "CONFIRMED" : "PENDING",
-      },
-      userId,
-    );
+    return issues.length > 0
+      ? { valid: false, error: "Inconsistências detectadas.", issues }
+      : { valid: true };
   }
 }

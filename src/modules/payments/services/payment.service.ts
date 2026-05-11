@@ -1,20 +1,17 @@
 // src/modules/payments/services/payment.service.ts
+
 import { Request } from "express";
 import { ApiResponse } from "@/responses/ApiResponse";
 import { PagedResponse } from "@/responses/PagedResponse";
 import { PaymentRepository } from "@/modules/payments/repository/payment.repository";
 import { PaymentIntegrityService } from "./payment-integrity.service";
-import { PaymentStatus } from "@prisma/client";
 
 export class PaymentService {
   private repo = new PaymentRepository();
   private integrityService = new PaymentIntegrityService();
 
-  // ─── Listar Pagamentos (Paginado + Filtros) ──────────────────────────────────
-
   async findAll(req: Request) {
-    const user = req.user!;
-    const { tenantId } = user;
+    const { tenantId } = req.user!;
     const {
       page = 1,
       limit = 10,
@@ -55,16 +52,12 @@ export class PaymentService {
       );
 
       const overdueInstallments = allInstallments.filter(
-        (inst) =>
-          inst.dueDate && new Date(inst.dueDate) < now && inst.paidAt === null,
+        (i) => i.dueDate && new Date(i.dueDate) < now && i.paidAt === null,
       );
 
-      const nextDueInstallment = allInstallments
+      const nextDue = allInstallments
         .filter(
-          (inst) =>
-            inst.dueDate &&
-            new Date(inst.dueDate) >= now &&
-            inst.paidAt === null,
+          (i) => i.dueDate && new Date(i.dueDate) >= now && i.paidAt === null,
         )
         .sort(
           (a, b) =>
@@ -73,11 +66,10 @@ export class PaymentService {
 
       return {
         ...payment,
-        saleDate: payment.sale?.saleDate || null,
         hasOverdueInstallments: overdueInstallments.length > 0,
         overdueCount: overdueInstallments.length,
-        nextDueDate: nextDueInstallment?.dueDate || null,
-        nextDueAmount: nextDueInstallment?.amount || null,
+        nextDueDate: nextDue?.dueDate ?? null,
+        nextDueAmount: nextDue?.amount ?? null,
       };
     });
 
@@ -91,12 +83,11 @@ export class PaymentService {
     );
   }
 
-  // ─── Buscar por ID ───────────────────────────────────────────────────────────
-
   async findById(req: Request) {
     const { id } = req.params;
+    const { tenantId } = req.user!;
 
-    const payment = await this.repo.findById(Number(id));
+    const payment = await this.repo.findById(Number(id), tenantId);
     if (!payment) {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
@@ -107,8 +98,6 @@ export class PaymentService {
       payment,
     );
   }
-
-  // ─── Status do Pagamento por Sale ID ────────────────────────────────────────
 
   async findStatusBySaleId(req: Request) {
     const { saleId } = req.params;
@@ -129,81 +118,64 @@ export class PaymentService {
     });
   }
 
-  // ─── Criar Pagamento ─────────────────────────────────────────────────────────
-
-  async create(req: Request) {
-    const user = req.user!;
-    const { sub: userId, tenantId, branchId } = user;
-    const data = req.body;
-
-    if (data.methods?.length) {
-      const paymentDiscount = Number(data.discount ?? 0);
-      const expectedMethodsTotal = Number(data.total) - paymentDiscount;
-      const sumMethods = data.methods.reduce(
-        (sum: number, m: any) => sum + m.amount,
-        0,
-      );
-
-      if (Math.abs(sumMethods - expectedMethodsTotal) > 0.01) {
-        return ApiResponse.error(
-          `A soma dos métodos (R$ ${sumMethods.toFixed(2)}) deve ser igual ao total com desconto (R$ ${expectedMethodsTotal.toFixed(2)}).`,
-          400,
-          req,
-        );
-      }
-    }
-
-    const payment = await this.repo.create(
-      { ...data, tenantId, branchId },
-      userId,
-    );
-
-    // Gerar parcelas para métodos parcelados
-    for (const methodItem of payment.methods) {
-      if (
-        methodItem.installments &&
-        methodItem.installments > 0 &&
-        methodItem.firstDueDate
-      ) {
-        await this.integrityService.generateInstallments(
-          {
-            id: methodItem.id,
-            amount: methodItem.amount,
-            installments: methodItem.installments,
-            firstDueDate: methodItem.firstDueDate,
-          },
-          { tenantId, branchId, userId },
-        );
-      }
-    }
-
-    const final = await this.repo.findById(payment.id);
-
-    return ApiResponse.success("Pagamento criado com sucesso.", req, final);
-  }
-
-  // ─── Deletar Pagamento ───────────────────────────────────────────────────────
-
-  async delete(req: Request) {
-    const user = req.user!;
+  async validate(req: Request) {
     const { id } = req.params;
-    const userId = user.sub;
+    const { tenantId } = req.user!;
 
-    const payment = await this.repo.findById(Number(id));
+    const payment = await this.repo.findById(Number(id), tenantId);
     if (!payment) {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
     }
 
-    if (payment.status !== PaymentStatus.PENDING) {
-      return ApiResponse.error(
-        "Somente pagamentos com status PENDING podem ser excluídos.",
-        400,
-        req,
-      );
+    const validation = await this.integrityService.validatePaymentIntegrity(
+      Number(id),
+    );
+
+    const allInstallments = payment.methods.flatMap((m) => m.installmentItems);
+    const stats = {
+      paymentId: payment.id,
+      saleId: payment.saleId,
+      status: payment.status,
+      subtotal: payment.subtotal,
+      total: payment.total,
+      discount: payment.discount ?? 0,
+      methodsCount: payment.methods.length,
+      sumMethods: payment.methods.reduce((sum, m) => sum + m.amount, 0),
+      instantMethodsPaid: payment.methods.filter((m) => m.isPaid).length,
+      installmentsCreated: allInstallments.length,
+      installmentsPaid: payment.installmentsPaid,
+      paidAmount: payment.paidAmount,
+    };
+
+    if (validation.valid) {
+      return ApiResponse.success("Pagamento íntegro e consistente.", req, {
+        valid: true,
+        stats,
+        methods: payment.methods.map((m) => ({
+          id: m.id,
+          method: m.method,
+          amount: m.amount,
+          isPaid: m.isPaid,
+          paidAt: m.paidAt,
+          installments: m.installments,
+          installmentItems: m.installmentItems.map((i) => ({
+            id: i.id,
+            sequence: i.sequence,
+            amount: i.amount,
+            paidAmount: i.paidAmount,
+            dueDate: i.dueDate,
+            isPaid: i.paidAt !== null,
+            paidAt: i.paidAt,
+          })),
+        })),
+      });
     }
 
-    await this.repo.softDelete(Number(id), userId);
-
-    return ApiResponse.success("Pagamento removido com sucesso.", req);
+    return ApiResponse.error(
+      validation.error ?? "Inconsistências detectadas no pagamento.",
+      400,
+      req,
+      { valid: false, stats, issues: validation.issues },
+    );
   }
 }

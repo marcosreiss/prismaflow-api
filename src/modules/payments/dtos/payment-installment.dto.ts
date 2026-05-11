@@ -1,37 +1,7 @@
 // src/modules/payments/dtos/payment-installment.dto.ts
 
-import { IsInt, IsNumber, IsOptional, Min } from "class-validator";
+import { IsDate, IsInt, IsNumber, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
-
-export class CreatePaymentInstallmentDto {
-  @IsInt()
-  @Min(1)
-  sequence!: number;
-
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  amount!: number;
-
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  paidAmount?: number;
-
-  @IsOptional()
-  @Type(() => Date)
-  dueDate?: Date; // ✅ ADICIONAR
-
-  @IsOptional()
-  @Type(() => Date)
-  paidAt?: Date;
-
-  @IsOptional()
-  tenantId?: string;
-
-  @IsOptional()
-  branchId?: string;
-}
 
 export class UpdatePaymentInstallmentDto {
   @IsOptional()
@@ -42,25 +12,13 @@ export class UpdatePaymentInstallmentDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
+  @Min(0.01)
   amount?: number;
 
   @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  paidAmount?: number;
-
-  @IsOptional()
   @Type(() => Date)
-  dueDate?: Date; // ✅ ADICIONAR
-
-  @IsOptional()
-  @Type(() => Date)
-  paidAt?: Date;
-
-  @IsOptional()
-  isActive?: boolean;
+  @IsDate()
+  dueDate?: Date;
 }
 
 export class PayInstallmentDto {
@@ -71,5 +29,6 @@ export class PayInstallmentDto {
 
   @IsOptional()
   @Type(() => Date)
-  paidAt?: Date; // Se não informado, usa now()
+  @IsDate()
+  paidAt?: Date;
 }

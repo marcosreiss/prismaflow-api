@@ -1,65 +1,73 @@
 // src/modules/payments/controller/payment-installment.controller.ts
-import { Request, Response } from "express";
-import { PaymentInstallmentPayService } from "../services/payment-installment-pay.service";
+
+import { Request, Response, NextFunction } from "express";
 import { PaymentInstallmentService } from "../services/payment-installment.service";
+import { PaymentInstallmentPayService } from "../services/payment-installment-pay.service";
 
-const installmentService = new PaymentInstallmentService();
-const installmentPayService = new PaymentInstallmentPayService();
+const service = new PaymentInstallmentService();
+const payService = new PaymentInstallmentPayService();
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
-
-function handleError(res: Response, error: any, fallbackMessage: string) {
-  res.status(400).json({
-    success: false,
-    message: error.message || fallbackMessage,
-  });
-}
-
-// ─── Leitura ──────────────────────────────────────────────────────────────────
-
-export async function listInstallmentsByPayment(req: Request, res: Response) {
+export const listInstallmentsByPayment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await installmentService.findByPaymentId(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao listar parcelas.");
+    const result = await service.findByPaymentId(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-export async function getInstallmentById(req: Request, res: Response) {
+export const getInstallmentById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await installmentService.findById(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao buscar parcela.");
+    const result = await service.findById(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-export async function listOverdueInstallments(req: Request, res: Response) {
+export const updateInstallment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await installmentService.findOverdue(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao listar parcelas vencidas.");
+    const result = await service.update(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-// ─── Escrita ──────────────────────────────────────────────────────────────────
-
-export async function updateInstallment(req: Request, res: Response) {
+export const payInstallment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await installmentService.update(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao atualizar parcela.");
+    const result = await payService.pay(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-export async function payInstallment(req: Request, res: Response) {
+export const listOverdueInstallments = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await installmentPayService.payInstallment(req);
-    res.status(result.status || 200).json(result);
-  } catch (error: any) {
-    handleError(res, error, "Erro ao registrar pagamento da parcela.");
+    const result = await service.findOverdue(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
   }
-}
+};

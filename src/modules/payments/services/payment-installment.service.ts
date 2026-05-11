@@ -1,4 +1,5 @@
 // src/modules/payments/services/payment-installment.service.ts
+
 import { Request } from "express";
 import { ApiResponse } from "@/responses/ApiResponse";
 import { PagedResponse } from "@/responses/PagedResponse";
@@ -37,20 +38,15 @@ export class PaymentInstallmentService {
   // ─── Listar Parcelas de um Pagamento ─────────────────────────────────────────
 
   async findByPaymentId(req: Request) {
-    const user = req.user!;
+    const { tenantId } = req.user!;
     const { paymentId } = req.params;
 
-    const payment = await this.paymentRepo.findById(Number(paymentId));
+    const payment = await this.paymentRepo.findById(
+      Number(paymentId),
+      tenantId,
+    );
     if (!payment) {
       return ApiResponse.error("Pagamento não encontrado.", 404, req);
-    }
-
-    if (payment.tenantId !== user.tenantId) {
-      return ApiResponse.error(
-        "Você não tem permissão para acessar este pagamento.",
-        403,
-        req,
-      );
     }
 
     const allInstallments = payment.methods.flatMap((m) =>
@@ -61,38 +57,30 @@ export class PaymentInstallmentService {
       })),
     );
 
-    const enrichedInstallments = allInstallments.map((i) =>
-      this.enrichInstallment(i),
-    );
+    const enriched = allInstallments.map((i) => this.enrichInstallment(i));
 
     const summary = {
-      total: enrichedInstallments.length,
-      paid: enrichedInstallments.filter((i) => i.isPaid).length,
-      pending: enrichedInstallments.filter((i) => !i.isPaid).length,
-      overdue: enrichedInstallments.filter((i) => i.isOverdue).length,
-      totalAmount: enrichedInstallments.reduce((sum, i) => sum + i.amount, 0),
-      paidAmount: enrichedInstallments.reduce(
-        (sum, i) => sum + i.paidAmount,
-        0,
-      ),
-      remainingAmount: enrichedInstallments.reduce(
-        (sum, i) => sum + i.remainingAmount,
-        0,
-      ),
+      total: enriched.length,
+      paid: enriched.filter((i) => i.isPaid).length,
+      pending: enriched.filter((i) => !i.isPaid).length,
+      overdue: enriched.filter((i) => i.isOverdue).length,
+      totalAmount: enriched.reduce((sum, i) => sum + i.amount, 0),
+      paidAmount: enriched.reduce((sum, i) => sum + i.paidAmount, 0),
+      remainingAmount: enriched.reduce((sum, i) => sum + i.remainingAmount, 0),
     };
 
     return ApiResponse.success("Parcelas listadas com sucesso.", req, {
       paymentId: payment.id,
       saleId: payment.saleId,
       summary,
-      installments: enrichedInstallments,
+      installments: enriched,
     });
   }
 
   // ─── Buscar Parcela por ID ────────────────────────────────────────────────────
 
   async findById(req: Request) {
-    const user = req.user!;
+    const { tenantId } = req.user!;
     const { id } = req.params;
 
     const installment = await this.installmentRepo.findById(Number(id));
@@ -100,7 +88,7 @@ export class PaymentInstallmentService {
       return ApiResponse.error("Parcela não encontrada.", 404, req);
     }
 
-    if (installment.tenantId !== user.tenantId) {
+    if (installment.paymentMethodItem.payment.tenantId !== tenantId) {
       return ApiResponse.error(
         "Você não tem permissão para acessar esta parcela.",
         403,
@@ -118,17 +106,16 @@ export class PaymentInstallmentService {
   // ─── Atualizar Parcela ────────────────────────────────────────────────────────
 
   async update(req: Request) {
-    const user = req.user!;
+    const { sub: userId, tenantId } = req.user!;
     const { id } = req.params;
-    const data = req.body;
-    const userId = user.sub;
+    const { amount, dueDate, sequence } = req.body;
 
     const installment = await this.installmentRepo.findById(Number(id));
     if (!installment) {
       return ApiResponse.error("Parcela não encontrada.", 404, req);
     }
 
-    if (installment.tenantId !== user.tenantId) {
+    if (installment.paymentMethodItem.payment.tenantId !== tenantId) {
       return ApiResponse.error(
         "Você não tem permissão para acessar esta parcela.",
         403,
@@ -136,23 +123,25 @@ export class PaymentInstallmentService {
       );
     }
 
-    if (installment.paidAmount > 0) {
+    if (installment.paidAt !== null) {
       return ApiResponse.error(
-        "Não é possível editar parcelas que já receberam pagamento.",
+        "Não é possível editar uma parcela já quitada.",
         400,
         req,
       );
     }
 
-    if (data.amount !== undefined && data.amount !== installment.amount) {
+    if (amount !== undefined && amount !== installment.amount) {
       const methodItem = installment.paymentMethodItem;
       const allInstallments = await this.installmentRepo.findByMethodItemId(
         methodItem.id,
       );
 
-      const newTotal = allInstallments.reduce((sum, inst) => {
-        return sum + (inst.id === installment.id ? data.amount : inst.amount);
-      }, 0);
+      const newTotal = allInstallments.reduce(
+        (sum, inst) =>
+          sum + (inst.id === installment.id ? amount : inst.amount),
+        0,
+      );
 
       if (Math.abs(newTotal - methodItem.amount) > 0.01) {
         return ApiResponse.error(
@@ -163,13 +152,9 @@ export class PaymentInstallmentService {
       }
     }
 
-    if (data.dueDate && isNaN(new Date(data.dueDate).getTime())) {
-      return ApiResponse.error("Data de vencimento inválida.", 400, req);
-    }
-
     const updated = await this.installmentRepo.update(
       Number(id),
-      { amount: data.amount, dueDate: data.dueDate, sequence: data.sequence },
+      { amount, dueDate, sequence },
       userId,
     );
 
@@ -179,8 +164,7 @@ export class PaymentInstallmentService {
   // ─── Listar Parcelas Vencidas ─────────────────────────────────────────────────
 
   async findOverdue(req: Request) {
-    const user = req.user!;
-    const { tenantId } = user;
+    const { tenantId } = req.user!;
     const { page = 1, limit = 10 } = req.query;
 
     const { items, total } = await this.installmentRepo.findOverdue(
@@ -202,9 +186,9 @@ export class PaymentInstallmentService {
         ...inst,
         daysOverdue,
         remainingAmount: inst.amount - inst.paidAmount,
-        clientName: inst.paymentMethodItem.payment.sale?.client?.name || "N/A",
+        clientName: inst.paymentMethodItem.payment.sale?.client?.name ?? "N/A",
         clientPhone:
-          inst.paymentMethodItem.payment.sale?.client?.phone01 || null,
+          inst.paymentMethodItem.payment.sale?.client?.phone01 ?? null,
       };
     });
 

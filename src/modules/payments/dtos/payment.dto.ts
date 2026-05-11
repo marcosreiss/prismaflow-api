@@ -1,4 +1,5 @@
 // src/modules/payments/dtos/payment.dto.ts
+
 import {
   IsArray,
   IsDate,
@@ -6,7 +7,6 @@ import {
   IsInt,
   IsNumber,
   IsOptional,
-  IsPositive,
   IsString,
   Max,
   Min,
@@ -21,12 +21,12 @@ export class PaymentMethodItemDto {
 
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
+  @Min(0.01)
   amount!: number;
 
   @IsOptional()
   @IsInt()
-  @Min(1)
+  @Min(2)
   installments?: number;
 
   @IsOptional()
@@ -40,98 +40,18 @@ export class PaymentMethodItemDto {
   paidAt?: Date;
 }
 
-export class CreatePaymentDto {
-  @IsInt()
-  @IsPositive()
-  saleId!: number;
-
-  @IsOptional()
-  @IsEnum(PaymentStatus)
-  status?: PaymentStatus;
-
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  total!: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  discount?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  paidAmount?: number;
-
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  installmentsPaid?: number;
-
-  @IsOptional()
-  @Type(() => Date)
-  @IsDate()
-  lastPaymentAt?: Date;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => PaymentMethodItemDto)
-  methods!: PaymentMethodItemDto[];
-
-  @IsOptional()
-  isActive?: boolean = true;
-
-  @IsOptional()
-  tenantId?: string;
-
-  @IsOptional()
-  branchId?: string;
-}
-
 export class UpdatePaymentDto {
   @IsOptional()
-  @IsEnum(PaymentStatus)
-  status?: PaymentStatus;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  total?: number;
-
-  @IsOptional()
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   discount?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0)
-  paidAmount?: number;
-
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  installmentsPaid?: number;
-
-  @IsOptional()
-  @Type(() => Date)
-  @IsDate()
-  lastPaymentAt?: Date;
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => PaymentMethodItemDto)
   methods?: PaymentMethodItemDto[];
-
-  @IsOptional()
-  isActive?: boolean;
 }
 
 export class UpdatePaymentStatusDto {

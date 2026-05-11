@@ -1,11 +1,13 @@
 // src/modules/payments/repository/payment.repository.ts
+
 import { PaymentStatus } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
 
-const paymentDetailsInclude = {
+const paymentInclude = {
   sale: {
     select: {
       id: true,
+      saleDate: true,
       clientId: true,
       total: true,
       client: { select: { id: true, name: true } },
@@ -17,25 +19,10 @@ const paymentDetailsInclude = {
 } as const;
 
 export class PaymentRepository {
-  // ─── CRUD ─────────────────────────────────────────────────────────────────
-
   async create(data: any, userId?: string) {
     return prisma.payment.create({
       data: withAuditData(userId, data),
-      include: {
-        sale: {
-          select: {
-            id: true,
-            saleDate: true,
-            clientId: true,
-            total: true,
-            client: { select: { id: true, name: true } },
-          },
-        },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentInclude,
     });
   }
 
@@ -43,62 +30,23 @@ export class PaymentRepository {
     return prisma.payment.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: {
-        sale: {
-          select: {
-            id: true,
-            saleDate: true,
-            clientId: true,
-            total: true,
-            client: { select: { id: true, name: true } },
-          },
-        },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentInclude,
     });
   }
 
-  async findById(id: number) {
-    return prisma.payment.findUnique({
-      where: { id },
-      include: {
-        sale: {
-          select: {
-            id: true,
-            saleDate: true,
-            clientId: true,
-            total: true,
-            client: { select: { id: true, name: true } },
-          },
-        },
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+  async findById(id: number, tenantId?: string) {
+    return prisma.payment.findFirst({
+      where: { id, ...(tenantId ? { tenantId } : {}) },
+      include: paymentInclude,
     });
   }
 
   async findBySaleId(saleId: number) {
     return prisma.payment.findUnique({
       where: { saleId },
-      include: {
-        methods: {
-          include: { installmentItems: { orderBy: { sequence: "asc" } } },
-        },
-      },
+      include: paymentInclude,
     });
   }
-
-  async softDelete(id: number, userId?: string) {
-    return prisma.payment.update({
-      where: { id },
-      data: withAuditData(userId, { isActive: false }, true),
-    });
-  }
-
-  // ─── Listagem e Filtros ───────────────────────────────────────────────────
 
   async findAllByTenant(
     tenantId: string,
@@ -118,34 +66,28 @@ export class PaymentRepository {
     },
   ) {
     const skip = (page - 1) * limit;
-    const where: any = { tenantId };
-    where.sale = where.sale || {};
+    const where: any = { tenantId, sale: {} };
 
     if (filters?.status) where.status = filters.status;
+    if (filters?.method) where.methods = { some: { method: filters.method } };
 
     if (filters?.startDate || filters?.endDate) {
       where.sale.saleDate = {};
-      if (filters.startDate) where.sale.saleDate.gte = filters.startDate;
-      if (filters.endDate) where.sale.saleDate.lte = filters.endDate;
+      if (filters?.startDate) where.sale.saleDate.gte = filters.startDate;
+      if (filters?.endDate) where.sale.saleDate.lte = filters.endDate;
     }
 
     if (filters?.clientId || filters?.clientName) {
-      where.sale.client = where.sale.client || {};
-      if (filters.clientId) where.sale.client.id = filters.clientId;
-      if (filters.clientName)
+      where.sale.client = {};
+      if (filters?.clientId) where.sale.client.id = filters.clientId;
+      if (filters?.clientName)
         where.sale.client.name = { contains: filters.clientName };
     }
 
-    if (filters?.method) {
-      where.methods = { some: { method: filters.method } };
-    }
-
     if (filters?.isPartiallyPaid) {
-      where.AND = where.AND || [];
-      where.AND.push({
-        installmentsPaid: { gt: 0 },
-        status: PaymentStatus.PENDING,
-      });
+      where.AND = [
+        { installmentsPaid: { gt: 0 }, status: PaymentStatus.PENDING },
+      ];
     }
 
     if (filters?.hasOverdueInstallments) {
@@ -162,7 +104,6 @@ export class PaymentRepository {
       const today = new Date();
       const futureDate = new Date();
       futureDate.setDate(today.getDate() + filters.dueDaysAhead);
-
       where.methods = {
         some: {
           installmentItems: {
@@ -182,20 +123,7 @@ export class PaymentRepository {
         skip,
         take: limit,
         orderBy: { sale: { saleDate: filters?.sortOrder ?? "desc" } },
-        include: {
-          sale: {
-            select: {
-              id: true,
-              saleDate: true,
-              clientId: true,
-              total: true,
-              client: { select: { id: true, name: true } },
-            },
-          },
-          methods: {
-            include: { installmentItems: { orderBy: { sequence: "asc" } } },
-          },
-        },
+        include: paymentInclude,
       }),
       prisma.payment.count({ where }),
     ]);

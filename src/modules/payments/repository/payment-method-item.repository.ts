@@ -1,6 +1,11 @@
 // src/modules/payments/repository/payment-method-item.repository.ts
+
 import { PaymentMethod } from "@prisma/client";
 import { prisma, withAuditData } from "@/config/prisma-context";
+
+const methodItemInclude = {
+  installmentItems: { orderBy: { sequence: "asc" } },
+} as const;
 
 export class PaymentMethodItemRepository {
   async create(
@@ -19,7 +24,7 @@ export class PaymentMethodItemRepository {
   ) {
     return prisma.paymentMethodItem.create({
       data: withAuditData(userId, data),
-      include: { installmentItems: { orderBy: { sequence: "asc" } } },
+      include: methodItemInclude,
     });
   }
 
@@ -27,21 +32,21 @@ export class PaymentMethodItemRepository {
     return prisma.paymentMethodItem.update({
       where: { id },
       data: withAuditData(userId, data, true),
-      include: { installmentItems: { orderBy: { sequence: "asc" } } },
+      include: methodItemInclude,
     });
   }
 
   async findById(id: number) {
     return prisma.paymentMethodItem.findUnique({
       where: { id },
-      include: { installmentItems: { orderBy: { sequence: "asc" } } },
+      include: methodItemInclude,
     });
   }
 
   async findByPaymentId(paymentId: number) {
     return prisma.paymentMethodItem.findMany({
       where: { paymentId },
-      include: { installmentItems: { orderBy: { sequence: "asc" } } },
+      include: methodItemInclude,
     });
   }
 

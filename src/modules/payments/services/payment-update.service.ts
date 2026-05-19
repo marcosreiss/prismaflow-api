@@ -6,6 +6,7 @@ import { PaymentRepository } from "@/modules/payments/repository/payment.reposit
 import { PaymentIntegrityService } from "./payment-integrity.service";
 import { PaymentStatus, PaymentMethod } from "@prisma/client";
 import { prisma } from "@/config/prisma-context";
+import { getChangedFields } from "@/utils/changed-fields";
 
 const INSTANT_METHODS: PaymentMethod[] = [
   PaymentMethod.PIX,
@@ -17,6 +18,72 @@ const INSTANT_METHODS: PaymentMethod[] = [
 export class PaymentUpdateService {
   private repo = new PaymentRepository();
   private integrityService = new PaymentIntegrityService();
+
+  private buildComparablePaymentState(existing: NonNullable<Awaited<ReturnType<PaymentRepository["findById"]>>>) {
+    return {
+      discount: existing.discount ?? 0,
+      methods: existing.methods
+        .map((method) => ({
+          method: method.method,
+          amount: method.amount,
+          installments: method.installments ?? null,
+          firstDueDate: method.firstDueDate ?? null,
+          isPaid: method.isPaid,
+          paidAt: method.paidAt ?? null,
+        }))
+        .sort((a, b) => {
+          if (a.method !== b.method) return a.method.localeCompare(b.method);
+          return a.amount - b.amount;
+        }),
+    };
+  }
+
+  private getChangedPaymentFields(
+    payload: { discount?: number; methods?: any[] },
+    existing: NonNullable<Awaited<ReturnType<PaymentRepository["findById"]>>>,
+  ) {
+    const comparableCurrent = this.buildComparablePaymentState(existing);
+
+    const comparableIncoming = {
+      ...(payload.discount !== undefined ? { discount: payload.discount } : {}),
+      ...(payload.methods !== undefined
+        ? {
+            methods: payload.methods
+              .map((method) => ({
+                method: method.method,
+                amount: method.amount,
+                installments: method.installments ?? null,
+                firstDueDate: method.firstDueDate ?? null,
+                isPaid: INSTANT_METHODS.includes(method.method),
+                paidAt: INSTANT_METHODS.includes(method.method)
+                  ? (method.paidAt ?? null)
+                  : null,
+              }))
+              .sort((a, b) => {
+                if (a.method !== b.method) return a.method.localeCompare(b.method);
+                return a.amount - b.amount;
+              }),
+          }
+        : {}),
+    };
+
+    const changedComparable = getChangedFields<typeof comparableCurrent>(
+      comparableIncoming,
+      comparableCurrent,
+    );
+
+    const changedPayload: { discount?: number; methods?: any[] } = {};
+
+    if ("discount" in changedComparable) {
+      changedPayload.discount = payload.discount;
+    }
+
+    if ("methods" in changedComparable) {
+      changedPayload.methods = payload.methods;
+    }
+
+    return changedPayload;
+  }
 
   async update(req: Request) {
     const { id } = req.params;
@@ -44,9 +111,14 @@ export class PaymentUpdateService {
       );
     }
 
+    const changedFields = this.getChangedPaymentFields(
+      { discount, methods },
+      existing,
+    );
+
     // ─── Atualização de discount ──────────────────────────────────────────────
 
-    if (discount !== undefined) {
+    if (changedFields.discount !== undefined) {
       const hasPaidActivity =
         existing.paidAmount > 0 ||
         existing.methods.some((m) => m.isPaid) ||
@@ -62,7 +134,9 @@ export class PaymentUpdateService {
         );
       }
 
-      const newTotal = parseFloat((existing.subtotal - discount).toFixed(2));
+      const newTotal = parseFloat(
+        (existing.subtotal - changedFields.discount).toFixed(2),
+      );
 
       if (existing.methods.length > 0) {
         const sumMethods = existing.methods.reduce(
@@ -78,12 +152,18 @@ export class PaymentUpdateService {
         }
       }
 
-      await this.repo.update(Number(id), { discount, total: newTotal }, userId);
+      await this.repo.update(
+        Number(id),
+        { discount: changedFields.discount, total: newTotal },
+        userId,
+      );
     }
 
     // ─── Replace completo de methods[] ───────────────────────────────────────
 
-    if (methods?.length) {
+    const changedMethods = changedFields.methods;
+
+    if (changedMethods?.length) {
       const allInstallments = existing.methods.flatMap(
         (m) => m.installmentItems,
       );
@@ -100,7 +180,7 @@ export class PaymentUpdateService {
         );
       }
 
-      if (methods.length > 2) {
+      if (changedMethods.length > 2) {
         return ApiResponse.error(
           "O Payment aceita no máximo 2 métodos.",
           400,
@@ -108,7 +188,7 @@ export class PaymentUpdateService {
         );
       }
 
-      const installmentMethods = methods.filter(
+      const installmentMethods = changedMethods.filter(
         (m: any) => m.method === PaymentMethod.INSTALLMENT,
       );
       if (installmentMethods.length > 1) {
@@ -120,7 +200,7 @@ export class PaymentUpdateService {
       }
 
       const currentTotal = existing.total;
-      const sumMethods = methods.reduce(
+      const sumMethods = changedMethods.reduce(
         (sum: number, m: any) => sum + m.amount,
         0,
       );
@@ -132,7 +212,7 @@ export class PaymentUpdateService {
         );
       }
 
-      for (const method of methods) {
+      for (const method of changedMethods) {
         if (method.method === PaymentMethod.INSTALLMENT) {
           if (!method.installments || method.installments < 2) {
             return ApiResponse.error(
@@ -170,7 +250,7 @@ export class PaymentUpdateService {
           where: { paymentId: Number(id) },
         });
 
-        for (const method of methods) {
+        for (const method of changedMethods) {
           const isInstant = INSTANT_METHODS.includes(method.method);
           await tx.paymentMethodItem.create({
             data: {
@@ -185,7 +265,8 @@ export class PaymentUpdateService {
                 ? new Date(method.firstDueDate)
                 : null,
               isPaid: isInstant,
-              paidAt: isInstant ? new Date(method.paidAt) : null,
+              paidAt:
+                isInstant && method.paidAt ? new Date(method.paidAt) : null,
               tenantId,
               branchId,
               createdById: userId,

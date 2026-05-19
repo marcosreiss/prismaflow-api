@@ -14,9 +14,35 @@ import {
   UpdateItemProductDto,
 } from "./dtos/item-product.dto";
 import { AppError } from "@/utils/app-error";
+import { getChangedFields } from "@/utils/changed-fields";
 import logger from "@/utils/logger";
 
 type TxClient = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
+
+type ComparableSaleState = {
+  clientId: number;
+  saleDate: Date | null;
+  prescriptionId: number | null;
+  notes: string | null;
+  discount: number;
+  productItems: Array<{
+    productId: number;
+    quantity: number;
+    frameDetails: {
+      material: string | null;
+      reference: string | null;
+      color: string | null;
+    } | null;
+  }>;
+  serviceItems: Array<{
+    serviceId: number;
+  }>;
+  protocol: {
+    book: string | null;
+    page: number | null;
+    os: string | null;
+  } | null;
+};
 
 export class SaleService {
   private saleRepo = new SaleRepository();
@@ -570,6 +596,277 @@ export class SaleService {
     return productSubtotal + serviceSubtotal;
   }
 
+  private async getSalePaymentState(saleId: number, tenantId: string) {
+    const payment = await prisma.payment.findFirst({
+      where: {
+        saleId,
+        tenantId,
+      },
+      include: {
+        methods: {
+          select: {
+            id: true,
+            isPaid: true,
+            paidAt: true,
+            installmentItems: {
+              select: {
+                paidAt: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!payment) {
+      throw new AppError("Pagamento não encontrado para esta venda.", 404);
+    }
+
+    const hasPaidMethod = payment.methods.some(
+      (method) => method.isPaid || method.paidAt !== null,
+    );
+
+    const hasPaidInstallment = payment.methods.some((method) =>
+      method.installmentItems.some((installment) => installment.paidAt !== null),
+    );
+
+    const hasPaymentActivity =
+      payment.status !== "PENDING" ||
+      payment.paidAmount > 0 ||
+      hasPaidMethod ||
+      hasPaidInstallment;
+
+    return {
+      payment,
+      hasPaymentActivity,
+    };
+  }
+
+  private buildComparableSaleState(
+    sale: NonNullable<Awaited<ReturnType<SaleRepository["findById"]>>>,
+  ): ComparableSaleState {
+    return {
+      clientId: sale.clientId,
+      saleDate: sale.saleDate ?? null,
+      prescriptionId: sale.prescriptionId ?? null,
+      notes: sale.notes ?? null,
+      discount: sale.discount ?? 0,
+      productItems: sale.productItems
+        .map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          frameDetails: item.frameDetails
+            ? {
+                material: item.frameDetails.material,
+                reference: item.frameDetails.reference ?? null,
+                color: item.frameDetails.color ?? null,
+              }
+            : null,
+        }))
+        .sort((a, b) => a.productId - b.productId),
+      serviceItems: sale.serviceItems
+        .map((item) => ({
+          serviceId: item.serviceId,
+        }))
+        .sort((a, b) => a.serviceId - b.serviceId),
+      protocol: sale.protocol
+        ? {
+            book: sale.protocol.book ?? null,
+            page: sale.protocol.page ?? null,
+            os: sale.protocol.os ?? null,
+          }
+        : null,
+    };
+  }
+
+  private getChangedSaleFields(
+    body: UpdateSaleDto,
+    sale: NonNullable<Awaited<ReturnType<SaleRepository["findById"]>>>,
+  ) {
+    const comparableCurrent = this.buildComparableSaleState(sale);
+
+    const comparableIncoming: Partial<ComparableSaleState> = {
+      ...(body.clientId !== undefined ? { clientId: body.clientId } : {}),
+      ...(body.saleDate !== undefined ? { saleDate: body.saleDate } : {}),
+      ...(body.prescriptionId !== undefined
+        ? { prescriptionId: body.prescriptionId ?? null }
+        : {}),
+      ...(body.notes !== undefined ? { notes: body.notes ?? null } : {}),
+      ...(body.discount !== undefined ? { discount: body.discount } : {}),
+      ...(body.productItems !== undefined
+        ? {
+            productItems: body.productItems
+              .map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity ?? 1,
+                frameDetails: item.frameDetails
+                  ? {
+                      material: item.frameDetails.material ?? null,
+                      reference: item.frameDetails.reference ?? null,
+                      color: item.frameDetails.color ?? null,
+                    }
+                  : null,
+              }))
+              .sort((a, b) => a.productId - b.productId),
+          }
+        : {}),
+      ...(body.serviceItems !== undefined
+        ? {
+            serviceItems: body.serviceItems
+              .map((item) => ({
+                serviceId: item.serviceId,
+              }))
+              .sort((a, b) => a.serviceId - b.serviceId),
+          }
+        : {}),
+      ...(body.protocol !== undefined
+        ? {
+            protocol: body.protocol
+              ? {
+                  book: body.protocol.book ?? null,
+                  page: body.protocol.page ?? null,
+                  os: body.protocol.os ?? null,
+                }
+              : null,
+          }
+        : {}),
+    };
+
+    const changedComparable = getChangedFields<ComparableSaleState>(
+      comparableIncoming,
+      comparableCurrent,
+    );
+
+    const changedBody: Partial<UpdateSaleDto> = {};
+
+    if ("clientId" in changedComparable) changedBody.clientId = body.clientId;
+    if ("saleDate" in changedComparable) changedBody.saleDate = body.saleDate;
+    if ("prescriptionId" in changedComparable) {
+      changedBody.prescriptionId = body.prescriptionId;
+    }
+    if ("notes" in changedComparable) changedBody.notes = body.notes;
+    if ("discount" in changedComparable) changedBody.discount = body.discount;
+    if ("productItems" in changedComparable) {
+      changedBody.productItems = body.productItems;
+    }
+    if ("serviceItems" in changedComparable) {
+      changedBody.serviceItems = body.serviceItems;
+    }
+    if ("protocol" in changedComparable) changedBody.protocol = body.protocol;
+
+    return changedBody;
+  }
+
+  private ensureEditableFieldsWhenPaymentStarted(
+    sale: Awaited<ReturnType<SaleRepository["findById"]>>,
+    body: UpdateSaleDto,
+  ) {
+    if (body.discount !== undefined) {
+      throw new AppError(
+        "Não é possível alterar desconto da venda quando já existem pagamentos registrados.",
+        409,
+      );
+    }
+
+    if (body.serviceItems !== undefined) {
+      throw new AppError(
+        "Não é possível alterar os serviços da venda quando já existem pagamentos registrados.",
+        409,
+      );
+    }
+
+    if (body.productItems === undefined) {
+      return;
+    }
+
+    const currentItems = sale?.productItems ?? [];
+
+    if (body.productItems.length !== currentItems.length) {
+      throw new AppError(
+        "Não é possível alterar os produtos da venda quando já existem pagamentos registrados.",
+        409,
+      );
+    }
+
+    const currentByProductId = new Map(
+      currentItems.map((item) => [item.productId, item]),
+    );
+
+    for (const item of body.productItems) {
+      const currentItem = currentByProductId.get(item.productId);
+
+      if (!currentItem || (item.quantity ?? 1) !== currentItem.quantity) {
+        throw new AppError(
+          "Não é possível alterar os produtos ou quantidades da venda quando já existem pagamentos registrados.",
+          409,
+        );
+      }
+    }
+  }
+
+  private async syncFrameDetailsOnly(
+    saleId: number,
+    items: UpdateItemProductDto[],
+    sale: NonNullable<Awaited<ReturnType<SaleRepository["findById"]>>>,
+    tenantId: string,
+    branchId: string,
+    userId: string,
+    tx: TxClient,
+  ) {
+    const currentItemsByProductId = new Map(
+      sale.productItems.map((item) => [item.productId, item]),
+    );
+
+    for (const item of items) {
+      const existingItem = currentItemsByProductId.get(item.productId);
+
+      if (!existingItem) {
+        throw new AppError("Item de produto da venda não encontrado.", 404);
+      }
+
+      if (existingItem.product.category !== "FRAME") {
+        continue;
+      }
+
+      if (!item.frameDetails) {
+        continue;
+      }
+
+      if (item.frameDetails.material === undefined) {
+        throw new AppError(
+          "O campo material é obrigatório para atualizar frameDetails.",
+          400,
+        );
+      }
+
+      if (existingItem.frameDetails) {
+        await tx.frameDetails.update({
+          where: { id: existingItem.frameDetails.id },
+          data: {
+            material: item.frameDetails.material,
+            reference: item.frameDetails.reference,
+            color: item.frameDetails.color,
+            updatedById: userId,
+          },
+        });
+        continue;
+      }
+
+      await tx.frameDetails.create({
+        data: {
+          itemProductId: existingItem.id,
+          material: item.frameDetails.material,
+          reference: item.frameDetails.reference,
+          color: item.frameDetails.color,
+          tenantId,
+          branchId,
+          createdById: userId,
+          updatedById: userId,
+        },
+      });
+    }
+  }
+
   async create(req: Request) {
     const { userId, tenantId, branchId } = this.extractUser(req);
     const body = req.body as CreateSaleDto;
@@ -691,70 +988,50 @@ export class SaleService {
       throw new AppError("Venda não encontrada.", 404);
     }
 
-    const payment = await prisma.payment.findFirst({
-      where: {
-        saleId,
-        tenantId,
-      },
-    });
+    const changedFields = this.getChangedSaleFields(body, sale);
 
-    if (!payment) {
-      throw new AppError("Pagamento não encontrado para esta venda.", 404);
+    const { hasPaymentActivity } = await this.getSalePaymentState(
+      saleId,
+      tenantId,
+    );
+
+    if (hasPaymentActivity) {
+      this.ensureEditableFieldsWhenPaymentStarted(sale, changedFields);
     }
 
-    const hasPaidMethod = await prisma.paymentMethodItem.findFirst({
-      where: {
-        paymentId: payment.id,
-        isPaid: true,
-      },
-    });
+    const nextClientId = changedFields.clientId ?? sale.clientId;
 
-    const hasPaidInstallment = await prisma.paymentInstallment.findFirst({
-      where: {
-        paymentMethodItem: {
-          paymentId: payment.id,
-        },
-        paidAt: {
-          not: null,
-        },
-      },
-    });
-
-    if (
-      payment.status !== "PENDING" ||
-      payment.paidAmount > 0 ||
-      hasPaidMethod ||
-      hasPaidInstallment
-    ) {
-      throw new AppError(
-        "Venda não pode ser editada porque o pagamento já foi iniciado, confirmado ou cancelado.",
-        409,
-      );
+    if (changedFields.clientId) {
+      await this.validateClient(changedFields.clientId, tenantId);
     }
 
-    const nextClientId = body.clientId ?? sale.clientId;
-
-    if (body.clientId) {
-      await this.validateClient(body.clientId, tenantId);
+    if (changedFields.saleDate) {
+      this.validateSaleDate(changedFields.saleDate);
     }
 
-    if (body.saleDate) {
-      this.validateSaleDate(body.saleDate);
-    }
-
-    if (body.prescriptionId) {
+    if (changedFields.prescriptionId) {
       await this.validatePrescription(
-        body.prescriptionId,
+        changedFields.prescriptionId,
         nextClientId,
         tenantId,
       );
     }
 
     return prisma.$transaction(async (tx) => {
-      if (body.productItems !== undefined) {
+      if (changedFields.productItems !== undefined && hasPaymentActivity) {
+        await this.syncFrameDetailsOnly(
+          saleId,
+          changedFields.productItems,
+          sale,
+          tenantId,
+          branchId,
+          userId,
+          tx,
+        );
+      } else if (changedFields.productItems !== undefined) {
         await this.replaceProductItems(
           saleId,
-          body.productItems,
+          changedFields.productItems,
           tenantId,
           branchId,
           userId,
@@ -762,10 +1039,10 @@ export class SaleService {
         );
       }
 
-      if (body.serviceItems !== undefined) {
+      if (changedFields.serviceItems !== undefined) {
         await this.replaceServiceItems(
           saleId,
-          body.serviceItems,
+          changedFields.serviceItems,
           tenantId,
           branchId,
           userId,
@@ -773,10 +1050,10 @@ export class SaleService {
         );
       }
 
-      if (body.protocol) {
+      if (changedFields.protocol) {
         await this.upsertProtocol(
           saleId,
-          body.protocol,
+          changedFields.protocol,
           tenantId,
           branchId,
           userId,
@@ -784,20 +1061,24 @@ export class SaleService {
         );
       }
 
-      const subtotal = await this.calculateCurrentSaleSubtotal(saleId, tx);
-      const discount = body.discount ?? sale.discount ?? 0;
+      const subtotal = hasPaymentActivity
+        ? (sale.subtotal ?? 0)
+        : await this.calculateCurrentSaleSubtotal(saleId, tx);
+      const discount = hasPaymentActivity
+        ? (sale.discount ?? 0)
+        : (changedFields.discount ?? sale.discount ?? 0);
       const total = subtotal - discount;
 
       await tx.sale.update({
         where: { id: saleId },
         data: {
           clientId: nextClientId,
-          saleDate: body.saleDate ?? sale.saleDate ?? undefined,
+          saleDate: changedFields.saleDate ?? sale.saleDate ?? undefined,
           prescriptionId:
-            body.prescriptionId !== undefined
-              ? body.prescriptionId
+            changedFields.prescriptionId !== undefined
+              ? changedFields.prescriptionId
               : sale.prescriptionId,
-          notes: body.notes ?? sale.notes,
+          notes: changedFields.notes ?? sale.notes,
           subtotal,
           discount,
           total,
@@ -805,14 +1086,16 @@ export class SaleService {
         },
       });
 
-      await tx.payment.update({
-        where: { saleId },
-        data: {
-          subtotal: total,
-          total,
-          updatedById: userId,
-        },
-      });
+      if (!hasPaymentActivity) {
+        await tx.payment.update({
+          where: { saleId },
+          data: {
+            subtotal: total,
+            total,
+            updatedById: userId,
+          },
+        });
+      }
 
       const updatedSale = await this.saleRepo.findById(saleId, tenantId);
 

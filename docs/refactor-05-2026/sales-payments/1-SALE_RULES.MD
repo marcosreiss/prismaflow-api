@@ -2,7 +2,7 @@
 
 ## 1. Visão Geral
 
-Uma `Sale` representa uma venda completa na ótica. Ela agrega itens de produto, itens de serviço e, opcionalmente, um protocolo de OS. Ao ser criada, um `Payment` é gerado automaticamente e vinculado a ela. Sale e Payment são entidades interdependentes — o ciclo de vida de uma afeta diretamente a outra.
+Uma `Sale` representa uma venda completa na ótica. Ela agrega itens de produto (com detalhes de uma armação - frame details), itens de serviço e, opcionalmente, um protocolo de OS. Ao ser criada, um `Payment` é gerado automaticamente e vinculado a ela. Sale e Payment são entidades interdependentes — o ciclo de vida de uma afeta diretamente a outra.
 
 ---
 
@@ -69,41 +69,73 @@ A criação inteira (Sale + itens + frameDetails + protocolo + Payment) ocorre d
 
 ## 4. Edição de Sale (`PUT /api/sales/:id`)
 
-### 4.1 Pré-condições de bloqueio
+### 4.1 Estado de pagamento observado na edição
 
-A edição é **bloqueada** se qualquer uma das condições abaixo for verdadeira:
+Antes de aplicar as regras de edição, a API verifica se já existe atividade financeira na venda.
+Essa condição é verdadeira se qualquer uma das situações abaixo ocorrer:
 
 | Condição                                     | Motivo                                          |
 |----------------------------------------------|-------------------------------------------------|
 | Payment não existe                           | Inconsistência — venda sem pagamento vinculado  |
-| `payment.status !== PENDING`                 | Venda confirmada ou cancelada é imutável        |
+| `payment.status !== PENDING`                 | Pagamento já foi confirmado ou cancelado        |
 | `payment.paidAmount > 0`                     | Já houve recebimento registrado                 |
 | Algum `PaymentMethodItem.isPaid === true`    | Método à vista já foi quitado                   |
 | Alguma `PaymentInstallment.paidAt !== null`  | Parcela já foi quitada                          |
 
-Se a edição for bloqueada e o usuário precisar corrigir a venda, o caminho é **hard delete da Sale** (ver Seção 6) e criação de uma nova venda.
+Quando nenhuma dessas condições ocorre, a edição segue livremente.
+Quando alguma ocorre, a edição não é bloqueada por completo: apenas mutações que podem gerar inconsistência financeira passam a ser bloqueadas.
 
 ### 4.2 Campos editáveis
 
-#### Sempre editáveis (sem restrição de estado do Payment)
+#### Sempre editáveis, inclusive com pagamento já iniciado
 
 | Campo            | Observação                         |
 |------------------|------------------------------------|
+| `clientId`       | Novo cliente deve pertencer ao tenant |
 | `saleDate`       | Não pode ser futura                |
 | `notes`          | Texto livre                        |
 | `prescriptionId` | Deve pertencer ao cliente e tenant |
 | `protocol`       | Criado se não existir, atualizado se já existir |
+| `productItems[].frameDetails` | Permitido apenas se os mesmos produtos e quantidades forem mantidos |
 
-#### Editáveis apenas se Payment estiver PENDING e sem pagamento registrado
+#### Editáveis apenas se não houver atividade de pagamento
 
 | Campo          | Observação                                         |
 |----------------|----------------------------------------------------|
-| `clientId`     | Novo cliente deve pertencer ao tenant              |
 | `discount`     | >= 0                                               |
 | `productItems` | Substituição completa da lista (replace strategy)  |
 | `serviceItems` | Substituição completa da lista (replace strategy)  |
 
-### 4.3 Recálculo automático após edição
+#### Restrições quando já existe atividade de pagamento
+
+- `discount` não pode ser alterado
+- `serviceItems` não podem ser alterados
+- `productItems` não podem trocar produtos nem quantidades
+- `productItems` podem ser enviados no payload completo, mas só são aceitos quando a diferença real estiver limitada a `frameDetails`
+
+Se o usuário precisar corrigir dados financeiros após pagamento iniciado, o caminho continua sendo recriar a venda ou corrigir o Payment diretamente, conforme o caso.
+
+### 4.3 Diff de payload antes das regras
+
+O frontend pode enviar o payload completo da venda, mesmo sem mudanças reais.
+
+Por isso, antes de aplicar bloqueios ou mutações, a API:
+
+1. carrega o estado persistido da `Sale`
+2. monta uma versão comparável do payload e do registro atual
+3. compara campo a campo
+4. segue o fluxo usando apenas os campos realmente alterados
+
+Isso evita bloqueios falsos positivos quando o frontend reenviou `discount`, `productItems`, `serviceItems` ou `protocol` sem alterações reais.
+
+Na comparação:
+
+- datas são normalizadas
+- arrays são comparados pelo conteúdo normalizado
+- `productItems` e `serviceItems` são normalizados por ordem estável
+- `frameDetails` entra na comparação de `productItems`
+
+### 4.4 Recálculo automático após edição
 
 Sempre que `productItems`, `serviceItems` ou `discount` forem alterados:
 
@@ -116,7 +148,9 @@ payment.total    = payment.subtotal - payment.discount
 
 O `payment.discount` não é alterado pela edição da Sale — ele é exclusivo do fluxo de pagamento.
 
-### 4.4 Gestão de estoque na edição
+Se a edição ocorrer com atividade de pagamento já existente, `subtotal`, `discount`, `total` e os valores do `Payment` permanecem inalterados. Nesse cenário, apenas campos não financeiros são persistidos.
+
+### 4.5 Gestão de estoque na edição
 
 A estratégia é **replace completo** com diff de estoque:
 
@@ -127,7 +161,9 @@ A estratégia é **replace completo** com diff de estoque:
    - Quantidade diminuiu → restaura a diferença
 4. Para itens sem mudança de produto e sem mudança de quantity: estoque não é tocado
 
-### 4.5 Atomicidade
+Quando já existe atividade de pagamento, não há replace completo de `productItems`: a API apenas sincroniza `frameDetails` dos itens já existentes, sem tocar em estoque.
+
+### 4.6 Atomicidade
 
 Toda a edição (Sale + itens + frameDetails + protocolo + ajuste de estoque + atualização do Payment) ocorre dentro de `prisma.$transaction`.
 

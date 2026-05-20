@@ -54,6 +54,33 @@ dentro da mesma `prisma.$transaction`, com os seguintes valores iniciais:
 Este é o endpoint principal pelo qual o usuário registra como a venda será paga.
 Ele permite atualizar `discount` e/ou `methods[]`.
 
+### 4.0 Diff de payload antes das regras
+
+O frontend pode reenviar o objeto inteiro do pagamento, mesmo quando nada foi alterado.
+
+Por isso, antes de aplicar validações de negócio, a API:
+
+1. carrega o `Payment` persistido com seus métodos
+2. monta uma versão comparável do estado atual
+3. compara o payload recebido campo a campo
+4. executa o restante do fluxo usando apenas os campos realmente alterados
+
+Hoje esse diff cobre:
+
+- `discount`
+- `methods[]`
+
+Na comparação de `methods[]`, a API considera apenas os campos editáveis do método:
+
+- `method`
+- `amount`
+- `installments`
+- `firstDueDate`
+- `isPaid`
+- `paidAt`
+
+As parcelas geradas automaticamente (`PaymentInstallment`) não entram nesse diff, porque são derivadas da configuração do método e não fazem parte do payload de atualização do Payment.
+
 ### 4.1 Pré-condições de bloqueio total
 
 A atualização é **completamente bloqueada** se:
@@ -68,6 +95,7 @@ A atualização é **completamente bloqueada** se:
 
 - Permitida enquanto `status === PENDING` e sem pagamentos registrados
   (`paidAmount === 0`, nenhum método com `isPaid: true`, nenhuma parcela com `paidAt`)
+- Só entra nessa validação se `discount` realmente tiver mudado em relação ao valor persistido
 - Após atualizar `discount`, `payment.total` é recalculado:
   ```
   payment.total = payment.subtotal - payment.discount
@@ -79,6 +107,8 @@ A atualização é **completamente bloqueada** se:
 
 Quando `methods[]` é enviado, os métodos existentes são **completamente substituídos**
 (replace strategy), desde que nenhum método ou parcela já tenha sido pago.
+
+Se o frontend reenviar `methods[]` sem alterações reais, nenhum replace é executado.
 
 #### Regras de substituição
 
@@ -111,6 +141,8 @@ Quando `methods[]` é enviado, os métodos existentes são **completamente subst
 3. Criar os novos `PaymentMethodItem`
 4. Para cada método `INSTALLMENT`, gerar as parcelas automaticamente
 5. Recalcular `paidAmount` e `status` do Payment
+
+Esse processo só acontece quando o diff detectar mudança real em `methods[]`.
 
 #### Recálculo automático após registro de métodos
 

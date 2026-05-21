@@ -86,6 +86,50 @@ export class SaleService {
     }
   }
 
+  private normalizeSaleDateForPersistence(
+    saleDate: Date | string | null | undefined,
+    context: {
+      saleId: number;
+      source: "changedFields" | "storedSale";
+    },
+  ) {
+    if (saleDate == null) {
+      return undefined;
+    }
+
+    if (saleDate instanceof Date) {
+      if (Number.isNaN(saleDate.getTime())) {
+        logger.error("Sale update received invalid Date instance for saleDate.", {
+          saleId: context.saleId,
+          source: context.source,
+        });
+        throw new AppError("Data da venda inválida.", 400);
+      }
+
+      return saleDate;
+    }
+
+    const normalizedDate = new Date(saleDate);
+
+    if (Number.isNaN(normalizedDate.getTime())) {
+      logger.error("Sale update could not parse saleDate string.", {
+        saleId: context.saleId,
+        source: context.source,
+        saleDate,
+      });
+      throw new AppError("Data da venda inválida.", 400);
+    }
+
+    logger.debug("Sale update normalized string saleDate before persistence.", {
+      saleId: context.saleId,
+      source: context.source,
+      originalSaleDate: saleDate,
+      normalizedSaleDate: normalizedDate.toISOString(),
+    });
+
+    return normalizedDate;
+  }
+
   private async validateClient(clientId: number, tenantId: string) {
     const client = await this.clientRepo.findById(clientId, tenantId);
 
@@ -1071,10 +1115,29 @@ export class SaleService {
 
       const normalizedSaleDate =
         changedFields.saleDate !== undefined
-          ? changedFields.saleDate instanceof Date
-            ? changedFields.saleDate
-            : new Date(changedFields.saleDate)
-          : sale.saleDate ?? undefined;
+          ? this.normalizeSaleDateForPersistence(changedFields.saleDate, {
+            saleId,
+            source: "changedFields",
+          })
+          : this.normalizeSaleDateForPersistence(sale.saleDate, {
+            saleId,
+            source: "storedSale",
+          });
+
+      logger.debug("Prepared sale payload for update.", {
+        saleId,
+        incomingSaleDate:
+          changedFields.saleDate instanceof Date
+            ? changedFields.saleDate.toISOString()
+            : changedFields.saleDate,
+        storedSaleDate:
+          sale.saleDate instanceof Date ? sale.saleDate.toISOString() : sale.saleDate,
+        normalizedSaleDate:
+          normalizedSaleDate instanceof Date
+            ? normalizedSaleDate.toISOString()
+            : normalizedSaleDate,
+        changedFieldKeys: Object.keys(changedFields),
+      });
 
 
       await tx.sale.update({

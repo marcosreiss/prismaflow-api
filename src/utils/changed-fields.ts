@@ -1,3 +1,4 @@
+// src/utils/changed-fields.ts
 type Normalizer = (value: unknown) => unknown;
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {

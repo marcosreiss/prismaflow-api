@@ -657,10 +657,10 @@ export class SaleService {
           quantity: item.quantity,
           frameDetails: item.frameDetails
             ? {
-                material: item.frameDetails.material,
-                reference: item.frameDetails.reference ?? null,
-                color: item.frameDetails.color ?? null,
-              }
+              material: item.frameDetails.material,
+              reference: item.frameDetails.reference ?? null,
+              color: item.frameDetails.color ?? null,
+            }
             : null,
         }))
         .sort((a, b) => a.productId - b.productId),
@@ -671,10 +671,10 @@ export class SaleService {
         .sort((a, b) => a.serviceId - b.serviceId),
       protocol: sale.protocol
         ? {
-            book: sale.protocol.book ?? null,
-            page: sale.protocol.page ?? null,
-            os: sale.protocol.os ?? null,
-          }
+          book: sale.protocol.book ?? null,
+          page: sale.protocol.page ?? null,
+          os: sale.protocol.os ?? null,
+        }
         : null,
     };
   }
@@ -695,40 +695,40 @@ export class SaleService {
       ...(body.discount !== undefined ? { discount: body.discount } : {}),
       ...(body.productItems !== undefined
         ? {
-            productItems: body.productItems
-              .map((item) => ({
-                productId: item.productId,
-                quantity: item.quantity ?? 1,
-                frameDetails: item.frameDetails
-                  ? {
-                      material: item.frameDetails.material ?? null,
-                      reference: item.frameDetails.reference ?? null,
-                      color: item.frameDetails.color ?? null,
-                    }
-                  : null,
-              }))
-              .sort((a, b) => a.productId - b.productId),
-          }
+          productItems: body.productItems
+            .map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity ?? 1,
+              frameDetails: item.frameDetails
+                ? {
+                  material: item.frameDetails.material ?? null,
+                  reference: item.frameDetails.reference ?? null,
+                  color: item.frameDetails.color ?? null,
+                }
+                : null,
+            }))
+            .sort((a, b) => a.productId - b.productId),
+        }
         : {}),
       ...(body.serviceItems !== undefined
         ? {
-            serviceItems: body.serviceItems
-              .map((item) => ({
-                serviceId: item.serviceId,
-              }))
-              .sort((a, b) => a.serviceId - b.serviceId),
-          }
+          serviceItems: body.serviceItems
+            .map((item) => ({
+              serviceId: item.serviceId,
+            }))
+            .sort((a, b) => a.serviceId - b.serviceId),
+        }
         : {}),
       ...(body.protocol !== undefined
         ? {
-            protocol: body.protocol
-              ? {
-                  book: body.protocol.book ?? null,
-                  page: body.protocol.page ?? null,
-                  os: body.protocol.os ?? null,
-                }
-              : null,
-          }
+          protocol: body.protocol
+            ? {
+              book: body.protocol.book ?? null,
+              page: body.protocol.page ?? null,
+              os: body.protocol.os ?? null,
+            }
+            : null,
+        }
         : {}),
     };
 
@@ -1069,11 +1069,19 @@ export class SaleService {
         : (changedFields.discount ?? sale.discount ?? 0);
       const total = subtotal - discount;
 
+      const normalizedSaleDate =
+        changedFields.saleDate !== undefined
+          ? changedFields.saleDate instanceof Date
+            ? changedFields.saleDate
+            : new Date(changedFields.saleDate)
+          : sale.saleDate ?? undefined;
+
+
       await tx.sale.update({
         where: { id: saleId },
         data: {
           clientId: nextClientId,
-          saleDate: changedFields.saleDate ?? sale.saleDate ?? undefined,
+          saleDate: normalizedSaleDate,
           prescriptionId:
             changedFields.prescriptionId !== undefined
               ? changedFields.prescriptionId

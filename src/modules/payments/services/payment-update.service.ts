@@ -7,6 +7,7 @@ import { PaymentIntegrityService } from "./payment-integrity.service";
 import { PaymentStatus, PaymentMethod } from "@prisma/client";
 import { prisma } from "@/config/prisma-context";
 import { getChangedFields } from "@/utils/changed-fields";
+import { AppError } from "@/utils/app-error";
 
 const INSTANT_METHODS: PaymentMethod[] = [
   PaymentMethod.PIX,
@@ -48,22 +49,22 @@ export class PaymentUpdateService {
       ...(payload.discount !== undefined ? { discount: payload.discount } : {}),
       ...(payload.methods !== undefined
         ? {
-            methods: payload.methods
-              .map((method) => ({
-                method: method.method,
-                amount: method.amount,
-                installments: method.installments ?? null,
-                firstDueDate: method.firstDueDate ?? null,
-                isPaid: INSTANT_METHODS.includes(method.method),
-                paidAt: INSTANT_METHODS.includes(method.method)
-                  ? (method.paidAt ?? null)
-                  : null,
-              }))
-              .sort((a, b) => {
-                if (a.method !== b.method) return a.method.localeCompare(b.method);
-                return a.amount - b.amount;
-              }),
-          }
+          methods: payload.methods
+            .map((method) => ({
+              method: method.method,
+              amount: method.amount,
+              installments: method.installments ?? null,
+              firstDueDate: method.firstDueDate ?? null,
+              isPaid: INSTANT_METHODS.includes(method.method),
+              paidAt: INSTANT_METHODS.includes(method.method)
+                ? (method.paidAt ?? null)
+                : null,
+            }))
+            .sort((a, b) => {
+              if (a.method !== b.method) return a.method.localeCompare(b.method);
+              return a.amount - b.amount;
+            }),
+        }
         : {}),
     };
 
@@ -86,6 +87,7 @@ export class PaymentUpdateService {
   }
 
   async update(req: Request) {
+    // throw new AppError("Atualização de pagamento desabilitada temporariamente.", 503);
     const { id } = req.params;
     const { sub: userId, tenantId, branchId } = req.user!;
     const { discount, methods } = req.body;

@@ -7,6 +7,7 @@
 - respostas de sucesso usam majoritariamente `ApiResponse` ou `PagedResponse`
 - validação estrutural é feita por DTOs
 - regras de negócio adicionais são aplicadas nos services
+- `tenantId` e, quando aplicável, `branchId` são derivados do token
 
 ## Auth
 
@@ -43,7 +44,7 @@ Regras:
 - usuário precisa existir
 - senha deve conferir
 - se `ADMIN` não tiver `branchId`:
-  - com uma filial disponível, login final é emitido diretamente
+  - com uma filial disponível, o token final é emitido diretamente
   - com múltiplas filiais, retorna `tempToken` e lista de filiais
 
 ### `POST /api/auth/branch-selection`
@@ -58,6 +59,7 @@ Regras:
 
 - token deve conter `isTemp`
 - token temporário deve estar válido
+- a filial escolhida precisa pertencer ao tenant do usuário
 - após seleção, retorna token JWT final com `branchId`
 
 ### `PUT /api/auth/change-password`
@@ -78,13 +80,12 @@ Body:
 - `name`
 - `email`
 - `password`
-- `role`
-- `tenantId`
-- `branchId`
+- `role` (`MANAGER` ou `EMPLOYEE`)
 
-Observação:
+Regras:
 
-- este endpoint convive com o módulo `/api/users`, que também cria usuários por outra trilha
+- este endpoint convive com o módulo `/api/users`
+- `tenantId` e `branchId` não vêm do body; saem do token do administrador autenticado
 
 ## Branches
 
@@ -158,6 +159,10 @@ Body:
 - `name`
 - `isActive` opcional
 
+Regras:
+
+- valida duplicidade de nome dentro do tenant
+
 ### `GET /api/brands`
 
 Query:
@@ -168,7 +173,7 @@ Query:
 
 ### `GET /api/brands/:id`
 
-Busca marca por ID.
+Busca marca por ID dentro do tenant.
 
 ### `PUT /api/brands/:id`
 
@@ -179,9 +184,11 @@ Body:
 
 ### `DELETE /api/brands/:id`
 
-Observação:
+Regras:
 
-- a exclusão é física no repository, não soft delete
+- marca precisa pertencer ao tenant
+- exclusão é bloqueada quando há produtos vinculados
+- sem vínculos, a remoção é física
 
 ## Products
 
@@ -204,6 +211,7 @@ Body principal:
 Regras:
 
 - `brandId` é obrigatório
+- `brandId` precisa pertencer ao mesmo tenant do usuário
 - `tenantId` e `branchId` são definidos pelo token
 - não permite duplicidade de nome + marca no tenant
 
@@ -225,13 +233,18 @@ Regra:
 
 ### `PUT /api/products/:id`
 
-Atualiza campos opcionais do produto.
+Regras:
+
+- produto precisa existir no tenant
+- se `brandId` mudar, a nova marca precisa pertencer ao tenant
 
 ### `DELETE /api/products/:id`
 
-Regra:
+Regras:
 
 - produto precisa pertencer ao tenant do usuário
+- se houver histórico em `itemProduct`, faz `softDelete`
+- se não houver vínculos, faz `hardDelete`
 
 ### `GET /api/products/:id/stock`
 
@@ -253,7 +266,7 @@ Body:
 Regras:
 
 - usuário precisa ter `branchId`
-- `branchId` enviado pelo cliente é ignorado
+- `branchId` do cliente é ignorado; vale o do token
 - nome não pode duplicar no tenant
 
 ### `GET /api/optical-services`
@@ -266,13 +279,22 @@ Query:
 
 ### `GET /api/optical-services/:id`
 
+Busca serviço por ID dentro do tenant.
+
 ### `PUT /api/optical-services/:id`
+
+Regras:
+
+- serviço precisa existir no tenant
+- se `name` mudar, o novo nome não pode conflitar no tenant
 
 ### `DELETE /api/optical-services/:id`
 
-Regra geral:
+Regras:
 
 - serviço deve pertencer ao tenant
+- com histórico em venda, usa `softDelete`
+- sem vínculos, usa `hardDelete`
 
 ## Clients
 
@@ -296,6 +318,7 @@ Body principal:
 Regras:
 
 - `tenantId` e `branchId` vêm do token
+- usuário precisa ter `branchId`
 - `bornDate` é convertida para `Date`
 - CPF deve ser único no tenant
 - trata colisão `P2002` para cenários concorrentes
@@ -313,6 +336,11 @@ Query:
 
 - `name` obrigatório
 
+Regras:
+
+- `EMPLOYEE` pesquisa apenas clientes da própria filial
+- `ADMIN` e `MANAGER` pesquisam no tenant
+
 ### `GET /api/clients/:clientId/prescriptions`
 
 Retorna prescrições do cliente.
@@ -324,6 +352,7 @@ Query:
 - `page`
 - `limit`
 - `date` opcional no formato `YYYY-MM-DD`
+- `branchId` opcional para `ADMIN` e `MANAGER`
 
 ### `GET /api/clients`
 
@@ -334,9 +363,27 @@ Query:
 - `search`
 - `branchId` opcional
 
+Regras:
+
+- `EMPLOYEE` enxerga apenas a própria filial
+- `ADMIN` e `MANAGER` podem filtrar por `branchId`
+
 ### `GET /api/clients/:id`
 
 Busca detalhada do cliente.
+
+### `DELETE /api/clients/:id`
+
+Papéis:
+
+- `ADMIN`
+- `MANAGER`
+
+Regras:
+
+- cliente precisa existir no tenant
+- com vínculos históricos, usa `softDelete`
+- sem vínculos, usa `hardDelete`
 
 ## Prescriptions
 
@@ -353,8 +400,14 @@ Body principal:
 Regras:
 
 - `tenantId` e `branchId` são injetados pelo service
+- usuário precisa ter `branchId`
+- cliente precisa pertencer ao tenant
 
 ### `PUT /api/prescriptions/:id`
+
+Regras:
+
+- receita precisa existir no tenant
 
 ### `GET /api/prescriptions/expired`
 
@@ -363,8 +416,11 @@ Query:
 - `page`
 - `limit`
 - `date` opcional
+- `branchId` opcional para `ADMIN` e `MANAGER`
 
 ### `GET /api/prescriptions/:id`
+
+Busca receita por ID.
 
 ### `DELETE /api/prescriptions/:id`
 
@@ -373,6 +429,11 @@ Papéis:
 - `ADMIN`
 - `MANAGER`
 
+Regras:
+
+- com vendas vinculadas, usa `softDelete`
+- sem vínculos, usa `hardDelete`
+
 ### `GET /api/prescriptions`
 
 Query:
@@ -380,6 +441,11 @@ Query:
 - `page`
 - `limit`
 - `clientId` opcional
+- `branchId` opcional para `ADMIN` e `MANAGER`
+
+Regras:
+
+- `EMPLOYEE` fica restrito à própria filial
 
 ## Sales
 
@@ -393,21 +459,21 @@ Body principal:
 - `saleDate`
 - `prescriptionId` opcional
 - `notes`
-- `subtotal`
 - `discount`
-- `total`
 - `productItems[]`
 - `serviceItems[]`
 - `protocol` opcional
 
 Regras centrais:
 
-- cliente deve existir
+- cliente deve existir no tenant
 - deve haver ao menos um produto ou serviço
 - data da venda não pode ser futura
-- produto precisa existir
-- serviço precisa existir
+- produto precisa existir no tenant
+- serviço precisa existir no tenant
+- prescrição, quando enviada, precisa pertencer ao cliente e ao tenant
 - estoque do produto deve ser suficiente
+- subtotal e total são calculados pela API
 - venda cria automaticamente um `Payment` inicial `PENDING`
 - se produto for `FRAME` e houver `frameDetails`, cria detalhes da armação
 
@@ -424,17 +490,21 @@ Query:
 
 Retorna venda detalhada com cliente, protocolo, prescrição e itens.
 
+### `GET /api/sales/by-client/:clientId`
+
+Lista as vendas do cliente dentro do tenant autenticado.
+
 ### `PUT /api/sales/:id`
 
 Regras centrais:
 
 - venda deve existir
 - payment relacionado deve existir
-- venda só pode ser editada se o payment estiver `PENDING` e sem pagamento iniciado
-- ao alterar itens de produto, o estoque é recalculado
+- após início de atividade financeira, a edição fica restrita a campos compatíveis
+- sem atividade financeira, a troca de itens recalcula subtotal, total e estoque
 - itens removidos restauram estoque
 - atualiza ou cria protocolo
-- sincroniza `total` e `discount` do payment
+- sincroniza valores do payment quando permitido
 - usa transação Prisma
 
 ### `DELETE /api/sales/:id`
@@ -443,36 +513,17 @@ Regras centrais:
 
 - venda deve existir
 - payment da venda deve existir
-- não pode excluir venda já paga ou parcialmente paga
 - restaura estoque dos itens
-- remove frame details, itens de serviço, protocolo e payment
-- faz soft delete da venda (`isActive = false`)
+- remove frame details, itens de serviço, protocolo, métodos, parcelas e payment
+- remove fisicamente a venda e dependências em cascata
 
 ## Payments
 
 Todos os endpoints exigem autenticação.
 
-### `POST /api/payments`
+Observação central:
 
-Body principal:
-
-- `saleId`
-- `total`
-- `discount` opcional
-- `methods[]`
-
-Cada item de `methods[]`:
-
-- `method`
-- `amount`
-- `installments` opcional
-- `firstDueDate` opcional
-- `paidAt` opcional
-
-Regras:
-
-- soma dos métodos deve ser igual ao total
-- métodos parcelados geram parcelas automaticamente
+- `Payment` não é criado manualmente por endpoint; ele nasce automaticamente com a venda
 
 ### `GET /api/payments`
 
@@ -489,6 +540,7 @@ Query suportada:
 - `hasOverdueInstallments`
 - `isPartiallyPaid`
 - `dueDaysAhead`
+- `sortOrder`
 
 ### `GET /api/payments/by-sale/:saleId`
 
@@ -509,29 +561,41 @@ Regras:
 
 - `CONFIRMED -> PENDING` não é permitido
 - payment `CANCELED` não pode voltar a outro estado
+- cancelamento restaura o estoque dos produtos da venda vinculada
 
 ### `GET /api/payments/:id`
 
+Busca pagamento detalhado por ID.
+
 ### `PUT /api/payments/:id`
+
+Body aceito:
+
+- `discount` opcional
+- `methods[]` opcional
+
+Cada item de `methods[]`:
+
+- `method`
+- `amount`
+- `installments` opcional
+- `firstDueDate` opcional
+- `paidAt` opcional
 
 Regras centrais:
 
 - payment deve existir
 - tenant deve coincidir
 - payment cancelado não pode ser atualizado
-- payment confirmado só permite alteração de `status` para cancelamento
+- payment confirmado não pode ser editado
+- `discount` só pode mudar quando ainda não houve pagamento registrado
 - se `methods[]` for enviado, ele substitui completamente os métodos existentes
 - não é permitido trocar métodos se já houver parcelas pagas ou métodos pagos
 - soma dos novos métodos deve bater com o total
-- métodos parcelados exigem `firstDueDate`
+- aceita no máximo 2 métodos
+- aceita no máximo 1 método `INSTALLMENT`
+- métodos parcelados exigem `installments >= 2` e `firstDueDate`
 - métodos instantâneos exigem `paidAt`
-
-### `DELETE /api/payments/:id`
-
-Regra:
-
-- somente `PENDING` pode ser removido
-- remoção é lógica (`isActive = false`)
 
 ## Payment Installments
 
@@ -559,7 +623,7 @@ Body:
 
 Regras:
 
-- não permite editar parcela que já recebeu pagamento
+- não permite editar parcela totalmente quitada
 - se `amount` mudar, a soma de parcelas do método precisa continuar igual ao valor do método
 - `dueDate` deve ser válida
 
@@ -578,6 +642,7 @@ Regras:
 - valor pago não pode exceder o saldo restante
 - `paidAt` é gravado somente quando a parcela for quitada integralmente
 - o payment agregado é recalculado após o registro
+- parcelas são geradas com incremento de mês-calendário a partir de `firstDueDate`
 
 ## Expenses
 
@@ -643,6 +708,6 @@ Retorna:
 - isolamento por `tenantId`
 - uso recorrente de `branchId` como contexto operacional
 - payload estrito com `forbidNonWhitelisted`
-- estoque afetado por criação, atualização e exclusão de venda
+- estoque afetado por criação, atualização, cancelamento de payment e exclusão de venda
 - integridade financeira controlada por services
-- formato de erro majoritariamente padronizado, mas não 100% uniforme
+- formato de erro majoritariamente padronizado, embora ainda coexistam estilos diferentes em alguns services

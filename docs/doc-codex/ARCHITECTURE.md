@@ -4,7 +4,7 @@
 
 O projeto é uma API HTTP construída com Express e TypeScript, usando Prisma como camada de acesso a dados sobre MySQL. A aplicação organiza o código por módulos de domínio, cada um com rotas, controller, service, repository e DTOs próprios, com variações conforme a complexidade do caso de uso.
 
-O domínio principal é o de gestão operacional de uma ótica com múltiplos tenants e múltiplas filiais.
+O domínio principal é o de gestão operacional de uma ótica com múltiplos tenants e múltiplas filiais. Os módulos core passaram por uma refatoração que reforçou isolamento multi-tenant, escopo por filial, tipagem e previsibilidade de exclusão.
 
 ## Bootstrap da aplicação
 
@@ -48,20 +48,19 @@ Responsabilidades:
 
 #### Controllers
 
-Os controllers são finos na maior parte dos módulos.
+Os controllers são finos na maior parte dos módulos, especialmente nos módulos core refatorados.
 
 Responsabilidades:
 
 - extrair dados de `req`
 - chamar o service
 - converter o retorno do service em resposta HTTP
-- encaminhar erros para `next(err)` ou responder diretamente, dependendo do módulo
+- encaminhar erros para `next(err)` e deixar a formatação final para a stack de resposta
 
 Observação importante:
 
-- há controllers padronizados com `try/catch` e `next(err)`
-- há controllers que respondem erro diretamente com `res.status(400).json(...)`
-- portanto, o tratamento global de erro não é o único caminho de falha na aplicação
+- o padrão dominante hoje é `try/catch` com `next(err)`
+- a maior heterogeneidade está menos nos controllers e mais nos services: alguns lançam `AppError`, outros retornam `ApiResponse.error(...)`
 
 #### Services
 
@@ -71,9 +70,16 @@ Responsabilidades típicas:
 
 - validar regras além da validação estrutural do DTO
 - aplicar contexto do usuário autenticado (`tenantId`, `branchId`, `sub`, `role`)
+- ignorar campos sensíveis vindos do cliente quando o contexto deve vir do token
 - coordenar chamadas a repositories
 - construir respostas com `ApiResponse` ou `PagedResponse`
 - disparar processos compostos, como geração de parcelas ou baixa/restauração de estoque
+
+Nos módulos core refatorados, o service também concentra:
+
+- validação de relacionamento cruzado no tenant
+- decisão entre `softDelete` e `hardDelete`
+- proteção contra edição de dados financeiros já iniciados
 
 Observação arquitetural:
 
@@ -90,7 +96,9 @@ Responsabilidades:
 - persistência e leitura
 - paginação e filtros
 - `include` e `select` dos agregados retornados
-- soft delete em entidades que usam `isActive`
+- operações de `softDelete` e `hardDelete` quando o módulo precisa preservar histórico
+
+Nos módulos refatorados, repositories tendem a ficar mais puros: acesso a dados, filtros por `tenantId` e consultas auxiliares como `hasRelations`, sem regra HTTP.
 
 Há módulos em que o repository é a única camada com Prisma. Em outros, ele divide essa responsabilidade com o service.
 
@@ -155,12 +163,14 @@ Padrões observados:
 - quase todos os modelos de negócio carregam `tenantId`
 - muitos modelos também carregam `branchId`
 - o JWT injeta ambos em `req.user`
-- services normalmente ignoram `tenantId` e `branchId` enviados pelo cliente, usando o token como fonte de verdade
+- services normalmente usam o token como fonte de verdade para `tenantId` e, quando aplicável, para `branchId`
+- módulos refatorados também validam que entidades relacionadas pertencem ao mesmo tenant antes de persistir vínculos
 
 Exemplos:
 
 - criação de cliente injeta `tenantId` e `branchId` do usuário
 - criação de serviço óptico força `branchId` vindo do token
+- criação de venda valida cliente, prescrição, produtos e serviços dentro do mesmo tenant
 - listagens podem permitir filtro opcional por filial, especialmente para `ADMIN`
 
 ## Papéis e autorização
@@ -209,7 +219,10 @@ O `errorMiddleware` retorna:
 
 ### Comportamento real no projeto
 
-Nem todos os erros chegam ao middleware global. Alguns controllers retornam diretamente `400` em `catch`, usando um payload simples sem o envelope padrão.
+O encaminhamento de erro pelos controllers hoje é majoritariamente uniforme. A principal diferença prática está no estilo do service:
+
+- módulos como `brands`, `products`, `clients`, `prescriptions` e `sales` usam `AppError` com frequência
+- partes do módulo de pagamentos ainda retornam `ApiResponse.error(...)` diretamente em vez de lançar exceções
 
 ## Auditoria simples
 
@@ -240,8 +253,8 @@ O nível `debug` é habilitado quando `DEBUG_LOGS=true`.
 
 ## Conclusão arquitetural
 
-A aplicação segue uma arquitetura modular clara e pragmática, adequada para uma API de negócio de médio porte. O desenho predominante é consistente, mas há flexibilizações importantes:
+A aplicação segue uma arquitetura modular clara e pragmática, adequada para uma API de negócio de médio porte. O desenho predominante ficou mais consistente após a refatoração dos módulos core, mas há flexibilizações importantes:
 
 - services por vezes acessam Prisma diretamente
-- tratamento de erro não é 100% uniforme
+- coexistem estilos diferentes de sinalização de erro em alguns services
 - alguns fluxos administrativos de usuários coexistem em mais de um módulo

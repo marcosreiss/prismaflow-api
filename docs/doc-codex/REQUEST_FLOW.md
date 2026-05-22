@@ -85,12 +85,7 @@ Existem dois estilos observados:
 - responde
 - `catch -> next(err)`
 
-### Estilo 2: tratamento local de erro
-
-- `try`
-- chama service
-- responde
-- `catch -> res.status(400).json({ success: false, message: ... })`
+Esse é o estilo predominante após a refatoração dos módulos core.
 
 ## 8. Service
 
@@ -99,6 +94,7 @@ O service é a camada que conhece o domínio.
 Atividades típicas:
 
 - injeta `tenantId` e `branchId` do token
+- ignora ou sobrescreve campos sensíveis que não devem vir do cliente
 - valida existência de registros
 - valida regras de negócio
 - chama repositórios
@@ -194,18 +190,19 @@ Sequência detalhada:
 4. valida que o cliente existe no tenant
 5. valida que a venda possui ao menos um produto ou serviço
 6. valida que a data da venda não é futura
-7. cria `Sale`
-8. opcionalmente cria `Protocol`
-9. para cada item de produto:
+7. calcula `subtotal` a partir dos itens e aplica `discount` para chegar a `total`
+8. cria `Sale`
+9. opcionalmente cria `Protocol`
+10. para cada item de produto:
    - valida produto
    - valida estoque
    - reduz estoque
    - cria `ItemProduct`
    - cria `FrameDetails` se necessário
-10. para cada item de serviço:
+11. para cada item de serviço:
    - valida serviço
    - cria `ItemOpticalService`
-11. cria `Payment` inicial `PENDING`
+12. cria `Payment` inicial `PENDING`
 
 ## Exemplo 4: fluxo de pagamento de parcela
 
@@ -222,7 +219,7 @@ Sequência:
 7. rejeita valor acima do saldo
 8. soma ao `paidAmount`
 9. marca `paidAt` somente na quitação total
-10. recalcula o payment agregado
+10. recalcula o payment agregado dentro de transação
 
 ## Fluxo de dados interno para datas
 
@@ -252,7 +249,7 @@ Atualização:
 O módulo de pagamentos adiciona um fluxo próprio:
 
 1. valida soma dos métodos
-2. gera parcelas para métodos parcelados
+2. gera parcelas para métodos parcelados usando avanço por mês-calendário
 3. registra quitação parcial ou total
 4. recalcula `paidAmount`, `installmentsPaid`, `lastPaymentAt` e `status`
 5. expõe endpoint de validação de integridade

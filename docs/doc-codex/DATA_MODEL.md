@@ -28,9 +28,9 @@ Diversos modelos possuem:
 - `createdAt`
 - `updatedAt`
 
-### 4. Soft delete parcial
+### 4. Soft delete seletivo
 
-Muitos modelos possuem `isActive`, mas isso não é universal nem sempre é filtrado automaticamente em todas as consultas.
+Muitos modelos possuem `isActive`, mas isso não é universal. Nos módulos core refatorados, as consultas principais tendem a filtrar `isActive: true`, e a exclusão decide entre `softDelete` e `hardDelete` conforme o histórico relacional.
 
 ## Entidades principais
 
@@ -440,6 +440,7 @@ O banco modela a estrutura, mas parte da consistência financeira depende do có
 
 - soma dos métodos deve bater com o total
 - soma das parcelas deve bater com o método
+- vencimentos parcelados avançam por mês-calendário a partir de `firstDueDate`
 - confirmação do payment depende do recálculo em service
 
 ## Resumo do agregado de negócio central

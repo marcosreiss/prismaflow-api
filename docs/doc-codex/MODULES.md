@@ -10,6 +10,12 @@ O padrão mais comum em `src/modules/<modulo>` é:
 - `*.repository.ts`: encapsula operações Prisma
 - `dtos/` ou `*.dto.ts`: valida contratos de entrada
 
+Após a refatoração dos módulos core, o padrão esperado ficou mais explícito:
+
+- controller orquestra `req/res` e encaminha erro com `next(err)`
+- service concentra regra de negócio, tenant, branch, duplicidade e integridade
+- repository faz acesso a dados e consultas auxiliares como `hasRelations`
+
 No módulo de pagamentos, a estrutura é mais segmentada e usa subpastas para `controller`, `repository`, `routes`, `services`, `dtos` e `doc`.
 
 ## Módulos de autenticação e identidade
@@ -29,6 +35,7 @@ Observações:
 - o fluxo de login possui desvio específico para `ADMIN` sem filial associada
 - nesse caso a API emite um token temporário e exige seleção de filial
 - o repository usa transação Prisma para criar tenant, primeira filial e primeiro admin de forma atômica
+- `register-user` administrativo foi enxugado: o corpo informa `name`, `email`, `password` e `role`, enquanto `tenantId` e `branchId` vêm do token
 
 ### `users`
 
@@ -83,6 +90,7 @@ Características:
 - restrito a `ADMIN`
 - paginação com `search`
 - valida duplicidade de nome no tenant antes da criação
+- impede exclusão quando já há produtos vinculados
 
 Observação importante:
 
@@ -102,6 +110,7 @@ Regras relevantes:
 - o service injeta `tenantId` e `branchId` do usuário
 - há validação de duplicidade por `nome + marca` dentro do tenant
 - listagem aceita filtros por categoria, marca e busca textual
+- a exclusão decide entre `softDelete` e `hardDelete` conforme histórico em `itemProduct`
 
 ### `optical-services`
 
@@ -114,6 +123,7 @@ Regras relevantes:
 - `branchId` do payload é ignorado; vale o `branchId` do token
 - exige que o usuário autenticado tenha filial associada
 - valida duplicidade por nome dentro do tenant
+- a exclusão faz `softDelete` quando já houve uso em venda e `hardDelete` quando não há vínculos
 
 ## Módulos de relacionamento com cliente
 
@@ -131,8 +141,10 @@ Características:
 - o service injeta `tenantId` e `branchId`
 - o CPF é único por tenant
 - há tratamento explícito para `P2002`
-- listagem aceita filtro opcional por `branchId`
+- `EMPLOYEE` fica restrito à própria filial em listagem, seleção e aniversariantes
+- `ADMIN` e `MANAGER` podem usar filtro opcional por `branchId`
 - aniversariantes usam SQL bruto com `DAY()` e `MONTH()`
+- a exclusão faz `softDelete` quando há vínculos como prescrições ou vendas
 
 ### `prescriptions`
 
@@ -147,7 +159,9 @@ Características:
 
 - o service injeta `tenantId` e `branchId`
 - o modelo armazena muitos campos ópticos
+- `EMPLOYEE` fica restrito à própria filial nas listagens; `ADMIN` e `MANAGER` podem filtrar por `branchId`
 - a exclusão é permitida apenas para `ADMIN` e `MANAGER`
+- a exclusão faz `softDelete` quando a receita já foi usada em venda
 
 ## Módulo de vendas
 
@@ -172,9 +186,11 @@ O `SaleService` coordena:
 
 Particularidades:
 
+- subtotal e total são recalculados pela API; o cliente informa apenas `discount`
+- a criação ocorre em transação e já gera `Payment` inicial com `status = PENDING`
 - o service cria diretamente `itemProduct`, `frameDetails` e `itemOpticalService`
-- o service executa transação Prisma diretamente na atualização
-- o service gerencia estoque de forma imperativa
+- a atualização bloqueia mudanças incompatíveis quando já existe atividade financeira
+- a remoção restaura estoque e faz deleção física em cascata de `sale` e dependências
 
 ## Módulo de pagamentos
 
@@ -182,7 +198,7 @@ Particularidades:
 
 Responsabilidade:
 
-- CRUD de pagamento
+- leitura e atualização de pagamento
 - atualização de status
 - validação de integridade
 - listagem com filtros ricos
@@ -199,7 +215,7 @@ Estrutura interna:
 
 Separação:
 
-- `PaymentService`: criação, listagem, consulta e remoção
+- `PaymentService`: listagem, consulta e validação
 - `PaymentUpdateService`: atualização, status e validação
 - `PaymentInstallmentService`: leitura e edição de parcelas
 - `PaymentInstallmentPayService`: quitação de parcelas
@@ -207,7 +223,11 @@ Separação:
 
 Observação:
 
+- `Payment` não é criado nem removido manualmente por endpoint próprio; ele nasce junto com a venda
 - `PaymentUpdateService` usa `prisma.$transaction` diretamente
+- atualização aceita essencialmente `discount` e substituição completa de `methods[]`
+- a geração de parcelas usa incremento de mês-calendário, não soma fixa de 30 dias
+- cancelamento de pagamento restaura estoque dos produtos da venda vinculada
 
 ## Módulo financeiro complementar
 
@@ -264,4 +284,4 @@ Exceções relevantes:
 
 - `SaleService` depende também de `prisma`
 - `PaymentUpdateService` depende também de `prisma`
-- alguns controllers não delegam o erro ao middleware global
+- `PaymentInstallmentPayService` e `PaymentIntegrityService` concentram regras financeiras que extrapolam o CRUD simples

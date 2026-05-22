@@ -2,7 +2,7 @@
 
 ## Objetivo desta documentação
 
-Esta pasta consolida a documentação técnica da API `prismaflow-api` com base na implementação atual do projeto Node.js usando Express, Prisma e MySQL. O foco aqui é descrever a aplicação como ela está hoje no código, não como ela idealmente deveria estar.
+Esta pasta consolida a documentação técnica da API `prismaflow-api` com base na implementação atual do projeto Node.js usando Express, Prisma e MySQL. O foco aqui é descrever a aplicação como ela está hoje no código, incluindo a refatoração consolidada dos módulos core registrada originalmente em `docs/refactor-05-2026`.
 
 Esta documentação cobre:
 
@@ -41,16 +41,26 @@ A API implementa um backend multi-tenant voltado ao domínio de óticas, com sup
 - despesas
 - indicadores de dashboard
 
+Desde a consolidação da refatoração dos módulos core, a base passou a adotar de forma mais consistente:
+
+- isolamento multi-tenant por `tenantId`
+- uso de `branchId` do token como contexto operacional
+- validações de relacionamento cruzado no service
+- soft delete seletivo em entidades com histórico
+- hard delete apenas quando não há vínculos dependentes
+
 O isolamento principal entre dados é feito por `tenantId`, com uso adicional frequente de `branchId` para segmentação operacional por filial. O controle de acesso é baseado em JWT com papéis `ADMIN`, `MANAGER` e `EMPLOYEE`.
 
 ## Características arquiteturais observadas
 
 - O projeto adota, como padrão predominante, a cadeia `route -> controller -> service -> repository -> Prisma`.
+- Nos módulos core refatorados, controllers tendem a ser finos e a delegar falhas para `next(err)`, enquanto services concentram validações de tenant, branch e integridade.
 - Esse padrão não é absolutamente rígido: há services que também acessam `prisma` diretamente, principalmente nos fluxos mais complexos de vendas e pagamentos.
 - A API utiliza DTOs com `class-validator` e `class-transformer` para validação de `body`, `query` e `params`.
 - As respostas seguem majoritariamente um envelope comum (`ApiResponse` e `PagedResponse`).
 - Os dados do banco usam `createdById` e `updatedById` como trilha simples de auditoria, preenchidos por `withAuditData`.
 - Campos `DateTime @db.Date` do Prisma são convertidos para string `YYYY-MM-DD` na camada de cliente Prisma estendido.
+- No módulo de pagamentos, a geração de parcelas usa avanço por mês-calendário a partir de `firstDueDate`, e não incrementos fixos de 30 dias.
 
 ## Observações importantes sobre fidelidade ao código
 
@@ -60,7 +70,7 @@ Alguns pontos relevantes da implementação atual:
 - `AuthService.registerUser` e o módulo `users` coexistem e tratam criação de usuários por caminhos diferentes
 - o módulo de pagamentos tem a arquitetura mais elaborada do projeto, com múltiplos services especializados
 - o módulo de vendas concentra lógica relevante de estoque, itens, protocolo e pagamento inicial
-- o tratamento de erros não é totalmente uniforme entre todos os controllers
+- em módulos refatorados, exclusão física e lógica agora dependem do histórico relacional da entidade
 
 Para leitura sequencial, a ordem recomendada é:
 

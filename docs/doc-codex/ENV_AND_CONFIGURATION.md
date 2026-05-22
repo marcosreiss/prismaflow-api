@@ -231,7 +231,7 @@ Em `src/types/express.d.ts`, o projeto adiciona `req.user` com:
 ## Configurações implícitas importantes
 
 - métodos instantâneos considerados pagos: `PIX`, `MONEY`, `DEBIT`, `CREDIT`
-- geração de parcelas em intervalos de 30 dias
+- geração de parcelas com avanço por mês-calendário a partir de `firstDueDate`
 - clientes aniversariantes usam `America/Sao_Paulo` quando não há data na query
 - CORS é fixo em código
 

@@ -2,138 +2,93 @@
 
 ## Visão geral
 
-O projeto é uma API HTTP construída com Express e TypeScript, usando Prisma como camada de acesso a dados sobre MySQL. A aplicação organiza o código por módulos de domínio, cada um com rotas, controller, service, repository e DTOs próprios, com variações conforme a complexidade do caso de uso.
+A API usa Express + TypeScript + Prisma sobre MySQL. O domínio principal é gestão operacional de óticas com múltiplos tenants e filiais.
 
-O domínio principal é o de gestão operacional de uma ótica com múltiplos tenants e múltiplas filiais. Os módulos core passaram por uma refatoração que reforçou isolamento multi-tenant, escopo por filial, tipagem e previsibilidade de exclusão.
+O padrão dominante é:
 
-## Bootstrap da aplicação
+`route -> controller -> service -> repository -> Prisma`
 
-O ponto de entrada é `src/server.ts`.
+Esse fluxo é seguido com mais consistência nos módulos core refatorados. As exceções mais importantes estão em `sales` e `payments`, que usam `prisma` direto em partes do service por causa de transações e regras compostas.
 
-Fluxo de inicialização:
+## Bootstrap
+
+Ponto de entrada: `src/server.ts`
+
+Fluxo:
 
 1. importa `reflect-metadata`
-2. cria a instância Express
-3. registra middlewares globais em `setupMiddlewares`
-4. monta todas as rotas sob o prefixo `/api`
-5. registra o middleware global de erros
-6. inicia o servidor na porta definida em `env.PORT`
+2. cria o app Express
+3. registra `setupMiddlewares`
+4. monta `/api`
+5. registra `errorMiddleware`
+6. sobe o servidor em `env.PORT`
 
-## Stack principal
+## Stack
 
 - Node.js
 - Express 5
 - TypeScript
 - Prisma Client
 - MySQL
-- JWT para autenticação
-- `class-validator` e `class-transformer` para validação de entrada
-- `bcryptjs` para hash de senhas
-- `winston` para logging customizado
-- `morgan`, `helmet` e `cors` como middlewares HTTP
+- JWT
+- `class-validator`
+- `class-transformer`
+- `bcryptjs`
+- `winston`
+- `morgan`, `helmet`, `cors`
 
-## Arquitetura lógica
+## Camadas
 
-### Camadas predominantes
+### Rotas
 
-#### Rotas
+- definem paths e middlewares
+- conectam endpoint ao controller
 
-As rotas fazem o binding entre URL, middlewares de autenticação/autorização/validação e handlers do controller.
+### Controllers
 
-Responsabilidades:
+- extraem dados de `req`
+- chamam services
+- respondem via `res.status(...).json(...)`
+- normalmente delegam erro com `next(err)`
 
-- declarar o caminho HTTP
-- definir middlewares por endpoint
-- acionar o controller correspondente
+### Services
 
-#### Controllers
+- concentram regras de negócio
+- aplicam `tenantId`, `branchId` e `sub`
+- validam integridade entre entidades
+- decidem `softDelete` ou `hardDelete`
+- executam fluxos compostos como venda, parcelas e estoque
 
-Os controllers são finos na maior parte dos módulos, especialmente nos módulos core refatorados.
+### Repositories
 
-Responsabilidades:
+- encapsulam consultas Prisma
+- aplicam filtros e paginação
+- montam `include` e `select`
 
-- extrair dados de `req`
-- chamar o service
-- converter o retorno do service em resposta HTTP
-- encaminhar erros para `next(err)` e deixar a formatação final para a stack de resposta
+### DTOs
 
-Observação importante:
+- validam `body`, `query` e `params`
+- usam `whitelist: true` e `forbidNonWhitelisted: true`
 
-- o padrão dominante hoje é `try/catch` com `next(err)`
-- a maior heterogeneidade está menos nos controllers e mais nos services: alguns lançam `AppError`, outros retornam `ApiResponse.error(...)`
-
-#### Services
-
-Os services concentram a lógica de negócio.
-
-Responsabilidades típicas:
-
-- validar regras além da validação estrutural do DTO
-- aplicar contexto do usuário autenticado (`tenantId`, `branchId`, `sub`, `role`)
-- ignorar campos sensíveis vindos do cliente quando o contexto deve vir do token
-- coordenar chamadas a repositories
-- construir respostas com `ApiResponse` ou `PagedResponse`
-- disparar processos compostos, como geração de parcelas ou baixa/restauração de estoque
-
-Nos módulos core refatorados, o service também concentra:
-
-- validação de relacionamento cruzado no tenant
-- decisão entre `softDelete` e `hardDelete`
-- proteção contra edição de dados financeiros já iniciados
-
-Observação arquitetural:
-
-- o padrão esperado seria service depender apenas de repositories
-- na implementação atual isso não é sempre verdade
-- `SaleService` e partes do módulo de pagamentos usam `prisma` diretamente, inclusive com transações
-
-#### Repositories
-
-Os repositories encapsulam o acesso ao Prisma.
-
-Responsabilidades:
-
-- persistência e leitura
-- paginação e filtros
-- `include` e `select` dos agregados retornados
-- operações de `softDelete` e `hardDelete` quando o módulo precisa preservar histórico
-
-Nos módulos refatorados, repositories tendem a ficar mais puros: acesso a dados, filtros por `tenantId` e consultas auxiliares como `hasRelations`, sem regra HTTP.
-
-Há módulos em que o repository é a única camada com Prisma. Em outros, ele divide essa responsabilidade com o service.
-
-#### DTOs
-
-Os DTOs definem o contrato estrutural das entradas.
-
-Responsabilidades:
-
-- validar campos obrigatórios
-- validar tipos, enums, datas e numéricos
-- rejeitar propriedades não declaradas via `forbidNonWhitelisted`
-- transformar payloads via `class-transformer`
-
-## Estrutura de diretórios relevante
+## Estrutura relevante
 
 ### `src/`
 
-- `config/`: cliente Prisma, contexto Prisma, ambiente
-- `middlewares/`: autenticação, autorização, validação, erro global e middlewares HTTP globais
-- `modules/`: domínio principal da aplicação
-- `responses/`: envelopes padronizados de resposta
-- `routes/`: agregador raiz de rotas
-- `types/`: extensão de tipos do Express
-- `utils/`: logging e utilitários de senha
+- `config/`: ambiente, Prisma e helpers
+- `middlewares/`: auth, autorização, validação e erro
+- `modules/`: domínio da API
+- `responses/`: envelopes padronizados
+- `routes/`: roteador raiz
+- `types/`: extensão do Express
+- `utils/`: logger, senha e helpers
 
 ### `prisma/`
 
-- `schema.prisma`: modelo canônico de dados
-- `migrations/`: histórico de migrações
-- `seeds/`: scripts de carga inicial
+- `schema.prisma`
+- `migrations/`
+- `seeds/`
 
-## Módulos expostos pela API
-
-O agregador de rotas em `src/routes/index.ts` registra os seguintes grupos:
+## Rotas raiz expostas
 
 - `/auth`
 - `/branches`
@@ -149,112 +104,35 @@ O agregador de rotas em `src/routes/index.ts` registra os seguintes grupos:
 - `/expenses`
 - `/dashboard`
 
-Há ainda uma rota raiz `/api/` que responde com uma mensagem simples de health básico.
+A raiz `/api/` responde `PrismaFlow API funcionando!`.
 
-## Multi-tenant e segmentação por filial
+## Multi-tenant e filial
 
-O projeto usa dois níveis principais de contexto:
-
-- `tenantId`: separação lógica entre óticas
-- `branchId`: separação entre filiais dentro do tenant
+O isolamento principal é por `tenantId`, com `branchId` como contexto operacional.
 
 Padrões observados:
 
-- quase todos os modelos de negócio carregam `tenantId`
+- quase todo modelo carrega `tenantId`
 - muitos modelos também carregam `branchId`
-- o JWT injeta ambos em `req.user`
-- services normalmente usam o token como fonte de verdade para `tenantId` e, quando aplicável, para `branchId`
-- módulos refatorados também validam que entidades relacionadas pertencem ao mesmo tenant antes de persistir vínculos
+- `req.user` recebe ambos via JWT
+- services tratam o token como fonte de verdade
 
-Exemplos:
-
-- criação de cliente injeta `tenantId` e `branchId` do usuário
-- criação de serviço óptico força `branchId` vindo do token
-- criação de venda valida cliente, prescrição, produtos e serviços dentro do mesmo tenant
-- listagens podem permitir filtro opcional por filial, especialmente para `ADMIN`
-
-## Papéis e autorização
-
-Os papéis definidos no schema Prisma são:
+## Papéis
 
 - `ADMIN`
 - `MANAGER`
 - `EMPLOYEE`
 
-O middleware `authGuard` valida o JWT e popula `req.user`. O middleware `requireRoles(...allowed)` restringe os endpoints por papel.
+## Respostas, erros e auditoria
 
-## Padrões de resposta
+- `ApiResponse`: envelope padrão
+- `PagedResponse`: paginação
+- `errorMiddleware`: normaliza falhas
+- `withAuditData(...)`: preenche `createdById` e `updatedById`
 
-### `ApiResponse`
+## Datas e logging
 
-Envelope base com:
-
-- `status`
-- `message`
-- `data`
-- `token`
-- `timestamp`
-- `path`
-
-### `PagedResponse`
-
-Usado em listagens paginadas. Dentro de `data` retorna:
-
-- `currentPage`
-- `totalPages`
-- `totalElements`
-- `limit`
-- `content`
-- `stats` opcional
-
-## Tratamento de erros
-
-### Middleware global
-
-O `errorMiddleware` retorna:
-
-- status vindo de `err.status` quando disponível
-- mensagem de `err.message`
-- envelope `ApiResponse.error(...)`
-
-### Comportamento real no projeto
-
-O encaminhamento de erro pelos controllers hoje é majoritariamente uniforme. A principal diferença prática está no estilo do service:
-
-- módulos como `brands`, `products`, `clients`, `prescriptions` e `sales` usam `AppError` com frequência
-- partes do módulo de pagamentos ainda retornam `ApiResponse.error(...)` diretamente em vez de lançar exceções
-
-## Auditoria simples
-
-Não existe um subsistema formal de auditoria no código atual, mas há auditoria leve por campos.
-
-Mecânica:
-
-- `withAuditData(userId, data, isUpdate)`
-- em criação: preenche `createdById` e `updatedById`
-- em atualização: preenche `updatedById`
-
-## Tratamento especial de datas
-
-O cliente Prisma é estendido em `src/config/prisma-client.ts` para detectar campos `DateTime @db.Date` e convertê-los de `Date` para string `YYYY-MM-DD` nos resultados.
-
-Benefício:
-
-- reduz ambiguidades de timezone na serialização de datas sem horário
-
-## Logging
-
-Há dois estilos de log coexistindo:
-
-- logs HTTP via `morgan("dev")`
-- logs de domínio via `winston` em `src/utils/logger.ts`
-
-O nível `debug` é habilitado quando `DEBUG_LOGS=true`.
-
-## Conclusão arquitetural
-
-A aplicação segue uma arquitetura modular clara e pragmática, adequada para uma API de negócio de médio porte. O desenho predominante ficou mais consistente após a refatoração dos módulos core, mas há flexibilizações importantes:
-
-- services por vezes acessam Prisma diretamente
-- coexistem estilos diferentes de sinalização de erro em alguns services
-- alguns fluxos administrativos de usuários coexistem em mais de um módulo
+- campos `DateTime @db.Date` são convertidos para `YYYY-MM-DD`
+- logs HTTP usam `morgan("dev")`
+- logs de domínio usam `winston`
+- `DEBUG_LOGS=true` habilita `debug`

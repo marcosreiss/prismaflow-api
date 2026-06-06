@@ -1,8 +1,6 @@
 # Variáveis de Ambiente e Configuração
 
-## Fontes observadas
-
-As configurações desta API estão distribuídas principalmente em:
+## Fontes principais
 
 - `.env.example`
 - `src/config/env.ts`
@@ -12,131 +10,54 @@ As configurações desta API estão distribuídas principalmente em:
 - `tsconfig.json`
 - `prisma/schema.prisma`
 
-## Variáveis de ambiente identificadas
+## Variáveis identificadas
 
-## `DATABASE_URL`
+### `DATABASE_URL`
 
-Uso:
+- usada pelo Prisma
+- conexão MySQL via `env("DATABASE_URL")`
 
-- configurada no `datasource db` do Prisma
-- utilizada para conexão MySQL
-
-Formato esperado:
-
-- string de conexão MySQL
-
-## `PORT`
-
-Uso:
+### `PORT`
 
 - lida em `src/config/env.ts`
-- usada em `src/server.ts`
-
-Comportamento:
-
 - default `3000`
 
-## `NODE_ENV`
-
-Uso:
-
-- lida em `src/config/env.ts`
-- usada também no logger
-
-Comportamento:
+### `NODE_ENV`
 
 - default `development`
 
-## `JWT_SECRET`
+### `JWT_SECRET`
 
-Uso:
+- assinatura e verificação do JWT
+- fallback atual: `default_secret`
 
-- assinatura e verificação dos JWTs
-- fluxos de login, autenticação e seleção de filial
+### `DEBUG_LOGS`
 
-Comportamento:
+- habilita nível `debug`
 
-- `src/config/env.ts` define fallback `default_secret`
-- `AuthService` ainda usa fallback local `chave-padrao`
+### `TZ`
 
-## `DEBUG_LOGS`
+- existe em `.env.example`
+- não é centralizada em `env.ts`
 
-Uso:
+## `env.ts`
 
-- lida em `src/utils/logger.ts`
-
-Comportamento:
-
-- quando `true`, o logger em console usa nível `debug`
-- caso contrário, usa `info`
-
-## `TZ`
-
-Uso observado:
-
-- aparece em `.env.example`
-- não é lida diretamente por um módulo específico
-
-## Configuração de ambiente consolidada em `env.ts`
-
-O arquivo `src/config/env.ts` centraliza apenas:
+Centraliza:
 
 - `PORT`
 - `NODE_ENV`
 - `JWT_SECRET`
 
-Ponto importante:
+## Prisma
 
-- `DATABASE_URL` não está exportada nesse objeto, pois o Prisma a consome diretamente do ambiente
+`src/config/prisma-client.ts`:
 
-## Configuração do Prisma
+- detecta campos `DateTime @db.Date`
+- converte retorno para `YYYY-MM-DD`
+- percorre relações carregadas
+- conecta no startup e loga sucesso ou falha
 
-### Schema
-
-Em `prisma/schema.prisma`:
-
-- `provider = "mysql"`
-- URL do datasource via `env("DATABASE_URL")`
-
-### Cliente Prisma estendido
-
-O projeto não usa apenas um `new PrismaClient()` puro. Em `src/config/prisma-client.ts`, o cliente é estendido com um hook em todas as operações de todos os modelos.
-
-Esse hook:
-
-- consulta metadados do schema em runtime
-- detecta campos `DateTime` com `nativeType = Date`
-- transforma `Date` em string `YYYY-MM-DD`
-- percorre relações carregadas no payload retornado
-
-## Conexão do Prisma
-
-Ao subir a aplicação:
-
-- o cliente tenta conectar imediatamente
-- em caso de sucesso, loga o alvo do banco
-- em caso de falha, escreve erro no console
-
-## Contexto Prisma
-
-Os arquivos `src/config/prisma.ts` e `src/config/prisma-context.ts` reexportam:
-
-- `prisma`
-- `withAuditData`
-- `formatDateOnlyFieldsForModel`
-
-## Auditoria por configuração auxiliar
-
-### `withAuditData`
-
-Comportamento:
-
-- em criação, injeta `createdById` e `updatedById`
-- em atualização, injeta `updatedById`
-
-## Configuração de middlewares HTTP
-
-Em `src/middlewares/global.middleware.ts`:
+## Middlewares globais
 
 - `express.json()`
 - `cors(...)`
@@ -145,62 +66,38 @@ Em `src/middlewares/global.middleware.ts`:
 
 ### CORS
 
-Origens permitidas atualmente:
+Origens hardcoded:
 
 - `http://localhost:5173`
 - `https://prismaflow.vercel.app`
 
-Configuração:
+`credentials: true`
 
-- `credentials: true`
+## JWT
 
-Observação importante:
+- token final: `2h`
+- token temporário: `5m`
+- payload comum: `sub`, `email`, `tenantId`, `branchId`, `role`
 
-- as origens estão hardcoded no código
-- não há variável de ambiente para lista dinâmica de origens
+## Validação
 
-## Configuração de autenticação
-
-O JWT usa:
-
-- segredo vindo de `JWT_SECRET`
-- expiração de `2h` para token final
-- expiração de `5m` para token temporário de seleção de filial
-
-Payload final normalmente inclui:
-
-- `sub`
-- `email`
-- `tenantId`
-- `branchId`
-- `role`
-
-## Configuração de validação
-
-O middleware `validateDto` usa:
+`validateDto` usa:
 
 - `plainToInstance`
 - `validate`
 - `whitelist: true`
 - `forbidNonWhitelisted: true`
 
-## Configuração de logging de domínio
+## Logging
 
-O logger `winston` em `src/utils/logger.ts` define:
+`winston` com:
 
-- níveis customizados: `error`, `warn`, `info`, `http`, `debug`
-- colorização de logs
-- timestamp formatado
-- saída padrão em console
+- níveis `error`, `warn`, `info`, `http`, `debug`
+- colorização
+- timestamp
+- console
 
-Não há, na implementação ativa:
-
-- persistência em arquivo
-- agregação externa
-
-## Configuração TypeScript
-
-Em `tsconfig.json`:
+## TypeScript
 
 - `target = ES2020`
 - `module = CommonJS`
@@ -209,35 +106,12 @@ Em `tsconfig.json`:
 - `strict = true`
 - `experimentalDecorators = true`
 - `emitDecoratorMetadata = true`
+- alias `@/* -> src/*`
 
-## Alias de importação
+## Observações
 
-O projeto define:
-
-- `@/* -> src/*`
-
-## Extensão de tipos do Express
-
-Em `src/types/express.d.ts`, o projeto adiciona `req.user` com:
-
-- `sub`
-- `email`
-- `tenantId`
-- `branchId`
-- `role`
-- `iat`
-- `exp`
-
-## Configurações implícitas importantes
-
-- métodos instantâneos considerados pagos: `PIX`, `MONEY`, `DEBIT`, `CREDIT`
-- geração de parcelas com avanço por mês-calendário a partir de `firstDueDate`
-- clientes aniversariantes usam `America/Sao_Paulo` quando não há data na query
-- CORS é fixo em código
-
-## Riscos e observações de configuração
-
-- `JWT_SECRET` tem fallbacks diferentes em arquivos distintos
-- `DEBUG_LOGS` é usado pelo logger, mas não é centralizado em `env.ts`
-- `TZ` aparece no exemplo, mas não estrutura todo o tratamento de timezone
-- a lista de origens CORS não é parametrizada
+- `req.user` é estendido em `src/types/express.d.ts`
+- métodos instantâneos: `PIX`, `MONEY`, `DEBIT`, `CREDIT`
+- parcelas avançam por mês-calendário, não por 30 dias fixos
+- `DEBUG_LOGS` não passa por `env.ts`
+- CORS não é parametrizado por variável de ambiente

@@ -1,380 +1,150 @@
 # Modelo de Dados
 
-## Visão geral do schema
+## Visão geral
 
-O modelo de dados está definido em `prisma/schema.prisma` e usa:
+O schema está em `prisma/schema.prisma` e usa:
 
 - `provider = "mysql"`
 - `generator prisma-client-js`
 
-O schema representa uma aplicação multi-tenant para operação de ótica, cobrindo cadastro, vendas, financeiro e dashboard.
+O modelo cobre cadastro, vendas, financeiro e dashboard em cenário multi-tenant.
 
-## Princípios estruturais do modelo
+## Princípios estruturais
 
-### 1. Multi-tenant por chave explícita
+- isolamento por `tenantId`
+- segmentação por `branchId`
+- auditoria simples com `createdById` e `updatedById`
+- `softDelete` seletivo via `isActive`
 
-Quase todos os modelos de domínio possuem `tenantId`.
+## Entidades centrais
 
-### 2. Segmentação operacional por filial
+### Tenant
 
-Muitos modelos também carregam `branchId`.
+Entidade raiz do sistema. Relaciona filiais, usuários, catálogo, clientes, vendas, pagamentos e despesas.
 
-### 3. Auditoria simplificada
+### Branch
 
-Diversos modelos possuem:
+Filial do tenant.
 
-- `createdById`
-- `updatedById`
-- `createdAt`
-- `updatedAt`
+Constraint principal:
 
-### 4. Soft delete seletivo
+- `@@unique([tenantId, name])`
 
-Muitos modelos possuem `isActive`, mas isso não é universal. Nos módulos core refatorados, as consultas principais tendem a filtrar `isActive: true`, e a exclusão decide entre `softDelete` e `hardDelete` conforme o histórico relacional.
+### User
 
-## Entidades principais
+Usuário autenticável com `email` globalmente único, `role`, `tenantId` e `branchId` opcional.
 
-## Tenant
+### Brand
 
-Representa a ótica ou organização principal.
+Marca de produto.
 
-Relações:
+Constraint principal:
 
-- `branches`
-- `brands`
-- `Client`
-- `frameDetails`
-- `itemOpticalServices`
-- `itemProducts`
-- `OpticalService`
-- `payments`
-- `Prescription`
-- `products`
-- `protocols`
-- `sales`
-- `users`
-- `paymentMethodItems`
-- `paymentInstallments`
-- `expenses`
+- `@@unique([tenantId, name])`
 
-## Branch
+### Product
 
-Representa uma filial do tenant.
+Produto vendável com preços, estoque, categoria, `tenantId`, `branchId` e `brandId`.
 
-Campos principais:
+### OpticalService
 
-- `id`
-- `name`
-- `tenantId`
+Serviço óptico vendável, sempre vinculado a tenant e filial.
 
-Constraint importante:
+### Client
 
-- `@@unique([tenantId, name], name: "branch_name_per_tenant_unique")`
+Cliente da ótica.
 
-## User
-
-Representa um usuário autenticável do sistema.
-
-Campos principais:
-
-- `id`
-- `name`
-- `email` globalmente único
-- `password`
-- `role`
-- `tenantId`
-- `branchId` opcional
-
-Observações:
-
-- `branchId` opcional é fundamental para o fluxo de seleção de filial do administrador
-- `email` é único globalmente, não por tenant
-
-## Brand
-
-Representa marca de produto.
-
-Campos principais:
-
-- `id` autoincrement
-- `name`
-- `isActive`
-- `tenantId`
-
-Observação relevante:
-
-- `name` está com `@unique` global
-- isso é mais restritivo do que a validação no service, que trata duplicidade no tenant
-
-## Product
-
-Representa item comercializável de catálogo.
-
-Campos principais:
-
-- `name`
-- `description`
-- `costPrice`
-- `markup`
-- `salePrice`
-- `stockQuantity`
-- `minimumStock`
-- `category`
-- `tenantId`
-- `branchId` opcional
-- `brandId` opcional
-
-Implicações:
-
-- estoque é controlado diretamente no produto
-- produtos vendidos são copiados na venda apenas por relação, não por snapshot completo
-
-## OpticalService
-
-Representa serviço óptico vendido em uma venda.
-
-Campos principais:
-
-- `name`
-- `description`
-- `price`
-- `tenantId`
-- `branchId`
-
-## Client
-
-Representa o cliente da ótica.
-
-Campos relevantes:
-
-- `cpf`
-- `bornDate @db.Date`
-- `gender`
-- dados de contato e endereço
-- `tenantId`
-- `branchId`
-
-Constraint importante:
+Constraint principal:
 
 - `@@unique([cpf, tenantId])`
 
-Significado:
+### Prescription
 
-- um mesmo CPF pode existir em tenants diferentes
-- dentro do mesmo tenant, CPF não pode se repetir
+Receita/prescrição do cliente, com `prescriptionDate @db.Date` e vários campos ópticos.
 
-## Prescription
+### Sale
 
-Representa a prescrição óptica do cliente.
+Venda principal do domínio, com:
 
-Campos principais:
-
-- `clientId`
-- `prescriptionDate @db.Date`
-- `doctorName`
-- `crm`
-- campos ópticos de longe
-- campos ópticos de perto
-- películas
-- campos gerais
-- `tenantId`
-- `branchId`
-
-## Sale
-
-Representa uma venda.
-
-Campos principais:
-
-- `clientId`
 - `saleDate @db.Date`
-- `prescriptionId` opcional
 - `subtotal`
 - `discount`
 - `total`
-- `notes`
-- `isActive`
 - `tenantId`
 - `branchId`
 
-Relações:
+Relaciona cliente, prescrição opcional, itens, payment e protocolo.
 
-- pertence a `Client`
-- pode referenciar `Prescription`
-- possui `serviceItems`
-- possui `productItems`
-- possui um `payment`
-- possui um `protocol`
+### ItemProduct
 
-## ItemProduct
+Item de produto da venda com `productId`, `quantity`, `unitPrice`, `tenantId` e `branchId`.
 
-Representa um item de produto dentro da venda.
+### FrameDetails
 
-Campos principais:
-
-- `saleId`
-- `productId`
-- `quantity`
-- `tenantId`
-- `branchId`
-
-Observação:
-
-- a quantidade padrão é `1`
-- não há preço unitário persistido diretamente no item
-
-## FrameDetails
-
-Representa detalhes adicionais para item de produto quando o produto é uma armação.
-
-Campos principais:
-
-- `itemProductId`
-- `material`
-- `reference`
-- `color`
-- `tenantId`
-- `branchId`
+Detalhes adicionais de armação.
 
 Constraint:
 
-- `itemProductId` é `@unique`
+- `itemProductId @unique`
 
-## ItemOpticalService
+### ItemOpticalService
 
-Representa um item de serviço dentro da venda.
+Item de serviço da venda com `serviceId`, `unitPrice`, `tenantId` e `branchId`.
 
-Campos principais:
+### Payment
 
-- `saleId`
-- `serviceId`
-- `tenantId`
-- `branchId`
+Agregado financeiro da venda, com:
 
-## Payment
-
-Representa o agregado financeiro principal da venda.
-
-Campos principais:
-
-- `saleId` único
+- `saleId @unique`
 - `status`
-- `total`
+- `subtotal`
 - `discount`
+- `total`
 - `paidAmount`
 - `installmentsPaid`
 - `lastPaymentAt @db.Date`
-- `isActive`
-- `tenantId`
-- `branchId`
 
-Constraint importante:
+### Protocol
 
-- `saleId @unique`
-
-Consequência:
-
-- cada venda possui no máximo um payment
-
-## Protocol
-
-Representa protocolo complementar da venda.
-
-Campos principais:
-
-- `saleId` opcional e único
-- `book`
-- `page`
-- `os`
-- `tenantId`
-- `branchId`
+Protocolo complementar da venda.
 
 Observação:
 
-- o DTO ainda contém `recordNumber`, mas esse campo não existe no schema atual
+- o schema não possui `recordNumber`
 
-## PaymentMethodItem
+### PaymentMethodItem
 
-Representa um método de pagamento componente do payment.
+Método de pagamento componente do payment, com `method`, `amount`, `installments`, `firstDueDate @db.Date`, `isPaid` e `paidAt @db.Date`.
 
-Campos principais:
+### PaymentInstallment
 
-- `paymentId`
-- `method`
-- `amount`
-- `installments`
-- `firstDueDate @db.Date`
-- `isPaid`
-- `paidAt @db.Date`
-- `tenantId`
-- `branchId`
+Parcela gerada para método `INSTALLMENT`, com `sequence`, `amount`, `paidAmount`, `dueDate @db.Date` e `paidAt @db.Date`.
 
-Uso de domínio:
+### Expense
 
-- permite pagamento composto, por exemplo PIX + parcelado
-- métodos instantâneos e métodos parcelados coexistem no mesmo agregado
+Despesa operacional com `dueDate @db.Date`, `paymentDate @db.Date`, `paymentMethod`, `tenantId` e `branchId`.
 
-## PaymentInstallment
+## Enums
 
-Representa cada parcela gerada a partir de um `PaymentMethodItem` parcelado.
-
-Campos principais:
-
-- `paymentMethodItemId`
-- `sequence`
-- `amount`
-- `paidAmount`
-- `dueDate @db.Date`
-- `paidAt @db.Date`
-- `isActive`
-- `tenantId`
-- `branchId`
-
-Uso de domínio:
-
-- suporta pagamento parcial por parcela
-- o status global do payment é recalculado a partir dessas parcelas
-
-## Expense
-
-Representa despesa operacional.
-
-Campos principais:
-
-- `description`
-- `amount`
-- `dueDate`
-- `status`
-- `paymentDate`
-- `paymentMethod`
-- `tenantId`
-- `branchId`
-
-Observação:
-
-- `dueDate` e `paymentDate` não estão anotados com `@db.Date` no schema
-
-## Enums do domínio
-
-## `Role`
+### `Role`
 
 - `ADMIN`
 - `MANAGER`
 - `EMPLOYEE`
 
-## `ProductCategory`
+### `ProductCategory`
 
 - `FRAME`
 - `LENS`
 - `ACCESSORY`
 
-## `Gender`
+### `Gender`
 
 - `MALE`
 - `FEMALE`
 - `OTHER`
 
-## `FrameMaterialType`
+### `FrameMaterialType`
 
 - `ACETATE`
 - `METAL`
@@ -384,7 +154,7 @@ Observação:
 - `WOOD`
 - `OTHERS`
 
-## `PaymentMethod`
+### `PaymentMethod`
 
 - `PIX`
 - `MONEY`
@@ -392,59 +162,17 @@ Observação:
 - `CREDIT`
 - `INSTALLMENT`
 
-## `PaymentStatus`
+### `PaymentStatus`
 
 - `PENDING`
 - `CONFIRMED`
 - `CANCELED`
 
-## `ExpenseStatus`
+### `ExpenseStatus`
 
 - `SCHEDULED`
 - `PAID`
 
-## Relações mais importantes do domínio
-
-- `Tenant -> Branch`: um tenant possui muitas filiais
-- `Tenant -> User`: um tenant possui muitos usuários
-- `Client -> Prescription`: um cliente possui várias prescrições
-- `Client -> Sale`: um cliente possui várias vendas
-- `Sale -> Payment`: uma venda possui no máximo um pagamento
-- `Sale -> Protocol`: uma venda possui no máximo um protocolo
-- `Sale -> ItemProduct / ItemOpticalService`: uma venda possui múltiplos itens
-- `Payment -> PaymentMethodItem`: um pagamento possui vários métodos
-- `PaymentMethodItem -> PaymentInstallment`: um método parcelado possui várias parcelas
-
-## Particularidades relevantes do modelo
-
-### Datas sem horário
-
-O projeto trata vários campos de data como `@db.Date`, o que é coerente com:
-
-- data de nascimento
-- data da prescrição
-- data da venda
-- vencimentos e quitações financeiras
-
-### Inconsistências de modelo/código
-
-Há alguns sinais de desalinhamento histórico:
-
-- `Protocol` no schema não tem `recordNumber`, mas o DTO e o service de vendas ainda lidam com ele
-- `Brand.name` é globalmente único, embora o service valide por tenant
-- nem toda entidade com `isActive` é filtrada automaticamente nas consultas
-
-### Integridade de pagamento depende da aplicação
-
-O banco modela a estrutura, mas parte da consistência financeira depende do código:
-
-- soma dos métodos deve bater com o total
-- soma das parcelas deve bater com o método
-- vencimentos parcelados avançam por mês-calendário a partir de `firstDueDate`
-- confirmação do payment depende do recálculo em service
-
-## Resumo do agregado de negócio central
-
-O agregado mais importante do sistema é:
+## Agregado central
 
 `Client -> Prescription? -> Sale -> Payment -> PaymentMethodItem -> PaymentInstallment`

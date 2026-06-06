@@ -32,13 +32,9 @@ git --version
 ## 📦 1️⃣ Clonar o Repositório
 
 ```bash
-git clone https://github.com/<seu-usuario>/<nome-do-repo>.git
-cd <nome-do-repo>
+git clone https://github.com/marcosreiss/prismaflow-api.git
 
 ```
-
-> Substitua <seu-usuario> e <nome-do-repo> pelo caminho real do repositório GitHub.
-> 
 
 ---
 

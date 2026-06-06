@@ -5,12 +5,30 @@
         "description": "Coleção de rotas principais da API PrismaFlow (Node.js + Express + Prisma).",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000/api"
+        },
+        {
+            "key": "token",
+            "value": ""
+        },
+        {
+            "key": "tempToken",
+            "value": ""
+        },
+        {
+            "key": "branchId",
+            "value": ""
+        }
+    ],
     "item": [
         {
             "name": "Auth",
             "item": [
                 {
-                    "name": "Registrar administrador (tenant + branch + admin)",
+                    "name": "Registrar administrador",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -22,13 +40,13 @@
                         "url": "{{baseUrl}}/auth/register-admin",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"tenantName\": \"Ótica Vision\",\n  \"branchName\": \"Matriz São Luís\",\n  \"name\": \"Diogo França\",\n  \"email\": \"diogo@gmail.com\",\n  \"password\": \"123456\"\n}"
+                            "raw": "{\n  \"tenantName\": \"Otica Vision\",\n  \"branchName\": \"Matriz Sao Luis\",\n  \"name\": \"Diogo Franca\",\n  \"email\": \"diogo@gmail.com\",\n  \"password\": \"123456\"\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Login (gerar token JWT)",
+                    "name": "Login",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -52,14 +70,52 @@
                                     "if (pm.response.code === 200) {",
                                     "  const json = pm.response.json();",
                                     "  if (json.token) pm.environment.set('token', json.token);",
+                                    "  if (json.data && json.data.tempToken) pm.environment.set('tempToken', json.data.tempToken);",
                                     "}"
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    "response": []
                 },
                 {
-                    "name": "Alterar senha (usuário autenticado)",
+                    "name": "Selecionar filial com token temporario",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{tempToken}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/auth/branch-selection",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"branchId\": \"{{branchId}}\"\n}"
+                        }
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "  const json = pm.response.json();",
+                                    "  if (json.token) pm.environment.set('token', json.token);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "response": []
+                },
+                {
+                    "name": "Alterar senha",
                     "request": {
                         "method": "PUT",
                         "header": [
@@ -81,7 +137,7 @@
                     "response": []
                 },
                 {
-                    "name": "Registrar usuário (Manager ou Employee)",
+                    "name": "Registrar usuario pelo auth",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -97,7 +153,7 @@
                         "url": "{{baseUrl}}/auth/register-user",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Maria Oliveira\",\n  \"email\": \"maria@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\",\n  \"tenantId\": \"{{tenantId}}\",\n  \"branchId\": \"{{branchId}}\"\n}"
+                            "raw": "{\n  \"name\": \"Maria Oliveira\",\n  \"email\": \"maria@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\"\n}"
                         }
                     },
                     "response": []
@@ -108,7 +164,7 @@
             "name": "Branches",
             "item": [
                 {
-                    "name": "Criar nova filial",
+                    "name": "Criar filial",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -130,7 +186,7 @@
                     "response": []
                 },
                 {
-                    "name": "Listar filiais (somente ADMIN)",
+                    "name": "Listar filiais",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -144,7 +200,7 @@
                     "response": []
                 },
                 {
-                    "name": "Listar filiais para select (id e nome)",
+                    "name": "Listar filiais para select",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -163,7 +219,7 @@
             "name": "Users",
             "item": [
                 {
-                    "name": "Criar novo usuário",
+                    "name": "Criar usuario",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -179,13 +235,13 @@
                         "url": "{{baseUrl}}/users",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Gerente A\",\n  \"email\": \"gerente@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\",\n  \"branchId\": \"<id_da_branch>\"\n}"
+                            "raw": "{\n  \"name\": \"Gerente A\",\n  \"email\": \"gerente@otica.com\",\n  \"password\": \"123456\",\n  \"role\": \"MANAGER\",\n  \"branchId\": \"{{branchId}}\"\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Listar usuários (ADMIN / MANAGER)",
+                    "name": "Listar usuarios",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -204,7 +260,7 @@
             "name": "Brands",
             "item": [
                 {
-                    "name": "Criar nova marca",
+                    "name": "Criar marca",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -226,7 +282,7 @@
                     "response": []
                 },
                 {
-                    "name": "Listar marcas (paginado + busca opcional)",
+                    "name": "Listar marcas",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -295,7 +351,7 @@
             "name": "Products",
             "item": [
                 {
-                    "name": "Criar novo produto",
+                    "name": "Criar produto",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -311,13 +367,13 @@
                         "url": "{{baseUrl}}/products",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Armação Classic\",\n  \"description\": \"Armação leve em acetato\",\n  \"costPrice\": 120.50,\n  \"markup\": 2.0,\n  \"salePrice\": 241.00,\n  \"stockQuantity\": 50,\n  \"minimumStock\": 10,\n  \"category\": \"FRAME\",\n  \"brandId\": 1,\n  \"branchId\": \"br_01j9xyz72h\"\n}"
+                            "raw": "{\n  \"name\": \"Armacao Classic\",\n  \"description\": \"Armacao leve em acetato\",\n  \"costPrice\": 120.5,\n  \"markup\": 2,\n  \"salePrice\": 241,\n  \"stockQuantity\": 50,\n  \"minimumStock\": 10,\n  \"category\": \"FRAME\",\n  \"brandId\": 1\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Listar produtos (paginado + busca + filtro categoria)",
+                    "name": "Listar produtos",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -326,7 +382,21 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/products?page=1&limit=10&search=armação&category=FRAME"
+                        "url": "{{baseUrl}}/products?page=1&limit=10&search=armacao&category=FRAME&brandId=1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar estoque do produto",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/products/1/stock"
                     },
                     "response": []
                 },
@@ -361,7 +431,7 @@
                         "url": "{{baseUrl}}/products/1",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Lente Antirreflexo Premium\",\n  \"description\": \"Lente com filtro de luz azul\",\n  \"salePrice\": 320.00,\n  \"stockQuantity\": 25\n}"
+                            "raw": "{\n  \"name\": \"Lente Antirreflexo Premium\",\n  \"description\": \"Lente com filtro de luz azul\",\n  \"salePrice\": 320,\n  \"stockQuantity\": 25,\n  \"brandId\": 1\n}"
                         }
                     },
                     "response": []
@@ -386,7 +456,7 @@
             "name": "Optical Services",
             "item": [
                 {
-                    "name": "Criar novo serviço ótico",
+                    "name": "Criar servico optico",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -402,13 +472,13 @@
                         "url": "{{baseUrl}}/optical-services",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Ajuste de Armação\",\n  \"description\": \"Serviço de alinhamento e ajuste em armações de óculos.\",\n  \"price\": 50.00,\n  \"branchId\": \"br_01j9xyz72h\",\n  \"isActive\": true\n}"
+                            "raw": "{\n  \"name\": \"Ajuste de Armacao\",\n  \"description\": \"Servico de alinhamento e ajuste em armacoes de oculos.\",\n  \"price\": 50,\n  \"isActive\": true\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Listar serviços (paginado + busca opcional)",
+                    "name": "Listar servicos opticos",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -422,7 +492,7 @@
                     "response": []
                 },
                 {
-                    "name": "Buscar serviço por ID",
+                    "name": "Buscar servico por ID",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -436,7 +506,7 @@
                     "response": []
                 },
                 {
-                    "name": "Atualizar serviço ótico",
+                    "name": "Atualizar servico optico",
                     "request": {
                         "method": "PUT",
                         "header": [
@@ -452,13 +522,13 @@
                         "url": "{{baseUrl}}/optical-services/1",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Troca de Lentes\",\n  \"description\": \"Substituição de lentes em armações existentes.\",\n  \"price\": 80.00,\n  \"isActive\": true\n}"
+                            "raw": "{\n  \"name\": \"Troca de Lentes\",\n  \"description\": \"Substituicao de lentes em armacoes existentes.\",\n  \"price\": 80,\n  \"isActive\": true\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Excluir serviço ótico",
+                    "name": "Excluir servico optico",
                     "request": {
                         "method": "DELETE",
                         "header": [
@@ -474,203 +544,240 @@
             ]
         },
         {
-            "name": "Clients & Prescriptions",
+            "name": "Clients",
             "item": [
                 {
-                    "name": "Clients",
-                    "item": [
-                        {
-                            "name": "Criar novo cliente",
-                            "request": {
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application/json"
-                                    },
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients",
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n  \"name\": \"Maria Oliveira\",\n  \"nickname\": \"Maria O.\",\n  \"cpf\": \"12345678900\",\n  \"bornDate\": \"1990-05-12\",\n  \"gender\": \"FEMALE\",\n  \"email\": \"maria@otica.com\",\n  \"phone01\": \"5598999999999\",\n  \"street\": \"Av. dos Holandeses\",\n  \"city\": \"São Luís\",\n  \"uf\": \"MA\",\n  \"branchId\": \"<id_da_branch>\"\n}"
-                                }
+                    "name": "Criar cliente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             },
-                            "response": []
-                        },
-                        {
-                            "name": "Atualizar cliente existente",
-                            "request": {
-                                "method": "PUT",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application/json"
-                                    },
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients/1",
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n  \"email\": \"maria.oliveira@otica.com\",\n  \"phone02\": \"5598988888888\",\n  \"isBlacklisted\": false\n}"
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Buscar cliente por ID",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients/1"
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Listar clientes",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients?page=1&limit=10&search=Maria"
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Buscar clientes para select (por nome, limitado a 50 registros)",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients/select?name=Maria"
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Listar aniversariantes do dia",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/clients/birthdays?page=1&limit=10"
-                            },
-                            "response": []
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Joao Silva\",\n  \"cpf\": \"12345678900\",\n  \"bornDate\": \"1990-05-10\",\n  \"gender\": \"MALE\",\n  \"email\": \"joao@email.com\",\n  \"phone01\": \"98999999999\",\n  \"city\": \"Sao Luis\",\n  \"uf\": \"MA\",\n  \"obs\": \"Cliente VIP\"\n}"
                         }
-                    ]
+                    },
+                    "response": []
                 },
                 {
-                    "name": "Prescriptions",
-                    "item": [
-                        {
-                            "name": "Criar nova receita",
-                            "request": {
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application/json"
-                                    },
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/prescriptions",
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n  \"clientId\": 1,\n  \"prescriptionDate\": \"2025-10-04\",\n  \"doctorName\": \"Dr. Paulo Medeiros\",\n  \"crm\": \"CRM-MA 12345\",\n  \"odSpherical\": \"-1.25\",\n  \"odCylindrical\": \"-0.75\",\n  \"odAxis\": \"180\",\n  \"oeSpherical\": \"-1.00\",\n  \"oeCylindrical\": \"-0.50\",\n  \"oeAxis\": \"170\",\n  \"additionRight\": \"+2.00\",\n  \"additionLeft\": \"+1.75\",\n  \"opticalCenterRight\": \"31\",\n  \"opticalCenterLeft\": \"31\",\n  \"branchId\": \"<id_da_branch>\"\n}"
-                                }
+                    "name": "Atualizar cliente",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             },
-                            "response": []
-                        },
-                        {
-                            "name": "Atualizar receita existente",
-                            "request": {
-                                "method": "PUT",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application/json"
-                                    },
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/prescriptions/1",
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\n  \"doctorName\": \"Dr. Carlos Silva\",\n  \"additionRight\": \"+2.25\",\n  \"opticalCenterRight\": \"32\"\n}"
-                                }
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Buscar receita por ID",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/prescriptions/1"
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Listar receitas (com paginação e filtro por cliente)",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/prescriptions?page=1&limit=10&clientId=1"
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Listar receitas vencidas (com paginação e data opcional)",
-                            "request": {
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Authorization",
-                                        "value": "Bearer {{token}}"
-                                    }
-                                ],
-                                "url": "{{baseUrl}}/prescriptions/expired?page=1&limit=10&date=2025-10-12"
-                            },
-                            "response": []
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nickname\": \"Joaozinho\",\n  \"phone01\": \"98988888888\",\n  \"obs\": \"Atualizado pelo atendimento\"\n}"
                         }
-                    ]
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar clientes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients?page=1&limit=10&search=joao&branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar cliente por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar clientes para select",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/select?name=jo"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar aniversariantes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/birthdays?page=1&limit=10&date=2026-06-06&branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar prescricoes do cliente",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/1/prescriptions"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir cliente",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/clients/1"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Prescriptions",
+            "item": [
+                {
+                    "name": "Criar prescricao",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"clientId\": 1,\n  \"prescriptionDate\": \"2026-06-06\",\n  \"doctorName\": \"Dr. Paulo Medeiros\",\n  \"crm\": \"CRM-MA 12345\",\n  \"odSphericalFar\": \"-1.25\",\n  \"odCylindricalFar\": \"-0.75\",\n  \"odAxisFar\": \"180\",\n  \"oeSphericalFar\": \"-1.00\",\n  \"oeCylindricalFar\": \"-0.50\",\n  \"oeAxisFar\": \"170\",\n  \"additionRight\": \"+2.00\",\n  \"additionLeft\": \"+1.75\",\n  \"opticalCenterRight\": \"31\",\n  \"opticalCenterLeft\": \"31\",\n  \"notes\": \"Receita para lente multifocal\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar prescricao",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"doctorName\": \"Dr. Carlos Silva\",\n  \"additionRight\": \"+2.25\",\n  \"opticalCenterRight\": \"32\"\n}"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar prescricao por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar prescricoes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions?page=1&limit=10&clientId=1&branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar prescricoes vencidas",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions/expired?page=1&limit=10&date=2026-06-06&branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir prescricao",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/prescriptions/1"
+                    },
+                    "response": []
                 }
             ]
         },
@@ -678,7 +785,7 @@
             "name": "Sales",
             "item": [
                 {
-                    "name": "Criar nova venda",
+                    "name": "Criar venda",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -694,13 +801,13 @@
                         "url": "{{baseUrl}}/sales",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"clientId\": 1,\n  \"subtotal\": 500.00,\n  \"discount\": 50.00,\n  \"total\": 450.00,\n  \"notes\": \"Venda à vista com desconto\",\n  \"branchId\": \"br_01j9xyz72h\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2,\n      \"frameDetails\": {\n        \"frameMaterialType\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Preto\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    { \"serviceId\": 1 }\n  ],\n  \"protocol\": {\n    \"recordNumber\": \"A123\",\n    \"book\": \"1\",\n    \"page\": 20,\n    \"os\": \"OS001\"\n  }\n}"
+                            "raw": "{\n  \"clientId\": 1,\n  \"saleDate\": \"2026-06-06T00:00:00.000Z\",\n  \"prescriptionId\": 1,\n  \"discount\": 50,\n  \"notes\": \"Venda a vista com desconto\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2,\n      \"frameDetails\": {\n        \"material\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Preto\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    {\n      \"serviceId\": 1\n    }\n  ],\n  \"protocol\": {\n    \"book\": \"1\",\n    \"page\": 20,\n    \"os\": \"OS001\"\n  }\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Atualizar venda existente",
+                    "name": "Atualizar venda",
                     "request": {
                         "method": "PUT",
                         "header": [
@@ -716,13 +823,13 @@
                         "url": "{{baseUrl}}/sales/1",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"subtotal\": 520.00,\n  \"discount\": 20.00,\n  \"total\": 500.00,\n  \"notes\": \"Venda ajustada com novo desconto\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 3,\n      \"frameDetails\": {\n        \"frameMaterialType\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Azul\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    { \"serviceId\": 1 },\n    { \"serviceId\": 2 }\n  ],\n  \"protocol\": {\n    \"recordNumber\": \"A123\",\n    \"book\": \"1\",\n    \"page\": 21,\n    \"os\": \"OS001\"\n  }\n}"
+                            "raw": "{\n  \"saleDate\": \"2026-06-06T00:00:00.000Z\",\n  \"discount\": 20,\n  \"notes\": \"Venda ajustada com novo desconto\",\n  \"productItems\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 3,\n      \"frameDetails\": {\n        \"material\": \"ACETATE\",\n        \"reference\": \"RB1234\",\n        \"color\": \"Azul\"\n      }\n    }\n  ],\n  \"serviceItems\": [\n    {\n      \"serviceId\": 1\n    },\n    {\n      \"serviceId\": 2\n    }\n  ],\n  \"protocol\": {\n    \"book\": \"1\",\n    \"page\": 21,\n    \"os\": \"OS001\"\n  }\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Listar vendas (paginado + filtro opcional por cliente)",
+                    "name": "Listar vendas",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -731,7 +838,7 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/sales?page=1&limit=10&clientId=1"
+                        "url": "{{baseUrl}}/sales?page=1&limit=10&clientId=1&clientName=joao"
                     },
                     "response": []
                 },
@@ -746,6 +853,20 @@
                             }
                         ],
                         "url": "{{baseUrl}}/sales/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar vendas por cliente",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/sales/by-client/1"
                     },
                     "response": []
                 },
@@ -769,51 +890,7 @@
             "name": "Payments",
             "item": [
                 {
-                    "name": "Criar novo pagamento",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": "{{baseUrl}}/payments",
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"saleId\": 1,\n  \"method\": \"PIX\",\n  \"status\": \"PENDING\",\n  \"total\": 450.00,\n  \"discount\": 50.00,\n  \"downPayment\": 0,\n  \"firstDueDate\": \"2025-12-20T00:00:00.000Z\"\n}"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Atualizar pagamento (gerar parcelas se INSTALLMENT)",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": "{{baseUrl}}/payments/1",
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"method\": \"INSTALLMENT\",\n  \"total\": 1000.00,\n  \"discount\": 0,\n  \"downPayment\": 200.00,\n  \"installmentsTotal\": 4,\n  \"firstDueDate\": \"2025-12-15T00:00:00.000Z\"\n}"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Listar pagamentos (com filtros avançados)",
+                    "name": "Listar pagamentos",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -822,7 +899,7 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments?page=1&limit=10&status=PENDING&hasOverdueInstallments=true&isPartiallyPaid=true&dueDaysAhead=7"
+                        "url": "{{baseUrl}}/payments?page=1&limit=10&status=PENDING&method=INSTALLMENT&hasOverdueInstallments=true&isPartiallyPaid=true&dueDaysAhead=7&clientName=joao&sortOrder=desc"
                     },
                     "response": []
                 },
@@ -841,6 +918,20 @@
                     "response": []
                 },
                 {
+                    "name": "Buscar pagamento por saleId",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payments/by-sale/1"
+                    },
+                    "response": []
+                },
+                {
                     "name": "Validar integridade do pagamento",
                     "request": {
                         "method": "GET",
@@ -855,16 +946,24 @@
                     "response": []
                 },
                 {
-                    "name": "Buscar status do pagamento por saleId",
+                    "name": "Atualizar pagamento",
                     "request": {
-                        "method": "GET",
+                        "method": "PUT",
                         "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
                             {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/by-sale/1"
+                        "url": "{{baseUrl}}/payments/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"discount\": 0,\n  \"methods\": [\n    {\n      \"method\": \"PIX\",\n      \"amount\": 200,\n      \"paidAt\": \"2026-06-06T10:00:00.000Z\"\n    },\n    {\n      \"method\": \"INSTALLMENT\",\n      \"amount\": 800,\n      \"installments\": 4,\n      \"firstDueDate\": \"2026-07-10T00:00:00.000Z\"\n    }\n  ]\n}"
+                        }
                     },
                     "response": []
                 },
@@ -889,20 +988,6 @@
                         }
                     },
                     "response": []
-                },
-                {
-                    "name": "Excluir pagamento",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": "{{baseUrl}}/payments/1"
-                    },
-                    "response": []
                 }
             ]
         },
@@ -910,7 +995,7 @@
             "name": "Payment Installments",
             "item": [
                 {
-                    "name": "Listar parcelas de um pagamento",
+                    "name": "Listar parcelas vencidas",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -919,7 +1004,21 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/1/installments"
+                        "url": "{{baseUrl}}/payment-installments/overdue?page=1&limit=10"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar parcelas por pagamento",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payment-installments/by-payment/1"
                     },
                     "response": []
                 },
@@ -933,7 +1032,29 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/installments/1"
+                        "url": "{{baseUrl}}/payment-installments/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Atualizar parcela",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/payment-installments/1",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"sequence\": 1,\n  \"amount\": 250,\n  \"dueDate\": \"2026-07-10T00:00:00.000Z\"\n}"
+                        }
                     },
                     "response": []
                 },
@@ -951,16 +1072,43 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/installments/1/pay",
+                        "url": "{{baseUrl}}/payment-installments/1/pay",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"paidAmount\": 200.00,\n  \"paidAt\": \"2025-12-16T10:30:00.000Z\"\n}"
+                            "raw": "{\n  \"paidAmount\": 200,\n  \"paidAt\": \"2026-07-10T10:30:00.000Z\"\n}"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Expenses",
+            "item": [
+                {
+                    "name": "Criar despesa",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/expenses",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"description\": \"Conta de energia\",\n  \"amount\": 350,\n  \"dueDate\": \"2026-06-10\",\n  \"status\": \"SCHEDULED\",\n  \"paymentMethod\": \"PIX\"\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Atualizar parcela (valor ou data)",
+                    "name": "Atualizar despesa",
                     "request": {
                         "method": "PUT",
                         "header": [
@@ -973,16 +1121,16 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/installments/1",
+                        "url": "{{baseUrl}}/expenses/1",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"amount\": 250.00,\n  \"dueDate\": \"2025-12-20T00:00:00.000Z\"\n}"
+                            "raw": "{\n  \"status\": \"PAID\",\n  \"paymentDate\": \"2026-06-09\",\n  \"paymentMethod\": \"DEBIT\"\n}"
                         }
                     },
                     "response": []
                 },
                 {
-                    "name": "Listar parcelas vencidas (relatório)",
+                    "name": "Listar despesas",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -991,7 +1139,124 @@
                                 "value": "Bearer {{token}}"
                             }
                         ],
-                        "url": "{{baseUrl}}/payments/installments/overdue?page=1&limit=10"
+                        "url": "{{baseUrl}}/expenses?page=1&limit=10&branchId={{branchId}}&status=SCHEDULED&search=energia"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Buscar despesa por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/expenses/1"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Excluir despesa",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/expenses/1"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Dashboard",
+            "item": [
+                {
+                    "name": "Balance",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/balance?branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Sales Summary",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/sales-summary?branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Payments Status",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/payments-status?branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Top Products",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/top-products?branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Top Clients",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/top-clients?branchId={{branchId}}"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Overdue Installments",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/dashboard/overdue-installments?branchId={{branchId}}"
                     },
                     "response": []
                 }

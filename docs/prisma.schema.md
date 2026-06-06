@@ -28,9 +28,9 @@ model Tenant {
   protocols           Protocol[]
   sales               Sale[]
   users               User[]
-  paymentMethodItems PaymentMethodItem[]
+  paymentMethodItems  PaymentMethodItem[]
   paymentInstallments PaymentInstallment[]
-  expenses Expense[]
+  expenses            Expense[]
 }
 
 model Branch {
@@ -54,8 +54,8 @@ model Branch {
   protocols           Protocol[]
   sales               Sale[]
   users               User[]
-  paymentMethodItems PaymentMethodItem[]
-  expenses Expense[]
+  paymentMethodItems  PaymentMethodItem[]
+  expenses            Expense[]
 
   @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
 }
@@ -81,7 +81,7 @@ model User {
 
 model Brand {
   id          Int       @id @default(autoincrement())
-  name        String    @unique
+  name        String
   isActive    Boolean   @default(true)
   tenantId    String
   createdById String?
@@ -91,6 +91,7 @@ model Brand {
   tenant      Tenant    @relation(fields: [tenantId], references: [id])
   products    Product[]
 
+  @@unique([tenantId, name])
   @@index([tenantId], map: "Brand_tenantId_fkey")
 }
 
@@ -146,9 +147,9 @@ model Client {
   id            Int            @id @default(autoincrement())
   name          String
   nickname      String?
-  cpf           String?        
+  cpf           String?
   rg            String?
-  bornDate  DateTime?  @db.Date
+  bornDate      DateTime?      @db.Date
   gender        Gender?
   fatherName    String?
   motherName    String?
@@ -183,15 +184,15 @@ model Client {
   prescriptions Prescription[]
   Sale          Sale[]
 
+  @@unique([cpf, tenantId])
   @@index([branchId], map: "Client_branchId_fkey")
   @@index([tenantId], map: "Client_tenantId_fkey")
-  @@unique([cpf, tenantId])
 }
 
 model Prescription {
-  id                 Int      @id @default(autoincrement())
+  id                 Int       @id @default(autoincrement())
   clientId           Int
-  prescriptionDate   DateTime?  @db.Date
+  prescriptionDate   DateTime? @db.Date
   doctorName         String?
   crm                String?
   odSphericalFar     String?
@@ -221,16 +222,16 @@ model Prescription {
   additionLeft       String?
   opticalCenterRight String?
   opticalCenterLeft  String?
-  isActive           Boolean  @default(true)
+  isActive           Boolean   @default(true)
   tenantId           String
   branchId           String
   createdById        String?
   updatedById        String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  branch             Branch   @relation(fields: [branchId], references: [id])
-  client             Client   @relation(fields: [clientId], references: [id])
-  tenant             Tenant   @relation(fields: [tenantId], references: [id])
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  branch             Branch    @relation(fields: [branchId], references: [id])
+  client             Client    @relation(fields: [clientId], references: [id])
+  tenant             Tenant    @relation(fields: [tenantId], references: [id])
   sales              Sale[]
 
   @@index([branchId], map: "Prescription_branchId_fkey")
@@ -241,7 +242,7 @@ model Prescription {
 model Sale {
   id             Int                  @id @default(autoincrement())
   clientId       Int
-  saleDate       DateTime?  @db.Date
+  saleDate       DateTime?            @db.Date
   prescriptionId Int?
   subtotal       Float?               @default(0)
   discount       Float?               @default(0)
@@ -273,6 +274,7 @@ model ItemProduct {
   id           Int           @id @default(autoincrement())
   saleId       Int
   productId    Int
+  unitPrice    Float
   quantity     Int           @default(1)
   tenantId     String
   branchId     String
@@ -317,6 +319,7 @@ model ItemOpticalService {
   id          Int            @id @default(autoincrement())
   saleId      Int
   serviceId   Int
+  unitPrice   Float
   tenantId    String
   branchId    String
   createdById String?
@@ -335,24 +338,25 @@ model ItemOpticalService {
 }
 
 model Payment {
-  id               Int                  @id @default(autoincrement())
-  saleId           Int                  @unique
-  status           PaymentStatus        @default(PENDING)
-  total            Float                @default(0)
-  discount         Float                @default(0)
-  paidAmount       Float                @default(0)
-  installmentsPaid Int                  @default(0)
-  lastPaymentAt    DateTime?  @db.Date
-  isActive         Boolean              @default(true)
+  id               Int                 @id @default(autoincrement())
+  saleId           Int                 @unique
+  status           PaymentStatus       @default(PENDING)
+  subtotal         Float               @default(0)
+  discount         Float               @default(0)
+  total            Float               @default(0)
+  paidAmount       Float               @default(0)
+  installmentsPaid Int                 @default(0)
+  lastPaymentAt    DateTime?           @db.Date
+  isActive         Boolean             @default(true)
   tenantId         String
   branchId         String
   createdById      String?
   updatedById      String?
-  createdAt        DateTime             @default(now())
-  updatedAt        DateTime             @updatedAt
-  branch           Branch               @relation(fields: [branchId], references: [id])
-  sale             Sale                 @relation("SalePayment", fields: [saleId], references: [id])
-  tenant           Tenant               @relation(fields: [tenantId], references: [id])
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  branch           Branch              @relation(fields: [branchId], references: [id])
+  sale             Sale                @relation("SalePayment", fields: [saleId], references: [id])
+  tenant           Tenant              @relation(fields: [tenantId], references: [id])
   methods          PaymentMethodItem[]
 
   @@index([branchId], map: "Payment_branchId_fkey")
@@ -360,44 +364,44 @@ model Payment {
 }
 
 model Protocol {
-  id           Int      @id @default(autoincrement())
-  saleId       Int?     @unique
-  book         String?
-  page         Int?
-  os           String?
-  isActive     Boolean  @default(true)
-  tenantId     String
-  branchId     String
-  createdById  String?
-  updatedById  String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  branch       Branch   @relation(fields: [branchId], references: [id])
-  sale         Sale?    @relation("SaleProtocol", fields: [saleId], references: [id])
-  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+  id          Int      @id @default(autoincrement())
+  saleId      Int?     @unique
+  book        String?
+  page        Int?
+  os          String?
+  isActive    Boolean  @default(true)
+  tenantId    String
+  branchId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  branch      Branch   @relation(fields: [branchId], references: [id])
+  sale        Sale?    @relation("SaleProtocol", fields: [saleId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
 
   @@index([branchId], map: "Protocol_branchId_fkey")
   @@index([tenantId], map: "Protocol_tenantId_fkey")
 }
 
 model PaymentMethodItem {
-  id           Int                  @id @default(autoincrement())
-  paymentId    Int
-  method       PaymentMethod
-  amount       Float                @default(0)
-  installments Int?
-  firstDueDate DateTime?  @db.Date
-  isPaid       Boolean              @default(false)
-  paidAt       DateTime?  @db.Date
-  tenantId     String
-  branchId     String
-  createdById  String?
-  updatedById  String?
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
-  payment      Payment              @relation(fields: [paymentId], references: [id])
-  tenant       Tenant               @relation(fields: [tenantId], references: [id])
-  branch       Branch               @relation(fields: [branchId], references: [id])
+  id               Int                  @id @default(autoincrement())
+  paymentId        Int
+  method           PaymentMethod
+  amount           Float                @default(0)
+  installments     Int?
+  firstDueDate     DateTime?            @db.Date
+  isPaid           Boolean              @default(false)
+  paidAt           DateTime?            @db.Date
+  tenantId         String
+  branchId         String
+  createdById      String?
+  updatedById      String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  payment          Payment              @relation(fields: [paymentId], references: [id])
+  tenant           Tenant               @relation(fields: [tenantId], references: [id])
+  branch           Branch               @relation(fields: [branchId], references: [id])
   installmentItems PaymentInstallment[]
 
   @@index([paymentId], map: "PaymentMethodItem_paymentId_fkey")
@@ -411,8 +415,8 @@ model PaymentInstallment {
   sequence            Int
   amount              Float             @default(0)
   paidAmount          Float             @default(0)
-  dueDate             DateTime?  @db.Date
-  paidAt              DateTime?  @db.Date
+  dueDate             DateTime?         @db.Date
+  paidAt              DateTime?         @db.Date
   isActive            Boolean           @default(true)
   tenantId            String
   branchId            String
@@ -472,22 +476,22 @@ enum PaymentStatus {
 }
 
 model Expense {
-  id            Int       @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   description   String
   amount        Float
-  dueDate       DateTime
-  status        ExpenseStatus @default(SCHEDULED)
-  paymentDate   DateTime?
+  dueDate       DateTime       @db.Date
+  status        ExpenseStatus  @default(SCHEDULED)
+  paymentDate   DateTime?      @db.Date
   paymentMethod PaymentMethod?
   tenantId      String
   branchId      String
   createdById   String?
   updatedById   String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  
-  branch        Branch    @relation(fields: [branchId], references: [id])
-  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  branch Branch @relation(fields: [branchId], references: [id])
+  tenant Tenant @relation(fields: [tenantId], references: [id])
 
   @@index([branchId], map: "Expense_branchId_fkey")
   @@index([tenantId], map: "Expense_tenantId_fkey")

@@ -1,0 +1,3943 @@
+================================================================================
+MIGRAÇÃO DE PARCELAS - ÓTICA CRISTÃ
+================================================================================
+
+Tenant ID: cmibvcyed00007m0118rkgft8
+Branch ID: cmibvcyed00017m014r66e39w
+Arquivo: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\carne.xlsx
+
+📂 Lendo arquivo Excel...
+✓ 3913 parcelas encontradas
+
+🔄 Iniciando migração...
+
+✓ Parcela 1/6: Payment 1 - Pago com sucesso
+✓ Parcela 2/6: Payment 1 - Pago com atraso
+✓ Parcela 3/6: Payment 1 - Pago com atraso
+✓ Parcela 4/6: Payment 1 - Pago com atraso
+✓ Parcela 5/6: Payment 1 - Vencida
+✓ Parcela 6/6: Payment 1 - Vencida
+⚠️  Parcela 18: Payment não existe para venda 10023
+⚠️  Parcela 19: Payment não existe para venda 10023
+⚠️  Parcela 20: Payment não existe para venda 10023
+⚠️  Parcela 21: Payment não existe para venda 10023
+⚠️  Parcela 22: Payment não existe para venda 10023
+⚠️  Parcela 23: Payment não existe para venda 10023
+⚠️  Parcela 24: Payment não existe para venda 10023
+⚠️  Parcela 25: Payment não existe para venda 10023
+⚠️  Parcela 26: Payment não existe para venda 10023
+⚠️  Parcela 27: Payment não existe para venda 10023
+⚠️  Parcela 28: Payment não existe para venda 10023
+⚠️  Parcela 29: Payment não existe para venda 10023
+⚠️  Parcela 30: Payment não existe para venda 10023
+⚠️  Parcela 31: Payment não existe para venda 10023
+⚠️  Parcela 32: Payment não existe para venda 10023
+⚠️  Parcela 33: Payment não existe para venda 10023
+⚠️  Parcela 34: Payment não existe para venda 10023
+⚠️  Parcela 35: Payment não existe para venda 10023
+⚠️  Parcela 36: Payment não existe para venda 10023
+⚠️  Parcela 37: Payment não existe para venda 10023
+⚠️  Parcela 38: Payment não existe para venda 10023
+⚠️  Parcela 39: Payment não existe para venda 10023
+⚠️  Parcela 40: Payment não existe para venda 10023
+⚠️  Parcela 41: Payment não existe para venda 10023
+⚠️  Parcela 42: Payment não existe para venda 10023
+⚠️  Parcela 43: Payment não existe para venda 10023
+✓ Parcela 1/5: Payment 2 - Pago com sucesso
+✓ Parcela 2/5: Payment 2 - Pago com atraso
+✓ Parcela 3/5: Payment 2 - Pago com atraso
+✓ Parcela 4/5: Payment 2 - Pago com atraso
+✓ Parcela 5/5: Payment 2 - Pago com atraso
+✓ Parcela 1/6: Payment 3 - Pago com atraso
+✓ Parcela 2/6: Payment 3 - Pago com atraso
+✓ Parcela 3/6: Payment 3 - Pago com atraso
+✓ Parcela 4/6: Payment 3 - Pago com atraso
+✓ Parcela 5/6: Payment 3 - Pago com atraso
+✓ Parcela 6/6: Payment 3 - Pago com atraso
+✓ Parcela 1/5: Payment 4 - Pago com atraso
+✓ Parcela 2/5: Payment 4 - Pago com atraso
+✓ Parcela 3/5: Payment 4 - Pago com atraso
+✓ Parcela 4/5: Payment 4 - Pago com atraso
+✓ Parcela 5/5: Payment 4 - Pago com atraso
+✓ Parcela 1/4: Payment 5 - Pago com sucesso
+✓ Parcela 2/4: Payment 5 - Pago com atraso
+✓ Parcela 3/4: Payment 5 - Pago com atraso
+✓ Parcela 4/4: Payment 5 - Pago com atraso
+✓ Parcela 1/6: Payment 6 - Pago com atraso
+✓ Parcela 2/6: Payment 6 - Pago com atraso
+✓ Parcela 3/6: Payment 6 - Pago com atraso
+✓ Parcela 4/6: Payment 6 - Pago com atraso
+✓ Parcela 5/6: Payment 6 - Pago com atraso
+✓ Parcela 6/6: Payment 6 - Pago com atraso
+✓ Parcela 1/6: Payment 7 - Vencida
+✓ Parcela 2/6: Payment 7 - Vencida
+✓ Parcela 3/6: Payment 7 - Vencida
+✓ Parcela 4/6: Payment 7 - Vencida
+✓ Parcela 5/6: Payment 7 - Vencida
+✓ Parcela 6/6: Payment 7 - Vencida
+✓ Parcela 1/5: Payment 8 - Pago com sucesso
+✓ Parcela 2/5: Payment 8 - Pago com atraso
+✓ Parcela 3/5: Payment 8 - Pago com atraso
+✓ Parcela 4/5: Payment 8 - Pago com atraso
+✓ Parcela 5/5: Payment 8 - Pago com atraso
+✓ Parcela 1/6: Payment 9 - Pago com atraso
+✓ Parcela 2/6: Payment 9 - Pago com atraso
+✓ Parcela 3/6: Payment 9 - Pago com atraso
+✓ Parcela 4/6: Payment 9 - Pago com atraso
+✓ Parcela 5/6: Payment 9 - Pago com atraso
+✓ Parcela 6/6: Payment 9 - Pago com atraso
+✓ Parcela 1/7: Payment 11 - Vencida
+✓ Parcela 2/7: Payment 11 - Vencida
+✓ Parcela 3/7: Payment 11 - Vencida
+✓ Parcela 4/7: Payment 11 - Vencida
+✓ Parcela 5/7: Payment 11 - Vencida
+✓ Parcela 6/7: Payment 11 - Vencida
+✓ Parcela 7/7: Payment 11 - Vencida
+✓ Parcela 1/6: Payment 10 - Pago com sucesso
+✓ Parcela 2/6: Payment 10 - Pago com atraso
+✓ Parcela 3/6: Payment 10 - Pago com sucesso
+✓ Parcela 4/6: Payment 10 - Pago com atraso
+✓ Parcela 5/6: Payment 10 - Aberta
+✓ Parcela 6/6: Payment 10 - Aberta
+✓ Parcela 1/1: Payment 12 - Vencida
+✓ Parcela 1/6: Payment 13 - Pago com atraso
+✓ Parcela 2/6: Payment 13 - Pago com atraso
+✓ Parcela 3/6: Payment 13 - Pago com atraso
+✓ Parcela 4/6: Payment 13 - Pago com atraso
+✓ Parcela 5/6: Payment 13 - Pago com atraso
+✓ Parcela 6/6: Payment 13 - Pago com atraso
+✓ Parcela 1/4: Payment 14 - Pago com atraso
+✓ Parcela 2/4: Payment 14 - Pago com atraso
+✓ Parcela 3/4: Payment 14 - Vencida
+✓ Parcela 4/4: Payment 14 - Vencida
+✓ Parcela 1/2: Payment 17 - Pago com sucesso
+✓ Parcela 2/2: Payment 17 - Pago com sucesso
+✓ Parcela 1/3: Payment 18 - Pago com atraso
+✓ Parcela 2/3: Payment 18 - Pago com atraso
+✓ Parcela 3/3: Payment 18 - Pago com atraso
+✓ Parcela 1/2: Payment 19 - Pago com atraso
+✓ Parcela 2/2: Payment 19 - Pago com atraso
+✓ Parcela 1/2: Payment 20 - Pago com atraso
+✓ Parcela 2/2: Payment 20 - Pago com atraso
+✓ Parcela 1/6: Payment 22 - Pago com sucesso
+✓ Parcela 2/6: Payment 22 - Pago com sucesso
+✓ Parcela 3/6: Payment 22 - Pago com sucesso
+✓ Parcela 4/6: Payment 22 - Pago com sucesso
+✓ Parcela 5/6: Payment 22 - Pago com sucesso
+✓ Parcela 6/6: Payment 22 - Pago com sucesso
+✓ Parcela 1/1: Payment 23 - Pago com atraso
+⚠️  Parcela 139: Payment não existe para venda 10048
+⚠️  Parcela 140: Payment não existe para venda 10048
+⚠️  Parcela 141: Payment não existe para venda 10048
+✓ Parcela 1/6: Payment 24 - Pago com sucesso
+✓ Parcela 2/6: Payment 24 - Pago com atraso
+✓ Parcela 3/6: Payment 24 - Pago com atraso
+✓ Parcela 4/6: Payment 24 - Pago com atraso
+✓ Parcela 5/6: Payment 24 - Pago com atraso
+✓ Parcela 6/6: Payment 24 - Pago com atraso
+✓ Parcela 1/1: Payment 25 - Pago com atraso
+✓ Parcela 1/3: Payment 26 - Pago com atraso
+✓ Parcela 2/3: Payment 26 - Pago com atraso
+✓ Parcela 3/3: Payment 26 - Pago com atraso
+✓ Parcela 1/2: Payment 27 - Pago com atraso
+✓ Parcela 2/2: Payment 27 - Pago com atraso
+✓ Parcela 1/1: Payment 29 - Pago com atraso
+✓ Parcela 1/6: Payment 30 - Pago com atraso
+✓ Parcela 2/6: Payment 30 - Pago com atraso
+✓ Parcela 3/6: Payment 30 - Pago com atraso
+✓ Parcela 4/6: Payment 30 - Pago com atraso
+✓ Parcela 5/6: Payment 30 - Pago com atraso
+✓ Parcela 6/6: Payment 30 - Pago com atraso
+⚠️  Parcela 163: Payment não existe para venda 10059
+⚠️  Parcela 164: Payment não existe para venda 10059
+⚠️  Parcela 165: Payment não existe para venda 10059
+✓ Parcela 1/3: Payment 31 - Pago com sucesso
+✓ Parcela 2/3: Payment 31 - Pago com atraso
+✓ Parcela 3/3: Payment 31 - Pago com atraso
+✓ Parcela 1/4: Payment 32 - Pago com atraso
+✓ Parcela 2/4: Payment 32 - Pago com atraso
+✓ Parcela 3/4: Payment 32 - Pago com atraso
+✓ Parcela 4/4: Payment 32 - Vencida
+✓ Parcela 1/2: Payment 33 - Pago com sucesso
+✓ Parcela 2/2: Payment 33 - Pago com atraso
+✓ Parcela 1/6: Payment 34 - Pago com sucesso
+✓ Parcela 2/6: Payment 34 - Pago com sucesso
+✓ Parcela 3/6: Payment 34 - Pago com atraso
+✓ Parcela 4/6: Payment 34 - Pago com atraso
+✓ Parcela 5/6: Payment 34 - Pago com atraso
+✓ Parcela 6/6: Payment 34 - Pago com atraso
+✓ Parcela 1/5: Payment 35 - Pago com atraso
+✓ Parcela 2/5: Payment 35 - Pago com atraso
+✓ Parcela 3/5: Payment 35 - Pago com sucesso
+✓ Parcela 4/5: Payment 35 - Pago com sucesso
+✓ Parcela 5/5: Payment 35 - Pago com sucesso
+⚠️  Parcela 191: Payment não existe para venda 10067
+⚠️  Parcela 192: Payment não existe para venda 10067
+⚠️  Parcela 193: Payment não existe para venda 10067
+⚠️  Parcela 194: Payment não existe para venda 10067
+⚠️  Parcela 195: Payment não existe para venda 10065
+⚠️  Parcela 196: Payment não existe para venda 10065
+⚠️  Parcela 197: Payment não existe para venda 10065
+⚠️  Parcela 198: Payment não existe para venda 10065
+⚠️  Parcela 199: Payment não existe para venda 10065
+✓ Parcela 1/5: Payment 41 - Pago com atraso
+✓ Parcela 2/5: Payment 41 - Pago com atraso
+✓ Parcela 3/5: Payment 41 - Pago com atraso
+✓ Parcela 4/5: Payment 41 - Pago com atraso
+✓ Parcela 5/5: Payment 41 - Pago com atraso
+✓ Parcela 1/4: Payment 42 - Pago com atraso
+✓ Parcela 2/4: Payment 42 - Pago com sucesso
+✓ Parcela 3/4: Payment 42 - Pago com sucesso
+✓ Parcela 4/4: Payment 42 - Pago com sucesso
+✓ Parcela 1/2: Payment 43 - Pago com atraso
+✓ Parcela 2/2: Payment 43 - Vencida
+✓ Parcela 1/4: Payment 44 - Pago com sucesso
+✓ Parcela 2/4: Payment 44 - Pago com atraso
+✓ Parcela 3/4: Payment 44 - Pago com atraso
+✓ Parcela 4/4: Payment 44 - Pago com atraso
+⚠️  Parcela 215: Payment não existe para venda 10085
+⚠️  Parcela 216: Payment não existe para venda 10085
+⚠️  Parcela 217: Payment não existe para venda 10085
+⚠️  Parcela 218: Payment não existe para venda 10085
+✓ Parcela 1/6: Payment 56 - Pago com atraso
+✓ Parcela 2/6: Payment 56 - Pago com atraso
+✓ Parcela 3/6: Payment 56 - Pago com atraso
+✓ Parcela 4/6: Payment 56 - Pago com atraso
+✓ Parcela 5/6: Payment 56 - Pago com atraso
+✓ Parcela 6/6: Payment 56 - Pago com atraso
+✓ Parcela 1/2: Payment 57 - Pago com atraso
+✓ Parcela 2/2: Payment 57 - Pago com atraso
+✓ Parcela 1/4: Payment 58 - Pago com sucesso
+✓ Parcela 2/4: Payment 58 - Pago com sucesso
+✓ Parcela 3/4: Payment 58 - Pago com atraso
+✓ Parcela 4/4: Payment 58 - Pago com sucesso
+✓ Parcela 1/1: Payment 60 - Pago com atraso
+✓ Parcela 1/1: Payment 61 - Pago com atraso
+✓ Parcela 1/2: Payment 62 - Pago com atraso
+✓ Parcela 2/2: Payment 62 - Aberta
+✓ Parcela 1/2: Payment 63 - Pago com atraso
+✓ Parcela 2/2: Payment 63 - Vencida
+✓ Parcela 1/1: Payment 64 - Aberta
+✓ Parcela 1/4: Payment 65 - Pago com atraso
+✓ Parcela 2/4: Payment 65 - Pago com atraso
+✓ Parcela 3/4: Payment 65 - Pago com atraso
+✓ Parcela 4/4: Payment 65 - Pago com atraso
+✓ Parcela 1/6: Payment 66 - Pago com atraso
+✓ Parcela 2/6: Payment 66 - Pago com atraso
+✓ Parcela 3/6: Payment 66 - Pago com atraso
+✓ Parcela 4/6: Payment 66 - Pago com atraso
+✓ Parcela 5/6: Payment 66 - Pago com atraso
+✓ Parcela 6/6: Payment 66 - Pago com atraso
+✓ Parcela 1/5: Payment 67 - Pago com atraso
+✓ Parcela 2/5: Payment 67 - Pago com atraso
+✓ Parcela 3/5: Payment 67 - Pago com atraso
+✓ Parcela 4/5: Payment 67 - Vencida
+✓ Parcela 5/5: Payment 67 - Vencida
+✓ Parcela 1/3: Payment 68 - Pago com sucesso
+✓ Parcela 2/3: Payment 68 - Pago com atraso
+✓ Parcela 3/3: Payment 68 - Pago com sucesso
+✓ Parcela 1/6: Payment 69 - Pago com sucesso
+✓ Parcela 2/6: Payment 69 - Pago com sucesso
+✓ Parcela 3/6: Payment 69 - Pago com sucesso
+✓ Parcela 4/6: Payment 69 - Pago com sucesso
+✓ Parcela 5/6: Payment 69 - Pago com sucesso
+✓ Parcela 6/6: Payment 69 - Pago com atraso
+✓ Parcela 1/1: Payment 70 - Pago com atraso
+✓ Parcela 1/5: Payment 71 - Pago com atraso
+✓ Parcela 2/5: Payment 71 - Pago com sucesso
+✓ Parcela 3/5: Payment 71 - Pago com atraso
+✓ Parcela 4/5: Payment 71 - Pago com atraso
+✓ Parcela 5/5: Payment 71 - Aberta
+✓ Parcela 1/5: Payment 72 - Pago com sucesso
+✓ Parcela 2/5: Payment 72 - Pago com sucesso
+✓ Parcela 3/5: Payment 72 - Pago com atraso
+✓ Parcela 4/5: Payment 72 - Pago com atraso
+✓ Parcela 5/5: Payment 72 - Pago com atraso
+✓ Parcela 1/6: Payment 73 - Pago com atraso
+✓ Parcela 2/6: Payment 73 - Pago com atraso
+✓ Parcela 3/6: Payment 73 - Pago com atraso
+✓ Parcela 4/6: Payment 73 - Pago com atraso
+✓ Parcela 5/6: Payment 73 - Aberta
+✓ Parcela 6/6: Payment 73 - Aberta
+✓ Parcela 1/1: Payment 74 - Pago com atraso
+✓ Parcela 1/2: Payment 75 - Vencida
+✓ Parcela 2/2: Payment 75 - Vencida
+✓ Parcela 1/6: Payment 76 - Pago com atraso
+✓ Parcela 2/6: Payment 76 - Pago com atraso
+✓ Parcela 3/6: Payment 76 - Pago com atraso
+✓ Parcela 4/6: Payment 76 - Aberta
+✓ Parcela 5/6: Payment 76 - Aberta
+✓ Parcela 6/6: Payment 76 - Aberta
+✓ Parcela 1/6: Payment 77 - Aberta
+✓ Parcela 2/6: Payment 77 - Aberta
+✓ Parcela 3/6: Payment 77 - Aberta
+✓ Parcela 4/6: Payment 77 - Aberta
+✓ Parcela 5/6: Payment 77 - Aberta
+✓ Parcela 6/6: Payment 77 - Aberta
+✓ Parcela 1/4: Payment 78 - Vencida
+✓ Parcela 2/4: Payment 78 - Vencida
+✓ Parcela 3/4: Payment 78 - Vencida
+✓ Parcela 4/4: Payment 78 - Vencida
+✓ Parcela 1/6: Payment 79 - Pago com atraso
+✓ Parcela 2/6: Payment 79 - Pago com sucesso
+✓ Parcela 3/6: Payment 79 - Pago com sucesso
+✓ Parcela 4/6: Payment 79 - Pago com sucesso
+✓ Parcela 5/6: Payment 79 - Pago com sucesso
+✓ Parcela 6/6: Payment 79 - Pago com sucesso
+✓ Parcela 1/3: Payment 80 - Pago com atraso
+✓ Parcela 2/3: Payment 80 - Pago com atraso
+✓ Parcela 3/3: Payment 80 - Pago com atraso
+✓ Parcela 1/6: Payment 81 - Pago com sucesso
+✓ Parcela 2/6: Payment 81 - Pago com sucesso
+✓ Parcela 3/6: Payment 81 - Pago com sucesso
+✓ Parcela 4/6: Payment 81 - Pago com sucesso
+✓ Parcela 5/6: Payment 81 - Pago com atraso
+✓ Parcela 6/6: Payment 81 - Pago com atraso
+✓ Parcela 1/5: Payment 82 - Pago com atraso
+✓ Parcela 2/5: Payment 82 - Pago com atraso
+✓ Parcela 3/5: Payment 82 - Pago com atraso
+✓ Parcela 4/5: Payment 82 - Vencida
+✓ Parcela 5/5: Payment 82 - Vencida
+✓ Parcela 1/6: Payment 83 - Pago com atraso
+✓ Parcela 2/6: Payment 83 - Pago com atraso
+✓ Parcela 3/6: Payment 83 - Pago com atraso
+✓ Parcela 4/6: Payment 83 - Pago com sucesso
+✓ Parcela 5/6: Payment 83 - Pago com atraso
+✓ Parcela 6/6: Payment 83 - Pago com atraso
+✓ Parcela 1/3: Payment 86 - Pago com atraso
+✓ Parcela 2/3: Payment 86 - Pago com atraso
+✓ Parcela 3/3: Payment 86 - Pago com atraso
+✓ Parcela 1/5: Payment 87 - Pago com atraso
+✓ Parcela 2/5: Payment 87 - Pago com atraso
+✓ Parcela 3/5: Payment 87 - Pago com atraso
+✓ Parcela 4/5: Payment 87 - Pago com atraso
+✓ Parcela 5/5: Payment 87 - Pago com atraso
+✓ Parcela 1/5: Payment 89 - Pago com sucesso
+✓ Parcela 2/5: Payment 89 - Pago com atraso
+✓ Parcela 3/5: Payment 89 - Pago com atraso
+✓ Parcela 4/5: Payment 89 - Pago com atraso
+✓ Parcela 5/5: Payment 89 - Pago com atraso
+✓ Parcela 1/4: Payment 90 - Pago com sucesso
+✓ Parcela 2/4: Payment 90 - Pago com sucesso
+✓ Parcela 3/4: Payment 90 - Pago com sucesso
+✓ Parcela 4/4: Payment 90 - Pago com sucesso
+✓ Parcela 1/2: Payment 91 - Pago com atraso
+✓ Parcela 2/2: Payment 91 - Pago com atraso
+✓ Parcela 1/5: Payment 92 - Pago com sucesso
+✓ Parcela 2/5: Payment 92 - Pago com sucesso
+✓ Parcela 3/5: Payment 92 - Pago com atraso
+✓ Parcela 4/5: Payment 92 - Pago com sucesso
+✓ Parcela 5/5: Payment 92 - Pago com atraso
+✓ Parcela 1/5: Payment 93 - Pago com atraso
+✓ Parcela 2/5: Payment 93 - Pago com atraso
+✓ Parcela 3/5: Payment 93 - Pago com atraso
+✓ Parcela 4/5: Payment 93 - Pago com atraso
+✓ Parcela 5/5: Payment 93 - Pago com atraso
+✓ Parcela 1/5: Payment 94 - Pago com atraso
+✓ Parcela 2/5: Payment 94 - Pago com atraso
+✓ Parcela 3/5: Payment 94 - Pago com atraso
+✓ Parcela 4/5: Payment 94 - Pago com atraso
+✓ Parcela 5/5: Payment 94 - Pago com atraso
+✓ Parcela 1/2: Payment 95 - Aberta
+✓ Parcela 2/2: Payment 95 - Aberta
+✓ Parcela 1/5: Payment 96 - Pago com atraso
+✓ Parcela 2/5: Payment 96 - Pago com atraso
+✓ Parcela 3/5: Payment 96 - Pago com atraso
+✓ Parcela 4/5: Payment 96 - Pago com atraso
+✓ Parcela 5/5: Payment 96 - Pago com atraso
+✓ Parcela 1/3: Payment 97 - Pago com sucesso
+✓ Parcela 2/3: Payment 97 - Pago com sucesso
+✓ Parcela 3/3: Payment 97 - Pago com atraso
+✓ Parcela 1/6: Payment 99 - Pago com sucesso
+✓ Parcela 2/6: Payment 99 - Pago com sucesso
+✓ Parcela 3/6: Payment 99 - Pago com atraso
+✓ Parcela 4/6: Payment 99 - Pago com sucesso
+✓ Parcela 5/6: Payment 99 - Pago com atraso
+✓ Parcela 6/6: Payment 99 - Pago com atraso
+✓ Parcela 1/10: Payment 100 - Pago com atraso
+✓ Parcela 2/10: Payment 100 - Pago com atraso
+✓ Parcela 3/10: Payment 100 - Pago com atraso
+✓ Parcela 4/10: Payment 100 - Vencida
+✓ Parcela 5/10: Payment 100 - Vencida
+✓ Parcela 6/10: Payment 100 - Vencida
+✓ Parcela 7/10: Payment 100 - Vencida
+✓ Parcela 8/10: Payment 100 - Vencida
+✓ Parcela 9/10: Payment 100 - Vencida
+✓ Parcela 10/10: Payment 100 - Vencida
+✓ Parcela 1/5: Payment 101 - Pago com sucesso
+✓ Parcela 2/5: Payment 101 - Aberta
+✓ Parcela 3/5: Payment 101 - Aberta
+✓ Parcela 4/5: Payment 101 - Aberta
+✓ Parcela 5/5: Payment 101 - Aberta
+✓ Parcela 1/7: Payment 102 - Pago com sucesso
+✓ Parcela 2/7: Payment 102 - Pago com sucesso
+✓ Parcela 3/7: Payment 102 - Pago com sucesso
+✓ Parcela 4/7: Payment 102 - Pago com sucesso
+✓ Parcela 5/7: Payment 102 - Pago com sucesso
+✓ Parcela 6/7: Payment 102 - Pago com sucesso
+✓ Parcela 7/7: Payment 102 - Pago com sucesso
+✓ Parcela 1/2: Payment 103 - Aberta
+✓ Parcela 2/2: Payment 103 - Aberta
+✓ Parcela 1/2: Payment 104 - Pago com sucesso
+✓ Parcela 2/2: Payment 104 - Pago com atraso
+✓ Parcela 1/5: Payment 105 - Pago com atraso
+✓ Parcela 2/5: Payment 105 - Pago com atraso
+✓ Parcela 3/5: Payment 105 - Pago com atraso
+✓ Parcela 4/5: Payment 105 - Pago com atraso
+✓ Parcela 5/5: Payment 105 - Pago com atraso
+✓ Parcela 1/3: Payment 106 - Pago com atraso
+✓ Parcela 2/3: Payment 106 - Pago com atraso
+✓ Parcela 3/3: Payment 106 - Pago com atraso
+✓ Parcela 1/5: Payment 107 - Pago com sucesso
+✓ Parcela 2/5: Payment 107 - Pago com atraso
+✓ Parcela 3/5: Payment 107 - Pago com atraso
+✓ Parcela 4/5: Payment 107 - Pago com atraso
+✓ Parcela 5/5: Payment 107 - Pago com atraso
+✓ Parcela 1/5: Payment 108 - Pago com atraso
+✓ Parcela 2/5: Payment 108 - Pago com atraso
+✓ Parcela 3/5: Payment 108 - Pago com atraso
+✓ Parcela 4/5: Payment 108 - Aberta
+✓ Parcela 5/5: Payment 108 - Aberta
+⚠️  Parcela 446: Payment não existe para venda 10146
+⚠️  Parcela 447: Payment não existe para venda 10146
+⚠️  Parcela 448: Payment não existe para venda 10146
+⚠️  Parcela 449: Payment não existe para venda 10146
+⚠️  Parcela 450: Payment não existe para venda 10146
+⚠️  Parcela 451: Payment não existe para venda 10146
+✓ Parcela 1/3: Payment 109 - Pago com sucesso
+✓ Parcela 2/3: Payment 109 - Pago com sucesso
+✓ Parcela 3/3: Payment 109 - Pago com sucesso
+✓ Parcela 1/1: Payment 110 - Aberta
+✓ Parcela 1/6: Payment 111 - Pago com atraso
+✓ Parcela 2/6: Payment 111 - Pago com atraso
+✓ Parcela 3/6: Payment 111 - Aberta
+✓ Parcela 4/6: Payment 111 - Aberta
+✓ Parcela 5/6: Payment 111 - Aberta
+✓ Parcela 6/6: Payment 111 - Aberta
+✓ Parcela 1/6: Payment 112 - Aberta
+✓ Parcela 2/6: Payment 112 - Aberta
+✓ Parcela 3/6: Payment 112 - Aberta
+✓ Parcela 4/6: Payment 112 - Aberta
+✓ Parcela 5/6: Payment 112 - Aberta
+✓ Parcela 6/6: Payment 112 - Aberta
+✓ Parcela 1/6: Payment 113 - Pago com atraso
+✓ Parcela 2/6: Payment 113 - Pago com atraso
+✓ Parcela 3/6: Payment 113 - Aberta
+✓ Parcela 4/6: Payment 113 - Aberta
+✓ Parcela 5/6: Payment 113 - Aberta
+✓ Parcela 6/6: Payment 113 - Aberta
+✓ Parcela 1/4: Payment 114 - Pago com sucesso
+✓ Parcela 2/4: Payment 114 - Pago com atraso
+✓ Parcela 3/4: Payment 114 - Pago com atraso
+✓ Parcela 4/4: Payment 114 - Pago com sucesso
+✓ Parcela 1/4: Payment 115 - Pago com sucesso
+✓ Parcela 2/4: Payment 115 - Pago com atraso
+✓ Parcela 3/4: Payment 115 - Pago com atraso
+✓ Parcela 4/4: Payment 115 - Pago com atraso
+✓ Parcela 1/5: Payment 117 - Pago com sucesso
+✓ Parcela 2/5: Payment 117 - Pago com sucesso
+✓ Parcela 3/5: Payment 117 - Pago com atraso
+✓ Parcela 4/5: Payment 117 - Pago com atraso
+✓ Parcela 5/5: Payment 117 - Pago com atraso
+✓ Parcela 1/5: Payment 119 - Pago com atraso
+✓ Parcela 2/5: Payment 119 - Pago com atraso
+✓ Parcela 3/5: Payment 119 - Pago com atraso
+✓ Parcela 4/5: Payment 119 - Pago com atraso
+✓ Parcela 5/5: Payment 119 - Pago com atraso
+✓ Parcela 1/3: Payment 121 - Pago com sucesso
+✓ Parcela 2/3: Payment 121 - Pago com sucesso
+✓ Parcela 3/3: Payment 121 - Pago com sucesso
+✓ Parcela 1/5: Payment 122 - Pago com sucesso
+✓ Parcela 2/5: Payment 122 - Pago com sucesso
+✓ Parcela 3/5: Payment 122 - Pago com atraso
+✓ Parcela 4/5: Payment 122 - Pago com atraso
+✓ Parcela 5/5: Payment 122 - Pago com atraso
+✓ Parcela 1/5: Payment 123 - Pago com atraso
+✓ Parcela 2/5: Payment 123 - Pago com sucesso
+✓ Parcela 3/5: Payment 123 - Pago com sucesso
+✓ Parcela 4/5: Payment 123 - Pago com sucesso
+✓ Parcela 5/5: Payment 123 - Pago com sucesso
+✓ Parcela 1/5: Payment 124 - Pago com atraso
+✓ Parcela 2/5: Payment 124 - Pago com atraso
+✓ Parcela 3/5: Payment 124 - Aberta
+✓ Parcela 4/5: Payment 124 - Aberta
+✓ Parcela 5/5: Payment 124 - Aberta
+✓ Parcela 1/2: Payment 125 - Pago com atraso
+✓ Parcela 2/2: Payment 125 - Pago com atraso
+✓ Parcela 1/6: Payment 126 - Pago com atraso
+✓ Parcela 2/6: Payment 126 - Pago com sucesso
+✓ Parcela 3/6: Payment 126 - Pago com atraso
+✓ Parcela 4/6: Payment 126 - Pago com atraso
+✓ Parcela 5/6: Payment 126 - Pago com atraso
+✓ Parcela 6/6: Payment 126 - Pago com atraso
+✓ Parcela 1/5: Payment 127 - Pago com sucesso
+✓ Parcela 2/5: Payment 127 - Pago com sucesso
+✓ Parcela 3/5: Payment 127 - Pago com sucesso
+✓ Parcela 4/5: Payment 127 - Pago com sucesso
+✓ Parcela 5/5: Payment 127 - Pago com sucesso
+✓ Parcela 1/1: Payment 118 - Pago com atraso
+✓ Parcela 1/1: Payment 128 - Pago com atraso
+✓ Parcela 1/4: Payment 129 - Pago com sucesso
+✓ Parcela 2/4: Payment 129 - Pago com sucesso
+✓ Parcela 3/4: Payment 129 - Pago com atraso
+✓ Parcela 4/4: Payment 129 - Pago com atraso
+✓ Parcela 1/1: Payment 135 - Pago com sucesso
+⚠️  Parcela 540: Payment não existe para venda 10175
+✓ Parcela 1/5: Payment 131 - Pago com atraso
+✓ Parcela 2/5: Payment 131 - Pago com sucesso
+✓ Parcela 3/5: Payment 131 - Pago com atraso
+✓ Parcela 4/5: Payment 131 - Pago com sucesso
+✓ Parcela 5/5: Payment 131 - Pago com sucesso
+✓ Parcela 1/6: Payment 139 - Pago com atraso
+✓ Parcela 2/6: Payment 139 - Pago com atraso
+✓ Parcela 3/6: Payment 139 - Pago com atraso
+✓ Parcela 4/6: Payment 139 - Pago com atraso
+✓ Parcela 5/6: Payment 139 - Pago com atraso
+✓ Parcela 6/6: Payment 139 - Pago com atraso
+✓ Parcela 1/4: Payment 141 - Pago com atraso
+✓ Parcela 2/4: Payment 141 - Pago com atraso
+✓ Parcela 3/4: Payment 141 - Pago com atraso
+✓ Parcela 4/4: Payment 141 - Pago com atraso
+⚠️  Parcela 556: Payment não existe para venda 10188
+⚠️  Parcela 557: Payment não existe para venda 10188
+⚠️  Parcela 558: Payment não existe para venda 10188
+✓ Parcela 1/6: Payment 146 - Pago com atraso
+✓ Parcela 2/6: Payment 146 - Pago com atraso
+✓ Parcela 3/6: Payment 146 - Pago com sucesso
+✓ Parcela 4/6: Payment 146 - Pago com atraso
+✓ Parcela 5/6: Payment 146 - Pago com atraso
+✓ Parcela 6/6: Payment 146 - Pago com atraso
+⚠️  Parcela 565: Payment não existe para venda 10188
+⚠️  Parcela 566: Payment não existe para venda 10188
+⚠️  Parcela 567: Payment não existe para venda 10188
+⚠️  Parcela 568: Payment não existe para venda 10188
+✓ Parcela 1/5: Payment 147 - Pago com atraso
+✓ Parcela 2/5: Payment 147 - Pago com atraso
+✓ Parcela 3/5: Payment 147 - Pago com atraso
+✓ Parcela 4/5: Payment 147 - Pago com atraso
+✓ Parcela 5/5: Payment 147 - Pago com atraso
+✓ Parcela 1/6: Payment 143 - Pago com sucesso
+✓ Parcela 2/6: Payment 143 - Pago com atraso
+✓ Parcela 3/6: Payment 143 - Pago com atraso
+✓ Parcela 4/6: Payment 143 - Pago com atraso
+✓ Parcela 5/6: Payment 143 - Pago com atraso
+✓ Parcela 6/6: Payment 143 - Pago com atraso
+✓ Parcela 1/6: Payment 148 - Pago com sucesso
+✓ Parcela 2/6: Payment 148 - Pago com sucesso
+✓ Parcela 3/6: Payment 148 - Pago com sucesso
+✓ Parcela 4/6: Payment 148 - Pago com sucesso
+✓ Parcela 5/6: Payment 148 - Pago com sucesso
+✓ Parcela 6/6: Payment 148 - Pago com atraso
+✓ Parcela 1/2: Payment 157 - Pago com sucesso
+✓ Parcela 2/2: Payment 157 - Pago com sucesso
+✓ Parcela 1/6: Payment 158 - Pago com atraso
+✓ Parcela 2/6: Payment 158 - Pago com atraso
+✓ Parcela 3/6: Payment 158 - Pago com atraso
+✓ Parcela 4/6: Payment 158 - Pago com atraso
+✓ Parcela 5/6: Payment 158 - Pago com atraso
+✓ Parcela 6/6: Payment 158 - Pago com atraso
+✓ Parcela 1/6: Payment 159 - Pago com atraso
+✓ Parcela 2/6: Payment 159 - Pago com sucesso
+✓ Parcela 3/6: Payment 159 - Pago com sucesso
+✓ Parcela 4/6: Payment 159 - Pago com atraso
+✓ Parcela 5/6: Payment 159 - Pago com atraso
+✓ Parcela 6/6: Payment 159 - Pago com atraso
+✓ Parcela 1/1: Payment 160 - Pago com atraso
+✓ Parcela 1/4: Payment 163 - Pago com atraso
+✓ Parcela 2/4: Payment 163 - Pago com sucesso
+✓ Parcela 3/4: Payment 163 - Pago com atraso
+✓ Parcela 4/4: Payment 163 - Pago com atraso
+✓ Parcela 1/6: Payment 166 - Pago com atraso
+✓ Parcela 2/6: Payment 166 - Pago com atraso
+✓ Parcela 3/6: Payment 166 - Pago com atraso
+✓ Parcela 4/6: Payment 166 - Pago com atraso
+✓ Parcela 5/6: Payment 166 - Pago com atraso
+✓ Parcela 6/6: Payment 166 - Pago com atraso
+✓ Parcela 1/3: Payment 169 - Pago com sucesso
+✓ Parcela 2/3: Payment 169 - Pago com sucesso
+✓ Parcela 3/3: Payment 169 - Pago com sucesso
+✓ Parcela 1/1: Payment 168 - Pago com atraso
+✓ Parcela 1/4: Payment 179 - Pago com atraso
+✓ Parcela 2/4: Payment 179 - Pago com atraso
+✓ Parcela 3/4: Payment 179 - Pago com atraso
+✓ Parcela 4/4: Payment 179 - Pago com atraso
+✓ Parcela 1/6: Payment 180 - Pago com atraso
+✓ Parcela 2/6: Payment 180 - Pago com atraso
+✓ Parcela 3/6: Payment 180 - Pago com atraso
+✓ Parcela 4/6: Payment 180 - Pago com sucesso
+✓ Parcela 5/6: Payment 180 - Pago com atraso
+✓ Parcela 6/6: Payment 180 - Pago com atraso
+✓ Parcela 1/6: Payment 181 - Pago com sucesso
+✓ Parcela 2/6: Payment 181 - Pago com sucesso
+✓ Parcela 3/6: Payment 181 - Pago com sucesso
+✓ Parcela 4/6: Payment 181 - Pago com sucesso
+✓ Parcela 5/6: Payment 181 - Pago com sucesso
+✓ Parcela 6/6: Payment 181 - Pago com sucesso
+✓ Parcela 1/3: Payment 171 - Pago com sucesso
+✓ Parcela 2/3: Payment 171 - Pago com sucesso
+✓ Parcela 3/3: Payment 171 - Pago com sucesso
+✓ Parcela 1/5: Payment 187 - Pago com atraso
+✓ Parcela 2/5: Payment 187 - Pago com sucesso
+✓ Parcela 3/5: Payment 187 - Pago com atraso
+✓ Parcela 4/5: Payment 187 - Pago com atraso
+✓ Parcela 5/5: Payment 187 - Pago com atraso
+✓ Parcela 1/6: Payment 188 - Pago com sucesso
+✓ Parcela 2/6: Payment 188 - Pago com sucesso
+✓ Parcela 3/6: Payment 188 - Pago com sucesso
+✓ Parcela 4/6: Payment 188 - Pago com sucesso
+✓ Parcela 5/6: Payment 188 - Pago com sucesso
+✓ Parcela 6/6: Payment 188 - Pago com sucesso
+✓ Parcela 1/6: Payment 190 - Pago com sucesso
+✓ Parcela 2/6: Payment 190 - Pago com sucesso
+✓ Parcela 3/6: Payment 190 - Pago com atraso
+✓ Parcela 4/6: Payment 190 - Pago com atraso
+✓ Parcela 5/6: Payment 190 - Pago com atraso
+✓ Parcela 6/6: Payment 190 - Pago com atraso
+✓ Parcela 1/4: Payment 191 - Pago com atraso
+✓ Parcela 2/4: Payment 191 - Pago com sucesso
+✓ Parcela 3/4: Payment 191 - Pago com sucesso
+✓ Parcela 4/4: Payment 191 - Pago com sucesso
+✓ Parcela 1/5: Payment 197 - Pago com sucesso
+✓ Parcela 2/5: Payment 197 - Pago com sucesso
+✓ Parcela 3/5: Payment 197 - Pago com atraso
+✓ Parcela 4/5: Payment 197 - Pago com atraso
+✓ Parcela 5/5: Payment 197 - Pago com atraso
+✓ Parcela 1/5: Payment 198 - Pago com atraso
+✓ Parcela 2/5: Payment 198 - Pago com sucesso
+✓ Parcela 3/5: Payment 198 - Pago com atraso
+✓ Parcela 4/5: Payment 198 - Pago com atraso
+✓ Parcela 5/5: Payment 198 - Pago com atraso
+✓ Parcela 1/4: Payment 199 - Pago com atraso
+✓ Parcela 2/4: Payment 199 - Pago com sucesso
+✓ Parcela 3/4: Payment 199 - Pago com atraso
+✓ Parcela 4/4: Payment 199 - Pago com sucesso
+✓ Parcela 1/5: Payment 193 - Pago com sucesso
+✓ Parcela 2/5: Payment 193 - Pago com sucesso
+✓ Parcela 3/5: Payment 193 - Pago com sucesso
+✓ Parcela 4/5: Payment 193 - Pago com sucesso
+✓ Parcela 5/5: Payment 193 - Pago com sucesso
+✓ Parcela 1/6: Payment 202 - Pago com atraso
+✓ Parcela 2/6: Payment 202 - Pago com atraso
+✓ Parcela 3/6: Payment 202 - Pago com atraso
+✓ Parcela 4/6: Payment 202 - Pago com atraso
+✓ Parcela 5/6: Payment 202 - Pago com atraso
+✓ Parcela 6/6: Payment 202 - Pago com sucesso
+✓ Parcela 1/4: Payment 205 - Pago com atraso
+✓ Parcela 2/4: Payment 205 - Pago com atraso
+✓ Parcela 3/4: Payment 205 - Pago com atraso
+✓ Parcela 4/4: Payment 205 - Pago com atraso
+✓ Parcela 1/6: Payment 206 - Pago com atraso
+✓ Parcela 2/6: Payment 206 - Pago com atraso
+✓ Parcela 3/6: Payment 206 - Pago com atraso
+✓ Parcela 4/6: Payment 206 - Pago com atraso
+✓ Parcela 5/6: Payment 206 - Pago com atraso
+✓ Parcela 6/6: Payment 206 - Pago com atraso
+✓ Parcela 1/2: Payment 194 - Pago com atraso
+✓ Parcela 2/2: Payment 194 - Pago com atraso
+✓ Parcela 1/4: Payment 192 - Pago com sucesso
+✓ Parcela 2/4: Payment 192 - Pago com atraso
+✓ Parcela 3/4: Payment 192 - Pago com atraso
+✓ Parcela 4/4: Payment 192 - Pago com atraso
+✓ Parcela 1/2: Payment 200 - Pago com atraso
+✓ Parcela 2/2: Payment 200 - Pago com atraso
+✓ Parcela 1/5: Payment 201 - Pago com atraso
+✓ Parcela 2/5: Payment 201 - Pago com sucesso
+✓ Parcela 3/5: Payment 201 - Pago com sucesso
+✓ Parcela 4/5: Payment 201 - Pago com sucesso
+✓ Parcela 5/5: Payment 201 - Pago com sucesso
+✓ Parcela 1/6: Payment 207 - Pago com atraso
+✓ Parcela 2/6: Payment 207 - Pago com atraso
+✓ Parcela 3/6: Payment 207 - Pago com atraso
+✓ Parcela 4/6: Payment 207 - Pago com atraso
+✓ Parcela 5/6: Payment 207 - Aberta
+✓ Parcela 6/6: Payment 207 - Aberta
+✓ Parcela 1/6: Payment 209 - Pago com atraso
+✓ Parcela 2/6: Payment 209 - Pago com sucesso
+✓ Parcela 3/6: Payment 209 - Pago com sucesso
+✓ Parcela 4/6: Payment 209 - Pago com atraso
+✓ Parcela 5/6: Payment 209 - Pago com atraso
+✓ Parcela 6/6: Payment 209 - Pago com atraso
+✓ Parcela 1/6: Payment 211 - Pago com atraso
+✓ Parcela 2/6: Payment 211 - Pago com sucesso
+✓ Parcela 3/6: Payment 211 - Pago com sucesso
+✓ Parcela 4/6: Payment 211 - Pago com sucesso
+✓ Parcela 5/6: Payment 211 - Pago com sucesso
+✓ Parcela 6/6: Payment 211 - Pago com sucesso
+✓ Parcela 1/5: Payment 172 - Pago com atraso
+✓ Parcela 2/5: Payment 172 - Pago com atraso
+✓ Parcela 3/5: Payment 172 - Pago com sucesso
+✓ Parcela 4/5: Payment 172 - Pago com atraso
+✓ Parcela 5/5: Payment 172 - Aberta
+✓ Parcela 1/5: Payment 216 - Pago com atraso
+✓ Parcela 2/5: Payment 216 - Pago com atraso
+✓ Parcela 3/5: Payment 216 - Pago com sucesso
+✓ Parcela 4/5: Payment 216 - Pago com sucesso
+✓ Parcela 5/5: Payment 216 - Pago com sucesso
+✓ Parcela 1/1: Payment 220 - Pago com atraso
+✓ Parcela 1/7: Payment 221 - Pago com sucesso
+✓ Parcela 2/7: Payment 221 - Pago com atraso
+✓ Parcela 3/7: Payment 221 - Pago com atraso
+✓ Parcela 4/7: Payment 221 - Pago com atraso
+✓ Parcela 5/7: Payment 221 - Pago com atraso
+✓ Parcela 6/7: Payment 221 - Pago com atraso
+✓ Parcela 7/7: Payment 221 - Pago com atraso
+✓ Parcela 1/7: Payment 222 - Pago com sucesso
+✓ Parcela 2/7: Payment 222 - Pago com atraso
+✓ Parcela 3/7: Payment 222 - Pago com sucesso
+✓ Parcela 4/7: Payment 222 - Pago com atraso
+✓ Parcela 5/7: Payment 222 - Pago com sucesso
+✓ Parcela 6/7: Payment 222 - Pago com sucesso
+✓ Parcela 7/7: Payment 222 - Pago com sucesso
+✓ Parcela 1/5: Payment 227 - Pago com sucesso
+✓ Parcela 2/5: Payment 227 - Pago com sucesso
+✓ Parcela 3/5: Payment 227 - Pago com sucesso
+✓ Parcela 4/5: Payment 227 - Pago com sucesso
+✓ Parcela 5/5: Payment 227 - Pago com sucesso
+✓ Parcela 1/5: Payment 230 - Pago com sucesso
+✓ Parcela 2/5: Payment 230 - Pago com sucesso
+✓ Parcela 3/5: Payment 230 - Pago com atraso
+✓ Parcela 4/5: Payment 230 - Pago com atraso
+✓ Parcela 5/5: Payment 230 - Pago com atraso
+✓ Parcela 1/6: Payment 231 - Pago com atraso
+✓ Parcela 2/6: Payment 231 - Pago com atraso
+✓ Parcela 3/6: Payment 231 - Pago com atraso
+✓ Parcela 4/6: Payment 231 - Pago com atraso
+✓ Parcela 5/6: Payment 231 - Pago com atraso
+✓ Parcela 6/6: Payment 231 - Pago com atraso
+✓ Parcela 1/4: Payment 233 - Pago com sucesso
+✓ Parcela 2/4: Payment 233 - Pago com sucesso
+✓ Parcela 3/4: Payment 233 - Pago com sucesso
+✓ Parcela 4/4: Payment 233 - Pago com sucesso
+✓ Parcela 1/6: Payment 218 - Pago com atraso
+✓ Parcela 2/6: Payment 218 - Pago com atraso
+✓ Parcela 3/6: Payment 218 - Pago com atraso
+✓ Parcela 4/6: Payment 218 - Pago com atraso
+✓ Parcela 5/6: Payment 218 - Pago com atraso
+✓ Parcela 6/6: Payment 218 - Pago com atraso
+✓ Parcela 1/5: Payment 237 - Pago com sucesso
+✓ Parcela 2/5: Payment 237 - Pago com atraso
+✓ Parcela 3/5: Payment 237 - Pago com atraso
+✓ Parcela 4/5: Payment 237 - Pago com sucesso
+✓ Parcela 5/5: Payment 237 - Pago com sucesso
+⚠️  Parcela 788: Payment não existe para venda 10281
+⚠️  Parcela 789: Payment não existe para venda 10281
+⚠️  Parcela 790: Payment não existe para venda 10281
+⚠️  Parcela 791: Payment não existe para venda 10281
+⚠️  Parcela 792: Payment não existe para venda 10281
+✓ Parcela 1/6: Payment 239 - Pago com atraso
+✓ Parcela 2/6: Payment 239 - Pago com sucesso
+✓ Parcela 3/6: Payment 239 - Pago com atraso
+✓ Parcela 4/6: Payment 239 - Pago com atraso
+✓ Parcela 5/6: Payment 239 - Pago com atraso
+✓ Parcela 6/6: Payment 239 - Pago com atraso
+✓ Parcela 1/4: Payment 240 - Pago com atraso
+✓ Parcela 2/4: Payment 240 - Pago com atraso
+✓ Parcela 3/4: Payment 240 - Pago com atraso
+✓ Parcela 4/4: Payment 240 - Pago com atraso
+✓ Parcela 1/7: Payment 243 - Pago com sucesso
+✓ Parcela 2/7: Payment 243 - Pago com atraso
+✓ Parcela 3/7: Payment 243 - Pago com atraso
+✓ Parcela 4/7: Payment 243 - Pago com sucesso
+✓ Parcela 5/7: Payment 243 - Pago com atraso
+✓ Parcela 6/7: Payment 243 - Pago com atraso
+✓ Parcela 7/7: Payment 243 - Pago com atraso
+✓ Parcela 1/5: Payment 245 - Pago com sucesso
+✓ Parcela 2/5: Payment 245 - Pago com atraso
+✓ Parcela 3/5: Payment 245 - Pago com atraso
+✓ Parcela 4/5: Payment 245 - Pago com atraso
+✓ Parcela 5/5: Payment 245 - Aberta
+✓ Parcela 1/6: Payment 246 - Pago com atraso
+✓ Parcela 2/6: Payment 246 - Pago com atraso
+✓ Parcela 3/6: Payment 246 - Pago com atraso
+✓ Parcela 4/6: Payment 246 - Pago com atraso
+✓ Parcela 5/6: Payment 246 - Pago com atraso
+✓ Parcela 6/6: Payment 246 - Pago com atraso
+✓ Parcela 1/5: Payment 248 - Pago com sucesso
+✓ Parcela 2/5: Payment 248 - Pago com atraso
+✓ Parcela 3/5: Payment 248 - Pago com atraso
+✓ Parcela 4/5: Payment 248 - Pago com sucesso
+✓ Parcela 5/5: Payment 248 - Pago com sucesso
+✓ Parcela 1/1: Payment 252 - Pago com sucesso
+✓ Parcela 1/3: Payment 253 - Pago com atraso
+✓ Parcela 2/3: Payment 253 - Pago com sucesso
+✓ Parcela 3/3: Payment 253 - Pago com atraso
+✓ Parcela 1/5: Payment 260 - Pago com sucesso
+✓ Parcela 2/5: Payment 260 - Pago com atraso
+✓ Parcela 3/5: Payment 260 - Pago com atraso
+✓ Parcela 4/5: Payment 260 - Pago com atraso
+✓ Parcela 5/5: Payment 260 - Pago com sucesso
+✓ Parcela 1/2: Payment 259 - Pago com sucesso
+✓ Parcela 2/2: Payment 259 - Pago com atraso
+✓ Parcela 1/6: Payment 265 - Pago com atraso
+✓ Parcela 2/6: Payment 265 - Pago com sucesso
+✓ Parcela 3/6: Payment 265 - Pago com atraso
+✓ Parcela 4/6: Payment 265 - Pago com atraso
+✓ Parcela 5/6: Payment 265 - Pago com sucesso
+✓ Parcela 6/6: Payment 265 - Pago com atraso
+✓ Parcela 1/4: Payment 266 - Pago com atraso
+✓ Parcela 2/4: Payment 266 - Pago com atraso
+✓ Parcela 3/4: Payment 266 - Pago com atraso
+✓ Parcela 4/4: Payment 266 - Pago com atraso
+✓ Parcela 1/4: Payment 269 - Pago com atraso
+✓ Parcela 2/4: Payment 269 - Pago com sucesso
+✓ Parcela 3/4: Payment 269 - Pago com atraso
+✓ Parcela 4/4: Payment 269 - Pago com atraso
+✓ Parcela 1/5: Payment 267 - Pago com sucesso
+✓ Parcela 2/5: Payment 267 - Pago com atraso
+✓ Parcela 3/5: Payment 267 - Pago com sucesso
+✓ Parcela 4/5: Payment 267 - Pago com atraso
+✓ Parcela 5/5: Payment 267 - Pago com atraso
+✓ Parcela 1/4: Payment 270 - Pago com sucesso
+✓ Parcela 2/4: Payment 270 - Pago com atraso
+✓ Parcela 3/4: Payment 270 - Pago com atraso
+✓ Parcela 4/4: Payment 270 - Pago com atraso
+✓ Parcela 1/5: Payment 271 - Pago com atraso
+✓ Parcela 2/5: Payment 271 - Pago com sucesso
+✓ Parcela 3/5: Payment 271 - Pago com atraso
+✓ Parcela 4/5: Payment 271 - Pago com atraso
+✓ Parcela 5/5: Payment 271 - Pago com atraso
+✓ Parcela 1/5: Payment 272 - Aberta
+✓ Parcela 2/5: Payment 272 - Aberta
+✓ Parcela 3/5: Payment 272 - Aberta
+✓ Parcela 4/5: Payment 272 - Aberta
+✓ Parcela 5/5: Payment 272 - Aberta
+✓ Parcela 1/6: Payment 273 - Pago com atraso
+✓ Parcela 2/6: Payment 273 - Pago com atraso
+✓ Parcela 3/6: Payment 273 - Pago com atraso
+✓ Parcela 4/6: Payment 273 - Pago com atraso
+✓ Parcela 5/6: Payment 273 - Pago com atraso
+✓ Parcela 6/6: Payment 273 - Vencida
+✓ Parcela 1/1: Payment 277 - Pago com atraso
+✓ Parcela 1/5: Payment 275 - Pago com sucesso
+✓ Parcela 2/5: Payment 275 - Pago com sucesso
+✓ Parcela 3/5: Payment 275 - Pago com sucesso
+✓ Parcela 4/5: Payment 275 - Pago com sucesso
+✓ Parcela 5/5: Payment 275 - Pago com sucesso
+✓ Parcela 1/1: Payment 279 - Pago com sucesso
+✓ Parcela 1/2: Payment 280 - Pago com atraso
+✓ Parcela 2/2: Payment 280 - Pago com atraso
+✓ Parcela 1/4: Payment 281 - Pago com sucesso
+✓ Parcela 2/4: Payment 281 - Pago com atraso
+✓ Parcela 3/4: Payment 281 - Pago com sucesso
+✓ Parcela 4/4: Payment 281 - Pago com atraso
+✓ Parcela 1/5: Payment 282 - Pago com sucesso
+✓ Parcela 2/5: Payment 282 - Pago com sucesso
+✓ Parcela 3/5: Payment 282 - Pago com sucesso
+✓ Parcela 4/5: Payment 282 - Pago com sucesso
+✓ Parcela 5/5: Payment 282 - Pago com sucesso
+✓ Parcela 1/5: Payment 285 - Pago com atraso
+✓ Parcela 2/5: Payment 285 - Pago com atraso
+✓ Parcela 3/5: Payment 285 - Pago com atraso
+✓ Parcela 4/5: Payment 285 - Pago com atraso
+✓ Parcela 5/5: Payment 285 - Pago com sucesso
+✓ Parcela 1/5: Payment 287 - Pago com sucesso
+✓ Parcela 2/5: Payment 287 - Pago com sucesso
+✓ Parcela 3/5: Payment 287 - Pago com sucesso
+✓ Parcela 4/5: Payment 287 - Pago com atraso
+✓ Parcela 5/5: Payment 287 - Pago com sucesso
+✓ Parcela 1/2: Payment 291 - Pago com sucesso
+✓ Parcela 2/2: Payment 291 - Pago com sucesso
+✓ Parcela 1/5: Payment 293 - Pago com atraso
+✓ Parcela 2/5: Payment 293 - Pago com sucesso
+✓ Parcela 3/5: Payment 293 - Pago com atraso
+✓ Parcela 4/5: Payment 293 - Pago com atraso
+✓ Parcela 5/5: Payment 293 - Pago com atraso
+✓ Parcela 1/3: Payment 288 - Pago com sucesso
+✓ Parcela 2/3: Payment 288 - Pago com sucesso
+✓ Parcela 3/3: Payment 288 - Pago com sucesso
+✓ Parcela 1/6: Payment 294 - Pago com atraso
+✓ Parcela 2/6: Payment 294 - Pago com atraso
+✓ Parcela 3/6: Payment 294 - Pago com atraso
+✓ Parcela 4/6: Payment 294 - Pago com atraso
+✓ Parcela 5/6: Payment 294 - Pago com sucesso
+✓ Parcela 6/6: Payment 294 - Pago com sucesso
+✓ Parcela 1/2: Payment 297 - Pago com atraso
+✓ Parcela 2/2: Payment 297 - Pago com sucesso
+✓ Parcela 1/3: Payment 298 - Pago com atraso
+✓ Parcela 2/3: Payment 298 - Pago com atraso
+✓ Parcela 3/3: Payment 298 - Pago com atraso
+✓ Parcela 1/5: Payment 299 - Pago com atraso
+✓ Parcela 2/5: Payment 299 - Pago com atraso
+✓ Parcela 3/5: Payment 299 - Pago com atraso
+✓ Parcela 4/5: Payment 299 - Pago com atraso
+✓ Parcela 5/5: Payment 299 - Pago com atraso
+✓ Parcela 1/1: Payment 301 - Pago com atraso
+✓ Parcela 1/4: Payment 300 - Pago com atraso
+✓ Parcela 2/4: Payment 300 - Pago com sucesso
+✓ Parcela 3/4: Payment 300 - Aberta
+✓ Parcela 4/4: Payment 300 - Aberta
+✓ Parcela 1/3: Payment 311 - Pago com atraso
+✓ Parcela 2/3: Payment 311 - Pago com atraso
+✓ Parcela 3/3: Payment 311 - Pago com atraso
+✓ Parcela 1/5: Payment 305 - Pago com sucesso
+✓ Parcela 2/5: Payment 305 - Pago com sucesso
+✓ Parcela 3/5: Payment 305 - Pago com sucesso
+✓ Parcela 4/5: Payment 305 - Pago com sucesso
+✓ Parcela 5/5: Payment 305 - Pago com sucesso
+✓ Parcela 1/5: Payment 313 - Pago com sucesso
+✓ Parcela 2/5: Payment 313 - Pago com atraso
+✓ Parcela 3/5: Payment 313 - Pago com sucesso
+✓ Parcela 4/5: Payment 313 - Pago com sucesso
+✓ Parcela 5/5: Payment 313 - Pago com sucesso
+✓ Parcela 1/2: Payment 315 - Pago com sucesso
+✓ Parcela 2/2: Payment 315 - Pago com sucesso
+✓ Parcela 1/5: Payment 322 - Pago com atraso
+✓ Parcela 2/5: Payment 322 - Pago com atraso
+✓ Parcela 3/5: Payment 322 - Pago com atraso
+✓ Parcela 4/5: Payment 322 - Pago com atraso
+✓ Parcela 5/5: Payment 322 - Pago com atraso
+✓ Parcela 1/5: Payment 319 - Pago com atraso
+✓ Parcela 2/5: Payment 319 - Pago com atraso
+✓ Parcela 3/5: Payment 319 - Pago com atraso
+✓ Parcela 4/5: Payment 319 - Pago com atraso
+✓ Parcela 5/5: Payment 319 - Pago com atraso
+✓ Parcela 1/1: Payment 323 - Pago com sucesso
+✓ Parcela 1/6: Payment 307 - Pago com atraso
+✓ Parcela 2/6: Payment 307 - Pago com atraso
+✓ Parcela 3/6: Payment 307 - Pago com atraso
+✓ Parcela 4/6: Payment 307 - Pago com atraso
+✓ Parcela 5/6: Payment 307 - Pago com atraso
+✓ Parcela 6/6: Payment 307 - Pago com atraso
+✓ Parcela 1/6: Payment 320 - Pago com atraso
+✓ Parcela 2/6: Payment 320 - Pago com atraso
+✓ Parcela 3/6: Payment 320 - Pago com atraso
+✓ Parcela 4/6: Payment 320 - Pago com atraso
+✓ Parcela 5/6: Payment 320 - Pago com atraso
+✓ Parcela 6/6: Payment 320 - Pago com atraso
+⚠️  Parcela 989: Payment não existe para venda 10370
+⚠️  Parcela 990: Payment não existe para venda 10370
+⚠️  Parcela 991: Payment não existe para venda 10370
+⚠️  Parcela 992: Payment não existe para venda 10370
+⚠️  Parcela 993: Payment não existe para venda 10370
+✓ Parcela 1/6: Payment 321 - Pago com atraso
+✓ Parcela 2/6: Payment 321 - Pago com atraso
+✓ Parcela 3/6: Payment 321 - Pago com atraso
+✓ Parcela 4/6: Payment 321 - Pago com atraso
+✓ Parcela 5/6: Payment 321 - Pago com atraso
+✓ Parcela 6/6: Payment 321 - Pago com atraso
+✓ Parcela 1/7: Payment 324 - Pago com sucesso
+✓ Parcela 2/7: Payment 324 - Pago com sucesso
+✓ Parcela 3/7: Payment 324 - Pago com atraso
+✓ Parcela 4/7: Payment 324 - Pago com atraso
+✓ Parcela 5/7: Payment 324 - Pago com atraso
+✓ Parcela 6/7: Payment 324 - Pago com sucesso
+✓ Parcela 7/7: Payment 324 - Pago com sucesso
+✓ Parcela 1/4: Payment 325 - Pago com atraso
+✓ Parcela 2/4: Payment 325 - Pago com atraso
+✓ Parcela 3/4: Payment 325 - Pago com atraso
+✓ Parcela 4/4: Payment 325 - Pago com atraso
+✓ Parcela 1/3: Payment 331 - Pago com sucesso
+✓ Parcela 2/3: Payment 331 - Pago com sucesso
+✓ Parcela 3/3: Payment 331 - Pago com atraso
+✓ Parcela 1/6: Payment 332 - Pago com atraso
+✓ Parcela 2/6: Payment 332 - Pago com atraso
+✓ Parcela 3/6: Payment 332 - Pago com atraso
+✓ Parcela 4/6: Payment 332 - Pago com atraso
+✓ Parcela 5/6: Payment 332 - Pago com atraso
+✓ Parcela 6/6: Payment 332 - Pago com atraso
+✓ Parcela 1/4: Payment 333 - Pago com atraso
+✓ Parcela 2/4: Payment 333 - Pago com sucesso
+✓ Parcela 3/4: Payment 333 - Pago com sucesso
+✓ Parcela 4/4: Payment 333 - Pago com sucesso
+✓ Parcela 1/2: Payment 334 - Pago com atraso
+✓ Parcela 2/2: Payment 334 - Pago com atraso
+✓ Parcela 1/5: Payment 335 - Pago com sucesso
+✓ Parcela 2/5: Payment 335 - Pago com sucesso
+✓ Parcela 3/5: Payment 335 - Pago com sucesso
+✓ Parcela 4/5: Payment 335 - Pago com sucesso
+✓ Parcela 5/5: Payment 335 - Pago com sucesso
+⚠️  Parcela 1031: Payment não existe para venda 10387
+⚠️  Parcela 1032: Payment não existe para venda 10387
+⚠️  Parcela 1033: Payment não existe para venda 10387
+⚠️  Parcela 1034: Payment não existe para venda 10387
+✓ Parcela 1/4: Payment 338 - Pago com atraso
+✓ Parcela 2/4: Payment 338 - Pago com atraso
+✓ Parcela 3/4: Payment 338 - Pago com atraso
+✓ Parcela 4/4: Payment 338 - Pago com atraso
+✓ Parcela 1/7: Payment 326 - Pago com sucesso
+✓ Parcela 2/7: Payment 326 - Pago com sucesso
+✓ Parcela 3/7: Payment 326 - Pago com atraso
+✓ Parcela 4/7: Payment 326 - Pago com atraso
+✓ Parcela 5/7: Payment 326 - Pago com atraso
+✓ Parcela 6/7: Payment 326 - Pago com sucesso
+✓ Parcela 7/7: Payment 326 - Pago com atraso
+✓ Parcela 1/6: Payment 327 - Pago com sucesso
+✓ Parcela 2/6: Payment 327 - Pago com atraso
+✓ Parcela 3/6: Payment 327 - Pago com atraso
+✓ Parcela 4/6: Payment 327 - Pago com atraso
+✓ Parcela 5/6: Payment 327 - Pago com atraso
+✓ Parcela 6/6: Payment 327 - Pago com atraso
+✓ Parcela 1/2: Payment 341 - Pago com atraso
+✓ Parcela 2/2: Payment 341 - Pago com sucesso
+✓ Parcela 1/2: Payment 344 - Pago com sucesso
+✓ Parcela 2/2: Payment 344 - Pago com sucesso
+✓ Parcela 1/6: Payment 350 - Pago com atraso
+✓ Parcela 2/6: Payment 350 - Pago com sucesso
+✓ Parcela 3/6: Payment 350 - Pago com sucesso
+✓ Parcela 4/6: Payment 350 - Pago com sucesso
+✓ Parcela 5/6: Payment 350 - Pago com sucesso
+✓ Parcela 6/6: Payment 350 - Pago com sucesso
+✓ Parcela 1/4: Payment 351 - Pago com atraso
+✓ Parcela 2/4: Payment 351 - Pago com atraso
+✓ Parcela 3/4: Payment 351 - Pago com atraso
+✓ Parcela 4/4: Payment 351 - Pago com atraso
+✓ Parcela 1/6: Payment 342 - Pago com atraso
+✓ Parcela 2/6: Payment 342 - Pago com atraso
+✓ Parcela 3/6: Payment 342 - Pago com atraso
+✓ Parcela 4/6: Payment 342 - Pago com sucesso
+✓ Parcela 5/6: Payment 342 - Pago com sucesso
+✓ Parcela 6/6: Payment 342 - Pago com sucesso
+✓ Parcela 1/5: Payment 355 - Pago com atraso
+✓ Parcela 2/5: Payment 355 - Pago com atraso
+✓ Parcela 3/5: Payment 355 - Pago com atraso
+✓ Parcela 4/5: Payment 355 - Pago com atraso
+✓ Parcela 5/5: Payment 355 - Pago com atraso
+✓ Parcela 1/5: Payment 357 - Pago com atraso
+✓ Parcela 2/5: Payment 357 - Pago com atraso
+✓ Parcela 3/5: Payment 357 - Pago com atraso
+✓ Parcela 4/5: Payment 357 - Pago com atraso
+✓ Parcela 5/5: Payment 357 - Pago com atraso
+✓ Parcela 1/2: Payment 353 - Pago com sucesso
+✓ Parcela 2/2: Payment 353 - Pago com sucesso
+✓ Parcela 1/5: Payment 359 - Pago com sucesso
+✓ Parcela 2/5: Payment 359 - Pago com sucesso
+✓ Parcela 3/5: Payment 359 - Pago com sucesso
+✓ Parcela 4/5: Payment 359 - Pago com sucesso
+✓ Parcela 5/5: Payment 359 - Pago com sucesso
+✓ Parcela 1/4: Payment 360 - Pago com atraso
+✓ Parcela 2/4: Payment 360 - Pago com sucesso
+✓ Parcela 3/4: Payment 360 - Pago com sucesso
+✓ Parcela 4/4: Payment 360 - Pago com sucesso
+✓ Parcela 1/5: Payment 363 - Pago com sucesso
+✓ Parcela 2/5: Payment 363 - Pago com sucesso
+✓ Parcela 3/5: Payment 363 - Pago com sucesso
+✓ Parcela 4/5: Payment 363 - Pago com atraso
+✓ Parcela 5/5: Payment 363 - Pago com atraso
+✓ Parcela 1/2: Payment 364 - Pago com atraso
+✓ Parcela 2/2: Payment 364 - Pago com sucesso
+✓ Parcela 1/3: Payment 369 - Pago com atraso
+✓ Parcela 2/3: Payment 369 - Pago com atraso
+✓ Parcela 3/3: Payment 369 - Pago com atraso
+✓ Parcela 1/6: Payment 371 - Pago com atraso
+✓ Parcela 2/6: Payment 371 - Pago com atraso
+✓ Parcela 3/6: Payment 371 - Pago com sucesso
+✓ Parcela 4/6: Payment 371 - Pago com atraso
+✓ Parcela 5/6: Payment 371 - Pago com atraso
+✓ Parcela 6/6: Payment 371 - Pago com atraso
+✓ Parcela 1/5: Payment 372 - Pago com atraso
+✓ Parcela 2/5: Payment 372 - Pago com atraso
+✓ Parcela 3/5: Payment 372 - Pago com atraso
+✓ Parcela 4/5: Payment 372 - Pago com atraso
+✓ Parcela 5/5: Payment 372 - Pago com atraso
+✓ Parcela 1/5: Payment 379 - Pago com atraso
+✓ Parcela 2/5: Payment 379 - Pago com atraso
+✓ Parcela 3/5: Payment 379 - Pago com atraso
+✓ Parcela 4/5: Payment 379 - Pago com atraso
+✓ Parcela 5/5: Payment 379 - Pago com atraso
+✓ Parcela 1/4: Payment 378 - Pago com atraso
+✓ Parcela 2/4: Payment 378 - Pago com atraso
+✓ Parcela 3/4: Payment 378 - Pago com atraso
+✓ Parcela 4/4: Payment 378 - Pago com atraso
+✓ Parcela 1/2: Payment 380 - Pago com sucesso
+✓ Parcela 2/2: Payment 380 - Pago com sucesso
+✓ Parcela 1/6: Payment 382 - Pago com atraso
+✓ Parcela 2/6: Payment 382 - Pago com atraso
+✓ Parcela 3/6: Payment 382 - Pago com atraso
+✓ Parcela 4/6: Payment 382 - Pago com atraso
+✓ Parcela 5/6: Payment 382 - Pago com atraso
+✓ Parcela 6/6: Payment 382 - Pago com atraso
+✓ Parcela 1/5: Payment 384 - Pago com atraso
+✓ Parcela 2/5: Payment 384 - Pago com atraso
+✓ Parcela 3/5: Payment 384 - Pago com atraso
+✓ Parcela 4/5: Payment 384 - Pago com atraso
+✓ Parcela 5/5: Payment 384 - Pago com atraso
+✓ Parcela 1/7: Payment 387 - Pago com atraso
+✓ Parcela 2/7: Payment 387 - Pago com atraso
+✓ Parcela 3/7: Payment 387 - Pago com atraso
+✓ Parcela 4/7: Payment 387 - Pago com atraso
+✓ Parcela 5/7: Payment 387 - Pago com atraso
+✓ Parcela 6/7: Payment 387 - Pago com atraso
+✓ Parcela 7/7: Payment 387 - Pago com atraso
+✓ Parcela 1/3: Payment 390 - Pago com sucesso
+✓ Parcela 2/3: Payment 390 - Pago com sucesso
+✓ Parcela 3/3: Payment 390 - Pago com sucesso
+✓ Parcela 1/6: Payment 389 - Pago com atraso
+✓ Parcela 2/6: Payment 389 - Pago com atraso
+✓ Parcela 3/6: Payment 389 - Pago com atraso
+✓ Parcela 4/6: Payment 389 - Pago com atraso
+✓ Parcela 5/6: Payment 389 - Pago com atraso
+✓ Parcela 6/6: Payment 389 - Pago com atraso
+✓ Parcela 1/5: Payment 391 - Pago com sucesso
+✓ Parcela 2/5: Payment 391 - Pago com sucesso
+✓ Parcela 3/5: Payment 391 - Pago com atraso
+✓ Parcela 4/5: Payment 391 - Pago com atraso
+✓ Parcela 5/5: Payment 391 - Pago com sucesso
+✓ Parcela 1/3: Payment 392 - Pago com atraso
+✓ Parcela 2/3: Payment 392 - Pago com sucesso
+✓ Parcela 3/3: Payment 392 - Pago com sucesso
+✓ Parcela 1/5: Payment 393 - Pago com atraso
+✓ Parcela 2/5: Payment 393 - Pago com atraso
+✓ Parcela 3/5: Payment 393 - Pago com atraso
+✓ Parcela 4/5: Payment 393 - Pago com atraso
+✓ Parcela 5/5: Payment 393 - Pago com atraso
+✓ Parcela 1/6: Payment 397 - Pago com sucesso
+✓ Parcela 2/6: Payment 397 - Pago com sucesso
+✓ Parcela 3/6: Payment 397 - Pago com sucesso
+✓ Parcela 4/6: Payment 397 - Pago com sucesso
+✓ Parcela 5/6: Payment 397 - Pago com sucesso
+✓ Parcela 6/6: Payment 397 - Pago com atraso
+✓ Parcela 1/6: Payment 398 - Pago com atraso
+✓ Parcela 2/6: Payment 398 - Pago com atraso
+✓ Parcela 3/6: Payment 398 - Pago com atraso
+✓ Parcela 4/6: Payment 398 - Pago com atraso
+✓ Parcela 5/6: Payment 398 - Pago com atraso
+✓ Parcela 6/6: Payment 398 - Pago com atraso
+✓ Parcela 1/8: Payment 400 - Pago com atraso
+✓ Parcela 2/8: Payment 400 - Pago com atraso
+✓ Parcela 3/8: Payment 400 - Pago com atraso
+✓ Parcela 4/8: Payment 400 - Pago com atraso
+✓ Parcela 5/8: Payment 400 - Pago com atraso
+✓ Parcela 6/8: Payment 400 - Pago com atraso
+✓ Parcela 7/8: Payment 400 - Pago com atraso
+✓ Parcela 8/8: Payment 400 - Aberta
+✓ Parcela 1/3: Payment 401 - Pago com atraso
+✓ Parcela 2/3: Payment 401 - Pago com atraso
+✓ Parcela 3/3: Payment 401 - Pago com atraso
+✓ Parcela 1/6: Payment 394 - Pago com sucesso
+✓ Parcela 2/6: Payment 394 - Pago com atraso
+✓ Parcela 3/6: Payment 394 - Pago com atraso
+✓ Parcela 4/6: Payment 394 - Pago com atraso
+✓ Parcela 5/6: Payment 394 - Pago com atraso
+✓ Parcela 6/6: Payment 394 - Pago com atraso
+✓ Parcela 1/5: Payment 402 - Pago com sucesso
+✓ Parcela 2/5: Payment 402 - Pago com sucesso
+✓ Parcela 3/5: Payment 402 - Pago com atraso
+✓ Parcela 4/5: Payment 402 - Pago com sucesso
+✓ Parcela 5/5: Payment 402 - Pago com atraso
+✓ Parcela 1/6: Payment 403 - Pago com sucesso
+✓ Parcela 2/6: Payment 403 - Pago com sucesso
+✓ Parcela 3/6: Payment 403 - Pago com sucesso
+✓ Parcela 4/6: Payment 403 - Pago com atraso
+✓ Parcela 5/6: Payment 403 - Pago com atraso
+✓ Parcela 6/6: Payment 403 - Pago com atraso
+✓ Parcela 1/5: Payment 406 - Pago com sucesso
+✓ Parcela 2/5: Payment 406 - Pago com sucesso
+✓ Parcela 3/5: Payment 406 - Pago com atraso
+✓ Parcela 4/5: Payment 406 - Pago com sucesso
+✓ Parcela 5/5: Payment 406 - Pago com sucesso
+✓ Parcela 1/4: Payment 408 - Pago com sucesso
+✓ Parcela 2/4: Payment 408 - Pago com atraso
+✓ Parcela 3/4: Payment 408 - Pago com sucesso
+✓ Parcela 4/4: Payment 408 - Pago com sucesso
+✓ Parcela 1/7: Payment 409 - Pago com atraso
+✓ Parcela 2/7: Payment 409 - Pago com atraso
+✓ Parcela 3/7: Payment 409 - Pago com atraso
+✓ Parcela 4/7: Payment 409 - Pago com atraso
+✓ Parcela 5/7: Payment 409 - Pago com atraso
+✓ Parcela 6/7: Payment 409 - Pago com atraso
+✓ Parcela 7/7: Payment 409 - Pago com atraso
+✓ Parcela 1/6: Payment 410 - Pago com atraso
+✓ Parcela 2/6: Payment 410 - Pago com atraso
+✓ Parcela 3/6: Payment 410 - Pago com atraso
+✓ Parcela 4/6: Payment 410 - Pago com atraso
+✓ Parcela 5/6: Payment 410 - Pago com atraso
+✓ Parcela 6/6: Payment 410 - Pago com atraso
+✓ Parcela 1/5: Payment 411 - Pago com sucesso
+✓ Parcela 2/5: Payment 411 - Pago com sucesso
+✓ Parcela 3/5: Payment 411 - Pago com sucesso
+✓ Parcela 4/5: Payment 411 - Pago com sucesso
+✓ Parcela 5/5: Payment 411 - Pago com sucesso
+✓ Parcela 1/6: Payment 413 - Pago com atraso
+✓ Parcela 2/6: Payment 413 - Pago com atraso
+✓ Parcela 3/6: Payment 413 - Pago com atraso
+✓ Parcela 4/6: Payment 413 - Pago com atraso
+✓ Parcela 5/6: Payment 413 - Pago com atraso
+✓ Parcela 6/6: Payment 413 - Pago com atraso
+✓ Parcela 1/1: Payment 416 - Pago com atraso
+✓ Parcela 1/5: Payment 423 - Pago com atraso
+✓ Parcela 2/5: Payment 423 - Pago com atraso
+✓ Parcela 3/5: Payment 423 - Aberta
+✓ Parcela 4/5: Payment 423 - Aberta
+✓ Parcela 5/5: Payment 423 - Aberta
+✓ Parcela 1/5: Payment 425 - Pago com atraso
+✓ Parcela 2/5: Payment 425 - Pago com atraso
+✓ Parcela 3/5: Payment 425 - Pago com atraso
+✓ Parcela 4/5: Payment 425 - Pago com atraso
+✓ Parcela 5/5: Payment 425 - Pago com atraso
+✓ Parcela 1/1: Payment 428 - Pago com sucesso
+✓ Parcela 1/6: Payment 429 - Pago com atraso
+✓ Parcela 2/6: Payment 429 - Pago com atraso
+✓ Parcela 3/6: Payment 429 - Pago com atraso
+✓ Parcela 4/6: Payment 429 - Pago com atraso
+✓ Parcela 5/6: Payment 429 - Pago com atraso
+✓ Parcela 6/6: Payment 429 - Pago com atraso
+✓ Parcela 1/5: Payment 421 - Pago com atraso
+✓ Parcela 2/5: Payment 421 - Pago com atraso
+✓ Parcela 3/5: Payment 421 - Pago com sucesso
+✓ Parcela 4/5: Payment 421 - Pago com atraso
+✓ Parcela 5/5: Payment 421 - Pago com sucesso
+✓ Parcela 1/5: Payment 433 - Pago com sucesso
+✓ Parcela 2/5: Payment 433 - Pago com sucesso
+✓ Parcela 3/5: Payment 433 - Pago com sucesso
+✓ Parcela 4/5: Payment 433 - Pago com sucesso
+✓ Parcela 5/5: Payment 433 - Pago com sucesso
+✓ Parcela 1/6: Payment 361 - Pago com atraso
+✓ Parcela 2/6: Payment 361 - Pago com atraso
+✓ Parcela 3/6: Payment 361 - Pago com atraso
+✓ Parcela 4/6: Payment 361 - Pago com atraso
+✓ Parcela 5/6: Payment 361 - Pago com atraso
+✓ Parcela 6/6: Payment 361 - Pago com atraso
+✓ Parcela 1/4: Payment 434 - Pago com sucesso
+✓ Parcela 2/4: Payment 434 - Pago com sucesso
+✓ Parcela 3/4: Payment 434 - Pago com sucesso
+✓ Parcela 4/4: Payment 434 - Pago com sucesso
+✓ Parcela 1/1: Payment 430 - Pago com atraso
+✓ Parcela 1/6: Payment 438 - Pago com atraso
+✓ Parcela 2/6: Payment 438 - Pago com sucesso
+✓ Parcela 3/6: Payment 438 - Pago com atraso
+✓ Parcela 4/6: Payment 438 - Pago com sucesso
+✓ Parcela 5/6: Payment 438 - Pago com sucesso
+✓ Parcela 6/6: Payment 438 - Pago com sucesso
+✓ Parcela 1/2: Payment 439 - Vencida
+✓ Parcela 2/2: Payment 439 - Vencida
+✓ Parcela 1/6: Payment 440 - Pago com sucesso
+✓ Parcela 2/6: Payment 440 - Pago com sucesso
+✓ Parcela 3/6: Payment 440 - Pago com atraso
+✓ Parcela 4/6: Payment 440 - Pago com sucesso
+✓ Parcela 5/6: Payment 440 - Pago com atraso
+✓ Parcela 6/6: Payment 440 - Pago com atraso
+✓ Parcela 1/5: Payment 443 - Pago com sucesso
+✓ Parcela 2/5: Payment 443 - Pago com atraso
+✓ Parcela 3/5: Payment 443 - Pago com atraso
+✓ Parcela 4/5: Payment 443 - Vencida
+✓ Parcela 5/5: Payment 443 - Vencida
+✓ Parcela 1/5: Payment 444 - Pago com sucesso
+✓ Parcela 2/5: Payment 444 - Pago com atraso
+✓ Parcela 3/5: Payment 444 - Pago com atraso
+✓ Parcela 4/5: Payment 444 - Pago com atraso
+✓ Parcela 5/5: Payment 444 - Pago com atraso
+✓ Parcela 1/4: Payment 445 - Pago com atraso
+✓ Parcela 2/4: Payment 445 - Pago com atraso
+✓ Parcela 3/4: Payment 445 - Pago com atraso
+✓ Parcela 4/4: Payment 445 - Pago com atraso
+✓ Parcela 1/6: Payment 448 - Pago com sucesso
+✓ Parcela 2/6: Payment 448 - Pago com sucesso
+✓ Parcela 3/6: Payment 448 - Pago com sucesso
+✓ Parcela 4/6: Payment 448 - Pago com atraso
+✓ Parcela 5/6: Payment 448 - Pago com atraso
+✓ Parcela 6/6: Payment 448 - Pago com atraso
+✓ Parcela 1/7: Payment 451 - Pago com atraso
+✓ Parcela 2/7: Payment 451 - Pago com sucesso
+✓ Parcela 3/7: Payment 451 - Pago com atraso
+✓ Parcela 4/7: Payment 451 - Pago com atraso
+✓ Parcela 5/7: Payment 451 - Pago com atraso
+✓ Parcela 6/7: Payment 451 - Pago com atraso
+✓ Parcela 7/7: Payment 451 - Pago com atraso
+✓ Parcela 1/5: Payment 458 - Pago com atraso
+✓ Parcela 2/5: Payment 458 - Pago com atraso
+✓ Parcela 3/5: Payment 458 - Pago com atraso
+✓ Parcela 4/5: Payment 458 - Pago com atraso
+✓ Parcela 5/5: Payment 458 - Pago com atraso
+✓ Parcela 1/4: Payment 461 - Pago com sucesso
+✓ Parcela 2/4: Payment 461 - Pago com sucesso
+✓ Parcela 3/4: Payment 461 - Pago com sucesso
+✓ Parcela 4/4: Payment 461 - Pago com atraso
+✓ Parcela 1/6: Payment 462 - Pago com atraso
+✓ Parcela 2/6: Payment 462 - Pago com atraso
+✓ Parcela 3/6: Payment 462 - Pago com atraso
+✓ Parcela 4/6: Payment 462 - Pago com atraso
+✓ Parcela 5/6: Payment 462 - Pago com atraso
+✓ Parcela 6/6: Payment 462 - Pago com atraso
+✓ Parcela 1/5: Payment 469 - Pago com atraso
+✓ Parcela 2/5: Payment 469 - Pago com atraso
+✓ Parcela 3/5: Payment 469 - Pago com atraso
+✓ Parcela 4/5: Payment 469 - Pago com atraso
+✓ Parcela 5/5: Payment 469 - Pago com atraso
+✓ Parcela 1/11: Payment 470 - Pago com sucesso
+✓ Parcela 2/11: Payment 470 - Pago com sucesso
+✓ Parcela 3/11: Payment 470 - Pago com sucesso
+✓ Parcela 4/11: Payment 470 - Aberta
+✓ Parcela 5/11: Payment 470 - Aberta
+✓ Parcela 6/11: Payment 470 - Aberta
+✓ Parcela 7/11: Payment 470 - Aberta
+✓ Parcela 8/11: Payment 470 - Aberta
+✓ Parcela 9/11: Payment 470 - Aberta
+✓ Parcela 10/11: Payment 470 - Aberta
+✓ Parcela 11/11: Payment 470 - Aberta
+✓ Parcela 1/5: Payment 471 - Pago com sucesso
+✓ Parcela 2/5: Payment 471 - Pago com sucesso
+✓ Parcela 3/5: Payment 471 - Pago com sucesso
+✓ Parcela 4/5: Payment 471 - Pago com sucesso
+✓ Parcela 5/5: Payment 471 - Pago com sucesso
+✓ Parcela 1/5: Payment 476 - Pago com sucesso
+✓ Parcela 2/5: Payment 476 - Pago com atraso
+✓ Parcela 3/5: Payment 476 - Pago com atraso
+✓ Parcela 4/5: Payment 476 - Aberta
+✓ Parcela 5/5: Payment 476 - Aberta
+✓ Parcela 1/6: Payment 477 - Pago com atraso
+✓ Parcela 2/6: Payment 477 - Pago com atraso
+✓ Parcela 3/6: Payment 477 - Pago com atraso
+✓ Parcela 4/6: Payment 477 - Pago com atraso
+✓ Parcela 5/6: Payment 477 - Pago com atraso
+✓ Parcela 6/6: Payment 477 - Pago com atraso
+✓ Parcela 1/3: Payment 492 - Pago com atraso
+✓ Parcela 2/3: Payment 492 - Pago com sucesso
+✓ Parcela 3/3: Payment 492 - Pago com sucesso
+✓ Parcela 1/4: Payment 488 - Pago com atraso
+✓ Parcela 2/4: Payment 488 - Pago com atraso
+✓ Parcela 3/4: Payment 488 - Pago com atraso
+✓ Parcela 4/4: Payment 488 - Pago com atraso
+✓ Parcela 1/5: Payment 508 - Pago com sucesso
+✓ Parcela 2/5: Payment 508 - Pago com atraso
+✓ Parcela 3/5: Payment 508 - Aberta
+✓ Parcela 4/5: Payment 508 - Aberta
+✓ Parcela 5/5: Payment 508 - Aberta
+✓ Parcela 1/1: Payment 495 - Pago com atraso
+✓ Parcela 1/5: Payment 510 - Pago com sucesso
+✓ Parcela 2/5: Payment 510 - Pago com sucesso
+✓ Parcela 3/5: Payment 510 - Pago com sucesso
+✓ Parcela 4/5: Payment 510 - Pago com sucesso
+✓ Parcela 5/5: Payment 510 - Pago com sucesso
+✓ Parcela 1/3: Payment 511 - Pago com atraso
+✓ Parcela 2/3: Payment 511 - Pago com sucesso
+✓ Parcela 3/3: Payment 511 - Pago com sucesso
+✓ Parcela 1/2: Payment 468 - Pago com sucesso
+✓ Parcela 2/2: Payment 468 - Pago com atraso
+✓ Parcela 1/6: Payment 503 - Pago com atraso
+✓ Parcela 2/6: Payment 503 - Pago com sucesso
+✓ Parcela 3/6: Payment 503 - Pago com sucesso
+✓ Parcela 4/6: Payment 503 - Pago com atraso
+✓ Parcela 5/6: Payment 503 - Pago com atraso
+✓ Parcela 6/6: Payment 503 - Aberta
+✓ Parcela 1/5: Payment 512 - Pago com sucesso
+✓ Parcela 2/5: Payment 512 - Pago com sucesso
+✓ Parcela 3/5: Payment 512 - Pago com sucesso
+✓ Parcela 4/5: Payment 512 - Pago com sucesso
+✓ Parcela 5/5: Payment 512 - Pago com sucesso
+✓ Parcela 1/3: Payment 481 - Pago com sucesso
+✓ Parcela 2/3: Payment 481 - Pago com atraso
+✓ Parcela 3/3: Payment 481 - Pago com atraso
+✓ Parcela 1/5: Payment 464 - Pago com sucesso
+✓ Parcela 2/5: Payment 464 - Pago com atraso
+✓ Parcela 3/5: Payment 464 - Pago com sucesso
+✓ Parcela 4/5: Payment 464 - Pago com sucesso
+✓ Parcela 5/5: Payment 464 - Pago com sucesso
+✓ Parcela 1/4: Payment 465 - Pago com atraso
+✓ Parcela 2/4: Payment 465 - Pago com atraso
+✓ Parcela 3/4: Payment 465 - Pago com atraso
+✓ Parcela 4/4: Payment 465 - Pago com atraso
+✓ Parcela 1/6: Payment 466 - Aberta
+✓ Parcela 2/6: Payment 466 - Aberta
+✓ Parcela 3/6: Payment 466 - Aberta
+✓ Parcela 4/6: Payment 466 - Aberta
+✓ Parcela 5/6: Payment 466 - Aberta
+✓ Parcela 6/6: Payment 466 - Aberta
+✓ Parcela 1/4: Payment 483 - Pago com sucesso
+✓ Parcela 2/4: Payment 483 - Pago com sucesso
+✓ Parcela 3/4: Payment 483 - Pago com sucesso
+✓ Parcela 4/4: Payment 483 - Pago com atraso
+✓ Parcela 1/5: Payment 514 - Pago com atraso
+✓ Parcela 2/5: Payment 514 - Pago com atraso
+✓ Parcela 3/5: Payment 514 - Pago com atraso
+✓ Parcela 4/5: Payment 514 - Pago com atraso
+✓ Parcela 5/5: Payment 514 - Pago com atraso
+✓ Parcela 1/6: Payment 516 - Pago com atraso
+✓ Parcela 2/6: Payment 516 - Pago com sucesso
+✓ Parcela 3/6: Payment 516 - Pago com atraso
+✓ Parcela 4/6: Payment 516 - Pago com atraso
+✓ Parcela 5/6: Payment 516 - Pago com atraso
+✓ Parcela 6/6: Payment 516 - Pago com sucesso
+✓ Parcela 1/3: Payment 521 - Pago com atraso
+✓ Parcela 2/3: Payment 521 - Pago com atraso
+✓ Parcela 3/3: Payment 521 - Pago com atraso
+✓ Parcela 1/6: Payment 515 - Pago com atraso
+✓ Parcela 2/6: Payment 515 - Pago com atraso
+✓ Parcela 3/6: Payment 515 - Pago com atraso
+✓ Parcela 4/6: Payment 515 - Pago com atraso
+✓ Parcela 5/6: Payment 515 - Pago com atraso
+✓ Parcela 6/6: Payment 515 - Pago com atraso
+✓ Parcela 1/6: Payment 523 - Pago com atraso
+✓ Parcela 2/6: Payment 523 - Pago com atraso
+✓ Parcela 3/6: Payment 523 - Pago com atraso
+✓ Parcela 4/6: Payment 523 - Pago com atraso
+✓ Parcela 5/6: Payment 523 - Pago com atraso
+✓ Parcela 6/6: Payment 523 - Pago com atraso
+✓ Parcela 1/5: Payment 525 - Pago com atraso
+✓ Parcela 2/5: Payment 525 - Pago com atraso
+✓ Parcela 3/5: Payment 525 - Pago com atraso
+✓ Parcela 4/5: Payment 525 - Pago com atraso
+✓ Parcela 5/5: Payment 525 - Pago com atraso
+✓ Parcela 1/3: Payment 531 - Pago com sucesso
+✓ Parcela 2/3: Payment 531 - Pago com atraso
+✓ Parcela 3/3: Payment 531 - Pago com atraso
+✓ Parcela 1/5: Payment 538 - Pago com sucesso
+✓ Parcela 2/5: Payment 538 - Pago com sucesso
+✓ Parcela 3/5: Payment 538 - Pago com atraso
+✓ Parcela 4/5: Payment 538 - Pago com atraso
+✓ Parcela 5/5: Payment 538 - Vencida
+✓ Parcela 1/1: Payment 527 - Pago com sucesso
+✓ Parcela 1/4: Payment 532 - Pago com atraso
+✓ Parcela 2/4: Payment 532 - Pago com atraso
+✓ Parcela 3/4: Payment 532 - Pago com atraso
+✓ Parcela 4/4: Payment 532 - Pago com sucesso
+✓ Parcela 1/5: Payment 535 - Pago com atraso
+✓ Parcela 2/5: Payment 535 - Pago com sucesso
+✓ Parcela 3/5: Payment 535 - Pago com atraso
+✓ Parcela 4/5: Payment 535 - Pago com atraso
+✓ Parcela 5/5: Payment 535 - Pago com sucesso
+✓ Parcela 1/4: Payment 536 - Pago com atraso
+✓ Parcela 2/4: Payment 536 - Pago com atraso
+✓ Parcela 3/4: Payment 536 - Pago com atraso
+✓ Parcela 4/4: Payment 536 - Pago com atraso
+✓ Parcela 1/5: Payment 539 - Pago com sucesso
+✓ Parcela 2/5: Payment 539 - Pago com sucesso
+✓ Parcela 3/5: Payment 539 - Pago com atraso
+✓ Parcela 4/5: Payment 539 - Pago com sucesso
+✓ Parcela 5/5: Payment 539 - Pago com sucesso
+✓ Parcela 1/6: Payment 542 - Pago com atraso
+✓ Parcela 2/6: Payment 542 - Pago com atraso
+✓ Parcela 3/6: Payment 542 - Pago com atraso
+✓ Parcela 4/6: Payment 542 - Pago com atraso
+✓ Parcela 5/6: Payment 542 - Pago com atraso
+✓ Parcela 6/6: Payment 542 - Pago com atraso
+✓ Parcela 1/1: Payment 543 - Pago com atraso
+✓ Parcela 1/2: Payment 546 - Pago com atraso
+✓ Parcela 2/2: Payment 546 - Pago com atraso
+✓ Parcela 1/7: Payment 547 - Pago com sucesso
+✓ Parcela 2/7: Payment 547 - Pago com atraso
+✓ Parcela 3/7: Payment 547 - Pago com atraso
+✓ Parcela 4/7: Payment 547 - Pago com atraso
+✓ Parcela 5/7: Payment 547 - Pago com atraso
+✓ Parcela 6/7: Payment 547 - Pago com atraso
+✓ Parcela 7/7: Payment 547 - Pago com atraso
+✓ Parcela 1/5: Payment 549 - Pago com atraso
+✓ Parcela 2/5: Payment 549 - Pago com atraso
+✓ Parcela 3/5: Payment 549 - Pago com atraso
+✓ Parcela 4/5: Payment 549 - Pago com sucesso
+✓ Parcela 5/5: Payment 549 - Pago com sucesso
+✓ Parcela 1/6: Payment 554 - Pago com atraso
+✓ Parcela 2/6: Payment 554 - Pago com atraso
+✓ Parcela 3/6: Payment 554 - Pago com atraso
+✓ Parcela 4/6: Payment 554 - Pago com atraso
+✓ Parcela 5/6: Payment 554 - Pago com atraso
+✓ Parcela 6/6: Payment 554 - Pago com atraso
+✓ Parcela 1/5: Payment 555 - Pago com atraso
+✓ Parcela 2/5: Payment 555 - Pago com atraso
+✓ Parcela 3/5: Payment 555 - Pago com atraso
+✓ Parcela 4/5: Payment 555 - Pago com sucesso
+✓ Parcela 5/5: Payment 555 - Pago com atraso
+✓ Parcela 1/6: Payment 559 - Pago com sucesso
+✓ Parcela 2/6: Payment 559 - Pago com sucesso
+✓ Parcela 3/6: Payment 559 - Pago com sucesso
+✓ Parcela 4/6: Payment 559 - Pago com sucesso
+✓ Parcela 5/6: Payment 559 - Pago com sucesso
+✓ Parcela 6/6: Payment 559 - Pago com atraso
+✓ Parcela 1/3: Payment 560 - Pago com atraso
+✓ Parcela 2/3: Payment 560 - Pago com atraso
+✓ Parcela 3/3: Payment 560 - Pago com atraso
+✓ Parcela 1/6: Payment 567 - Pago com sucesso
+✓ Parcela 2/6: Payment 567 - Pago com sucesso
+✓ Parcela 3/6: Payment 567 - Pago com sucesso
+✓ Parcela 4/6: Payment 567 - Pago com sucesso
+✓ Parcela 5/6: Payment 567 - Pago com atraso
+✓ Parcela 6/6: Payment 567 - Pago com atraso
+✓ Parcela 1/3: Payment 568 - Pago com atraso
+✓ Parcela 2/3: Payment 568 - Pago com atraso
+✓ Parcela 3/3: Payment 568 - Pago com atraso
+⚠️  Parcela 1539: Payment não existe para venda 10626
+⚠️  Parcela 1540: Payment não existe para venda 10626
+⚠️  Parcela 1541: Payment não existe para venda 10626
+⚠️  Parcela 1542: Payment não existe para venda 10626
+⚠️  Parcela 1543: Payment não existe para venda 10626
+✓ Parcela 1/5: Payment 571 - Pago com atraso
+✓ Parcela 2/5: Payment 571 - Pago com atraso
+✓ Parcela 3/5: Payment 571 - Pago com atraso
+✓ Parcela 4/5: Payment 571 - Pago com atraso
+✓ Parcela 5/5: Payment 571 - Pago com atraso
+✓ Parcela 1/1: Payment 499 - Pago com atraso
+✓ Parcela 1/6: Payment 557 - Pago com atraso
+✓ Parcela 2/6: Payment 557 - Pago com sucesso
+✓ Parcela 3/6: Payment 557 - Pago com sucesso
+✓ Parcela 4/6: Payment 557 - Pago com sucesso
+✓ Parcela 5/6: Payment 557 - Pago com sucesso
+✓ Parcela 6/6: Payment 557 - Pago com sucesso
+✓ Parcela 1/5: Payment 576 - Pago com sucesso
+✓ Parcela 2/5: Payment 576 - Pago com atraso
+✓ Parcela 3/5: Payment 576 - Pago com atraso
+✓ Parcela 4/5: Payment 576 - Pago com atraso
+✓ Parcela 5/5: Payment 576 - Pago com atraso
+✓ Parcela 1/4: Payment 582 - Pago com atraso
+✓ Parcela 2/4: Payment 582 - Pago com atraso
+✓ Parcela 3/4: Payment 582 - Pago com sucesso
+✓ Parcela 4/4: Payment 582 - Pago com sucesso
+✓ Parcela 1/5: Payment 583 - Pago com atraso
+✓ Parcela 2/5: Payment 583 - Pago com atraso
+✓ Parcela 3/5: Payment 583 - Pago com atraso
+✓ Parcela 4/5: Payment 583 - Pago com atraso
+✓ Parcela 5/5: Payment 583 - Pago com sucesso
+✓ Parcela 1/5: Payment 587 - Pago com atraso
+✓ Parcela 2/5: Payment 587 - Pago com atraso
+✓ Parcela 3/5: Payment 587 - Pago com atraso
+✓ Parcela 4/5: Payment 587 - Pago com atraso
+✓ Parcela 5/5: Payment 587 - Pago com atraso
+✓ Parcela 1/6: Payment 588 - Pago com sucesso
+✓ Parcela 2/6: Payment 588 - Pago com sucesso
+✓ Parcela 3/6: Payment 588 - Pago com sucesso
+✓ Parcela 4/6: Payment 588 - Pago com atraso
+✓ Parcela 5/6: Payment 588 - Pago com sucesso
+✓ Parcela 6/6: Payment 588 - Pago com sucesso
+✓ Parcela 1/6: Payment 591 - Pago com atraso
+✓ Parcela 2/6: Payment 591 - Pago com sucesso
+✓ Parcela 3/6: Payment 591 - Pago com atraso
+✓ Parcela 4/6: Payment 591 - Pago com atraso
+✓ Parcela 5/6: Payment 591 - Pago com atraso
+✓ Parcela 6/6: Payment 591 - Pago com sucesso
+✓ Parcela 1/4: Payment 596 - Pago com sucesso
+✓ Parcela 2/4: Payment 596 - Pago com sucesso
+✓ Parcela 3/4: Payment 596 - Pago com sucesso
+✓ Parcela 4/4: Payment 596 - Pago com atraso
+✓ Parcela 1/6: Payment 556 - Pago com atraso
+✓ Parcela 2/6: Payment 556 - Pago com atraso
+✓ Parcela 3/6: Payment 556 - Pago com atraso
+✓ Parcela 4/6: Payment 556 - Pago com atraso
+✓ Parcela 5/6: Payment 556 - Pago com atraso
+✓ Parcela 6/6: Payment 556 - Pago com atraso
+✓ Parcela 1/1: Payment 572 - Pago com atraso
+✓ Parcela 1/2: Payment 577 - Pago com atraso
+✓ Parcela 2/2: Payment 577 - Pago com atraso
+✓ Parcela 1/3: Payment 563 - Pago com sucesso
+✓ Parcela 2/3: Payment 563 - Pago com atraso
+✓ Parcela 3/3: Payment 563 - Pago com atraso
+✓ Parcela 1/3: Payment 607 - Pago com atraso
+✓ Parcela 2/3: Payment 607 - Pago com atraso
+✓ Parcela 3/3: Payment 607 - Pago com atraso
+✓ Parcela 1/5: Payment 599 - Pago com atraso
+✓ Parcela 2/5: Payment 599 - Pago com sucesso
+✓ Parcela 3/5: Payment 599 - Pago com sucesso
+✓ Parcela 4/5: Payment 599 - Pago com sucesso
+✓ Parcela 5/5: Payment 599 - Pago com sucesso
+✓ Parcela 1/5: Payment 600 - Pago com atraso
+✓ Parcela 2/5: Payment 600 - Pago com sucesso
+✓ Parcela 3/5: Payment 600 - Pago com sucesso
+✓ Parcela 4/5: Payment 600 - Pago com sucesso
+✓ Parcela 5/5: Payment 600 - Pago com atraso
+✓ Parcela 1/5: Payment 612 - Pago com sucesso
+✓ Parcela 2/5: Payment 612 - Pago com sucesso
+✓ Parcela 3/5: Payment 612 - Pago com sucesso
+✓ Parcela 4/5: Payment 612 - Pago com atraso
+✓ Parcela 5/5: Payment 612 - Pago com atraso
+✓ Parcela 1/3: Payment 602 - Pago com atraso
+✓ Parcela 2/3: Payment 602 - Pago com sucesso
+✓ Parcela 3/3: Payment 602 - Pago com atraso
+✓ Parcela 1/6: Payment 608 - Pago com atraso
+✓ Parcela 2/6: Payment 608 - Pago com atraso
+✓ Parcela 3/6: Payment 608 - Pago com atraso
+✓ Parcela 4/6: Payment 608 - Pago com atraso
+✓ Parcela 5/6: Payment 608 - Pago com atraso
+✓ Parcela 6/6: Payment 608 - Pago com atraso
+✓ Parcela 1/4: Payment 615 - Pago com sucesso
+✓ Parcela 2/4: Payment 615 - Pago com sucesso
+✓ Parcela 3/4: Payment 615 - Pago com sucesso
+✓ Parcela 4/4: Payment 615 - Pago com atraso
+✓ Parcela 1/5: Payment 619 - Pago com atraso
+✓ Parcela 2/5: Payment 619 - Pago com sucesso
+✓ Parcela 3/5: Payment 619 - Pago com sucesso
+✓ Parcela 4/5: Payment 619 - Pago com sucesso
+✓ Parcela 5/5: Payment 619 - Pago com sucesso
+✓ Parcela 1/6: Payment 610 - Pago com atraso
+✓ Parcela 2/6: Payment 610 - Pago com atraso
+✓ Parcela 3/6: Payment 610 - Pago com sucesso
+✓ Parcela 4/6: Payment 610 - Pago com sucesso
+✓ Parcela 5/6: Payment 610 - Pago com atraso
+✓ Parcela 6/6: Payment 610 - Pago com sucesso
+✓ Parcela 1/6: Payment 611 - Pago com atraso
+✓ Parcela 2/6: Payment 611 - Pago com atraso
+✓ Parcela 3/6: Payment 611 - Pago com sucesso
+✓ Parcela 4/6: Payment 611 - Pago com atraso
+✓ Parcela 5/6: Payment 611 - Pago com atraso
+✓ Parcela 6/6: Payment 611 - Pago com atraso
+✓ Parcela 1/4: Payment 628 - Pago com atraso
+✓ Parcela 2/4: Payment 628 - Pago com atraso
+✓ Parcela 3/4: Payment 628 - Pago com atraso
+✓ Parcela 4/4: Payment 628 - Pago com atraso
+✓ Parcela 1/5: Payment 631 - Pago com sucesso
+✓ Parcela 2/5: Payment 631 - Pago com sucesso
+✓ Parcela 3/5: Payment 631 - Pago com sucesso
+✓ Parcela 4/5: Payment 631 - Pago com atraso
+✓ Parcela 5/5: Payment 631 - Pago com atraso
+✓ Parcela 1/6: Payment 637 - Pago com sucesso
+✓ Parcela 2/6: Payment 637 - Pago com sucesso
+✓ Parcela 3/6: Payment 637 - Pago com sucesso
+✓ Parcela 4/6: Payment 637 - Pago com atraso
+✓ Parcela 5/6: Payment 637 - Pago com atraso
+✓ Parcela 6/6: Payment 637 - Pago com atraso
+✓ Parcela 1/2: Payment 639 - Pago com atraso
+✓ Parcela 2/2: Payment 639 - Pago com atraso
+✓ Parcela 1/5: Payment 638 - Pago com atraso
+✓ Parcela 2/5: Payment 638 - Pago com sucesso
+✓ Parcela 3/5: Payment 638 - Pago com atraso
+✓ Parcela 4/5: Payment 638 - Pago com sucesso
+✓ Parcela 5/5: Payment 638 - Pago com atraso
+✓ Parcela 1/5: Payment 634 - Pago com atraso
+✓ Parcela 2/5: Payment 634 - Pago com sucesso
+✓ Parcela 3/5: Payment 634 - Pago com atraso
+✓ Parcela 4/5: Payment 634 - Pago com sucesso
+✓ Parcela 5/5: Payment 634 - Pago com sucesso
+✓ Parcela 1/1: Payment 642 - Pago com atraso
+✓ Parcela 1/3: Payment 645 - Pago com sucesso
+✓ Parcela 2/3: Payment 645 - Pago com sucesso
+✓ Parcela 3/3: Payment 645 - Pago com sucesso
+✓ Parcela 1/8: Payment 646 - Pago com sucesso
+✓ Parcela 2/8: Payment 646 - Pago com sucesso
+✓ Parcela 3/8: Payment 646 - Pago com sucesso
+✓ Parcela 4/8: Payment 646 - Pago com sucesso
+✓ Parcela 5/8: Payment 646 - Pago com atraso
+✓ Parcela 6/8: Payment 646 - Pago com atraso
+✓ Parcela 7/8: Payment 646 - Pago com sucesso
+✓ Parcela 8/8: Payment 646 - Pago com sucesso
+✓ Parcela 1/3: Payment 647 - Pago com atraso
+✓ Parcela 2/3: Payment 647 - Pago com sucesso
+✓ Parcela 3/3: Payment 647 - Pago com atraso
+✓ Parcela 1/6: Payment 655 - Pago com atraso
+✓ Parcela 2/6: Payment 655 - Pago com sucesso
+✓ Parcela 3/6: Payment 655 - Pago com sucesso
+✓ Parcela 4/6: Payment 655 - Pago com atraso
+✓ Parcela 5/6: Payment 655 - Pago com atraso
+✓ Parcela 6/6: Payment 655 - Pago com atraso
+✓ Parcela 1/2: Payment 660 - Aberta
+✓ Parcela 2/2: Payment 660 - Aberta
+✓ Parcela 1/6: Payment 649 - Pago com atraso
+✓ Parcela 2/6: Payment 649 - Pago com atraso
+✓ Parcela 3/6: Payment 649 - Pago com atraso
+✓ Parcela 4/6: Payment 649 - Pago com atraso
+✓ Parcela 5/6: Payment 649 - Pago com atraso
+✓ Parcela 6/6: Payment 649 - Pago com atraso
+✓ Parcela 1/1: Payment 648 - Pago com atraso
+✓ Parcela 1/5: Payment 651 - Pago com sucesso
+✓ Parcela 2/5: Payment 651 - Pago com sucesso
+✓ Parcela 3/5: Payment 651 - Pago com sucesso
+✓ Parcela 4/5: Payment 651 - Pago com sucesso
+✓ Parcela 5/5: Payment 651 - Pago com sucesso
+✓ Parcela 1/2: Payment 652 - Pago com atraso
+✓ Parcela 2/2: Payment 652 - Pago com atraso
+✓ Parcela 1/6: Payment 657 - Pago com atraso
+✓ Parcela 2/6: Payment 657 - Pago com atraso
+✓ Parcela 3/6: Payment 657 - Pago com atraso
+✓ Parcela 4/6: Payment 657 - Pago com atraso
+✓ Parcela 5/6: Payment 657 - Pago com atraso
+✓ Parcela 6/6: Payment 657 - Pago com atraso
+✓ Parcela 1/2: Payment 595 - Pago com atraso
+✓ Parcela 2/2: Payment 595 - Pago com atraso
+✓ Parcela 1/5: Payment 662 - Pago com atraso
+✓ Parcela 2/5: Payment 662 - Pago com atraso
+✓ Parcela 3/5: Payment 662 - Pago com atraso
+✓ Parcela 4/5: Payment 662 - Pago com atraso
+✓ Parcela 5/5: Payment 662 - Pago com sucesso
+✓ Parcela 1/5: Payment 666 - Pago com atraso
+✓ Parcela 2/5: Payment 666 - Pago com atraso
+✓ Parcela 3/5: Payment 666 - Pago com atraso
+✓ Parcela 4/5: Payment 666 - Pago com atraso
+✓ Parcela 5/5: Payment 666 - Pago com atraso
+✓ Parcela 1/6: Payment 671 - Pago com sucesso
+✓ Parcela 2/6: Payment 671 - Pago com atraso
+✓ Parcela 3/6: Payment 671 - Pago com atraso
+✓ Parcela 4/6: Payment 671 - Pago com atraso
+✓ Parcela 5/6: Payment 671 - Pago com atraso
+✓ Parcela 6/6: Payment 671 - Pago com atraso
+✓ Parcela 1/2: Payment 673 - Pago com sucesso
+✓ Parcela 2/2: Payment 673 - Pago com sucesso
+✓ Parcela 1/6: Payment 674 - Pago com sucesso
+✓ Parcela 2/6: Payment 674 - Pago com sucesso
+✓ Parcela 3/6: Payment 674 - Pago com atraso
+✓ Parcela 4/6: Payment 674 - Pago com atraso
+✓ Parcela 5/6: Payment 674 - Pago com atraso
+✓ Parcela 6/6: Payment 674 - Pago com atraso
+✓ Parcela 1/4: Payment 677 - Pago com atraso
+✓ Parcela 2/4: Payment 677 - Pago com atraso
+✓ Parcela 3/4: Payment 677 - Pago com sucesso
+✓ Parcela 4/4: Payment 677 - Pago com atraso
+✓ Parcela 1/4: Payment 678 - Pago com sucesso
+✓ Parcela 2/4: Payment 678 - Pago com atraso
+✓ Parcela 3/4: Payment 678 - Pago com atraso
+✓ Parcela 4/4: Payment 678 - Pago com atraso
+⚠️  Parcela 1761: Payment não existe para venda 10742
+⚠️  Parcela 1762: Payment não existe para venda 10742
+⚠️  Parcela 1763: Payment não existe para venda 10742
+⚠️  Parcela 1764: Payment não existe para venda 10742
+⚠️  Parcela 1765: Payment não existe para venda 10742
+⚠️  Parcela 1766: Payment não existe para venda 10742
+⚠️  Parcela 1767: Payment não existe para venda 10742
+⚠️  Parcela 1768: Payment não existe para venda 10742
+⚠️  Parcela 1769: Payment não existe para venda 10742
+⚠️  Parcela 1770: Payment não existe para venda 10742
+✓ Parcela 1/2: Payment 681 - Pago com sucesso
+✓ Parcela 2/2: Payment 681 - Pago com sucesso
+✓ Parcela 1/4: Payment 683 - Pago com sucesso
+✓ Parcela 2/4: Payment 683 - Pago com sucesso
+✓ Parcela 3/4: Payment 683 - Pago com sucesso
+✓ Parcela 4/4: Payment 683 - Pago com sucesso
+✓ Parcela 1/4: Payment 676 - Pago com atraso
+✓ Parcela 2/4: Payment 676 - Pago com sucesso
+✓ Parcela 3/4: Payment 676 - Pago com atraso
+✓ Parcela 4/4: Payment 676 - Pago com atraso
+✓ Parcela 1/5: Payment 679 - Pago com sucesso
+✓ Parcela 2/5: Payment 679 - Pago com sucesso
+✓ Parcela 3/5: Payment 679 - Pago com sucesso
+✓ Parcela 4/5: Payment 679 - Pago com sucesso
+✓ Parcela 5/5: Payment 679 - Pago com sucesso
+✓ Parcela 1/3: Payment 680 - Pago com sucesso
+✓ Parcela 2/3: Payment 680 - Pago com sucesso
+✓ Parcela 3/3: Payment 680 - Pago com atraso
+✓ Parcela 1/5: Payment 691 - Pago com atraso
+✓ Parcela 2/5: Payment 691 - Pago com atraso
+✓ Parcela 3/5: Payment 691 - Pago com atraso
+✓ Parcela 4/5: Payment 691 - Aberta
+✓ Parcela 5/5: Payment 691 - Aberta
+✓ Parcela 1/6: Payment 695 - Pago com sucesso
+✓ Parcela 2/6: Payment 695 - Pago com sucesso
+✓ Parcela 3/6: Payment 695 - Pago com sucesso
+✓ Parcela 4/6: Payment 695 - Pago com sucesso
+✓ Parcela 5/6: Payment 695 - Pago com sucesso
+✓ Parcela 6/6: Payment 695 - Pago com sucesso
+✓ Parcela 1/6: Payment 703 - Pago com sucesso
+✓ Parcela 2/6: Payment 703 - Pago com sucesso
+✓ Parcela 3/6: Payment 703 - Pago com atraso
+✓ Parcela 4/6: Payment 703 - Pago com atraso
+✓ Parcela 5/6: Payment 703 - Pago com atraso
+✓ Parcela 6/6: Payment 703 - Pago com atraso
+✓ Parcela 1/5: Payment 707 - Pago com sucesso
+✓ Parcela 2/5: Payment 707 - Pago com atraso
+✓ Parcela 3/5: Payment 707 - Pago com sucesso
+✓ Parcela 4/5: Payment 707 - Pago com atraso
+✓ Parcela 5/5: Payment 707 - Pago com sucesso
+✓ Parcela 1/4: Payment 717 - Pago com atraso
+✓ Parcela 2/4: Payment 717 - Pago com atraso
+✓ Parcela 3/4: Payment 717 - Pago com atraso
+✓ Parcela 4/4: Payment 717 - Pago com atraso
+✓ Parcela 1/5: Payment 709 - Pago com sucesso
+✓ Parcela 2/5: Payment 709 - Pago com sucesso
+✓ Parcela 3/5: Payment 709 - Pago com sucesso
+✓ Parcela 4/5: Payment 709 - Pago com sucesso
+✓ Parcela 5/5: Payment 709 - Pago com sucesso
+✓ Parcela 1/5: Payment 708 - Pago com sucesso
+✓ Parcela 2/5: Payment 708 - Pago com atraso
+✓ Parcela 3/5: Payment 708 - Pago com atraso
+✓ Parcela 4/5: Payment 708 - Aberta
+✓ Parcela 5/5: Payment 708 - Aberta
+✓ Parcela 1/2: Payment 720 - Pago com sucesso
+✓ Parcela 2/2: Payment 720 - Pago com sucesso
+✓ Parcela 1/6: Payment 721 - Pago com atraso
+✓ Parcela 2/6: Payment 721 - Pago com atraso
+✓ Parcela 3/6: Payment 721 - Pago com atraso
+✓ Parcela 4/6: Payment 721 - Pago com atraso
+✓ Parcela 5/6: Payment 721 - Pago com atraso
+✓ Parcela 6/6: Payment 721 - Pago com atraso
+✓ Parcela 1/4: Payment 723 - Pago com atraso
+✓ Parcela 2/4: Payment 723 - Pago com sucesso
+✓ Parcela 3/4: Payment 723 - Pago com sucesso
+✓ Parcela 4/4: Payment 723 - Aberta
+✓ Parcela 1/6: Payment 730 - Pago com sucesso
+✓ Parcela 2/6: Payment 730 - Pago com atraso
+✓ Parcela 3/6: Payment 730 - Pago com atraso
+✓ Parcela 4/6: Payment 730 - Pago com atraso
+✓ Parcela 5/6: Payment 730 - Pago com atraso
+✓ Parcela 6/6: Payment 730 - Pago com sucesso
+✓ Parcela 1/5: Payment 729 - Pago com atraso
+✓ Parcela 2/5: Payment 729 - Pago com sucesso
+✓ Parcela 3/5: Payment 729 - Pago com sucesso
+✓ Parcela 4/5: Payment 729 - Pago com sucesso
+✓ Parcela 5/5: Payment 729 - Pago com sucesso
+✓ Parcela 1/5: Payment 733 - Pago com sucesso
+✓ Parcela 2/5: Payment 733 - Pago com sucesso
+✓ Parcela 3/5: Payment 733 - Pago com sucesso
+✓ Parcela 4/5: Payment 733 - Pago com sucesso
+✓ Parcela 5/5: Payment 733 - Pago com sucesso
+✓ Parcela 1/5: Payment 741 - Pago com atraso
+✓ Parcela 2/5: Payment 741 - Pago com atraso
+✓ Parcela 3/5: Payment 741 - Pago com atraso
+✓ Parcela 4/5: Payment 741 - Pago com atraso
+✓ Parcela 5/5: Payment 741 - Pago com atraso
+✓ Parcela 1/1: Payment 743 - Pago com atraso
+✓ Parcela 1/3: Payment 742 - Pago com atraso
+✓ Parcela 2/3: Payment 742 - Pago com atraso
+✓ Parcela 3/3: Payment 742 - Pago com atraso
+✓ Parcela 1/3: Payment 747 - Pago com atraso
+✓ Parcela 2/3: Payment 747 - Aberta
+✓ Parcela 3/3: Payment 747 - Aberta
+✓ Parcela 1/6: Payment 748 - Pago com atraso
+✓ Parcela 2/6: Payment 748 - Pago com atraso
+✓ Parcela 3/6: Payment 748 - Pago com atraso
+✓ Parcela 4/6: Payment 748 - Pago com atraso
+✓ Parcela 5/6: Payment 748 - Pago com atraso
+✓ Parcela 6/6: Payment 748 - Pago com sucesso
+✓ Parcela 1/5: Payment 749 - Pago com atraso
+✓ Parcela 2/5: Payment 749 - Pago com atraso
+✓ Parcela 3/5: Payment 749 - Aberta
+✓ Parcela 4/5: Payment 749 - Aberta
+✓ Parcela 5/5: Payment 749 - Aberta
+✓ Parcela 1/3: Payment 750 - Pago com sucesso
+✓ Parcela 2/3: Payment 750 - Pago com sucesso
+✓ Parcela 3/3: Payment 750 - Pago com sucesso
+✓ Parcela 1/5: Payment 752 - Pago com sucesso
+✓ Parcela 2/5: Payment 752 - Pago com sucesso
+✓ Parcela 3/5: Payment 752 - Pago com sucesso
+✓ Parcela 4/5: Payment 752 - Pago com atraso
+✓ Parcela 5/5: Payment 752 - Pago com atraso
+✓ Parcela 1/6: Payment 753 - Pago com atraso
+✓ Parcela 2/6: Payment 753 - Pago com atraso
+✓ Parcela 3/6: Payment 753 - Pago com atraso
+✓ Parcela 4/6: Payment 753 - Pago com atraso
+✓ Parcela 5/6: Payment 753 - Pago com atraso
+✓ Parcela 6/6: Payment 753 - Pago com atraso
+✓ Parcela 1/5: Payment 757 - Pago com sucesso
+✓ Parcela 2/5: Payment 757 - Pago com atraso
+✓ Parcela 3/5: Payment 757 - Pago com sucesso
+✓ Parcela 4/5: Payment 757 - Pago com sucesso
+✓ Parcela 5/5: Payment 757 - Pago com sucesso
+✓ Parcela 1/4: Payment 763 - Pago com atraso
+✓ Parcela 2/4: Payment 763 - Pago com atraso
+✓ Parcela 3/4: Payment 763 - Pago com atraso
+✓ Parcela 4/4: Payment 763 - Pago com atraso
+✓ Parcela 1/1: Payment 755 - Pago com atraso
+✓ Parcela 1/5: Payment 769 - Pago com atraso
+✓ Parcela 2/5: Payment 769 - Pago com atraso
+✓ Parcela 3/5: Payment 769 - Pago com sucesso
+✓ Parcela 4/5: Payment 769 - Pago com sucesso
+✓ Parcela 5/5: Payment 769 - Pago com sucesso
+✓ Parcela 1/5: Payment 772 - Pago com atraso
+✓ Parcela 2/5: Payment 772 - Pago com sucesso
+✓ Parcela 3/5: Payment 772 - Pago com atraso
+✓ Parcela 4/5: Payment 772 - Pago com atraso
+✓ Parcela 5/5: Payment 772 - Pago com sucesso
+✓ Parcela 1/4: Payment 768 - Pago com atraso
+✓ Parcela 2/4: Payment 768 - Pago com atraso
+✓ Parcela 3/4: Payment 768 - Pago com atraso
+✓ Parcela 4/4: Payment 768 - Pago com atraso
+✓ Parcela 1/5: Payment 775 - Pago com sucesso
+✓ Parcela 2/5: Payment 775 - Pago com atraso
+✓ Parcela 3/5: Payment 775 - Pago com atraso
+✓ Parcela 4/5: Payment 775 - Pago com atraso
+✓ Parcela 5/5: Payment 775 - Pago com atraso
+✓ Parcela 1/4: Payment 781 - Pago com atraso
+✓ Parcela 2/4: Payment 781 - Pago com atraso
+✓ Parcela 3/4: Payment 781 - Pago com sucesso
+✓ Parcela 4/4: Payment 781 - Pago com atraso
+✓ Parcela 1/2: Payment 787 - Pago com atraso
+✓ Parcela 2/2: Payment 787 - Pago com atraso
+✓ Parcela 1/3: Payment 773 - Pago com atraso
+✓ Parcela 2/3: Payment 773 - Pago com atraso
+✓ Parcela 3/3: Payment 773 - Pago com atraso
+✓ Parcela 1/2: Payment 778 - Pago com atraso
+✓ Parcela 2/2: Payment 778 - Pago com atraso
+✓ Parcela 1/5: Payment 796 - Pago com sucesso
+✓ Parcela 2/5: Payment 796 - Pago com sucesso
+✓ Parcela 3/5: Payment 796 - Pago com atraso
+✓ Parcela 4/5: Payment 796 - Pago com atraso
+✓ Parcela 5/5: Payment 796 - Pago com sucesso
+✓ Parcela 1/3: Payment 788 - Pago com sucesso
+✓ Parcela 2/3: Payment 788 - Pago com atraso
+✓ Parcela 3/3: Payment 788 - Pago com sucesso
+✓ Parcela 1/4: Payment 790 - Pago com atraso
+✓ Parcela 2/4: Payment 790 - Pago com atraso
+✓ Parcela 3/4: Payment 790 - Pago com atraso
+✓ Parcela 4/4: Payment 790 - Pago com atraso
+✓ Parcela 1/5: Payment 793 - Pago com atraso
+✓ Parcela 2/5: Payment 793 - Pago com atraso
+✓ Parcela 3/5: Payment 793 - Pago com atraso
+✓ Parcela 4/5: Payment 793 - Pago com atraso
+✓ Parcela 5/5: Payment 793 - Pago com atraso
+✓ Parcela 1/5: Payment 794 - Pago com atraso
+✓ Parcela 2/5: Payment 794 - Pago com atraso
+✓ Parcela 3/5: Payment 794 - Pago com atraso
+✓ Parcela 4/5: Payment 794 - Pago com atraso
+✓ Parcela 5/5: Payment 794 - Pago com atraso
+✓ Parcela 1/2: Payment 798 - Pago com sucesso
+✓ Parcela 2/2: Payment 798 - Pago com atraso
+✓ Parcela 1/2: Payment 799 - Pago com atraso
+✓ Parcela 2/2: Payment 799 - Pago com atraso
+✓ Parcela 1/5: Payment 800 - Pago com atraso
+✓ Parcela 2/5: Payment 800 - Pago com atraso
+✓ Parcela 3/5: Payment 800 - Pago com atraso
+✓ Parcela 4/5: Payment 800 - Pago com atraso
+✓ Parcela 5/5: Payment 800 - Pago com atraso
+✓ Parcela 1/6: Payment 801 - Pago com atraso
+✓ Parcela 2/6: Payment 801 - Pago com atraso
+✓ Parcela 3/6: Payment 801 - Pago com atraso
+✓ Parcela 4/6: Payment 801 - Pago com atraso
+✓ Parcela 5/6: Payment 801 - Pago com atraso
+✓ Parcela 6/6: Payment 801 - Pago com atraso
+✓ Parcela 1/5: Payment 805 - Pago com sucesso
+✓ Parcela 2/5: Payment 805 - Pago com sucesso
+✓ Parcela 3/5: Payment 805 - Pago com sucesso
+✓ Parcela 4/5: Payment 805 - Pago com atraso
+✓ Parcela 5/5: Payment 805 - Pago com sucesso
+✓ Parcela 1/4: Payment 811 - Pago com atraso
+✓ Parcela 2/4: Payment 811 - Pago com atraso
+✓ Parcela 3/4: Payment 811 - Pago com atraso
+✓ Parcela 4/4: Payment 811 - Pago com atraso
+✓ Parcela 1/6: Payment 810 - Pago com atraso
+✓ Parcela 2/6: Payment 810 - Pago com atraso
+✓ Parcela 3/6: Payment 810 - Pago com atraso
+✓ Parcela 4/6: Payment 810 - Pago com atraso
+✓ Parcela 5/6: Payment 810 - Pago com atraso
+✓ Parcela 6/6: Payment 810 - Pago com atraso
+✓ Parcela 1/5: Payment 813 - Pago com atraso
+✓ Parcela 2/5: Payment 813 - Pago com atraso
+✓ Parcela 3/5: Payment 813 - Pago com atraso
+✓ Parcela 4/5: Payment 813 - Pago com atraso
+✓ Parcela 5/5: Payment 813 - Pago com atraso
+✓ Parcela 1/4: Payment 819 - Pago com atraso
+✓ Parcela 2/4: Payment 819 - Pago com sucesso
+✓ Parcela 3/4: Payment 819 - Pago com atraso
+✓ Parcela 4/4: Payment 819 - Pago com atraso
+⚠️  Parcela 1991: Payment não existe para venda 10880
+⚠️  Parcela 1992: Payment não existe para venda 10880
+⚠️  Parcela 1993: Payment não existe para venda 10880
+⚠️  Parcela 1994: Payment não existe para venda 10880
+⚠️  Parcela 1995: Payment não existe para venda 10880
+⚠️  Parcela 1996: Payment não existe para venda 10880
+⚠️  Parcela 1997: Payment não existe para venda 10880
+⚠️  Parcela 1998: Payment não existe para venda 10880
+✓ Parcela 1/6: Payment 836 - Pago com sucesso
+✓ Parcela 2/6: Payment 836 - Pago com atraso
+✓ Parcela 3/6: Payment 836 - Pago com atraso
+✓ Parcela 4/6: Payment 836 - Pago com atraso
+✓ Parcela 5/6: Payment 836 - Pago com sucesso
+✓ Parcela 6/6: Payment 836 - Pago com atraso
+✓ Parcela 1/5: Payment 809 - Pago com atraso
+✓ Parcela 2/5: Payment 809 - Pago com sucesso
+✓ Parcela 3/5: Payment 809 - Pago com atraso
+✓ Parcela 4/5: Payment 809 - Pago com atraso
+✓ Parcela 5/5: Payment 809 - Pago com atraso
+✓ Parcela 1/6: Payment 830 - Pago com sucesso
+✓ Parcela 2/6: Payment 830 - Pago com sucesso
+✓ Parcela 3/6: Payment 830 - Pago com sucesso
+✓ Parcela 4/6: Payment 830 - Pago com atraso
+✓ Parcela 5/6: Payment 830 - Pago com sucesso
+✓ Parcela 6/6: Payment 830 - Pago com atraso
+✓ Parcela 1/6: Payment 835 - Pago com atraso
+✓ Parcela 2/6: Payment 835 - Pago com atraso
+✓ Parcela 3/6: Payment 835 - Pago com atraso
+✓ Parcela 4/6: Payment 835 - Pago com atraso
+✓ Parcela 5/6: Payment 835 - Pago com atraso
+✓ Parcela 6/6: Payment 835 - Pago com atraso
+✓ Parcela 1/6: Payment 842 - Pago com atraso
+✓ Parcela 2/6: Payment 842 - Pago com atraso
+✓ Parcela 3/6: Payment 842 - Pago com atraso
+✓ Parcela 4/6: Payment 842 - Pago com atraso
+✓ Parcela 5/6: Payment 842 - Pago com atraso
+✓ Parcela 6/6: Payment 842 - Pago com atraso
+✓ Parcela 1/5: Payment 821 - Pago com atraso
+✓ Parcela 2/5: Payment 821 - Pago com atraso
+✓ Parcela 3/5: Payment 821 - Pago com atraso
+✓ Parcela 4/5: Payment 821 - Pago com atraso
+✓ Parcela 5/5: Payment 821 - Pago com atraso
+✓ Parcela 1/2: Payment 831 - Pago com atraso
+✓ Parcela 2/2: Payment 831 - Pago com atraso
+✓ Parcela 1/7: Payment 840 - Pago com atraso
+✓ Parcela 2/7: Payment 840 - Pago com atraso
+✓ Parcela 3/7: Payment 840 - Pago com atraso
+✓ Parcela 4/7: Payment 840 - Pago com atraso
+✓ Parcela 5/7: Payment 840 - Pago com atraso
+✓ Parcela 6/7: Payment 840 - Pago com atraso
+✓ Parcela 7/7: Payment 840 - Pago com atraso
+✓ Parcela 1/5: Payment 851 - Pago com atraso
+✓ Parcela 2/5: Payment 851 - Pago com atraso
+✓ Parcela 3/5: Payment 851 - Pago com atraso
+✓ Parcela 4/5: Payment 851 - Pago com atraso
+✓ Parcela 5/5: Payment 851 - Pago com atraso
+✓ Parcela 1/4: Payment 846 - Pago com atraso
+✓ Parcela 2/4: Payment 846 - Pago com atraso
+✓ Parcela 3/4: Payment 846 - Pago com atraso
+✓ Parcela 4/4: Payment 846 - Pago com atraso
+✓ Parcela 1/3: Payment 845 - Pago com atraso
+✓ Parcela 2/3: Payment 845 - Aberta
+✓ Parcela 3/3: Payment 845 - Aberta
+⚠️  Parcela 2056: Payment não existe para venda 10922
+⚠️  Parcela 2057: Payment não existe para venda 10922
+⚠️  Parcela 2058: Payment não existe para venda 10922
+⚠️  Parcela 2059: Payment não existe para venda 10922
+⚠️  Parcela 2060: Payment não existe para venda 10922
+⚠️  Parcela 2061: Payment não existe para venda 10922
+✓ Parcela 1/4: Payment 856 - Pago com atraso
+✓ Parcela 2/4: Payment 856 - Pago com sucesso
+✓ Parcela 3/4: Payment 856 - Pago com atraso
+✓ Parcela 4/4: Payment 856 - Pago com atraso
+✓ Parcela 1/10: Payment 865 - Pago com sucesso
+✓ Parcela 2/10: Payment 865 - Pago com atraso
+✓ Parcela 3/10: Payment 865 - Pago com sucesso
+✓ Parcela 4/10: Payment 865 - Pago com sucesso
+✓ Parcela 5/10: Payment 865 - Pago com sucesso
+✓ Parcela 6/10: Payment 865 - Pago com sucesso
+✓ Parcela 7/10: Payment 865 - Pago com sucesso
+✓ Parcela 8/10: Payment 865 - Pago com sucesso
+✓ Parcela 9/10: Payment 865 - Pago com atraso
+✓ Parcela 10/10: Payment 865 - Pago com atraso
+✓ Parcela 1/5: Payment 858 - Pago com sucesso
+✓ Parcela 2/5: Payment 858 - Pago com atraso
+✓ Parcela 3/5: Payment 858 - Pago com sucesso
+✓ Parcela 4/5: Payment 858 - Aberta
+✓ Parcela 5/5: Payment 858 - Aberta
+✓ Parcela 1/6: Payment 861 - Pago com atraso
+✓ Parcela 2/6: Payment 861 - Pago com atraso
+✓ Parcela 3/6: Payment 861 - Pago com atraso
+✓ Parcela 4/6: Payment 861 - Pago com atraso
+✓ Parcela 5/6: Payment 861 - Pago com atraso
+✓ Parcela 6/6: Payment 861 - Pago com sucesso
+✓ Parcela 1/4: Payment 868 - Pago com sucesso
+✓ Parcela 2/4: Payment 868 - Pago com atraso
+✓ Parcela 3/4: Payment 868 - Pago com atraso
+✓ Parcela 4/4: Payment 868 - Pago com sucesso
+✓ Parcela 1/10: Payment 827 - Pago com sucesso
+✓ Parcela 2/10: Payment 827 - Pago com sucesso
+✓ Parcela 3/10: Payment 827 - Pago com sucesso
+✓ Parcela 4/10: Payment 827 - Pago com sucesso
+✓ Parcela 5/10: Payment 827 - Pago com sucesso
+✓ Parcela 6/10: Payment 827 - Pago com sucesso
+✓ Parcela 7/10: Payment 827 - Pago com sucesso
+✓ Parcela 8/10: Payment 827 - Pago com sucesso
+✓ Parcela 9/10: Payment 827 - Pago com sucesso
+✓ Parcela 10/10: Payment 827 - Pago com sucesso
+✓ Parcela 1/6: Payment 864 - Pago com atraso
+✓ Parcela 2/6: Payment 864 - Pago com atraso
+✓ Parcela 3/6: Payment 864 - Pago com atraso
+✓ Parcela 4/6: Payment 864 - Pago com atraso
+✓ Parcela 5/6: Payment 864 - Pago com atraso
+✓ Parcela 6/6: Payment 864 - Pago com atraso
+✓ Parcela 1/6: Payment 869 - Pago com atraso
+✓ Parcela 2/6: Payment 869 - Pago com atraso
+✓ Parcela 3/6: Payment 869 - Pago com atraso
+✓ Parcela 4/6: Payment 869 - Pago com atraso
+✓ Parcela 5/6: Payment 869 - Pago com atraso
+✓ Parcela 6/6: Payment 869 - Pago com atraso
+✓ Parcela 1/6: Payment 874 - Pago com sucesso
+✓ Parcela 2/6: Payment 874 - Pago com sucesso
+✓ Parcela 3/6: Payment 874 - Pago com sucesso
+✓ Parcela 4/6: Payment 874 - Pago com sucesso
+✓ Parcela 5/6: Payment 874 - Pago com sucesso
+✓ Parcela 6/6: Payment 874 - Pago com sucesso
+✓ Parcela 1/4: Payment 897 - Pago com atraso
+✓ Parcela 2/4: Payment 897 - Pago com atraso
+✓ Parcela 3/4: Payment 897 - Pago com atraso
+✓ Parcela 4/4: Payment 897 - Pago com atraso
+✓ Parcela 1/5: Payment 878 - Pago com sucesso
+✓ Parcela 2/5: Payment 878 - Pago com atraso
+✓ Parcela 3/5: Payment 878 - Pago com sucesso
+✓ Parcela 4/5: Payment 878 - Pago com sucesso
+✓ Parcela 5/5: Payment 878 - Pago com sucesso
+✓ Parcela 1/3: Payment 883 - Pago com sucesso
+✓ Parcela 2/3: Payment 883 - Pago com sucesso
+✓ Parcela 3/3: Payment 883 - Pago com atraso
+✓ Parcela 1/5: Payment 890 - Pago com sucesso
+✓ Parcela 2/5: Payment 890 - Pago com atraso
+✓ Parcela 3/5: Payment 890 - Pago com atraso
+✓ Parcela 4/5: Payment 890 - Pago com atraso
+✓ Parcela 5/5: Payment 890 - Aberta
+✓ Parcela 1/5: Payment 899 - Pago com atraso
+✓ Parcela 2/5: Payment 899 - Pago com atraso
+✓ Parcela 3/5: Payment 899 - Pago com atraso
+✓ Parcela 4/5: Payment 899 - Pago com atraso
+✓ Parcela 5/5: Payment 899 - Pago com atraso
+✓ Parcela 1/5: Payment 891 - Pago com sucesso
+✓ Parcela 2/5: Payment 891 - Pago com sucesso
+✓ Parcela 3/5: Payment 891 - Pago com sucesso
+✓ Parcela 4/5: Payment 891 - Pago com atraso
+✓ Parcela 5/5: Payment 891 - Pago com atraso
+✓ Parcela 1/9: Payment 904 - Pago com atraso
+✓ Parcela 2/9: Payment 904 - Pago com atraso
+✓ Parcela 3/9: Payment 904 - Pago com atraso
+✓ Parcela 4/9: Payment 904 - Pago com atraso
+✓ Parcela 5/9: Payment 904 - Pago com atraso
+✓ Parcela 6/9: Payment 904 - Pago com atraso
+✓ Parcela 7/9: Payment 904 - Pago com atraso
+✓ Parcela 8/9: Payment 904 - Pago com atraso
+✓ Parcela 9/9: Payment 904 - Pago com atraso
+✓ Parcela 1/2: Payment 901 - Pago com sucesso
+✓ Parcela 2/2: Payment 901 - Pago com atraso
+✓ Parcela 1/2: Payment 905 - Pago com atraso
+✓ Parcela 2/2: Payment 905 - Pago com atraso
+✓ Parcela 1/8: Payment 911 - Pago com atraso
+✓ Parcela 2/8: Payment 911 - Pago com sucesso
+✓ Parcela 3/8: Payment 911 - Pago com sucesso
+✓ Parcela 4/8: Payment 911 - Pago com atraso
+✓ Parcela 5/8: Payment 911 - Pago com sucesso
+✓ Parcela 6/8: Payment 911 - Pago com sucesso
+✓ Parcela 7/8: Payment 911 - Pago com sucesso
+✓ Parcela 8/8: Payment 911 - Pago com sucesso
+✓ Parcela 1/6: Payment 912 - Pago com atraso
+✓ Parcela 2/6: Payment 912 - Pago com atraso
+✓ Parcela 3/6: Payment 912 - Pago com atraso
+✓ Parcela 4/6: Payment 912 - Pago com atraso
+✓ Parcela 5/6: Payment 912 - Pago com atraso
+✓ Parcela 6/6: Payment 912 - Pago com atraso
+✓ Parcela 1/6: Payment 916 - Pago com sucesso
+✓ Parcela 2/6: Payment 916 - Pago com atraso
+✓ Parcela 3/6: Payment 916 - Pago com sucesso
+✓ Parcela 4/6: Payment 916 - Pago com atraso
+✓ Parcela 5/6: Payment 916 - Pago com atraso
+✓ Parcela 6/6: Payment 916 - Pago com atraso
+✓ Parcela 1/6: Payment 919 - Pago com atraso
+✓ Parcela 2/6: Payment 919 - Pago com atraso
+✓ Parcela 3/6: Payment 919 - Pago com atraso
+✓ Parcela 4/6: Payment 919 - Pago com atraso
+✓ Parcela 5/6: Payment 919 - Pago com atraso
+✓ Parcela 6/6: Payment 919 - Pago com atraso
+✓ Parcela 1/6: Payment 922 - Pago com sucesso
+✓ Parcela 2/6: Payment 922 - Pago com sucesso
+✓ Parcela 3/6: Payment 922 - Pago com sucesso
+✓ Parcela 4/6: Payment 922 - Pago com sucesso
+✓ Parcela 5/6: Payment 922 - Pago com sucesso
+✓ Parcela 6/6: Payment 922 - Pago com sucesso
+✓ Parcela 1/6: Payment 915 - Pago com sucesso
+✓ Parcela 2/6: Payment 915 - Pago com sucesso
+✓ Parcela 3/6: Payment 915 - Pago com sucesso
+✓ Parcela 4/6: Payment 915 - Pago com sucesso
+✓ Parcela 5/6: Payment 915 - Pago com sucesso
+✓ Parcela 6/6: Payment 915 - Pago com sucesso
+✓ Parcela 1/1: Payment 927 - Pago com sucesso
+✓ Parcela 1/4: Payment 929 - Pago com atraso
+✓ Parcela 2/4: Payment 929 - Pago com sucesso
+✓ Parcela 3/4: Payment 929 - Pago com sucesso
+✓ Parcela 4/4: Payment 929 - Pago com atraso
+✓ Parcela 1/2: Payment 933 - Pago com atraso
+✓ Parcela 2/2: Payment 933 - Pago com atraso
+✓ Parcela 1/6: Payment 934 - Pago com atraso
+✓ Parcela 2/6: Payment 934 - Pago com sucesso
+✓ Parcela 3/6: Payment 934 - Pago com sucesso
+✓ Parcela 4/6: Payment 934 - Pago com sucesso
+✓ Parcela 5/6: Payment 934 - Pago com sucesso
+✓ Parcela 6/6: Payment 934 - Pago com sucesso
+✓ Parcela 1/5: Payment 942 - Pago com sucesso
+✓ Parcela 2/5: Payment 942 - Pago com atraso
+✓ Parcela 3/5: Payment 942 - Pago com sucesso
+✓ Parcela 4/5: Payment 942 - Pago com atraso
+✓ Parcela 5/5: Payment 942 - Pago com atraso
+✓ Parcela 1/1: Payment 941 - Pago com sucesso
+✓ Parcela 1/6: Payment 964 - Pago com sucesso
+✓ Parcela 2/6: Payment 964 - Pago com sucesso
+✓ Parcela 3/6: Payment 964 - Pago com sucesso
+✓ Parcela 4/6: Payment 964 - Pago com sucesso
+✓ Parcela 5/6: Payment 964 - Pago com sucesso
+✓ Parcela 6/6: Payment 964 - Pago com sucesso
+✓ Parcela 1/6: Payment 965 - Pago com atraso
+✓ Parcela 2/6: Payment 965 - Pago com atraso
+✓ Parcela 3/6: Payment 965 - Pago com atraso
+✓ Parcela 4/6: Payment 965 - Pago com atraso
+✓ Parcela 5/6: Payment 965 - Pago com atraso
+✓ Parcela 6/6: Payment 965 - Pago com atraso
+✓ Parcela 1/5: Payment 963 - Pago com atraso
+✓ Parcela 2/5: Payment 963 - Pago com atraso
+✓ Parcela 3/5: Payment 963 - Pago com atraso
+✓ Parcela 4/5: Payment 963 - Pago com atraso
+✓ Parcela 5/5: Payment 963 - Pago com atraso
+✓ Parcela 1/7: Payment 944 - Pago com atraso
+✓ Parcela 2/7: Payment 944 - Pago com atraso
+✓ Parcela 3/7: Payment 944 - Pago com atraso
+✓ Parcela 4/7: Payment 944 - Pago com atraso
+✓ Parcela 5/7: Payment 944 - Pago com atraso
+✓ Parcela 6/7: Payment 944 - Pago com atraso
+✓ Parcela 7/7: Payment 944 - Pago com atraso
+✓ Parcela 1/4: Payment 936 - Pago com sucesso
+✓ Parcela 2/4: Payment 936 - Pago com sucesso
+✓ Parcela 3/4: Payment 936 - Pago com atraso
+✓ Parcela 4/4: Payment 936 - Pago com atraso
+✓ Parcela 1/2: Payment 946 - Pago com sucesso
+✓ Parcela 2/2: Payment 946 - Pago com sucesso
+✓ Parcela 1/5: Payment 959 - Pago com sucesso
+✓ Parcela 2/5: Payment 959 - Pago com sucesso
+✓ Parcela 3/5: Payment 959 - Pago com sucesso
+✓ Parcela 4/5: Payment 959 - Pago com sucesso
+✓ Parcela 5/5: Payment 959 - Pago com atraso
+⚠️  Parcela 2255: Payment não existe para venda 11023
+⚠️  Parcela 2256: Payment não existe para venda 11023
+⚠️  Parcela 2257: Payment não existe para venda 11023
+⚠️  Parcela 2258: Payment não existe para venda 11023
+✓ Parcela 1/8: Payment 969 - Pago com atraso
+✓ Parcela 2/8: Payment 969 - Pago com atraso
+✓ Parcela 3/8: Payment 969 - Pago com atraso
+✓ Parcela 4/8: Payment 969 - Pago com atraso
+✓ Parcela 5/8: Payment 969 - Pago com atraso
+✓ Parcela 6/8: Payment 969 - Pago com atraso
+✓ Parcela 7/8: Payment 969 - Pago com atraso
+✓ Parcela 8/8: Payment 969 - Pago com atraso
+✓ Parcela 1/6: Payment 947 - Pago com sucesso
+✓ Parcela 2/6: Payment 947 - Pago com sucesso
+✓ Parcela 3/6: Payment 947 - Pago com atraso
+✓ Parcela 4/6: Payment 947 - Pago com sucesso
+✓ Parcela 5/6: Payment 947 - Pago com atraso
+✓ Parcela 6/6: Payment 947 - Pago com atraso
+✓ Parcela 1/1: Payment 958 - Pago com atraso
+✓ Parcela 1/2: Payment 972 - Pago com sucesso
+✓ Parcela 2/2: Payment 972 - Pago com atraso
+✓ Parcela 1/2: Payment 971 - Pago com sucesso
+✓ Parcela 2/2: Payment 971 - Pago com atraso
+✓ Parcela 1/3: Payment 974 - Pago com sucesso
+✓ Parcela 2/3: Payment 974 - Pago com sucesso
+✓ Parcela 3/3: Payment 974 - Pago com sucesso
+✓ Parcela 1/6: Payment 978 - Pago com sucesso
+✓ Parcela 2/6: Payment 978 - Pago com atraso
+✓ Parcela 3/6: Payment 978 - Pago com atraso
+✓ Parcela 4/6: Payment 978 - Pago com atraso
+✓ Parcela 5/6: Payment 978 - Pago com atraso
+✓ Parcela 6/6: Payment 978 - Pago com atraso
+✓ Parcela 1/2: Payment 979 - Pago com atraso
+✓ Parcela 2/2: Payment 979 - Pago com atraso
+✓ Parcela 1/2: Payment 983 - Pago com atraso
+✓ Parcela 2/2: Payment 983 - Pago com sucesso
+✓ Parcela 1/2: Payment 985 - Vencida
+✓ Parcela 2/2: Payment 985 - Aberta
+✓ Parcela 1/6: Payment 986 - Pago com atraso
+✓ Parcela 2/6: Payment 986 - Pago com atraso
+✓ Parcela 3/6: Payment 986 - Pago com atraso
+✓ Parcela 4/6: Payment 986 - Pago com atraso
+✓ Parcela 5/6: Payment 986 - Pago com atraso
+✓ Parcela 6/6: Payment 986 - Pago com atraso
+✓ Parcela 1/4: Payment 988 - Pago com atraso
+✓ Parcela 2/4: Payment 988 - Pago com atraso
+✓ Parcela 3/4: Payment 988 - Pago com sucesso
+✓ Parcela 4/4: Payment 988 - Pago com atraso
+✓ Parcela 1/6: Payment 994 - Pago com sucesso
+✓ Parcela 2/6: Payment 994 - Pago com sucesso
+✓ Parcela 3/6: Payment 994 - Pago com sucesso
+✓ Parcela 4/6: Payment 994 - Pago com atraso
+✓ Parcela 5/6: Payment 994 - Pago com atraso
+✓ Parcela 6/6: Payment 994 - Pago com atraso
+✓ Parcela 1/8: Payment 1012 - Pago com atraso
+✓ Parcela 2/8: Payment 1012 - Pago com atraso
+✓ Parcela 3/8: Payment 1012 - Pago com sucesso
+✓ Parcela 4/8: Payment 1012 - Pago com sucesso
+✓ Parcela 5/8: Payment 1012 - Pago com atraso
+✓ Parcela 6/8: Payment 1012 - Pago com sucesso
+✓ Parcela 7/8: Payment 1012 - Pago com sucesso
+✓ Parcela 8/8: Payment 1012 - Pago com sucesso
+✓ Parcela 1/2: Payment 1001 - Pago com atraso
+✓ Parcela 2/2: Payment 1001 - Pago com atraso
+✓ Parcela 1/1: Payment 993 - Aberta
+✓ Parcela 1/5: Payment 1019 - Pago com sucesso
+✓ Parcela 2/5: Payment 1019 - Pago com atraso
+✓ Parcela 3/5: Payment 1019 - Pago com sucesso
+✓ Parcela 4/5: Payment 1019 - Pago com atraso
+✓ Parcela 5/5: Payment 1019 - Pago com sucesso
+✓ Parcela 1/5: Payment 998 - Pago com sucesso
+✓ Parcela 2/5: Payment 998 - Pago com sucesso
+✓ Parcela 3/5: Payment 998 - Pago com atraso
+✓ Parcela 4/5: Payment 998 - Pago com atraso
+✓ Parcela 5/5: Payment 998 - Pago com atraso
+✓ Parcela 1/3: Payment 1003 - Pago com atraso
+✓ Parcela 2/3: Payment 1003 - Pago com sucesso
+✓ Parcela 3/3: Payment 1003 - Pago com atraso
+✓ Parcela 1/2: Payment 989 - Pago com atraso
+✓ Parcela 2/2: Payment 989 - Pago com sucesso
+✓ Parcela 1/4: Payment 1013 - Pago com atraso
+✓ Parcela 2/4: Payment 1013 - Pago com atraso
+✓ Parcela 3/4: Payment 1013 - Pago com atraso
+✓ Parcela 4/4: Payment 1013 - Pago com atraso
+✓ Parcela 1/4: Payment 1014 - Pago com sucesso
+✓ Parcela 2/4: Payment 1014 - Pago com atraso
+✓ Parcela 3/4: Payment 1014 - Pago com sucesso
+✓ Parcela 4/4: Payment 1014 - Pago com atraso
+✓ Parcela 1/4: Payment 1028 - Pago com atraso
+✓ Parcela 2/4: Payment 1028 - Pago com atraso
+✓ Parcela 3/4: Payment 1028 - Pago com atraso
+✓ Parcela 4/4: Payment 1028 - Pago com atraso
+✓ Parcela 1/2: Payment 1029 - Pago com atraso
+✓ Parcela 2/2: Payment 1029 - Pago com atraso
+✓ Parcela 1/4: Payment 1034 - Pago com sucesso
+✓ Parcela 2/4: Payment 1034 - Pago com sucesso
+✓ Parcela 3/4: Payment 1034 - Pago com sucesso
+✓ Parcela 4/4: Payment 1034 - Pago com sucesso
+✓ Parcela 1/4: Payment 1035 - Pago com atraso
+✓ Parcela 2/4: Payment 1035 - Pago com atraso
+✓ Parcela 3/4: Payment 1035 - Pago com atraso
+✓ Parcela 4/4: Payment 1035 - Pago com atraso
+✓ Parcela 1/3: Payment 1045 - Pago com atraso
+✓ Parcela 2/3: Payment 1045 - Pago com atraso
+✓ Parcela 3/3: Payment 1045 - Pago com atraso
+✓ Parcela 1/5: Payment 1053 - Pago com sucesso
+✓ Parcela 2/5: Payment 1053 - Pago com sucesso
+✓ Parcela 3/5: Payment 1053 - Pago com sucesso
+✓ Parcela 4/5: Payment 1053 - Pago com atraso
+✓ Parcela 5/5: Payment 1053 - Pago com atraso
+✓ Parcela 1/6: Payment 1044 - Pago com sucesso
+✓ Parcela 2/6: Payment 1044 - Pago com atraso
+✓ Parcela 3/6: Payment 1044 - Pago com atraso
+✓ Parcela 4/6: Payment 1044 - Pago com atraso
+✓ Parcela 5/6: Payment 1044 - Pago com atraso
+✓ Parcela 6/6: Payment 1044 - Pago com atraso
+✓ Parcela 1/6: Payment 1022 - Pago com atraso
+✓ Parcela 2/6: Payment 1022 - Pago com atraso
+✓ Parcela 3/6: Payment 1022 - Pago com atraso
+✓ Parcela 4/6: Payment 1022 - Pago com atraso
+✓ Parcela 5/6: Payment 1022 - Aberta
+✓ Parcela 6/6: Payment 1022 - Aberta
+✓ Parcela 1/5: Payment 1048 - Pago com sucesso
+✓ Parcela 2/5: Payment 1048 - Pago com sucesso
+✓ Parcela 3/5: Payment 1048 - Pago com atraso
+✓ Parcela 4/5: Payment 1048 - Pago com atraso
+✓ Parcela 5/5: Payment 1048 - Pago com atraso
+✓ Parcela 1/4: Payment 1041 - Pago com atraso
+✓ Parcela 2/4: Payment 1041 - Pago com sucesso
+✓ Parcela 3/4: Payment 1041 - Pago com atraso
+✓ Parcela 4/4: Payment 1041 - Pago com atraso
+✓ Parcela 1/1: Payment 1056 - Aberta
+✓ Parcela 1/4: Payment 1061 - Pago com sucesso
+✓ Parcela 2/4: Payment 1061 - Pago com sucesso
+✓ Parcela 3/4: Payment 1061 - Pago com sucesso
+✓ Parcela 4/4: Payment 1061 - Pago com atraso
+✓ Parcela 1/2: Payment 1062 - Pago com sucesso
+✓ Parcela 2/2: Payment 1062 - Pago com atraso
+✓ Parcela 1/4: Payment 1063 - Pago com atraso
+✓ Parcela 2/4: Payment 1063 - Pago com atraso
+✓ Parcela 3/4: Payment 1063 - Pago com sucesso
+✓ Parcela 4/4: Payment 1063 - Pago com sucesso
+✓ Parcela 1/2: Payment 1066 - Pago com sucesso
+✓ Parcela 2/2: Payment 1066 - Pago com sucesso
+✓ Parcela 1/4: Payment 1064 - Pago com sucesso
+✓ Parcela 2/4: Payment 1064 - Pago com sucesso
+✓ Parcela 3/4: Payment 1064 - Pago com sucesso
+✓ Parcela 4/4: Payment 1064 - Pago com atraso
+✓ Parcela 1/5: Payment 1069 - Pago com sucesso
+✓ Parcela 2/5: Payment 1069 - Pago com atraso
+✓ Parcela 3/5: Payment 1069 - Pago com sucesso
+✓ Parcela 4/5: Payment 1069 - Pago com sucesso
+✓ Parcela 5/5: Payment 1069 - Pago com sucesso
+✓ Parcela 1/4: Payment 1070 - Pago com atraso
+✓ Parcela 2/4: Payment 1070 - Pago com atraso
+✓ Parcela 3/4: Payment 1070 - Pago com sucesso
+✓ Parcela 4/4: Payment 1070 - Pago com sucesso
+✓ Parcela 1/2: Payment 1073 - Pago com atraso
+✓ Parcela 2/2: Payment 1073 - Pago com atraso
+✓ Parcela 1/5: Payment 1077 - Pago com sucesso
+✓ Parcela 2/5: Payment 1077 - Pago com atraso
+✓ Parcela 3/5: Payment 1077 - Pago com atraso
+✓ Parcela 4/5: Payment 1077 - Pago com sucesso
+✓ Parcela 5/5: Payment 1077 - Pago com atraso
+✓ Parcela 1/4: Payment 1079 - Pago com atraso
+✓ Parcela 2/4: Payment 1079 - Pago com atraso
+✓ Parcela 3/4: Payment 1079 - Pago com atraso
+✓ Parcela 4/4: Payment 1079 - Pago com atraso
+✓ Parcela 1/3: Payment 1086 - Pago com sucesso
+✓ Parcela 2/3: Payment 1086 - Pago com sucesso
+✓ Parcela 3/3: Payment 1086 - Pago com sucesso
+✓ Parcela 1/5: Payment 1087 - Pago com sucesso
+✓ Parcela 2/5: Payment 1087 - Pago com atraso
+✓ Parcela 3/5: Payment 1087 - Pago com atraso
+✓ Parcela 4/5: Payment 1087 - Pago com atraso
+✓ Parcela 5/5: Payment 1087 - Pago com atraso
+✓ Parcela 1/6: Payment 1092 - Pago com sucesso
+✓ Parcela 2/6: Payment 1092 - Pago com sucesso
+✓ Parcela 3/6: Payment 1092 - Pago com sucesso
+✓ Parcela 4/6: Payment 1092 - Pago com sucesso
+✓ Parcela 5/6: Payment 1092 - Pago com sucesso
+✓ Parcela 6/6: Payment 1092 - Pago com atraso
+✓ Parcela 1/2: Payment 1093 - Pago com atraso
+✓ Parcela 2/2: Payment 1093 - Pago com atraso
+✓ Parcela 1/5: Payment 1095 - Pago com sucesso
+✓ Parcela 2/5: Payment 1095 - Pago com sucesso
+✓ Parcela 3/5: Payment 1095 - Pago com sucesso
+✓ Parcela 4/5: Payment 1095 - Pago com sucesso
+✓ Parcela 5/5: Payment 1095 - Pago com atraso
+✓ Parcela 1/5: Payment 1091 - Pago com atraso
+✓ Parcela 2/5: Payment 1091 - Pago com atraso
+✓ Parcela 3/5: Payment 1091 - Pago com atraso
+✓ Parcela 4/5: Payment 1091 - Pago com atraso
+✓ Parcela 5/5: Payment 1091 - Pago com atraso
+✓ Parcela 1/4: Payment 1099 - Pago com sucesso
+✓ Parcela 2/4: Payment 1099 - Pago com sucesso
+✓ Parcela 3/4: Payment 1099 - Pago com sucesso
+✓ Parcela 4/4: Payment 1099 - Pago com atraso
+✓ Parcela 1/3: Payment 1104 - Pago com atraso
+✓ Parcela 2/3: Payment 1104 - Pago com atraso
+✓ Parcela 3/3: Payment 1104 - Pago com sucesso
+⚠️  Parcela 2463: Payment não existe para venda 11176
+⚠️  Parcela 2464: Payment não existe para venda 11176
+⚠️  Parcela 2465: Payment não existe para venda 11176
+⚠️  Parcela 2466: Payment não existe para venda 11176
+⚠️  Parcela 2467: Payment não existe para venda 11176
+⚠️  Parcela 2468: Payment não existe para venda 11176
+⚠️  Parcela 2469: Payment não existe para venda 11176
+⚠️  Parcela 2470: Payment não existe para venda 11176
+✓ Parcela 1/6: Payment 1110 - Pago com atraso
+✓ Parcela 2/6: Payment 1110 - Pago com atraso
+✓ Parcela 3/6: Payment 1110 - Pago com atraso
+✓ Parcela 4/6: Payment 1110 - Pago com atraso
+✓ Parcela 5/6: Payment 1110 - Pago com atraso
+✓ Parcela 6/6: Payment 1110 - Pago com atraso
+✓ Parcela 1/2: Payment 1120 - Aberta
+✓ Parcela 2/2: Payment 1120 - Aberta
+✓ Parcela 1/8: Payment 1111 - Pago com sucesso
+✓ Parcela 2/8: Payment 1111 - Pago com sucesso
+✓ Parcela 3/8: Payment 1111 - Pago com sucesso
+✓ Parcela 4/8: Payment 1111 - Pago com atraso
+✓ Parcela 5/8: Payment 1111 - Pago com sucesso
+✓ Parcela 6/8: Payment 1111 - Pago com sucesso
+✓ Parcela 7/8: Payment 1111 - Pago com sucesso
+✓ Parcela 8/8: Payment 1111 - Pago com sucesso
+✓ Parcela 1/4: Payment 1117 - Pago com sucesso
+✓ Parcela 2/4: Payment 1117 - Pago com sucesso
+✓ Parcela 3/4: Payment 1117 - Pago com sucesso
+✓ Parcela 4/4: Payment 1117 - Pago com sucesso
+✓ Parcela 1/6: Payment 1121 - Pago com atraso
+✓ Parcela 2/6: Payment 1121 - Pago com sucesso
+✓ Parcela 3/6: Payment 1121 - Pago com atraso
+✓ Parcela 4/6: Payment 1121 - Pago com atraso
+✓ Parcela 5/6: Payment 1121 - Pago com atraso
+✓ Parcela 6/6: Payment 1121 - Pago com atraso
+✓ Parcela 1/5: Payment 1125 - Pago com atraso
+✓ Parcela 2/5: Payment 1125 - Pago com atraso
+✓ Parcela 3/5: Payment 1125 - Pago com atraso
+✓ Parcela 4/5: Payment 1125 - Pago com atraso
+✓ Parcela 5/5: Payment 1125 - Pago com atraso
+✓ Parcela 1/6: Payment 1126 - Pago com sucesso
+✓ Parcela 2/6: Payment 1126 - Pago com sucesso
+✓ Parcela 3/6: Payment 1126 - Pago com sucesso
+✓ Parcela 4/6: Payment 1126 - Pago com sucesso
+✓ Parcela 5/6: Payment 1126 - Pago com sucesso
+✓ Parcela 6/6: Payment 1126 - Pago com atraso
+✓ Parcela 1/2: Payment 1127 - Aberta
+✓ Parcela 2/2: Payment 1127 - Aberta
+✓ Parcela 1/3: Payment 1122 - Pago com atraso
+✓ Parcela 2/3: Payment 1122 - Pago com sucesso
+✓ Parcela 3/3: Payment 1122 - Pago com atraso
+✓ Parcela 1/3: Payment 1128 - Pago com sucesso
+✓ Parcela 2/3: Payment 1128 - Pago com sucesso
+✓ Parcela 3/3: Payment 1128 - Pago com atraso
+✓ Parcela 1/5: Payment 1130 - Pago com sucesso
+✓ Parcela 2/5: Payment 1130 - Pago com atraso
+✓ Parcela 3/5: Payment 1130 - Pago com atraso
+✓ Parcela 4/5: Payment 1130 - Pago com atraso
+✓ Parcela 5/5: Payment 1130 - Pago com atraso
+✓ Parcela 1/6: Payment 1133 - Pago com atraso
+✓ Parcela 2/6: Payment 1133 - Pago com atraso
+✓ Parcela 3/6: Payment 1133 - Pago com atraso
+✓ Parcela 4/6: Payment 1133 - Pago com atraso
+✓ Parcela 5/6: Payment 1133 - Pago com atraso
+✓ Parcela 6/6: Payment 1133 - Pago com atraso
+✓ Parcela 1/5: Payment 1136 - Pago com atraso
+✓ Parcela 2/5: Payment 1136 - Pago com atraso
+✓ Parcela 3/5: Payment 1136 - Pago com atraso
+✓ Parcela 4/5: Payment 1136 - Pago com atraso
+✓ Parcela 5/5: Payment 1136 - Pago com sucesso
+✓ Parcela 1/4: Payment 1138 - Pago com atraso
+✓ Parcela 2/4: Payment 1138 - Pago com atraso
+✓ Parcela 3/4: Payment 1138 - Pago com atraso
+✓ Parcela 4/4: Payment 1138 - Pago com atraso
+✓ Parcela 1/5: Payment 1141 - Pago com atraso
+✓ Parcela 2/5: Payment 1141 - Pago com atraso
+✓ Parcela 3/5: Payment 1141 - Pago com atraso
+✓ Parcela 4/5: Payment 1141 - Pago com atraso
+✓ Parcela 5/5: Payment 1141 - Pago com atraso
+✓ Parcela 1/4: Payment 1142 - Pago com atraso
+✓ Parcela 2/4: Payment 1142 - Pago com atraso
+✓ Parcela 3/4: Payment 1142 - Pago com atraso
+✓ Parcela 4/4: Payment 1142 - Pago com atraso
+✓ Parcela 1/5: Payment 1145 - Pago com atraso
+✓ Parcela 2/5: Payment 1145 - Pago com atraso
+✓ Parcela 3/5: Payment 1145 - Pago com atraso
+✓ Parcela 4/5: Payment 1145 - Pago com atraso
+✓ Parcela 5/5: Payment 1145 - Pago com atraso
+✓ Parcela 1/1: Payment 1148 - Pago com sucesso
+✓ Parcela 1/1: Payment 1149 - Pago com atraso
+✓ Parcela 1/4: Payment 1152 - Pago com sucesso
+✓ Parcela 2/4: Payment 1152 - Pago com atraso
+✓ Parcela 3/4: Payment 1152 - Pago com sucesso
+✓ Parcela 4/4: Payment 1152 - Pago com sucesso
+✓ Parcela 1/2: Payment 1153 - Pago com atraso
+✓ Parcela 2/2: Payment 1153 - Pago com atraso
+✓ Parcela 1/2: Payment 1158 - Aberta
+✓ Parcela 2/2: Payment 1158 - Aberta
+✓ Parcela 1/4: Payment 1161 - Pago com sucesso
+✓ Parcela 2/4: Payment 1161 - Pago com sucesso
+✓ Parcela 3/4: Payment 1161 - Pago com sucesso
+✓ Parcela 4/4: Payment 1161 - Pago com sucesso
+✓ Parcela 1/3: Payment 1163 - Pago com atraso
+✓ Parcela 2/3: Payment 1163 - Pago com atraso
+✓ Parcela 3/3: Payment 1163 - Pago com atraso
+✓ Parcela 1/6: Payment 1174 - Pago com atraso
+✓ Parcela 2/6: Payment 1174 - Pago com atraso
+✓ Parcela 3/6: Payment 1174 - Pago com atraso
+✓ Parcela 4/6: Payment 1174 - Pago com atraso
+✓ Parcela 5/6: Payment 1174 - Pago com atraso
+✓ Parcela 6/6: Payment 1174 - Pago com atraso
+✓ Parcela 1/3: Payment 1175 - Pago com sucesso
+✓ Parcela 2/3: Payment 1175 - Pago com sucesso
+✓ Parcela 3/3: Payment 1175 - Pago com atraso
+✓ Parcela 1/5: Payment 1177 - Pago com atraso
+✓ Parcela 2/5: Payment 1177 - Pago com atraso
+✓ Parcela 3/5: Payment 1177 - Pago com atraso
+✓ Parcela 4/5: Payment 1177 - Pago com atraso
+✓ Parcela 5/5: Payment 1177 - Pago com atraso
+✓ Parcela 1/4: Payment 1180 - Pago com atraso
+✓ Parcela 2/4: Payment 1180 - Pago com atraso
+✓ Parcela 3/4: Payment 1180 - Pago com atraso
+✓ Parcela 4/4: Payment 1180 - Pago com atraso
+✓ Parcela 1/2: Payment 1183 - Pago com atraso
+✓ Parcela 2/2: Payment 1183 - Pago com atraso
+✓ Parcela 1/5: Payment 1165 - Pago com sucesso
+✓ Parcela 2/5: Payment 1165 - Pago com atraso
+✓ Parcela 3/5: Payment 1165 - Pago com sucesso
+✓ Parcela 4/5: Payment 1165 - Pago com atraso
+✓ Parcela 5/5: Payment 1165 - Pago com sucesso
+✓ Parcela 1/3: Payment 1195 - Pago com sucesso
+✓ Parcela 2/3: Payment 1195 - Pago com sucesso
+✓ Parcela 3/3: Payment 1195 - Pago com sucesso
+✓ Parcela 1/4: Payment 1200 - Pago com sucesso
+✓ Parcela 2/4: Payment 1200 - Pago com atraso
+✓ Parcela 3/4: Payment 1200 - Pago com atraso
+✓ Parcela 4/4: Payment 1200 - Pago com atraso
+✓ Parcela 1/4: Payment 1201 - Pago com atraso
+✓ Parcela 2/4: Payment 1201 - Pago com atraso
+✓ Parcela 3/4: Payment 1201 - Pago com atraso
+✓ Parcela 4/4: Payment 1201 - Pago com atraso
+✓ Parcela 1/2: Payment 1202 - Pago com atraso
+✓ Parcela 2/2: Payment 1202 - Pago com atraso
+✓ Parcela 1/4: Payment 1205 - Pago com sucesso
+✓ Parcela 2/4: Payment 1205 - Pago com sucesso
+✓ Parcela 3/4: Payment 1205 - Pago com sucesso
+✓ Parcela 4/4: Payment 1205 - Pago com sucesso
+✓ Parcela 1/4: Payment 1208 - Pago com sucesso
+✓ Parcela 2/4: Payment 1208 - Pago com atraso
+✓ Parcela 3/4: Payment 1208 - Pago com atraso
+✓ Parcela 4/4: Payment 1208 - Pago com sucesso
+✓ Parcela 1/8: Payment 1209 - Pago com atraso
+✓ Parcela 2/8: Payment 1209 - Pago com atraso
+✓ Parcela 3/8: Payment 1209 - Pago com atraso
+✓ Parcela 4/8: Payment 1209 - Pago com atraso
+✓ Parcela 5/8: Payment 1209 - Pago com atraso
+✓ Parcela 6/8: Payment 1209 - Pago com atraso
+✓ Parcela 7/8: Payment 1209 - Pago com atraso
+✓ Parcela 8/8: Payment 1209 - Pago com atraso
+✓ Parcela 1/5: Payment 1214 - Pago com atraso
+✓ Parcela 2/5: Payment 1214 - Pago com atraso
+✓ Parcela 3/5: Payment 1214 - Vencida
+✓ Parcela 4/5: Payment 1214 - Vencida
+✓ Parcela 5/5: Payment 1214 - Vencida
+✓ Parcela 1/4: Payment 1223 - Pago com sucesso
+✓ Parcela 2/4: Payment 1223 - Pago com sucesso
+✓ Parcela 3/4: Payment 1223 - Pago com sucesso
+✓ Parcela 4/4: Payment 1223 - Pago com sucesso
+✓ Parcela 1/5: Payment 1230 - Pago com atraso
+✓ Parcela 2/5: Payment 1230 - Pago com atraso
+✓ Parcela 3/5: Payment 1230 - Pago com atraso
+✓ Parcela 4/5: Payment 1230 - Pago com atraso
+✓ Parcela 5/5: Payment 1230 - Pago com atraso
+✓ Parcela 1/6: Payment 1243 - Pago com atraso
+✓ Parcela 2/6: Payment 1243 - Pago com sucesso
+✓ Parcela 3/6: Payment 1243 - Pago com sucesso
+✓ Parcela 4/6: Payment 1243 - Pago com sucesso
+✓ Parcela 5/6: Payment 1243 - Pago com atraso
+✓ Parcela 6/6: Payment 1243 - Pago com sucesso
+✓ Parcela 1/9: Payment 1248 - Pago com atraso
+✓ Parcela 2/9: Payment 1248 - Pago com atraso
+✓ Parcela 3/9: Payment 1248 - Pago com atraso
+✓ Parcela 4/9: Payment 1248 - Pago com atraso
+✓ Parcela 5/9: Payment 1248 - Pago com atraso
+✓ Parcela 6/9: Payment 1248 - Pago com atraso
+✓ Parcela 7/9: Payment 1248 - Pago com atraso
+✓ Parcela 8/9: Payment 1248 - Pago com atraso
+✓ Parcela 9/9: Payment 1248 - Pago com atraso
+✓ Parcela 1/6: Payment 1250 - Pago com atraso
+✓ Parcela 2/6: Payment 1250 - Pago com atraso
+✓ Parcela 3/6: Payment 1250 - Pago com atraso
+✓ Parcela 4/6: Payment 1250 - Pago com sucesso
+✓ Parcela 5/6: Payment 1250 - Pago com sucesso
+✓ Parcela 6/6: Payment 1250 - Pago com atraso
+✓ Parcela 1/5: Payment 1256 - Pago com sucesso
+✓ Parcela 2/5: Payment 1256 - Pago com sucesso
+✓ Parcela 3/5: Payment 1256 - Pago com sucesso
+✓ Parcela 4/5: Payment 1256 - Pago com sucesso
+✓ Parcela 5/5: Payment 1256 - Pago com atraso
+✓ Parcela 1/3: Payment 1260 - Pago com atraso
+✓ Parcela 2/3: Payment 1260 - Pago com atraso
+✓ Parcela 3/3: Payment 1260 - Pago com atraso
+✓ Parcela 1/4: Payment 1264 - Pago com atraso
+✓ Parcela 2/4: Payment 1264 - Pago com sucesso
+✓ Parcela 3/4: Payment 1264 - Pago com sucesso
+✓ Parcela 4/4: Payment 1264 - Pago com sucesso
+✓ Parcela 1/4: Payment 1266 - Pago com sucesso
+✓ Parcela 2/4: Payment 1266 - Pago com sucesso
+✓ Parcela 3/4: Payment 1266 - Pago com atraso
+✓ Parcela 4/4: Payment 1266 - Pago com sucesso
+✓ Parcela 1/8: Payment 1274 - Pago com sucesso
+✓ Parcela 2/8: Payment 1274 - Pago com atraso
+✓ Parcela 3/8: Payment 1274 - Pago com atraso
+✓ Parcela 4/8: Payment 1274 - Pago com atraso
+✓ Parcela 5/8: Payment 1274 - Pago com atraso
+✓ Parcela 6/8: Payment 1274 - Pago com atraso
+✓ Parcela 7/8: Payment 1274 - Pago com atraso
+✓ Parcela 8/8: Payment 1274 - Pago com atraso
+✓ Parcela 1/4: Payment 1282 - Pago com atraso
+✓ Parcela 2/4: Payment 1282 - Pago com atraso
+✓ Parcela 3/4: Payment 1282 - Pago com atraso
+✓ Parcela 4/4: Payment 1282 - Pago com atraso
+✓ Parcela 1/5: Payment 1286 - Pago com atraso
+✓ Parcela 2/5: Payment 1286 - Pago com atraso
+✓ Parcela 3/5: Payment 1286 - Pago com atraso
+✓ Parcela 4/5: Payment 1286 - Pago com atraso
+✓ Parcela 5/5: Payment 1286 - Pago com atraso
+✓ Parcela 1/4: Payment 1293 - Pago com sucesso
+✓ Parcela 2/4: Payment 1293 - Pago com sucesso
+✓ Parcela 3/4: Payment 1293 - Pago com sucesso
+✓ Parcela 4/4: Payment 1293 - Pago com sucesso
+✓ Parcela 1/3: Payment 1300 - Pago com atraso
+✓ Parcela 2/3: Payment 1300 - Vencida
+✓ Parcela 3/3: Payment 1300 - Vencida
+✓ Parcela 1/11: Payment 1295 - Pago com atraso
+✓ Parcela 2/11: Payment 1295 - Pago com sucesso
+✓ Parcela 3/11: Payment 1295 - Pago com sucesso
+✓ Parcela 4/11: Payment 1295 - Pago com sucesso
+✓ Parcela 5/11: Payment 1295 - Pago com sucesso
+✓ Parcela 6/11: Payment 1295 - Pago com sucesso
+✓ Parcela 7/11: Payment 1295 - Pago com sucesso
+✓ Parcela 8/11: Payment 1295 - Pago com sucesso
+✓ Parcela 9/11: Payment 1295 - Pago com sucesso
+✓ Parcela 10/11: Payment 1295 - Pago com sucesso
+✓ Parcela 11/11: Payment 1295 - Pago com sucesso
+✓ Parcela 1/5: Payment 1305 - Pago com atraso
+✓ Parcela 2/5: Payment 1305 - Pago com atraso
+✓ Parcela 3/5: Payment 1305 - Pago com atraso
+✓ Parcela 4/5: Payment 1305 - Pago com atraso
+✓ Parcela 5/5: Payment 1305 - Pago com atraso
+✓ Parcela 1/6: Payment 1307 - Pago com atraso
+✓ Parcela 2/6: Payment 1307 - Pago com atraso
+✓ Parcela 3/6: Payment 1307 - Pago com atraso
+✓ Parcela 4/6: Payment 1307 - Pago com atraso
+✓ Parcela 5/6: Payment 1307 - Pago com atraso
+✓ Parcela 6/6: Payment 1307 - Pago com atraso
+✓ Parcela 1/5: Payment 1308 - Pago com atraso
+✓ Parcela 2/5: Payment 1308 - Pago com sucesso
+✓ Parcela 3/5: Payment 1308 - Pago com atraso
+✓ Parcela 4/5: Payment 1308 - Pago com atraso
+✓ Parcela 5/5: Payment 1308 - Pago com atraso
+✓ Parcela 1/6: Payment 1309 - Pago com sucesso
+✓ Parcela 2/6: Payment 1309 - Pago com sucesso
+✓ Parcela 3/6: Payment 1309 - Pago com sucesso
+✓ Parcela 4/6: Payment 1309 - Pago com sucesso
+✓ Parcela 5/6: Payment 1309 - Pago com sucesso
+✓ Parcela 6/6: Payment 1309 - Pago com sucesso
+✓ Parcela 1/3: Payment 1310 - Pago com sucesso
+✓ Parcela 2/3: Payment 1310 - Pago com atraso
+✓ Parcela 3/3: Payment 1310 - Pago com sucesso
+✓ Parcela 1/5: Payment 1311 - Pago com atraso
+✓ Parcela 2/5: Payment 1311 - Pago com atraso
+✓ Parcela 3/5: Payment 1311 - Pago com atraso
+✓ Parcela 4/5: Payment 1311 - Pago com atraso
+✓ Parcela 5/5: Payment 1311 - Pago com atraso
+✓ Parcela 1/7: Payment 1313 - Pago com atraso
+✓ Parcela 2/7: Payment 1313 - Pago com sucesso
+✓ Parcela 3/7: Payment 1313 - Pago com sucesso
+✓ Parcela 4/7: Payment 1313 - Pago com sucesso
+✓ Parcela 5/7: Payment 1313 - Pago com sucesso
+✓ Parcela 6/7: Payment 1313 - Pago com atraso
+✓ Parcela 7/7: Payment 1313 - Pago com atraso
+✓ Parcela 1/4: Payment 1314 - Vencida
+✓ Parcela 2/4: Payment 1314 - Vencida
+✓ Parcela 3/4: Payment 1314 - Vencida
+✓ Parcela 4/4: Payment 1314 - Vencida
+⚠️  Parcela 2748: Payment não existe para venda 11407
+⚠️  Parcela 2749: Payment não existe para venda 11407
+⚠️  Parcela 2750: Payment não existe para venda 11407
+⚠️  Parcela 2751: Payment não existe para venda 11407
+⚠️  Parcela 2752: Payment não existe para venda 11407
+⚠️  Parcela 2753: Payment não existe para venda 11407
+⚠️  Parcela 2754: Payment não existe para venda 11407
+⚠️  Parcela 2755: Payment não existe para venda 11407
+⚠️  Parcela 2756: Payment não existe para venda 11407
+⚠️  Parcela 2757: Payment não existe para venda 11407
+✓ Parcela 1/8: Payment 1315 - Pago com sucesso
+✓ Parcela 2/8: Payment 1315 - Pago com sucesso
+✓ Parcela 3/8: Payment 1315 - Pago com sucesso
+✓ Parcela 4/8: Payment 1315 - Pago com atraso
+✓ Parcela 5/8: Payment 1315 - Pago com sucesso
+✓ Parcela 6/8: Payment 1315 - Pago com atraso
+✓ Parcela 7/8: Payment 1315 - Pago com sucesso
+✓ Parcela 8/8: Payment 1315 - Pago com sucesso
+✓ Parcela 1/6: Payment 1319 - Pago com atraso
+✓ Parcela 2/6: Payment 1319 - Pago com sucesso
+✓ Parcela 3/6: Payment 1319 - Pago com atraso
+✓ Parcela 4/6: Payment 1319 - Pago com atraso
+✓ Parcela 5/6: Payment 1319 - Pago com atraso
+✓ Parcela 6/6: Payment 1319 - Aberta
+✓ Parcela 1/3: Payment 1317 - Pago com atraso
+✓ Parcela 2/3: Payment 1317 - Pago com atraso
+✓ Parcela 3/3: Payment 1317 - Pago com atraso
+✓ Parcela 1/5: Payment 1321 - Pago com sucesso
+✓ Parcela 2/5: Payment 1321 - Pago com atraso
+✓ Parcela 3/5: Payment 1321 - Pago com atraso
+✓ Parcela 4/5: Payment 1321 - Pago com sucesso
+✓ Parcela 5/5: Payment 1321 - Pago com atraso
+✓ Parcela 1/5: Payment 1329 - Pago com sucesso
+✓ Parcela 2/5: Payment 1329 - Pago com atraso
+✓ Parcela 3/5: Payment 1329 - Pago com atraso
+✓ Parcela 4/5: Payment 1329 - Pago com atraso
+✓ Parcela 5/5: Payment 1329 - Pago com atraso
+✓ Parcela 1/6: Payment 1331 - Pago com sucesso
+✓ Parcela 2/6: Payment 1331 - Pago com atraso
+✓ Parcela 3/6: Payment 1331 - Pago com atraso
+✓ Parcela 4/6: Payment 1331 - Pago com atraso
+✓ Parcela 5/6: Payment 1331 - Pago com atraso
+✓ Parcela 6/6: Payment 1331 - Pago com atraso
+✓ Parcela 1/3: Payment 1332 - Pago com atraso
+✓ Parcela 2/3: Payment 1332 - Pago com atraso
+✓ Parcela 3/3: Payment 1332 - Pago com sucesso
+✓ Parcela 1/3: Payment 1340 - Pago com sucesso
+✓ Parcela 2/3: Payment 1340 - Pago com sucesso
+✓ Parcela 3/3: Payment 1340 - Pago com sucesso
+✓ Parcela 1/5: Payment 1343 - Pago com atraso
+✓ Parcela 2/5: Payment 1343 - Pago com atraso
+✓ Parcela 3/5: Payment 1343 - Pago com atraso
+✓ Parcela 4/5: Payment 1343 - Pago com atraso
+✓ Parcela 5/5: Payment 1343 - Pago com atraso
+✓ Parcela 1/1: Payment 1344 - Pago com sucesso
+✓ Parcela 1/5: Payment 1348 - Pago com atraso
+✓ Parcela 2/5: Payment 1348 - Pago com atraso
+✓ Parcela 3/5: Payment 1348 - Pago com atraso
+✓ Parcela 4/5: Payment 1348 - Pago com atraso
+✓ Parcela 5/5: Payment 1348 - Pago com atraso
+✓ Parcela 1/4: Payment 1352 - Pago com sucesso
+✓ Parcela 2/4: Payment 1352 - Pago com atraso
+✓ Parcela 3/4: Payment 1352 - Pago com sucesso
+✓ Parcela 4/4: Payment 1352 - Pago com sucesso
+✓ Parcela 1/8: Payment 1357 - Pago com atraso
+✓ Parcela 2/8: Payment 1357 - Pago com sucesso
+✓ Parcela 3/8: Payment 1357 - Pago com sucesso
+✓ Parcela 4/8: Payment 1357 - Pago com sucesso
+✓ Parcela 5/8: Payment 1357 - Pago com sucesso
+✓ Parcela 6/8: Payment 1357 - Pago com sucesso
+✓ Parcela 7/8: Payment 1357 - Pago com sucesso
+✓ Parcela 8/8: Payment 1357 - Pago com sucesso
+✓ Parcela 1/7: Payment 1358 - Pago com atraso
+✓ Parcela 2/7: Payment 1358 - Pago com atraso
+✓ Parcela 3/7: Payment 1358 - Pago com atraso
+✓ Parcela 4/7: Payment 1358 - Pago com atraso
+✓ Parcela 5/7: Payment 1358 - Pago com atraso
+✓ Parcela 6/7: Payment 1358 - Pago com atraso
+✓ Parcela 7/7: Payment 1358 - Pago com atraso
+✓ Parcela 1/5: Payment 1361 - Pago com atraso
+✓ Parcela 2/5: Payment 1361 - Pago com atraso
+✓ Parcela 3/5: Payment 1361 - Aberta
+✓ Parcela 4/5: Payment 1361 - Aberta
+✓ Parcela 5/5: Payment 1361 - Aberta
+✓ Parcela 1/4: Payment 1363 - Pago com atraso
+✓ Parcela 2/4: Payment 1363 - Pago com atraso
+✓ Parcela 3/4: Payment 1363 - Pago com atraso
+✓ Parcela 4/4: Payment 1363 - Pago com atraso
+✓ Parcela 1/5: Payment 1360 - Pago com sucesso
+✓ Parcela 2/5: Payment 1360 - Pago com sucesso
+✓ Parcela 3/5: Payment 1360 - Pago com sucesso
+✓ Parcela 4/5: Payment 1360 - Pago com sucesso
+✓ Parcela 5/5: Payment 1360 - Pago com sucesso
+✓ Parcela 1/1: Payment 1365 - Pago com atraso
+✓ Parcela 1/5: Payment 1368 - Pago com atraso
+✓ Parcela 2/5: Payment 1368 - Pago com atraso
+✓ Parcela 3/5: Payment 1368 - Pago com atraso
+✓ Parcela 4/5: Payment 1368 - Pago com atraso
+✓ Parcela 5/5: Payment 1368 - Pago com atraso
+✓ Parcela 1/3: Payment 1369 - Pago com atraso
+✓ Parcela 2/3: Payment 1369 - Aberta
+✓ Parcela 3/3: Payment 1369 - Aberta
+✓ Parcela 1/6: Payment 1373 - Pago com sucesso
+✓ Parcela 2/6: Payment 1373 - Pago com atraso
+✓ Parcela 3/6: Payment 1373 - Pago com atraso
+✓ Parcela 4/6: Payment 1373 - Pago com atraso
+✓ Parcela 5/6: Payment 1373 - Pago com atraso
+✓ Parcela 6/6: Payment 1373 - Pago com atraso
+⚠️  Parcela 2856: Payment não existe para venda 11478
+⚠️  Parcela 2857: Payment não existe para venda 11478
+⚠️  Parcela 2858: Payment não existe para venda 11478
+⚠️  Parcela 2859: Payment não existe para venda 11478
+⚠️  Parcela 2860: Payment não existe para venda 11478
+⚠️  Parcela 2861: Payment não existe para venda 11478
+✓ Parcela 1/5: Payment 1389 - Pago com atraso
+✓ Parcela 2/5: Payment 1389 - Pago com atraso
+✓ Parcela 3/5: Payment 1389 - Pago com atraso
+✓ Parcela 4/5: Payment 1389 - Pago com atraso
+✓ Parcela 5/5: Payment 1389 - Pago com atraso
+✓ Parcela 1/4: Payment 1392 - Pago com sucesso
+✓ Parcela 2/4: Payment 1392 - Pago com sucesso
+✓ Parcela 3/4: Payment 1392 - Pago com sucesso
+✓ Parcela 4/4: Payment 1392 - Pago com sucesso
+✓ Parcela 1/5: Payment 1397 - Pago com sucesso
+✓ Parcela 2/5: Payment 1397 - Pago com sucesso
+✓ Parcela 3/5: Payment 1397 - Pago com sucesso
+✓ Parcela 4/5: Payment 1397 - Pago com atraso
+✓ Parcela 5/5: Payment 1397 - Pago com sucesso
+✓ Parcela 1/5: Payment 1396 - Pago com atraso
+✓ Parcela 2/5: Payment 1396 - Pago com atraso
+✓ Parcela 3/5: Payment 1396 - Pago com atraso
+✓ Parcela 4/5: Payment 1396 - Pago com atraso
+✓ Parcela 5/5: Payment 1396 - Pago com atraso
+✓ Parcela 1/5: Payment 1398 - Pago com atraso
+✓ Parcela 2/5: Payment 1398 - Pago com atraso
+✓ Parcela 3/5: Payment 1398 - Pago com atraso
+✓ Parcela 4/5: Payment 1398 - Pago com atraso
+✓ Parcela 5/5: Payment 1398 - Pago com atraso
+✓ Parcela 1/4: Payment 1403 - Pago com atraso
+✓ Parcela 2/4: Payment 1403 - Pago com atraso
+✓ Parcela 3/4: Payment 1403 - Pago com atraso
+✓ Parcela 4/4: Payment 1403 - Pago com atraso
+✓ Parcela 1/5: Payment 1404 - Pago com atraso
+✓ Parcela 2/5: Payment 1404 - Pago com atraso
+✓ Parcela 3/5: Payment 1404 - Pago com atraso
+✓ Parcela 4/5: Payment 1404 - Pago com atraso
+✓ Parcela 5/5: Payment 1404 - Pago com atraso
+✓ Parcela 1/2: Payment 1405 - Pago com atraso
+✓ Parcela 2/2: Payment 1405 - Pago com atraso
+✓ Parcela 1/5: Payment 1407 - Pago com atraso
+✓ Parcela 2/5: Payment 1407 - Pago com atraso
+✓ Parcela 3/5: Payment 1407 - Pago com atraso
+✓ Parcela 4/5: Payment 1407 - Pago com atraso
+✓ Parcela 5/5: Payment 1407 - Pago com atraso
+✓ Parcela 1/5: Payment 1410 - Pago com atraso
+✓ Parcela 2/5: Payment 1410 - Pago com atraso
+✓ Parcela 3/5: Payment 1410 - Pago com atraso
+✓ Parcela 4/5: Payment 1410 - Pago com atraso
+✓ Parcela 5/5: Payment 1410 - Pago com atraso
+✓ Parcela 1/5: Payment 1412 - Pago com atraso
+✓ Parcela 2/5: Payment 1412 - Pago com atraso
+✓ Parcela 3/5: Payment 1412 - Pago com atraso
+✓ Parcela 4/5: Payment 1412 - Pago com atraso
+✓ Parcela 5/5: Payment 1412 - Pago com atraso
+✓ Parcela 1/5: Payment 1413 - Pago com atraso
+✓ Parcela 2/5: Payment 1413 - Pago com atraso
+✓ Parcela 3/5: Payment 1413 - Pago com atraso
+✓ Parcela 4/5: Payment 1413 - Pago com atraso
+✓ Parcela 5/5: Payment 1413 - Pago com atraso
+✓ Parcela 1/4: Payment 1419 - Pago com sucesso
+✓ Parcela 2/4: Payment 1419 - Pago com sucesso
+✓ Parcela 3/4: Payment 1419 - Pago com sucesso
+✓ Parcela 4/4: Payment 1419 - Pago com sucesso
+✓ Parcela 1/4: Payment 1424 - Pago com sucesso
+✓ Parcela 2/4: Payment 1424 - Pago com sucesso
+✓ Parcela 3/4: Payment 1424 - Pago com atraso
+✓ Parcela 4/4: Payment 1424 - Pago com atraso
+✓ Parcela 1/4: Payment 1433 - Pago com sucesso
+✓ Parcela 2/4: Payment 1433 - Pago com atraso
+✓ Parcela 3/4: Payment 1433 - Pago com sucesso
+✓ Parcela 4/4: Payment 1433 - Pago com atraso
+✓ Parcela 1/6: Payment 1438 - Pago com sucesso
+✓ Parcela 2/6: Payment 1438 - Pago com sucesso
+✓ Parcela 3/6: Payment 1438 - Pago com sucesso
+✓ Parcela 4/6: Payment 1438 - Pago com atraso
+✓ Parcela 5/6: Payment 1438 - Pago com atraso
+✓ Parcela 6/6: Payment 1438 - Pago com atraso
+✓ Parcela 1/5: Payment 1429 - Pago com atraso
+✓ Parcela 2/5: Payment 1429 - Aberta
+✓ Parcela 3/5: Payment 1429 - Aberta
+✓ Parcela 4/5: Payment 1429 - Aberta
+✓ Parcela 5/5: Payment 1429 - Aberta
+✓ Parcela 1/5: Payment 1443 - Pago com sucesso
+✓ Parcela 2/5: Payment 1443 - Pago com atraso
+✓ Parcela 3/5: Payment 1443 - Pago com atraso
+✓ Parcela 4/5: Payment 1443 - Pago com atraso
+✓ Parcela 5/5: Payment 1443 - Pago com atraso
+✓ Parcela 1/2: Payment 1453 - Pago com atraso
+✓ Parcela 2/2: Payment 1453 - Pago com sucesso
+✓ Parcela 1/6: Payment 1462 - Pago com sucesso
+✓ Parcela 2/6: Payment 1462 - Pago com sucesso
+✓ Parcela 3/6: Payment 1462 - Pago com sucesso
+✓ Parcela 4/6: Payment 1462 - Pago com sucesso
+✓ Parcela 5/6: Payment 1462 - Pago com sucesso
+✓ Parcela 6/6: Payment 1462 - Pago com sucesso
+✓ Parcela 1/8: Payment 1465 - Pago com sucesso
+✓ Parcela 2/8: Payment 1465 - Pago com sucesso
+✓ Parcela 3/8: Payment 1465 - Pago com sucesso
+✓ Parcela 4/8: Payment 1465 - Pago com sucesso
+✓ Parcela 5/8: Payment 1465 - Pago com sucesso
+✓ Parcela 6/8: Payment 1465 - Pago com atraso
+✓ Parcela 7/8: Payment 1465 - Pago com atraso
+✓ Parcela 8/8: Payment 1465 - Pago com atraso
+✓ Parcela 1/8: Payment 1466 - Pago com sucesso
+✓ Parcela 2/8: Payment 1466 - Pago com sucesso
+✓ Parcela 3/8: Payment 1466 - Pago com sucesso
+✓ Parcela 4/8: Payment 1466 - Pago com sucesso
+✓ Parcela 5/8: Payment 1466 - Pago com sucesso
+✓ Parcela 6/8: Payment 1466 - Pago com atraso
+✓ Parcela 7/8: Payment 1466 - Pago com atraso
+✓ Parcela 8/8: Payment 1466 - Pago com atraso
+✓ Parcela 1/8: Payment 1469 - Pago com sucesso
+✓ Parcela 2/8: Payment 1469 - Pago com sucesso
+✓ Parcela 3/8: Payment 1469 - Pago com sucesso
+✓ Parcela 4/8: Payment 1469 - Pago com sucesso
+✓ Parcela 5/8: Payment 1469 - Pago com atraso
+✓ Parcela 6/8: Payment 1469 - Pago com atraso
+✓ Parcela 7/8: Payment 1469 - Pago com sucesso
+✓ Parcela 8/8: Payment 1469 - Pago com atraso
+✓ Parcela 1/8: Payment 1473 - Pago com sucesso
+✓ Parcela 2/8: Payment 1473 - Pago com atraso
+✓ Parcela 3/8: Payment 1473 - Pago com atraso
+✓ Parcela 4/8: Payment 1473 - Pago com atraso
+✓ Parcela 5/8: Payment 1473 - Pago com atraso
+✓ Parcela 6/8: Payment 1473 - Pago com atraso
+✓ Parcela 7/8: Payment 1473 - Pago com atraso
+✓ Parcela 8/8: Payment 1473 - Pago com atraso
+✓ Parcela 1/5: Payment 1474 - Pago com atraso
+✓ Parcela 2/5: Payment 1474 - Pago com atraso
+✓ Parcela 3/5: Payment 1474 - Pago com atraso
+✓ Parcela 4/5: Payment 1474 - Pago com atraso
+✓ Parcela 5/5: Payment 1474 - Pago com atraso
+✓ Parcela 1/6: Payment 1475 - Pago com atraso
+✓ Parcela 2/6: Payment 1475 - Pago com atraso
+✓ Parcela 3/6: Payment 1475 - Pago com sucesso
+✓ Parcela 4/6: Payment 1475 - Pago com sucesso
+✓ Parcela 5/6: Payment 1475 - Pago com atraso
+✓ Parcela 6/6: Payment 1475 - Aberta
+✓ Parcela 1/4: Payment 1476 - Pago com sucesso
+✓ Parcela 2/4: Payment 1476 - Pago com sucesso
+✓ Parcela 3/4: Payment 1476 - Pago com atraso
+✓ Parcela 4/4: Payment 1476 - Pago com atraso
+✓ Parcela 1/5: Payment 1480 - Pago com sucesso
+✓ Parcela 2/5: Payment 1480 - Pago com sucesso
+✓ Parcela 3/5: Payment 1480 - Pago com sucesso
+✓ Parcela 4/5: Payment 1480 - Pago com sucesso
+✓ Parcela 5/5: Payment 1480 - Pago com sucesso
+✓ Parcela 1/6: Payment 1483 - Pago com sucesso
+✓ Parcela 2/6: Payment 1483 - Pago com sucesso
+✓ Parcela 3/6: Payment 1483 - Pago com atraso
+✓ Parcela 4/6: Payment 1483 - Pago com atraso
+✓ Parcela 5/6: Payment 1483 - Pago com atraso
+✓ Parcela 6/6: Payment 1483 - Pago com atraso
+✓ Parcela 1/6: Payment 1488 - Pago com sucesso
+✓ Parcela 2/6: Payment 1488 - Pago com sucesso
+✓ Parcela 3/6: Payment 1488 - Pago com sucesso
+✓ Parcela 4/6: Payment 1488 - Pago com sucesso
+✓ Parcela 5/6: Payment 1488 - Pago com sucesso
+✓ Parcela 6/6: Payment 1488 - Pago com sucesso
+✓ Parcela 1/6: Payment 1491 - Pago com atraso
+✓ Parcela 2/6: Payment 1491 - Pago com atraso
+✓ Parcela 3/6: Payment 1491 - Pago com atraso
+✓ Parcela 4/6: Payment 1491 - Pago com atraso
+✓ Parcela 5/6: Payment 1491 - Pago com atraso
+✓ Parcela 6/6: Payment 1491 - Pago com atraso
+✓ Parcela 1/3: Payment 1494 - Pago com atraso
+✓ Parcela 2/3: Payment 1494 - Pago com atraso
+✓ Parcela 3/3: Payment 1494 - Pago com sucesso
+✓ Parcela 1/7: Payment 1495 - Pago com sucesso
+✓ Parcela 2/7: Payment 1495 - Pago com atraso
+✓ Parcela 3/7: Payment 1495 - Pago com sucesso
+✓ Parcela 4/7: Payment 1495 - Pago com sucesso
+✓ Parcela 5/7: Payment 1495 - Pago com sucesso
+✓ Parcela 6/7: Payment 1495 - Pago com sucesso
+✓ Parcela 7/7: Payment 1495 - Pago com sucesso
+✓ Parcela 1/2: Payment 1496 - Pago com sucesso
+✓ Parcela 2/2: Payment 1496 - Pago com sucesso
+✓ Parcela 1/3: Payment 1497 - Pago com atraso
+✓ Parcela 2/3: Payment 1497 - Pago com atraso
+✓ Parcela 3/3: Payment 1497 - Pago com atraso
+✓ Parcela 1/4: Payment 1498 - Pago com atraso
+✓ Parcela 2/4: Payment 1498 - Pago com atraso
+✓ Parcela 3/4: Payment 1498 - Pago com atraso
+✓ Parcela 4/4: Payment 1498 - Pago com atraso
+✓ Parcela 1/4: Payment 1499 - Pago com atraso
+✓ Parcela 2/4: Payment 1499 - Pago com atraso
+✓ Parcela 3/4: Payment 1499 - Pago com atraso
+✓ Parcela 4/4: Payment 1499 - Pago com atraso
+✓ Parcela 1/6: Payment 1501 - Pago com sucesso
+✓ Parcela 2/6: Payment 1501 - Pago com atraso
+✓ Parcela 3/6: Payment 1501 - Pago com atraso
+✓ Parcela 4/6: Payment 1501 - Pago com sucesso
+✓ Parcela 5/6: Payment 1501 - Pago com sucesso
+✓ Parcela 6/6: Payment 1501 - Pago com atraso
+✓ Parcela 1/5: Payment 1502 - Pago com sucesso
+✓ Parcela 2/5: Payment 1502 - Pago com sucesso
+✓ Parcela 3/5: Payment 1502 - Pago com sucesso
+✓ Parcela 4/5: Payment 1502 - Pago com sucesso
+✓ Parcela 5/5: Payment 1502 - Pago com sucesso
+✓ Parcela 1/1: Payment 1504 - Pago com atraso
+✓ Parcela 1/5: Payment 1512 - Pago com sucesso
+✓ Parcela 2/5: Payment 1512 - Pago com atraso
+✓ Parcela 3/5: Payment 1512 - Pago com sucesso
+✓ Parcela 4/5: Payment 1512 - Pago com sucesso
+✓ Parcela 5/5: Payment 1512 - Pago com sucesso
+✓ Parcela 1/8: Payment 1514 - Pago com sucesso
+✓ Parcela 2/8: Payment 1514 - Pago com sucesso
+✓ Parcela 3/8: Payment 1514 - Pago com sucesso
+✓ Parcela 4/8: Payment 1514 - Pago com sucesso
+✓ Parcela 5/8: Payment 1514 - Pago com sucesso
+✓ Parcela 6/8: Payment 1514 - Pago com sucesso
+✓ Parcela 7/8: Payment 1514 - Pago com sucesso
+✓ Parcela 8/8: Payment 1514 - Pago com sucesso
+✓ Parcela 1/5: Payment 1515 - Pago com atraso
+✓ Parcela 2/5: Payment 1515 - Pago com sucesso
+✓ Parcela 3/5: Payment 1515 - Pago com atraso
+✓ Parcela 4/5: Payment 1515 - Pago com sucesso
+✓ Parcela 5/5: Payment 1515 - Pago com atraso
+✓ Parcela 1/1: Payment 1518 - Pago com sucesso
+✓ Parcela 1/2: Payment 1520 - Pago com atraso
+✓ Parcela 2/2: Payment 1520 - Pago com atraso
+✓ Parcela 1/4: Payment 1522 - Pago com sucesso
+✓ Parcela 2/4: Payment 1522 - Pago com atraso
+✓ Parcela 3/4: Payment 1522 - Pago com sucesso
+✓ Parcela 4/4: Payment 1522 - Pago com atraso
+✓ Parcela 1/7: Payment 1529 - Pago com atraso
+✓ Parcela 2/7: Payment 1529 - Pago com atraso
+✓ Parcela 3/7: Payment 1529 - Pago com atraso
+✓ Parcela 4/7: Payment 1529 - Pago com atraso
+✓ Parcela 5/7: Payment 1529 - Pago com atraso
+✓ Parcela 6/7: Payment 1529 - Pago com atraso
+✓ Parcela 7/7: Payment 1529 - Pago com atraso
+✓ Parcela 1/5: Payment 1532 - Pago com atraso
+✓ Parcela 2/5: Payment 1532 - Pago com atraso
+✓ Parcela 3/5: Payment 1532 - Pago com atraso
+✓ Parcela 4/5: Payment 1532 - Pago com atraso
+✓ Parcela 5/5: Payment 1532 - Aberta
+✓ Parcela 1/5: Payment 1536 - Pago com atraso
+✓ Parcela 2/5: Payment 1536 - Pago com atraso
+✓ Parcela 3/5: Payment 1536 - Pago com atraso
+✓ Parcela 4/5: Payment 1536 - Pago com atraso
+✓ Parcela 5/5: Payment 1536 - Pago com atraso
+✓ Parcela 1/5: Payment 1540 - Pago com sucesso
+✓ Parcela 2/5: Payment 1540 - Pago com sucesso
+✓ Parcela 3/5: Payment 1540 - Pago com sucesso
+✓ Parcela 4/5: Payment 1540 - Pago com atraso
+✓ Parcela 5/5: Payment 1540 - Pago com sucesso
+✓ Parcela 1/7: Payment 1542 - Pago com atraso
+✓ Parcela 2/7: Payment 1542 - Pago com atraso
+✓ Parcela 3/7: Payment 1542 - Pago com atraso
+✓ Parcela 4/7: Payment 1542 - Pago com atraso
+✓ Parcela 5/7: Payment 1542 - Pago com atraso
+✓ Parcela 6/7: Payment 1542 - Pago com atraso
+✓ Parcela 7/7: Payment 1542 - Pago com atraso
+✓ Parcela 1/5: Payment 1544 - Pago com sucesso
+✓ Parcela 2/5: Payment 1544 - Pago com sucesso
+✓ Parcela 3/5: Payment 1544 - Pago com sucesso
+✓ Parcela 4/5: Payment 1544 - Pago com atraso
+✓ Parcela 5/5: Payment 1544 - Pago com atraso
+✓ Parcela 1/5: Payment 1547 - Pago com sucesso
+✓ Parcela 2/5: Payment 1547 - Pago com sucesso
+✓ Parcela 3/5: Payment 1547 - Pago com atraso
+✓ Parcela 4/5: Payment 1547 - Pago com atraso
+✓ Parcela 5/5: Payment 1547 - Pago com atraso
+✓ Parcela 1/6: Payment 1548 - Pago com atraso
+✓ Parcela 2/6: Payment 1548 - Pago com sucesso
+✓ Parcela 3/6: Payment 1548 - Pago com atraso
+✓ Parcela 4/6: Payment 1548 - Pago com sucesso
+✓ Parcela 5/6: Payment 1548 - Pago com sucesso
+✓ Parcela 6/6: Payment 1548 - Pago com atraso
+✓ Parcela 1/5: Payment 1549 - Pago com atraso
+✓ Parcela 2/5: Payment 1549 - Pago com atraso
+✓ Parcela 3/5: Payment 1549 - Pago com atraso
+✓ Parcela 4/5: Payment 1549 - Pago com atraso
+✓ Parcela 5/5: Payment 1549 - Pago com atraso
+✓ Parcela 1/6: Payment 1552 - Pago com sucesso
+✓ Parcela 2/6: Payment 1552 - Pago com atraso
+✓ Parcela 3/6: Payment 1552 - Pago com sucesso
+✓ Parcela 4/6: Payment 1552 - Pago com atraso
+✓ Parcela 5/6: Payment 1552 - Pago com atraso
+✓ Parcela 6/6: Payment 1552 - Pago com atraso
+✓ Parcela 1/4: Payment 1555 - Pago com atraso
+✓ Parcela 2/4: Payment 1555 - Pago com sucesso
+✓ Parcela 3/4: Payment 1555 - Pago com atraso
+✓ Parcela 4/4: Payment 1555 - Pago com sucesso
+✓ Parcela 1/3: Payment 1556 - Pago com sucesso
+✓ Parcela 2/3: Payment 1556 - Pago com sucesso
+✓ Parcela 3/3: Payment 1556 - Pago com sucesso
+✓ Parcela 1/3: Payment 1559 - Pago com sucesso
+✓ Parcela 2/3: Payment 1559 - Pago com atraso
+✓ Parcela 3/3: Payment 1559 - Pago com atraso
+✓ Parcela 1/5: Payment 1560 - Pago com sucesso
+✓ Parcela 2/5: Payment 1560 - Pago com sucesso
+✓ Parcela 3/5: Payment 1560 - Pago com atraso
+✓ Parcela 4/5: Payment 1560 - Pago com sucesso
+✓ Parcela 5/5: Payment 1560 - Pago com sucesso
+✓ Parcela 1/6: Payment 1563 - Pago com atraso
+✓ Parcela 2/6: Payment 1563 - Pago com sucesso
+✓ Parcela 3/6: Payment 1563 - Pago com atraso
+✓ Parcela 4/6: Payment 1563 - Pago com sucesso
+✓ Parcela 5/6: Payment 1563 - Pago com atraso
+✓ Parcela 6/6: Payment 1563 - Pago com atraso
+✓ Parcela 1/2: Payment 1569 - Pago com sucesso
+✓ Parcela 2/2: Payment 1569 - Pago com sucesso
+✓ Parcela 1/4: Payment 1575 - Pago com atraso
+✓ Parcela 2/4: Payment 1575 - Pago com atraso
+✓ Parcela 3/4: Payment 1575 - Pago com atraso
+✓ Parcela 4/4: Payment 1575 - Pago com sucesso
+✓ Parcela 1/8: Payment 1578 - Pago com sucesso
+✓ Parcela 2/8: Payment 1578 - Pago com sucesso
+✓ Parcela 3/8: Payment 1578 - Pago com sucesso
+✓ Parcela 4/8: Payment 1578 - Pago com sucesso
+✓ Parcela 5/8: Payment 1578 - Pago com sucesso
+✓ Parcela 6/8: Payment 1578 - Pago com sucesso
+✓ Parcela 7/8: Payment 1578 - Pago com sucesso
+✓ Parcela 8/8: Payment 1578 - Pago com sucesso
+✓ Parcela 1/5: Payment 1580 - Pago com atraso
+✓ Parcela 2/5: Payment 1580 - Pago com atraso
+✓ Parcela 3/5: Payment 1580 - Pago com atraso
+✓ Parcela 4/5: Payment 1580 - Pago com atraso
+✓ Parcela 5/5: Payment 1580 - Aberta
+✓ Parcela 1/2: Payment 1570 - Pago com sucesso
+✓ Parcela 2/2: Payment 1570 - Pago com sucesso
+✓ Parcela 1/2: Payment 1583 - Pago com atraso
+✓ Parcela 2/2: Payment 1583 - Pago com atraso
+✓ Parcela 1/2: Payment 1585 - Pago com atraso
+✓ Parcela 2/2: Payment 1585 - Pago com atraso
+✓ Parcela 1/5: Payment 1588 - Pago com atraso
+✓ Parcela 2/5: Payment 1588 - Pago com atraso
+✓ Parcela 3/5: Payment 1588 - Pago com atraso
+✓ Parcela 4/5: Payment 1588 - Pago com atraso
+✓ Parcela 5/5: Payment 1588 - Pago com atraso
+✓ Parcela 1/4: Payment 1590 - Pago com sucesso
+✓ Parcela 2/4: Payment 1590 - Pago com sucesso
+✓ Parcela 3/4: Payment 1590 - Pago com sucesso
+✓ Parcela 4/4: Payment 1590 - Pago com sucesso
+✓ Parcela 1/6: Payment 1601 - Pago com sucesso
+✓ Parcela 2/6: Payment 1601 - Pago com sucesso
+✓ Parcela 3/6: Payment 1601 - Pago com sucesso
+✓ Parcela 4/6: Payment 1601 - Pago com atraso
+✓ Parcela 5/6: Payment 1601 - Pago com sucesso
+✓ Parcela 6/6: Payment 1601 - Pago com sucesso
+✓ Parcela 1/5: Payment 1605 - Pago com atraso
+✓ Parcela 2/5: Payment 1605 - Pago com atraso
+✓ Parcela 3/5: Payment 1605 - Pago com atraso
+✓ Parcela 4/5: Payment 1605 - Pago com atraso
+✓ Parcela 5/5: Payment 1605 - Pago com atraso
+✓ Parcela 1/2: Payment 1607 - Pago com atraso
+✓ Parcela 2/2: Payment 1607 - Pago com atraso
+✓ Parcela 1/3: Payment 1608 - Pago com sucesso
+✓ Parcela 2/3: Payment 1608 - Pago com atraso
+✓ Parcela 3/3: Payment 1608 - Pago com atraso
+✓ Parcela 1/5: Payment 1609 - Pago com sucesso
+✓ Parcela 2/5: Payment 1609 - Pago com atraso
+✓ Parcela 3/5: Payment 1609 - Pago com sucesso
+✓ Parcela 4/5: Payment 1609 - Pago com atraso
+✓ Parcela 5/5: Payment 1609 - Pago com atraso
+✓ Parcela 1/5: Payment 1610 - Pago com sucesso
+✓ Parcela 2/5: Payment 1610 - Pago com atraso
+✓ Parcela 3/5: Payment 1610 - Pago com atraso
+✓ Parcela 4/5: Payment 1610 - Pago com atraso
+✓ Parcela 5/5: Payment 1610 - Pago com atraso
+✓ Parcela 1/6: Payment 1611 - Pago com atraso
+✓ Parcela 2/6: Payment 1611 - Pago com atraso
+✓ Parcela 3/6: Payment 1611 - Pago com atraso
+✓ Parcela 4/6: Payment 1611 - Pago com atraso
+✓ Parcela 5/6: Payment 1611 - Pago com atraso
+✓ Parcela 6/6: Payment 1611 - Pago com atraso
+✓ Parcela 1/6: Payment 1612 - Pago com sucesso
+✓ Parcela 2/6: Payment 1612 - Pago com sucesso
+✓ Parcela 3/6: Payment 1612 - Pago com sucesso
+✓ Parcela 4/6: Payment 1612 - Pago com atraso
+✓ Parcela 5/6: Payment 1612 - Pago com atraso
+✓ Parcela 6/6: Payment 1612 - Pago com atraso
+✓ Parcela 1/10: Payment 1613 - Pago com sucesso
+✓ Parcela 2/10: Payment 1613 - Pago com sucesso
+✓ Parcela 3/10: Payment 1613 - Pago com atraso
+✓ Parcela 4/10: Payment 1613 - Pago com sucesso
+✓ Parcela 5/10: Payment 1613 - Pago com sucesso
+✓ Parcela 6/10: Payment 1613 - Pago com sucesso
+✓ Parcela 7/10: Payment 1613 - Pago com sucesso
+✓ Parcela 8/10: Payment 1613 - Pago com sucesso
+✓ Parcela 9/10: Payment 1613 - Pago com sucesso
+✓ Parcela 10/10: Payment 1613 - Pago com sucesso
+✓ Parcela 1/5: Payment 1615 - Pago com sucesso
+✓ Parcela 2/5: Payment 1615 - Pago com sucesso
+✓ Parcela 3/5: Payment 1615 - Pago com sucesso
+✓ Parcela 4/5: Payment 1615 - Pago com sucesso
+✓ Parcela 5/5: Payment 1615 - Pago com sucesso
+✓ Parcela 1/5: Payment 1618 - Pago com atraso
+✓ Parcela 2/5: Payment 1618 - Pago com atraso
+✓ Parcela 3/5: Payment 1618 - Pago com atraso
+✓ Parcela 4/5: Payment 1618 - Aberta
+✓ Parcela 5/5: Payment 1618 - Aberta
+✓ Parcela 1/2: Payment 1619 - Pago com atraso
+✓ Parcela 2/2: Payment 1619 - Aberta
+✓ Parcela 1/5: Payment 1621 - Pago com sucesso
+✓ Parcela 2/5: Payment 1621 - Pago com sucesso
+✓ Parcela 3/5: Payment 1621 - Pago com sucesso
+✓ Parcela 4/5: Payment 1621 - Pago com sucesso
+✓ Parcela 5/5: Payment 1621 - Pago com sucesso
+✓ Parcela 1/5: Payment 1622 - Pago com sucesso
+✓ Parcela 2/5: Payment 1622 - Pago com sucesso
+✓ Parcela 3/5: Payment 1622 - Pago com sucesso
+✓ Parcela 4/5: Payment 1622 - Pago com atraso
+✓ Parcela 5/5: Payment 1622 - Pago com sucesso
+✓ Parcela 1/5: Payment 1623 - Pago com sucesso
+✓ Parcela 2/5: Payment 1623 - Pago com atraso
+✓ Parcela 3/5: Payment 1623 - Pago com atraso
+✓ Parcela 4/5: Payment 1623 - Pago com sucesso
+✓ Parcela 5/5: Payment 1623 - Pago com atraso
+✓ Parcela 1/2: Payment 1624 - Pago com atraso
+✓ Parcela 2/2: Payment 1624 - Pago com atraso
+✓ Parcela 1/5: Payment 1625 - Pago com atraso
+✓ Parcela 2/5: Payment 1625 - Pago com atraso
+✓ Parcela 3/5: Payment 1625 - Pago com sucesso
+✓ Parcela 4/5: Payment 1625 - Pago com atraso
+✓ Parcela 5/5: Payment 1625 - Pago com sucesso
+✓ Parcela 1/10: Payment 1627 - Pago com sucesso
+✓ Parcela 2/10: Payment 1627 - Pago com sucesso
+✓ Parcela 3/10: Payment 1627 - Pago com sucesso
+✓ Parcela 4/10: Payment 1627 - Pago com sucesso
+✓ Parcela 5/10: Payment 1627 - Pago com atraso
+✓ Parcela 6/10: Payment 1627 - Pago com atraso
+✓ Parcela 7/10: Payment 1627 - Pago com atraso
+✓ Parcela 8/10: Payment 1627 - Pago com atraso
+✓ Parcela 9/10: Payment 1627 - Pago com sucesso
+✓ Parcela 10/10: Payment 1627 - Pago com sucesso
+✓ Parcela 1/2: Payment 1635 - Pago com atraso
+✓ Parcela 2/2: Payment 1635 - Pago com atraso
+✓ Parcela 1/3: Payment 1639 - Pago com atraso
+✓ Parcela 2/3: Payment 1639 - Pago com atraso
+✓ Parcela 3/3: Payment 1639 - Pago com atraso
+✓ Parcela 1/5: Payment 1652 - Pago com sucesso
+✓ Parcela 2/5: Payment 1652 - Pago com atraso
+✓ Parcela 3/5: Payment 1652 - Pago com atraso
+✓ Parcela 4/5: Payment 1652 - Pago com atraso
+✓ Parcela 5/5: Payment 1652 - Pago com sucesso
+✓ Parcela 1/6: Payment 1654 - Pago com sucesso
+✓ Parcela 2/6: Payment 1654 - Pago com sucesso
+✓ Parcela 3/6: Payment 1654 - Pago com sucesso
+✓ Parcela 4/6: Payment 1654 - Pago com sucesso
+✓ Parcela 5/6: Payment 1654 - Pago com sucesso
+✓ Parcela 6/6: Payment 1654 - Pago com sucesso
+✓ Parcela 1/10: Payment 1656 - Pago com sucesso
+✓ Parcela 2/10: Payment 1656 - Pago com atraso
+✓ Parcela 3/10: Payment 1656 - Pago com atraso
+✓ Parcela 4/10: Payment 1656 - Pago com atraso
+✓ Parcela 5/10: Payment 1656 - Pago com atraso
+✓ Parcela 6/10: Payment 1656 - Pago com atraso
+✓ Parcela 7/10: Payment 1656 - Pago com atraso
+✓ Parcela 8/10: Payment 1656 - Pago com atraso
+✓ Parcela 9/10: Payment 1656 - Pago com atraso
+✓ Parcela 10/10: Payment 1656 - Pago com atraso
+✓ Parcela 1/3: Payment 1657 - Pago com atraso
+✓ Parcela 2/3: Payment 1657 - Pago com atraso
+✓ Parcela 3/3: Payment 1657 - Pago com atraso
+✓ Parcela 1/5: Payment 1658 - Pago com atraso
+✓ Parcela 2/5: Payment 1658 - Pago com atraso
+✓ Parcela 3/5: Payment 1658 - Pago com atraso
+✓ Parcela 4/5: Payment 1658 - Pago com sucesso
+✓ Parcela 5/5: Payment 1658 - Pago com sucesso
+✓ Parcela 1/2: Payment 1660 - Pago com atraso
+✓ Parcela 2/2: Payment 1660 - Pago com sucesso
+✓ Parcela 1/1: Payment 1662 - Pago com atraso
+✓ Parcela 1/7: Payment 1670 - Pago com atraso
+✓ Parcela 2/7: Payment 1670 - Pago com atraso
+✓ Parcela 3/7: Payment 1670 - Pago com atraso
+✓ Parcela 4/7: Payment 1670 - Pago com atraso
+✓ Parcela 5/7: Payment 1670 - Pago com atraso
+✓ Parcela 6/7: Payment 1670 - Pago com atraso
+✓ Parcela 7/7: Payment 1670 - Pago com atraso
+✓ Parcela 1/1: Payment 1673 - Pago com sucesso
+✓ Parcela 1/6: Payment 1675 - Pago com sucesso
+✓ Parcela 2/6: Payment 1675 - Pago com atraso
+✓ Parcela 3/6: Payment 1675 - Pago com atraso
+✓ Parcela 4/6: Payment 1675 - Pago com atraso
+✓ Parcela 5/6: Payment 1675 - Pago com atraso
+✓ Parcela 6/6: Payment 1675 - Aberta
+✓ Parcela 1/5: Payment 1684 - Pago com atraso
+✓ Parcela 2/5: Payment 1684 - Pago com atraso
+✓ Parcela 3/5: Payment 1684 - Pago com atraso
+✓ Parcela 4/5: Payment 1684 - Pago com atraso
+✓ Parcela 5/5: Payment 1684 - Pago com atraso
+✓ Parcela 1/4: Payment 1688 - Pago com atraso
+✓ Parcela 2/4: Payment 1688 - Pago com sucesso
+✓ Parcela 3/4: Payment 1688 - Pago com atraso
+✓ Parcela 4/4: Payment 1688 - Pago com atraso
+✓ Parcela 1/6: Payment 1690 - Pago com atraso
+✓ Parcela 2/6: Payment 1690 - Pago com atraso
+✓ Parcela 3/6: Payment 1690 - Pago com atraso
+✓ Parcela 4/6: Payment 1690 - Aberta
+✓ Parcela 5/6: Payment 1690 - Aberta
+✓ Parcela 6/6: Payment 1690 - Aberta
+✓ Parcela 1/5: Payment 1691 - Pago com atraso
+✓ Parcela 2/5: Payment 1691 - Pago com atraso
+✓ Parcela 3/5: Payment 1691 - Aberta
+✓ Parcela 4/5: Payment 1691 - Aberta
+✓ Parcela 5/5: Payment 1691 - Aberta
+✓ Parcela 1/5: Payment 1694 - Pago com sucesso
+✓ Parcela 2/5: Payment 1694 - Pago com atraso
+✓ Parcela 3/5: Payment 1694 - Pago com sucesso
+✓ Parcela 4/5: Payment 1694 - Pago com sucesso
+✓ Parcela 5/5: Payment 1694 - Pago com atraso
+✓ Parcela 1/2: Payment 1695 - Pago com atraso
+✓ Parcela 2/2: Payment 1695 - Aberta
+✓ Parcela 1/7: Payment 1696 - Pago com atraso
+✓ Parcela 2/7: Payment 1696 - Pago com atraso
+✓ Parcela 3/7: Payment 1696 - Pago com atraso
+✓ Parcela 4/7: Payment 1696 - Pago com atraso
+✓ Parcela 5/7: Payment 1696 - Pago com sucesso
+✓ Parcela 6/7: Payment 1696 - Pago com sucesso
+✓ Parcela 7/7: Payment 1696 - Pago com atraso
+✓ Parcela 1/10: Payment 1697 - Pago com atraso
+✓ Parcela 2/10: Payment 1697 - Pago com sucesso
+✓ Parcela 3/10: Payment 1697 - Pago com sucesso
+✓ Parcela 4/10: Payment 1697 - Pago com atraso
+✓ Parcela 5/10: Payment 1697 - Pago com atraso
+✓ Parcela 6/10: Payment 1697 - Pago com atraso
+✓ Parcela 7/10: Payment 1697 - Pago com sucesso
+✓ Parcela 8/10: Payment 1697 - Pago com sucesso
+✓ Parcela 9/10: Payment 1697 - Pago com atraso
+✓ Parcela 10/10: Payment 1697 - Pago com atraso
+✓ Parcela 1/4: Payment 1700 - Pago com sucesso
+✓ Parcela 2/4: Payment 1700 - Pago com sucesso
+✓ Parcela 3/4: Payment 1700 - Pago com sucesso
+✓ Parcela 4/4: Payment 1700 - Pago com sucesso
+✓ Parcela 1/1: Payment 1709 - Pago com atraso
+✓ Parcela 1/6: Payment 1710 - Pago com sucesso
+✓ Parcela 2/6: Payment 1710 - Pago com sucesso
+✓ Parcela 3/6: Payment 1710 - Pago com sucesso
+✓ Parcela 4/6: Payment 1710 - Pago com sucesso
+✓ Parcela 5/6: Payment 1710 - Pago com sucesso
+✓ Parcela 6/6: Payment 1710 - Pago com atraso
+✓ Parcela 1/1: Payment 1711 - Aberta
+✓ Parcela 1/3: Payment 1712 - Aberta
+✓ Parcela 2/3: Payment 1712 - Aberta
+✓ Parcela 3/3: Payment 1712 - Aberta
+✓ Parcela 1/4: Payment 1715 - Pago com sucesso
+✓ Parcela 2/4: Payment 1715 - Pago com sucesso
+✓ Parcela 3/4: Payment 1715 - Pago com sucesso
+✓ Parcela 4/4: Payment 1715 - Aberta
+✓ Parcela 1/7: Payment 1718 - Pago com sucesso
+✓ Parcela 2/7: Payment 1718 - Pago com sucesso
+✓ Parcela 3/7: Payment 1718 - Aberta
+✓ Parcela 4/7: Payment 1718 - Aberta
+✓ Parcela 5/7: Payment 1718 - Aberta
+✓ Parcela 6/7: Payment 1718 - Aberta
+✓ Parcela 7/7: Payment 1718 - Aberta
+✓ Parcela 1/5: Payment 1719 - Pago com atraso
+✓ Parcela 2/5: Payment 1719 - Pago com atraso
+✓ Parcela 3/5: Payment 1719 - Aberta
+✓ Parcela 4/5: Payment 1719 - Aberta
+✓ Parcela 5/5: Payment 1719 - Aberta
+✓ Parcela 1/6: Payment 1724 - Pago com sucesso
+✓ Parcela 2/6: Payment 1724 - Pago com sucesso
+✓ Parcela 3/6: Payment 1724 - Aberta
+✓ Parcela 4/6: Payment 1724 - Aberta
+✓ Parcela 5/6: Payment 1724 - Aberta
+✓ Parcela 6/6: Payment 1724 - Aberta
+✓ Parcela 1/10: Payment 1726 - Pago com sucesso
+✓ Parcela 2/10: Payment 1726 - Pago com atraso
+✓ Parcela 3/10: Payment 1726 - Pago com atraso
+✓ Parcela 4/10: Payment 1726 - Pago com sucesso
+✓ Parcela 5/10: Payment 1726 - Pago com atraso
+✓ Parcela 6/10: Payment 1726 - Pago com sucesso
+✓ Parcela 7/10: Payment 1726 - Pago com sucesso
+✓ Parcela 8/10: Payment 1726 - Pago com sucesso
+✓ Parcela 9/10: Payment 1726 - Pago com sucesso
+✓ Parcela 10/10: Payment 1726 - Pago com atraso
+✓ Parcela 1/2: Payment 1728 - Pago com atraso
+✓ Parcela 2/2: Payment 1728 - Pago com atraso
+✓ Parcela 1/4: Payment 1731 - Pago com sucesso
+✓ Parcela 2/4: Payment 1731 - Pago com sucesso
+✓ Parcela 3/4: Payment 1731 - Pago com sucesso
+✓ Parcela 4/4: Payment 1731 - Aberta
+✓ Parcela 1/4: Payment 1732 - Aberta
+✓ Parcela 2/4: Payment 1732 - Aberta
+✓ Parcela 3/4: Payment 1732 - Aberta
+✓ Parcela 4/4: Payment 1732 - Aberta
+✓ Parcela 1/6: Payment 1736 - Pago com sucesso
+✓ Parcela 2/6: Payment 1736 - Pago com sucesso
+✓ Parcela 3/6: Payment 1736 - Aberta
+✓ Parcela 4/6: Payment 1736 - Aberta
+✓ Parcela 5/6: Payment 1736 - Aberta
+✓ Parcela 6/6: Payment 1736 - Aberta
+✓ Parcela 1/8: Payment 1739 - Pago com sucesso
+✓ Parcela 2/8: Payment 1739 - Pago com sucesso
+✓ Parcela 3/8: Payment 1739 - Pago com sucesso
+✓ Parcela 4/8: Payment 1739 - Pago com sucesso
+✓ Parcela 5/8: Payment 1739 - Pago com sucesso
+✓ Parcela 6/8: Payment 1739 - Pago com sucesso
+✓ Parcela 7/8: Payment 1739 - Pago com atraso
+✓ Parcela 8/8: Payment 1739 - Pago com sucesso
+✓ Parcela 1/5: Payment 1744 - Pago com sucesso
+✓ Parcela 2/5: Payment 1744 - Aberta
+✓ Parcela 3/5: Payment 1744 - Aberta
+✓ Parcela 4/5: Payment 1744 - Aberta
+✓ Parcela 5/5: Payment 1744 - Aberta
+✓ Parcela 1/10: Payment 1745 - Pago com sucesso
+✓ Parcela 2/10: Payment 1745 - Pago com atraso
+✓ Parcela 3/10: Payment 1745 - Pago com sucesso
+✓ Parcela 4/10: Payment 1745 - Pago com atraso
+✓ Parcela 5/10: Payment 1745 - Pago com sucesso
+✓ Parcela 6/10: Payment 1745 - Pago com sucesso
+✓ Parcela 7/10: Payment 1745 - Pago com atraso
+✓ Parcela 8/10: Payment 1745 - Pago com sucesso
+✓ Parcela 9/10: Payment 1745 - Pago com sucesso
+✓ Parcela 10/10: Payment 1745 - Pago com sucesso
+✓ Parcela 1/5: Payment 1747 - Aberta
+✓ Parcela 2/5: Payment 1747 - Aberta
+✓ Parcela 3/5: Payment 1747 - Aberta
+✓ Parcela 4/5: Payment 1747 - Aberta
+✓ Parcela 5/5: Payment 1747 - Aberta
+✓ Parcela 1/8: Payment 1748 - Pago com sucesso
+✓ Parcela 2/8: Payment 1748 - Aberta
+✓ Parcela 3/8: Payment 1748 - Aberta
+✓ Parcela 4/8: Payment 1748 - Aberta
+✓ Parcela 5/8: Payment 1748 - Aberta
+✓ Parcela 6/8: Payment 1748 - Aberta
+✓ Parcela 7/8: Payment 1748 - Aberta
+✓ Parcela 8/8: Payment 1748 - Aberta
+✓ Parcela 1/8: Payment 1749 - Pago com atraso
+✓ Parcela 2/8: Payment 1749 - Aberta
+✓ Parcela 3/8: Payment 1749 - Aberta
+✓ Parcela 4/8: Payment 1749 - Aberta
+✓ Parcela 5/8: Payment 1749 - Aberta
+✓ Parcela 6/8: Payment 1749 - Aberta
+✓ Parcela 7/8: Payment 1749 - Aberta
+✓ Parcela 8/8: Payment 1749 - Aberta
+✓ Parcela 1/5: Payment 1753 - Aberta
+✓ Parcela 2/5: Payment 1753 - Aberta
+✓ Parcela 3/5: Payment 1753 - Aberta
+✓ Parcela 4/5: Payment 1753 - Aberta
+✓ Parcela 5/5: Payment 1753 - Aberta
+✓ Parcela 1/5: Payment 1757 - Aberta
+✓ Parcela 2/5: Payment 1757 - Aberta
+✓ Parcela 3/5: Payment 1757 - Aberta
+✓ Parcela 4/5: Payment 1757 - Aberta
+✓ Parcela 5/5: Payment 1757 - Aberta
+✓ Parcela 1/4: Payment 1752 - Aberta
+✓ Parcela 2/4: Payment 1752 - Aberta
+✓ Parcela 3/4: Payment 1752 - Aberta
+✓ Parcela 4/4: Payment 1752 - Aberta
+✓ Parcela 1/8: Payment 1758 - Pago com sucesso
+✓ Parcela 2/8: Payment 1758 - Pago com sucesso
+✓ Parcela 3/8: Payment 1758 - Pago com sucesso
+✓ Parcela 4/8: Payment 1758 - Pago com sucesso
+✓ Parcela 5/8: Payment 1758 - Pago com sucesso
+✓ Parcela 6/8: Payment 1758 - Pago com sucesso
+✓ Parcela 7/8: Payment 1758 - Pago com sucesso
+✓ Parcela 8/8: Payment 1758 - Pago com sucesso
+✓ Parcela 1/5: Payment 1759 - Aberta
+✓ Parcela 2/5: Payment 1759 - Aberta
+✓ Parcela 3/5: Payment 1759 - Aberta
+✓ Parcela 4/5: Payment 1759 - Aberta
+✓ Parcela 5/5: Payment 1759 - Aberta
+✓ Parcela 1/8: Payment 1762 - Pago com sucesso
+✓ Parcela 2/8: Payment 1762 - Pago com atraso
+✓ Parcela 3/8: Payment 1762 - Pago com sucesso
+✓ Parcela 4/8: Payment 1762 - Pago com atraso
+✓ Parcela 5/8: Payment 1762 - Pago com atraso
+✓ Parcela 6/8: Payment 1762 - Pago com sucesso
+✓ Parcela 7/8: Payment 1762 - Pago com atraso
+✓ Parcela 8/8: Payment 1762 - Pago com atraso
+✓ Parcela 1/6: Payment 1765 - Aberta
+✓ Parcela 2/6: Payment 1765 - Aberta
+✓ Parcela 3/6: Payment 1765 - Aberta
+✓ Parcela 4/6: Payment 1765 - Aberta
+✓ Parcela 5/6: Payment 1765 - Aberta
+✓ Parcela 6/6: Payment 1765 - Aberta
+✓ Parcela 1/6: Payment 1766 - Pago com atraso
+✓ Parcela 2/6: Payment 1766 - Pago com atraso
+✓ Parcela 3/6: Payment 1766 - Pago com atraso
+✓ Parcela 4/6: Payment 1766 - Pago com atraso
+✓ Parcela 5/6: Payment 1766 - Pago com atraso
+✓ Parcela 6/6: Payment 1766 - Pago com atraso
+✓ Parcela 1/5: Payment 1769 - Aberta
+✓ Parcela 2/5: Payment 1769 - Aberta
+✓ Parcela 3/5: Payment 1769 - Aberta
+✓ Parcela 4/5: Payment 1769 - Aberta
+✓ Parcela 5/5: Payment 1769 - Aberta
+✓ Parcela 1/6: Payment 1771 - Pago com sucesso
+✓ Parcela 2/6: Payment 1771 - Pago com sucesso
+✓ Parcela 3/6: Payment 1771 - Pago com sucesso
+✓ Parcela 4/6: Payment 1771 - Pago com sucesso
+✓ Parcela 5/6: Payment 1771 - Pago com sucesso
+✓ Parcela 6/6: Payment 1771 - Pago com sucesso
+✓ Parcela 1/6: Payment 1774 - Pago com sucesso
+✓ Parcela 2/6: Payment 1774 - Pago com sucesso
+✓ Parcela 3/6: Payment 1774 - Pago com sucesso
+✓ Parcela 4/6: Payment 1774 - Pago com sucesso
+✓ Parcela 5/6: Payment 1774 - Pago com sucesso
+✓ Parcela 6/6: Payment 1774 - Pago com atraso
+✓ Parcela 1/6: Payment 1775 - Pago com sucesso
+✓ Parcela 2/6: Payment 1775 - Pago com sucesso
+✓ Parcela 3/6: Payment 1775 - Pago com atraso
+✓ Parcela 4/6: Payment 1775 - Pago com atraso
+✓ Parcela 5/6: Payment 1775 - Pago com atraso
+✓ Parcela 6/6: Payment 1775 - Pago com atraso
+✓ Parcela 1/6: Payment 1777 - Aberta
+✓ Parcela 2/6: Payment 1777 - Aberta
+✓ Parcela 3/6: Payment 1777 - Aberta
+✓ Parcela 4/6: Payment 1777 - Aberta
+✓ Parcela 5/6: Payment 1777 - Aberta
+✓ Parcela 6/6: Payment 1777 - Aberta
+✓ Parcela 1/4: Payment 1782 - Aberta
+✓ Parcela 2/4: Payment 1782 - Aberta
+✓ Parcela 3/4: Payment 1782 - Aberta
+✓ Parcela 4/4: Payment 1782 - Aberta
+✓ Parcela 1/4: Payment 1786 - Pago com atraso
+✓ Parcela 2/4: Payment 1786 - Pago com atraso
+✓ Parcela 3/4: Payment 1786 - Pago com atraso
+✓ Parcela 4/4: Payment 1786 - Pago com atraso
+✓ Parcela 1/4: Payment 1788 - Aberta
+✓ Parcela 2/4: Payment 1788 - Aberta
+✓ Parcela 3/4: Payment 1788 - Aberta
+✓ Parcela 4/4: Payment 1788 - Aberta
+✓ Parcela 1/8: Payment 1789 - Pago com atraso
+✓ Parcela 2/8: Payment 1789 - Pago com atraso
+✓ Parcela 3/8: Payment 1789 - Pago com atraso
+✓ Parcela 4/8: Payment 1789 - Pago com atraso
+✓ Parcela 5/8: Payment 1789 - Pago com atraso
+✓ Parcela 6/8: Payment 1789 - Pago com sucesso
+✓ Parcela 7/8: Payment 1789 - Pago com sucesso
+✓ Parcela 8/8: Payment 1789 - Pago com atraso
+✓ Parcela 1/4: Payment 1790 - Aberta
+✓ Parcela 2/4: Payment 1790 - Aberta
+✓ Parcela 3/4: Payment 1790 - Aberta
+✓ Parcela 4/4: Payment 1790 - Aberta
+✓ Parcela 1/5: Payment 1791 - Pago com atraso
+✓ Parcela 2/5: Payment 1791 - Pago com atraso
+✓ Parcela 3/5: Payment 1791 - Pago com atraso
+✓ Parcela 4/5: Payment 1791 - Pago com atraso
+✓ Parcela 5/5: Payment 1791 - Pago com atraso
+✓ Parcela 1/6: Payment 1797 - Pago com sucesso
+✓ Parcela 2/6: Payment 1797 - Pago com atraso
+✓ Parcela 3/6: Payment 1797 - Pago com atraso
+✓ Parcela 4/6: Payment 1797 - Aberta
+✓ Parcela 5/6: Payment 1797 - Aberta
+✓ Parcela 6/6: Payment 1797 - Aberta
+✓ Parcela 1/1: Payment 1800 - Aberta
+✓ Parcela 1/5: Payment 1801 - Pago com sucesso
+✓ Parcela 2/5: Payment 1801 - Pago com sucesso
+✓ Parcela 3/5: Payment 1801 - Pago com sucesso
+✓ Parcela 4/5: Payment 1801 - Pago com sucesso
+✓ Parcela 5/5: Payment 1801 - Pago com sucesso
+✓ Parcela 1/4: Payment 1804 - Pago com sucesso
+✓ Parcela 2/4: Payment 1804 - Pago com sucesso
+✓ Parcela 3/4: Payment 1804 - Pago com sucesso
+✓ Parcela 4/4: Payment 1804 - Pago com sucesso
+✓ Parcela 1/4: Payment 1805 - Pago com sucesso
+✓ Parcela 2/4: Payment 1805 - Pago com sucesso
+✓ Parcela 3/4: Payment 1805 - Pago com sucesso
+✓ Parcela 4/4: Payment 1805 - Pago com sucesso
+✓ Parcela 1/5: Payment 1807 - Pago com sucesso
+✓ Parcela 2/5: Payment 1807 - Pago com sucesso
+✓ Parcela 3/5: Payment 1807 - Pago com sucesso
+✓ Parcela 4/5: Payment 1807 - Pago com sucesso
+✓ Parcela 5/5: Payment 1807 - Pago com sucesso
+✓ Parcela 1/5: Payment 1810 - Pago com sucesso
+✓ Parcela 2/5: Payment 1810 - Pago com atraso
+✓ Parcela 3/5: Payment 1810 - Pago com sucesso
+✓ Parcela 4/5: Payment 1810 - Pago com atraso
+✓ Parcela 5/5: Payment 1810 - Pago com atraso
+✓ Parcela 1/7: Payment 1811 - Pago com atraso
+✓ Parcela 2/7: Payment 1811 - Pago com atraso
+✓ Parcela 3/7: Payment 1811 - Pago com atraso
+✓ Parcela 4/7: Payment 1811 - Pago com atraso
+✓ Parcela 5/7: Payment 1811 - Aberta
+✓ Parcela 6/7: Payment 1811 - Aberta
+✓ Parcela 7/7: Payment 1811 - Aberta
+✓ Parcela 1/4: Payment 1818 - Pago com sucesso
+✓ Parcela 2/4: Payment 1818 - Pago com atraso
+✓ Parcela 3/4: Payment 1818 - Aberta
+✓ Parcela 4/4: Payment 1818 - Aberta
+✓ Parcela 1/6: Payment 1819 - Pago com atraso
+✓ Parcela 2/6: Payment 1819 - Pago com atraso
+✓ Parcela 3/6: Payment 1819 - Pago com atraso
+✓ Parcela 4/6: Payment 1819 - Pago com atraso
+✓ Parcela 5/6: Payment 1819 - Pago com sucesso
+✓ Parcela 6/6: Payment 1819 - Pago com atraso
+✓ Parcela 1/5: Payment 1826 - Pago com atraso
+✓ Parcela 2/5: Payment 1826 - Pago com atraso
+✓ Parcela 3/5: Payment 1826 - Pago com atraso
+✓ Parcela 4/5: Payment 1826 - Pago com atraso
+✓ Parcela 5/5: Payment 1826 - Pago com atraso
+✓ Parcela 1/5: Payment 1827 - Pago com sucesso
+✓ Parcela 2/5: Payment 1827 - Pago com atraso
+✓ Parcela 3/5: Payment 1827 - Pago com atraso
+✓ Parcela 4/5: Payment 1827 - Pago com atraso
+✓ Parcela 5/5: Payment 1827 - Pago com atraso
+✓ Parcela 1/3: Payment 1830 - Pago com atraso
+✓ Parcela 2/3: Payment 1830 - Pago com atraso
+✓ Parcela 3/3: Payment 1830 - Pago com atraso
+✓ Parcela 1/2: Payment 1831 - Aberta
+✓ Parcela 2/2: Payment 1831 - Aberta
+✓ Parcela 1/5: Payment 1833 - Pago com atraso
+✓ Parcela 2/5: Payment 1833 - Pago com atraso
+✓ Parcela 3/5: Payment 1833 - Pago com atraso
+✓ Parcela 4/5: Payment 1833 - Pago com atraso
+✓ Parcela 5/5: Payment 1833 - Pago com atraso
+✓ Parcela 1/5: Payment 1834 - Pago com atraso
+✓ Parcela 2/5: Payment 1834 - Pago com atraso
+✓ Parcela 3/5: Payment 1834 - Aberta
+✓ Parcela 4/5: Payment 1834 - Aberta
+✓ Parcela 5/5: Payment 1834 - Aberta
+✓ Parcela 1/2: Payment 1838 - Pago com sucesso
+✓ Parcela 2/2: Payment 1838 - Pago com sucesso
+✓ Parcela 1/1: Payment 1840 - Aberta
+✓ Parcela 1/8: Payment 1841 - Pago com sucesso
+✓ Parcela 2/8: Payment 1841 - Pago com sucesso
+✓ Parcela 3/8: Payment 1841 - Pago com sucesso
+✓ Parcela 4/8: Payment 1841 - Pago com sucesso
+✓ Parcela 5/8: Payment 1841 - Pago com sucesso
+✓ Parcela 6/8: Payment 1841 - Pago com sucesso
+✓ Parcela 7/8: Payment 1841 - Pago com sucesso
+✓ Parcela 8/8: Payment 1841 - Pago com sucesso
+✓ Parcela 1/6: Payment 1842 - Pago com sucesso
+✓ Parcela 2/6: Payment 1842 - Pago com sucesso
+✓ Parcela 3/6: Payment 1842 - Pago com sucesso
+✓ Parcela 4/6: Payment 1842 - Pago com atraso
+✓ Parcela 5/6: Payment 1842 - Pago com atraso
+✓ Parcela 6/6: Payment 1842 - Pago com atraso
+✓ Parcela 1/6: Payment 1846 - Pago com sucesso
+✓ Parcela 2/6: Payment 1846 - Pago com sucesso
+✓ Parcela 3/6: Payment 1846 - Pago com sucesso
+✓ Parcela 4/6: Payment 1846 - Pago com sucesso
+✓ Parcela 5/6: Payment 1846 - Pago com sucesso
+✓ Parcela 6/6: Payment 1846 - Pago com sucesso
+✓ Parcela 1/5: Payment 1847 - Pago com sucesso
+✓ Parcela 2/5: Payment 1847 - Pago com sucesso
+✓ Parcela 3/5: Payment 1847 - Pago com sucesso
+✓ Parcela 4/5: Payment 1847 - Pago com sucesso
+✓ Parcela 5/5: Payment 1847 - Pago com sucesso
+✓ Parcela 1/6: Payment 1852 - Pago com atraso
+✓ Parcela 2/6: Payment 1852 - Pago com atraso
+✓ Parcela 3/6: Payment 1852 - Pago com atraso
+✓ Parcela 4/6: Payment 1852 - Pago com atraso
+✓ Parcela 5/6: Payment 1852 - Pago com atraso
+✓ Parcela 6/6: Payment 1852 - Pago com atraso
+✓ Parcela 1/5: Payment 1854 - Pago com atraso
+✓ Parcela 2/5: Payment 1854 - Pago com atraso
+✓ Parcela 3/5: Payment 1854 - Pago com sucesso
+✓ Parcela 4/5: Payment 1854 - Pago com atraso
+✓ Parcela 5/5: Payment 1854 - Pago com atraso
+✓ Parcela 1/3: Payment 1856 - Pago com atraso
+✓ Parcela 2/3: Payment 1856 - Pago com atraso
+✓ Parcela 3/3: Payment 1856 - Pago com atraso
+✓ Parcela 1/2: Payment 1857 - Pago com atraso
+✓ Parcela 2/2: Payment 1857 - Pago com atraso
+✓ Parcela 1/6: Payment 1861 - Pago com atraso
+✓ Parcela 2/6: Payment 1861 - Pago com atraso
+✓ Parcela 3/6: Payment 1861 - Pago com atraso
+✓ Parcela 4/6: Payment 1861 - Pago com atraso
+✓ Parcela 5/6: Payment 1861 - Pago com atraso
+✓ Parcela 6/6: Payment 1861 - Pago com atraso
+✓ Parcela 1/5: Payment 1862 - Pago com sucesso
+✓ Parcela 2/5: Payment 1862 - Pago com atraso
+✓ Parcela 3/5: Payment 1862 - Pago com sucesso
+✓ Parcela 4/5: Payment 1862 - Pago com atraso
+✓ Parcela 5/5: Payment 1862 - Pago com sucesso
+✓ Parcela 1/6: Payment 1863 - Pago com atraso
+✓ Parcela 2/6: Payment 1863 - Pago com atraso
+✓ Parcela 3/6: Payment 1863 - Pago com atraso
+✓ Parcela 4/6: Payment 1863 - Pago com atraso
+✓ Parcela 5/6: Payment 1863 - Pago com atraso
+✓ Parcela 6/6: Payment 1863 - Pago com atraso
+✓ Parcela 1/4: Payment 1868 - Pago com atraso
+✓ Parcela 2/4: Payment 1868 - Pago com atraso
+✓ Parcela 3/4: Payment 1868 - Pago com atraso
+✓ Parcela 4/4: Payment 1868 - Aberta
+✓ Parcela 1/4: Payment 1869 - Pago com atraso
+✓ Parcela 2/4: Payment 1869 - Pago com atraso
+✓ Parcela 3/4: Payment 1869 - Pago com atraso
+✓ Parcela 4/4: Payment 1869 - Aberta
+✓ Parcela 1/10: Payment 1873 - Pago com sucesso
+✓ Parcela 2/10: Payment 1873 - Pago com atraso
+✓ Parcela 3/10: Payment 1873 - Pago com sucesso
+✓ Parcela 4/10: Payment 1873 - Pago com sucesso
+✓ Parcela 5/10: Payment 1873 - Pago com sucesso
+✓ Parcela 6/10: Payment 1873 - Pago com atraso
+✓ Parcela 7/10: Payment 1873 - Pago com atraso
+✓ Parcela 8/10: Payment 1873 - Pago com atraso
+✓ Parcela 9/10: Payment 1873 - Pago com atraso
+✓ Parcela 10/10: Payment 1873 - Aberta
+✓ Parcela 1/5: Payment 1876 - Pago com sucesso
+✓ Parcela 2/5: Payment 1876 - Pago com sucesso
+✓ Parcela 3/5: Payment 1876 - Pago com sucesso
+✓ Parcela 4/5: Payment 1876 - Pago com sucesso
+✓ Parcela 5/5: Payment 1876 - Pago com sucesso
+✓ Parcela 1/4: Payment 1877 - Pago com atraso
+✓ Parcela 2/4: Payment 1877 - Pago com atraso
+✓ Parcela 3/4: Payment 1877 - Pago com atraso
+✓ Parcela 4/4: Payment 1877 - Pago com atraso
+✓ Parcela 1/1: Payment 1878 - Aberta
+✓ Parcela 1/3: Payment 1882 - Pago com atraso
+✓ Parcela 2/3: Payment 1882 - Pago com atraso
+✓ Parcela 3/3: Payment 1882 - Pago com sucesso
+✓ Parcela 1/6: Payment 1883 - Pago com sucesso
+✓ Parcela 2/6: Payment 1883 - Pago com atraso
+✓ Parcela 3/6: Payment 1883 - Pago com atraso
+✓ Parcela 4/6: Payment 1883 - Pago com atraso
+✓ Parcela 5/6: Payment 1883 - Pago com atraso
+✓ Parcela 6/6: Payment 1883 - Pago com atraso
+✓ Parcela 1/2: Payment 1886 - Pago com atraso
+✓ Parcela 2/2: Payment 1886 - Pago com sucesso
+✓ Parcela 1/1: Payment 1889 - Pago com sucesso
+✓ Parcela 1/6: Payment 1890 - Pago com atraso
+✓ Parcela 2/6: Payment 1890 - Pago com atraso
+✓ Parcela 3/6: Payment 1890 - Pago com atraso
+✓ Parcela 4/6: Payment 1890 - Pago com atraso
+✓ Parcela 5/6: Payment 1890 - Pago com atraso
+✓ Parcela 6/6: Payment 1890 - Pago com atraso
+✓ Parcela 1/4: Payment 1893 - Pago com atraso
+✓ Parcela 2/4: Payment 1893 - Pago com atraso
+✓ Parcela 3/4: Payment 1893 - Pago com atraso
+✓ Parcela 4/4: Payment 1893 - Pago com atraso
+✓ Parcela 1/1: Payment 1894 - Pago com atraso
+✓ Parcela 1/6: Payment 1896 - Pago com sucesso
+✓ Parcela 2/6: Payment 1896 - Pago com sucesso
+✓ Parcela 3/6: Payment 1896 - Pago com sucesso
+✓ Parcela 4/6: Payment 1896 - Pago com sucesso
+✓ Parcela 5/6: Payment 1896 - Pago com sucesso
+✓ Parcela 6/6: Payment 1896 - Pago com sucesso
+✓ Parcela 1/7: Payment 1900 - Pago com sucesso
+✓ Parcela 2/7: Payment 1900 - Pago com sucesso
+✓ Parcela 3/7: Payment 1900 - Pago com sucesso
+✓ Parcela 4/7: Payment 1900 - Pago com sucesso
+✓ Parcela 5/7: Payment 1900 - Pago com sucesso
+✓ Parcela 6/7: Payment 1900 - Pago com sucesso
+✓ Parcela 7/7: Payment 1900 - Pago com sucesso
+✓ Parcela 1/5: Payment 1901 - Pago com sucesso
+✓ Parcela 2/5: Payment 1901 - Pago com sucesso
+✓ Parcela 3/5: Payment 1901 - Pago com atraso
+✓ Parcela 4/5: Payment 1901 - Pago com atraso
+✓ Parcela 5/5: Payment 1901 - Pago com atraso
+✓ Parcela 1/7: Payment 1902 - Pago com sucesso
+✓ Parcela 2/7: Payment 1902 - Pago com sucesso
+✓ Parcela 3/7: Payment 1902 - Pago com atraso
+✓ Parcela 4/7: Payment 1902 - Pago com atraso
+✓ Parcela 5/7: Payment 1902 - Pago com atraso
+✓ Parcela 6/7: Payment 1902 - Pago com sucesso
+✓ Parcela 7/7: Payment 1902 - Pago com sucesso
+✓ Parcela 1/5: Payment 1903 - Aberta
+✓ Parcela 2/5: Payment 1903 - Aberta
+✓ Parcela 3/5: Payment 1903 - Aberta
+✓ Parcela 4/5: Payment 1903 - Aberta
+✓ Parcela 5/5: Payment 1903 - Aberta
+✓ Parcela 1/1: Payment 1908 - Pago com atraso
+✓ Parcela 1/10: Payment 1910 - Pago com atraso
+✓ Parcela 2/10: Payment 1910 - Pago com sucesso
+✓ Parcela 3/10: Payment 1910 - Pago com atraso
+✓ Parcela 4/10: Payment 1910 - Pago com sucesso
+✓ Parcela 5/10: Payment 1910 - Pago com sucesso
+✓ Parcela 6/10: Payment 1910 - Pago com atraso
+✓ Parcela 7/10: Payment 1910 - Aberta
+✓ Parcela 8/10: Payment 1910 - Aberta
+✓ Parcela 9/10: Payment 1910 - Aberta
+✓ Parcela 10/10: Payment 1910 - Aberta
+✓ Parcela 1/14: Payment 1914 - Pago com sucesso
+✓ Parcela 2/14: Payment 1914 - Pago com sucesso
+✓ Parcela 3/14: Payment 1914 - Pago com sucesso
+✓ Parcela 4/14: Payment 1914 - Pago com sucesso
+✓ Parcela 5/14: Payment 1914 - Pago com sucesso
+✓ Parcela 6/14: Payment 1914 - Pago com sucesso
+✓ Parcela 7/14: Payment 1914 - Pago com sucesso
+✓ Parcela 8/14: Payment 1914 - Aberta
+✓ Parcela 9/14: Payment 1914 - Aberta
+✓ Parcela 10/14: Payment 1914 - Aberta
+✓ Parcela 11/14: Payment 1914 - Aberta
+✓ Parcela 12/14: Payment 1914 - Aberta
+✓ Parcela 13/14: Payment 1914 - Aberta
+✓ Parcela 14/14: Payment 1914 - Aberta
+✓ Parcela 1/5: Payment 1917 - Pago com sucesso
+✓ Parcela 2/5: Payment 1917 - Pago com sucesso
+✓ Parcela 3/5: Payment 1917 - Pago com sucesso
+✓ Parcela 4/5: Payment 1917 - Pago com sucesso
+✓ Parcela 5/5: Payment 1917 - Pago com sucesso
+✓ Parcela 1/6: Payment 1920 - Pago com sucesso
+✓ Parcela 2/6: Payment 1920 - Pago com sucesso
+✓ Parcela 3/6: Payment 1920 - Pago com sucesso
+✓ Parcela 4/6: Payment 1920 - Pago com sucesso
+✓ Parcela 5/6: Payment 1920 - Pago com sucesso
+✓ Parcela 6/6: Payment 1920 - Pago com sucesso
+✓ Parcela 1/4: Payment 1919 - Pago com sucesso
+✓ Parcela 2/4: Payment 1919 - Pago com sucesso
+✓ Parcela 3/4: Payment 1919 - Pago com sucesso
+✓ Parcela 4/4: Payment 1919 - Pago com sucesso
+✓ Parcela 1/6: Payment 1928 - Pago com atraso
+✓ Parcela 2/6: Payment 1928 - Pago com atraso
+✓ Parcela 3/6: Payment 1928 - Pago com atraso
+✓ Parcela 4/6: Payment 1928 - Pago com atraso
+✓ Parcela 5/6: Payment 1928 - Pago com sucesso
+✓ Parcela 6/6: Payment 1928 - Aberta
+✓ Parcela 1/7: Payment 1934 - Pago com atraso
+✓ Parcela 2/7: Payment 1934 - Pago com atraso
+✓ Parcela 3/7: Payment 1934 - Pago com atraso
+✓ Parcela 4/7: Payment 1934 - Pago com atraso
+✓ Parcela 5/7: Payment 1934 - Pago com atraso
+✓ Parcela 6/7: Payment 1934 - Pago com sucesso
+✓ Parcela 7/7: Payment 1934 - Aberta
+✓ Parcela 1/6: Payment 1930 - Pago com sucesso
+✓ Parcela 2/6: Payment 1930 - Pago com atraso
+✓ Parcela 3/6: Payment 1930 - Pago com atraso
+✓ Parcela 4/6: Payment 1930 - Pago com atraso
+✓ Parcela 5/6: Payment 1930 - Aberta
+✓ Parcela 6/6: Payment 1930 - Aberta
+✓ Parcela 1/5: Payment 1942 - Pago com atraso
+✓ Parcela 2/5: Payment 1942 - Pago com atraso
+✓ Parcela 3/5: Payment 1942 - Pago com atraso
+✓ Parcela 4/5: Payment 1942 - Pago com atraso
+✓ Parcela 5/5: Payment 1942 - Pago com atraso
+✓ Parcela 1/4: Payment 1944 - Pago com sucesso
+✓ Parcela 2/4: Payment 1944 - Pago com sucesso
+✓ Parcela 3/4: Payment 1944 - Pago com sucesso
+✓ Parcela 4/4: Payment 1944 - Pago com sucesso
+✓ Parcela 1/1: Payment 1945 - Aberta
+✓ Parcela 1/5: Payment 1949 - Pago com sucesso
+✓ Parcela 2/5: Payment 1949 - Pago com sucesso
+✓ Parcela 3/5: Payment 1949 - Pago com sucesso
+✓ Parcela 4/5: Payment 1949 - Pago com sucesso
+✓ Parcela 5/5: Payment 1949 - Pago com sucesso
+✓ Parcela 1/6: Payment 1950 - Pago com atraso
+✓ Parcela 2/6: Payment 1950 - Pago com atraso
+✓ Parcela 3/6: Payment 1950 - Pago com atraso
+✓ Parcela 4/6: Payment 1950 - Pago com atraso
+✓ Parcela 5/6: Payment 1950 - Aberta
+✓ Parcela 6/6: Payment 1950 - Aberta
+✓ Parcela 1/10: Payment 1953 - Pago com atraso
+✓ Parcela 2/10: Payment 1953 - Pago com atraso
+✓ Parcela 3/10: Payment 1953 - Aberta
+✓ Parcela 4/10: Payment 1953 - Aberta
+✓ Parcela 5/10: Payment 1953 - Aberta
+✓ Parcela 6/10: Payment 1953 - Aberta
+✓ Parcela 7/10: Payment 1953 - Aberta
+✓ Parcela 8/10: Payment 1953 - Aberta
+✓ Parcela 9/10: Payment 1953 - Aberta
+✓ Parcela 10/10: Payment 1953 - Aberta
+✓ Parcela 1/10: Payment 1954 - Pago com sucesso
+✓ Parcela 2/10: Payment 1954 - Pago com sucesso
+✓ Parcela 3/10: Payment 1954 - Pago com atraso
+✓ Parcela 4/10: Payment 1954 - Pago com atraso
+✓ Parcela 5/10: Payment 1954 - Aberta
+✓ Parcela 6/10: Payment 1954 - Aberta
+✓ Parcela 7/10: Payment 1954 - Aberta
+✓ Parcela 8/10: Payment 1954 - Aberta
+✓ Parcela 9/10: Payment 1954 - Aberta
+✓ Parcela 10/10: Payment 1954 - Aberta
+✓ Parcela 1/3: Payment 1956 - Pago com sucesso
+✓ Parcela 2/3: Payment 1956 - Pago com sucesso
+✓ Parcela 3/3: Payment 1956 - Pago com sucesso
+✓ Parcela 1/5: Payment 1957 - Pago com atraso
+✓ Parcela 2/5: Payment 1957 - Pago com atraso
+✓ Parcela 3/5: Payment 1957 - Pago com atraso
+✓ Parcela 4/5: Payment 1957 - Aberta
+✓ Parcela 5/5: Payment 1957 - Aberta
+✓ Parcela 1/5: Payment 1959 - Pago com sucesso
+✓ Parcela 2/5: Payment 1959 - Pago com sucesso
+✓ Parcela 3/5: Payment 1959 - Pago com sucesso
+✓ Parcela 4/5: Payment 1959 - Pago com sucesso
+✓ Parcela 5/5: Payment 1959 - Aberta
+✓ Parcela 1/5: Payment 1964 - Pago com atraso
+✓ Parcela 2/5: Payment 1964 - Pago com atraso
+✓ Parcela 3/5: Payment 1964 - Aberta
+✓ Parcela 4/5: Payment 1964 - Aberta
+✓ Parcela 5/5: Payment 1964 - Aberta
+✓ Parcela 1/5: Payment 1966 - Pago com atraso
+✓ Parcela 2/5: Payment 1966 - Pago com atraso
+✓ Parcela 3/5: Payment 1966 - Pago com atraso
+✓ Parcela 4/5: Payment 1966 - Pago com sucesso
+✓ Parcela 5/5: Payment 1966 - Pago com sucesso
+✓ Parcela 1/5: Payment 1971 - Pago com atraso
+✓ Parcela 2/5: Payment 1971 - Pago com sucesso
+✓ Parcela 3/5: Payment 1971 - Pago com sucesso
+✓ Parcela 4/5: Payment 1971 - Aberta
+✓ Parcela 5/5: Payment 1971 - Aberta
+✓ Parcela 1/10: Payment 1972 - Pago com atraso
+✓ Parcela 2/10: Payment 1972 - Pago com atraso
+✓ Parcela 3/10: Payment 1972 - Aberta
+✓ Parcela 4/10: Payment 1972 - Aberta
+✓ Parcela 5/10: Payment 1972 - Aberta
+✓ Parcela 6/10: Payment 1972 - Aberta
+✓ Parcela 7/10: Payment 1972 - Aberta
+✓ Parcela 8/10: Payment 1972 - Aberta
+✓ Parcela 9/10: Payment 1972 - Aberta
+✓ Parcela 10/10: Payment 1972 - Aberta
+✓ Parcela 1/9: Payment 1973 - Pago com sucesso
+✓ Parcela 2/9: Payment 1973 - Pago com atraso
+✓ Parcela 3/9: Payment 1973 - Pago com sucesso
+✓ Parcela 4/9: Payment 1973 - Aberta
+✓ Parcela 5/9: Payment 1973 - Aberta
+✓ Parcela 6/9: Payment 1973 - Aberta
+✓ Parcela 7/9: Payment 1973 - Aberta
+✓ Parcela 8/9: Payment 1973 - Aberta
+✓ Parcela 9/9: Payment 1973 - Aberta
+✓ Parcela 1/3: Payment 1974 - Pago com sucesso
+✓ Parcela 2/3: Payment 1974 - Pago com sucesso
+✓ Parcela 3/3: Payment 1974 - Pago com sucesso
+✓ Parcela 1/8: Payment 1975 - Pago com atraso
+✓ Parcela 2/8: Payment 1975 - Pago com atraso
+✓ Parcela 3/8: Payment 1975 - Pago com sucesso
+✓ Parcela 4/8: Payment 1975 - Aberta
+✓ Parcela 5/8: Payment 1975 - Aberta
+✓ Parcela 6/8: Payment 1975 - Aberta
+✓ Parcela 7/8: Payment 1975 - Aberta
+✓ Parcela 8/8: Payment 1975 - Aberta
+✓ Parcela 1/1: Payment 1960 - Aberta
+✓ Parcela 1/6: Payment 1977 - Pago com sucesso
+✓ Parcela 2/6: Payment 1977 - Pago com sucesso
+✓ Parcela 3/6: Payment 1977 - Aberta
+✓ Parcela 4/6: Payment 1977 - Aberta
+✓ Parcela 5/6: Payment 1977 - Aberta
+✓ Parcela 6/6: Payment 1977 - Aberta
+✓ Parcela 1/5: Payment 1983 - Pago com atraso
+✓ Parcela 2/5: Payment 1983 - Pago com atraso
+✓ Parcela 3/5: Payment 1983 - Aberta
+✓ Parcela 4/5: Payment 1983 - Aberta
+✓ Parcela 5/5: Payment 1983 - Aberta
+✓ Parcela 1/6: Payment 1984 - Pago com atraso
+✓ Parcela 2/6: Payment 1984 - Pago com atraso
+✓ Parcela 3/6: Payment 1984 - Aberta
+✓ Parcela 4/6: Payment 1984 - Aberta
+✓ Parcela 5/6: Payment 1984 - Aberta
+✓ Parcela 6/6: Payment 1984 - Aberta
+✓ Parcela 1/6: Payment 1979 - Pago com atraso
+✓ Parcela 2/6: Payment 1979 - Pago com sucesso
+✓ Parcela 3/6: Payment 1979 - Aberta
+✓ Parcela 4/6: Payment 1979 - Aberta
+✓ Parcela 5/6: Payment 1979 - Aberta
+✓ Parcela 6/6: Payment 1979 - Aberta
+✓ Parcela 1/6: Payment 1988 - Pago com atraso
+✓ Parcela 2/6: Payment 1988 - Pago com atraso
+✓ Parcela 3/6: Payment 1988 - Aberta
+✓ Parcela 4/6: Payment 1988 - Aberta
+✓ Parcela 5/6: Payment 1988 - Aberta
+✓ Parcela 6/6: Payment 1988 - Aberta
+✓ Parcela 1/8: Payment 1989 - Pago com atraso
+✓ Parcela 2/8: Payment 1989 - Aberta
+✓ Parcela 3/8: Payment 1989 - Aberta
+✓ Parcela 4/8: Payment 1989 - Aberta
+✓ Parcela 5/8: Payment 1989 - Aberta
+✓ Parcela 6/8: Payment 1989 - Aberta
+✓ Parcela 7/8: Payment 1989 - Aberta
+✓ Parcela 8/8: Payment 1989 - Aberta
+✓ Parcela 1/6: Payment 1999 - Aberta
+✓ Parcela 2/6: Payment 1999 - Aberta
+✓ Parcela 3/6: Payment 1999 - Aberta
+✓ Parcela 4/6: Payment 1999 - Aberta
+✓ Parcela 5/6: Payment 1999 - Aberta
+✓ Parcela 6/6: Payment 1999 - Aberta
+✓ Parcela 1/1: Payment 2000 - Aberta
+✓ Parcela 1/5: Payment 2001 - Pago com sucesso
+✓ Parcela 2/5: Payment 2001 - Aberta
+✓ Parcela 3/5: Payment 2001 - Aberta
+✓ Parcela 4/5: Payment 2001 - Aberta
+✓ Parcela 5/5: Payment 2001 - Aberta
+✓ Parcela 1/6: Payment 2004 - Pago com atraso
+✓ Parcela 2/6: Payment 2004 - Pago com atraso
+✓ Parcela 3/6: Payment 2004 - Aberta
+✓ Parcela 4/6: Payment 2004 - Aberta
+✓ Parcela 5/6: Payment 2004 - Aberta
+✓ Parcela 6/6: Payment 2004 - Aberta
+✓ Parcela 1/10: Payment 2005 - Aberta
+✓ Parcela 2/10: Payment 2005 - Aberta
+✓ Parcela 3/10: Payment 2005 - Aberta
+✓ Parcela 4/10: Payment 2005 - Aberta
+✓ Parcela 5/10: Payment 2005 - Aberta
+✓ Parcela 6/10: Payment 2005 - Aberta
+✓ Parcela 7/10: Payment 2005 - Aberta
+✓ Parcela 8/10: Payment 2005 - Aberta
+✓ Parcela 9/10: Payment 2005 - Aberta
+✓ Parcela 10/10: Payment 2005 - Aberta
+✓ Parcela 1/2: Payment 2012 - Aberta
+✓ Parcela 2/2: Payment 2012 - Aberta
+✓ Parcela 1/5: Payment 2015 - Pago com sucesso
+✓ Parcela 2/5: Payment 2015 - Pago com sucesso
+✓ Parcela 3/5: Payment 2015 - Aberta
+✓ Parcela 4/5: Payment 2015 - Aberta
+✓ Parcela 5/5: Payment 2015 - Aberta
+
+================================================================================
+RELATÓRIO DE MIGRAÇÃO
+================================================================================
+Total de registros: 3913
+✓ Sucesso:          3783
+⏭️  Ignorados:        130
+✗ Erros:            0
+================================================================================
+
+⚠️  Log de erros salvo em: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\logs\installments-errors.json
+
+📊 Total de parcelas no banco: 3783
+📊 Parcelas pagas: 3361
+📊 Parcelas pendentes: 422
+
+✅ Migração concluída com sucesso!

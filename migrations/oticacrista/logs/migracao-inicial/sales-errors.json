@@ -1,0 +1,730 @@
+[
+  {
+    "atendimento": {
+      "ateId": 10043,
+      "ateColaborador": null,
+      "ateCliente": 8,
+      "ateDataCompra": "3/5/15",
+      "ateDataVencimento": null,
+      "ateTotal": "1920,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 8 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10048,
+      "ateColaborador": 2,
+      "ateCliente": 41,
+      "ateDataCompra": "5/27/16",
+      "ateDataVencimento": "2/1/17",
+      "ateTotal": "1250,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "650,00"
+    },
+    "error": "Cliente 41 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10054,
+      "ateColaborador": 2,
+      "ateCliente": 46,
+      "ateDataCompra": "3/1/16",
+      "ateDataVencimento": null,
+      "ateTotal": "800,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 46 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10058,
+      "ateColaborador": 2,
+      "ateCliente": 161,
+      "ateDataCompra": "1/18/17",
+      "ateDataVencimento": null,
+      "ateTotal": "660,00",
+      "atePago": "Pago com sucesso no catão de crédito em 6 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 161 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10085,
+      "ateColaborador": 2,
+      "ateCliente": 298,
+      "ateDataCompra": "2/8/17",
+      "ateDataVencimento": "3/1/17",
+      "ateTotal": "400,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 298 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10146,
+      "ateColaborador": 2,
+      "ateCliente": 104,
+      "ateDataCompra": "12/10/16",
+      "ateDataVencimento": "1/10/17",
+      "ateTotal": "900,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 104 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10175,
+      "ateColaborador": 2,
+      "ateCliente": 76,
+      "ateDataCompra": "11/21/16",
+      "ateDataVencimento": "5/15/17",
+      "ateTotal": "1624,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "1392,00"
+    },
+    "error": "Cliente 76 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10281,
+      "ateColaborador": 2,
+      "ateCliente": 903,
+      "ateDataCompra": "8/28/17",
+      "ateDataVencimento": "9/2/17",
+      "ateTotal": "500,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 903 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10290,
+      "ateColaborador": 2,
+      "ateCliente": 923,
+      "ateDataCompra": "9/9/17",
+      "ateDataVencimento": null,
+      "ateTotal": "850,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 923 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10370,
+      "ateColaborador": 2,
+      "ateCliente": 298,
+      "ateDataCompra": "12/28/17",
+      "ateDataVencimento": "1/10/18",
+      "ateTotal": "500,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 298 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10387,
+      "ateColaborador": 2,
+      "ateCliente": 1282,
+      "ateDataCompra": "1/12/18",
+      "ateDataVencimento": "2/15/18",
+      "ateTotal": "400,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 1282 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10597,
+      "ateColaborador": 2,
+      "ateCliente": 898,
+      "ateDataCompra": "10/17/18",
+      "ateDataVencimento": null,
+      "ateTotal": "0,01",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 898 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10626,
+      "ateColaborador": 2,
+      "ateCliente": 1650,
+      "ateDataCompra": "12/13/18",
+      "ateDataVencimento": "1/10/19",
+      "ateTotal": "900,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "400,00"
+    },
+    "error": "Cliente 1650 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10742,
+      "ateColaborador": 2,
+      "ateCliente": 104,
+      "ateDataCompra": "6/1/19",
+      "ateDataVencimento": "7/10/19",
+      "ateTotal": "1300,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 104 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10829,
+      "ateColaborador": 2,
+      "ateCliente": 898,
+      "ateDataCompra": "10/1/19",
+      "ateDataVencimento": null,
+      "ateTotal": "500,00",
+      "atePago": "0",
+      "ateFormaPagamento": null,
+      "ateEntrada": null
+    },
+    "error": "Cliente 898 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10880,
+      "ateColaborador": 2,
+      "ateCliente": 923,
+      "ateDataCompra": "12/23/19",
+      "ateDataVencimento": "1/20/20",
+      "ateTotal": "2000,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 923 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 10922,
+      "ateColaborador": 2,
+      "ateCliente": 1870,
+      "ateDataCompra": "2/28/20",
+      "ateDataVencimento": "3/10/20",
+      "ateTotal": "1050,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 1870 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11023,
+      "ateColaborador": null,
+      "ateCliente": 1933,
+      "ateDataCompra": "8/14/20",
+      "ateDataVencimento": "9/15/20",
+      "ateTotal": "600,00",
+      "atePago": "Carnê aberto",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "120,00"
+    },
+    "error": "Cliente 1933 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11118,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "11/30/20",
+      "ateDataVencimento": null,
+      "ateTotal": "270,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11155,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "12/30/20",
+      "ateDataVencimento": null,
+      "ateTotal": "70,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11156,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "1/30/21",
+      "ateDataVencimento": null,
+      "ateTotal": "195,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11176,
+      "ateColaborador": 2,
+      "ateCliente": 923,
+      "ateDataCompra": "3/13/21",
+      "ateDataVencimento": "4/10/21",
+      "ateTotal": "2000,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 923 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11189,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "2/26/21",
+      "ateDataVencimento": null,
+      "ateTotal": "162,50",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11190,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "3/31/21",
+      "ateDataVencimento": null,
+      "ateTotal": "70,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11211,
+      "ateColaborador": 2,
+      "ateCliente": 1650,
+      "ateDataCompra": "5/13/21",
+      "ateDataVencimento": null,
+      "ateTotal": "650,00",
+      "atePago": "Pago com sucesso no catão de crédito em 4 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "250,00"
+    },
+    "error": "Cliente 1650 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11232,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "4/30/21",
+      "ateDataVencimento": null,
+      "ateTotal": "185,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11233,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "5/31/21",
+      "ateDataVencimento": null,
+      "ateTotal": "70,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11240,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "6/30/21",
+      "ateDataVencimento": null,
+      "ateTotal": "170,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11257,
+      "ateColaborador": 2,
+      "ateCliente": 2103,
+      "ateDataCompra": "7/22/21",
+      "ateDataVencimento": null,
+      "ateTotal": "690,00",
+      "atePago": "Pago com sucesso no catão de crédito em 7 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2103 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11261,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "7/31/21",
+      "ateDataVencimento": null,
+      "ateTotal": "135,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11326,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "11/30/21",
+      "ateDataVencimento": null,
+      "ateTotal": "125,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11356,
+      "ateColaborador": null,
+      "ateCliente": 2020,
+      "ateDataCompra": "1/31/22",
+      "ateDataVencimento": null,
+      "ateTotal": "210,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11407,
+      "ateColaborador": 2,
+      "ateCliente": 2301,
+      "ateDataCompra": "4/25/22",
+      "ateDataVencimento": "5/5/22",
+      "ateTotal": "1200,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2301 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11408,
+      "ateColaborador": 2,
+      "ateCliente": 2301,
+      "ateDataCompra": "4/25/22",
+      "ateDataVencimento": null,
+      "ateTotal": "500,00",
+      "atePago": "Pago com sucesso no catão de crédito em 1 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2301 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11411,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "4/30/22",
+      "ateDataVencimento": null,
+      "ateTotal": "180,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11447,
+      "ateColaborador": null,
+      "ateCliente": 2332,
+      "ateDataCompra": "6/28/22",
+      "ateDataVencimento": null,
+      "ateTotal": "700,00",
+      "atePago": "Pago com sucesso no cartão de débito",
+      "ateFormaPagamento": "DÉBITO",
+      "ateEntrada": "350,00"
+    },
+    "error": "Cliente 2332 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11464,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "7/30/22",
+      "ateDataVencimento": null,
+      "ateTotal": "35,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11478,
+      "ateColaborador": 2,
+      "ateCliente": 104,
+      "ateDataCompra": "8/17/22",
+      "ateDataVencimento": "9/17/22",
+      "ateTotal": "1500,00",
+      "atePago": "Carnê concluído",
+      "ateFormaPagamento": "CARNÊ",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 104 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11488,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "8/31/22",
+      "ateDataVencimento": null,
+      "ateTotal": "155,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11510,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "9/30/22",
+      "ateDataVencimento": null,
+      "ateTotal": "110,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11526,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "10/31/22",
+      "ateDataVencimento": null,
+      "ateTotal": "75,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11555,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "12/30/22",
+      "ateDataVencimento": null,
+      "ateTotal": "610,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11571,
+      "ateColaborador": 2,
+      "ateCliente": 2393,
+      "ateDataCompra": "1/16/23",
+      "ateDataVencimento": null,
+      "ateTotal": "390,00",
+      "atePago": "Pago com sucesso no catão de crédito em 5 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2393 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11581,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "1/31/23",
+      "ateDataVencimento": null,
+      "ateTotal": "460",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11598,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "2/28/23",
+      "ateDataVencimento": null,
+      "ateTotal": "155,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11611,
+      "ateColaborador": 2,
+      "ateCliente": 1650,
+      "ateDataCompra": "3/14/23",
+      "ateDataVencimento": null,
+      "ateTotal": "1950,00",
+      "atePago": "Pago com sucesso no catão de crédito em 10 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 1650 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11648,
+      "ateColaborador": 2,
+      "ateCliente": 2431,
+      "ateDataCompra": "5/22/23",
+      "ateDataVencimento": null,
+      "ateTotal": "500,00",
+      "atePago": "Pago com sucesso no catão de crédito em 5 parcelas",
+      "ateFormaPagamento": "CRÉDITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2431 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11658,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "5/31/23",
+      "ateDataVencimento": null,
+      "ateTotal": "250,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11760,
+      "ateColaborador": 2,
+      "ateCliente": 2479,
+      "ateDataCompra": "11/30/23",
+      "ateDataVencimento": null,
+      "ateTotal": "200,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2479 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11810,
+      "ateColaborador": 2,
+      "ateCliente": 2504,
+      "ateDataCompra": "2/15/24",
+      "ateDataVencimento": null,
+      "ateTotal": "750,00",
+      "atePago": "Pago com sucesso no cartão de débito",
+      "ateFormaPagamento": "DÉBITO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2504 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 11824,
+      "ateColaborador": 2,
+      "ateCliente": 2020,
+      "ateDataCompra": "3/4/24",
+      "ateDataVencimento": null,
+      "ateTotal": "400,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2020 não encontrado"
+  },
+  {
+    "atendimento": {
+      "ateId": 12105,
+      "ateColaborador": 2,
+      "ateCliente": 2642,
+      "ateDataCompra": "9/2/25",
+      "ateDataVencimento": null,
+      "ateTotal": "1700,00",
+      "atePago": "Pago com sucesso em dinheiro",
+      "ateFormaPagamento": "DINHEIRO",
+      "ateEntrada": "0,00"
+    },
+    "error": "Cliente 2642 não encontrado"
+  }
+]

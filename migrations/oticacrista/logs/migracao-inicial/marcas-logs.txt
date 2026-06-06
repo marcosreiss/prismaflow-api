@@ -1,0 +1,175 @@
+
+================================================================================
+MIGRAÇÃO DE MARCAS - ÓTICA CRISTÃ
+================================================================================
+
+Tenant ID: cmibvcyed00007m0118rkgft8
+Branch ID: cmibvcyed00017m014r66e39w
+Arquivo: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\marca.xlsx
+
+📂 Lendo arquivo Excel...
+✓ 138 marcas encontradas
+
+🔄 Iniciando migração...
+
+✓ Marca 1: Sem Marca
+✓ Marca 2: JEAN MONIER
+⏭️  Marca "JEAN PIERRE" já existe (ID: 166)
+✓ Marca 4: PLATINI
+✓ Marca 5: COROLLA
+✓ Marca 6: OPTIMAX
+✓ Marca 7: BURGUESE
+✓ Marca 8: MAXLINE
+✓ Marca 9: PIERRE CARDIN
+✓ Marca 10: FOX
+✓ Marca 11: IMOLA
+✓ Marca 12: LAVORATO
+✓ Marca 13: PROSOL
+✓ Marca 14: TECNOL
+✓ Marca 15: ASOLO
+✗ Erro ao migrar marca 16: 
+Invalid `prisma.brand.create()` invocation in
+C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\scripts\01-migrate-brands.ts:137:28
+
+  134 }
+  135
+  136 // Criar marca
+→ 137 await prisma.brand.create(
+Unique constraint failed on the constraint: `PRIMARY`
+✓ Marca 17: EXPRESS
+✓ Marca 18: INTELECTUM
+✓ Marca 20: LIZEA
+✓ Marca 21: AUGEN
+✓ Marca 22: HAGNUS
+✓ Marca 23: FLEX
+✓ Marca 24: DIOCULOS
+✓ Marca 25: KAVALEIROS
+✓ Marca 26: COPACABANAS
+✓ Marca 27: PLAY BOY
+✓ Marca 28: LEVERT
+✓ Marca 29: LUCIANA GIMENES
+✓ Marca 30: X-TREME
+✓ Marca 31: TIGRÃO
+✓ Marca 32: PRINCESA
+✓ Marca 33: LOUGGE
+✓ Marca 34: DA VINCI
+✓ Marca 35: HESS
+✓ Marca 36: CLASSICA
+✓ Marca 37: DETROIT
+✓ Marca 38: GRAZI
+✓ Marca 39: VOGUE
+✓ Marca 40: KEYPER
+✓ Marca 41: RAY BAN
+✓ Marca 42: K&L
+✓ Marca 43: TURMA DA MONICA
+✓ Marca 51: HOYA
+✓ Marca 60: ESSILOR
+✓ Marca 63: ZEISS
+✓ Marca 64: SOLA
+✓ Marca 67: GUGA KUERTEN
+✓ Marca 68: DI VIALLE
+✓ Marca 71: ALAN GARRAUD
+✓ Marca 72: LEMUD
+✓ Marca 73: KRISTAL
+✓ Marca 74: PAOLA PIOVANI
+✓ Marca 75: SUN WAY
+✓ Marca 76: OASIS
+✓ Marca 79: PEREGO
+✓ Marca 80: OPHBRAS
+✓ Marca 81: ESSLOR DESATIVADA
+✓ Marca 82: BERINE
+✓ Marca 83: OPTVIW
+✓ Marca 84: TRATAMENTOS
+✓ Marca 85: SIGNUS
+✓ Marca 86: MASTER GLASS
+✓ Marca 87: POPULAR
+✓ Marca 88: HAYTEK
+✓ Marca 89: VISCO
+✓ Marca 90: CESAR CIELO
+✓ Marca 92: SALDO ANTERIOR
+✓ Marca 93: EGLANCE
+✓ Marca 94: ARNETTE
+✓ Marca 95: D'VISION
+✓ Marca 96: SCUDO
+✓ Marca 97: PRONTO
+✓ Marca 98: BERINE SEM PRODUTO
+✓ Marca 99: KEEPER
+✓ Marca 100: DI VITTORE
+✓ Marca 101: RENOMA
+✓ Marca 102: TOP LINE
+✓ Marca 103: SOLOTICA
+✓ Marca 104: CORRIGIR
+✓ Marca 105: VEJA BEM MEU BEM
+✓ Marca 106: LABO OPTICA
+✓ Marca 108: PROMOÇÃO
+⏭️  Marca "CORRIGIR" já existe (ID: 104)
+✓ Marca 110: TEC LAB
+✓ Marca 111: VIP OPTIC
+✓ Marca 112: BERINE SP
+✓ Marca 113: GIRO
+✓ Marca 114: MARESIA
+✓ Marca 115: VIZZANO
+✓ Marca 116: VIP GOLD
+✓ Marca 117: BURGET
+✓ Marca 118: YNOT
+✓ Marca 119: BRASIL LENTES
+✓ Marca 120: OPTO PHARMA
+✓ Marca 121: GIRO COPS
+✓ Marca 122: CENTRAL DIST
+✓ Marca 123: KEEPER BRASIL
+✓ Marca 124: SPELLBOUND
+✓ Marca 125: VISIONMAX LABO
+✓ Marca 126: VICTOR LORENZO
+✓ Marca 127: RENEGOCIAÇÃO
+✓ Marca 128: OPTI PRIME
+✓ Marca 129: PRO EASY
+✓ Marca 130: FIAMMA
+✓ Marca 131: URBAN
+✓ Marca 132: BRASIL OCULAR
+✓ Marca 133: GOLD LIFE
+✓ Marca 134: SANTOS DIST
+✓ Marca 135: PERSONAL
+✓ Marca 136: SOLAB
+✓ Marca 137: OK
+✓ Marca 138: SOLAB DESATIVADA
+✓ Marca 139: OBEN
+✓ Marca 140: AUGE
+✓ Marca 141: VISEL
+✓ Marca 142: FRESHLOOK
+✓ Marca 143: COPS
+✓ Marca 144: DI MARELLA
+✓ Marca 145: VLS SPORT
+✓ Marca 146: K2
+✓ Marca 147: SAULO DIST
+✓ Marca 148: PAULO CARRARO
+✓ Marca 149: VALENTINA GUERRA
+✓ Marca 150: CARMEN VITTI
+✓ Marca 151: ROMANO
+✓ Marca 152: GOLD VIEW DIST
+✓ Marca 153: DIST DIGITAL
+✓ Marca 154: ECKO UNLTD
+✓ Marca 155: VERTZ
+✓ Marca 156: DIST 2A OPTICOS
+✓ Marca 157: POWER
+✓ Marca 158: TOP CLUB
+✓ Marca 159: PRÓPIA
+✓ Marca 160: DIST LOHAN
+✓ Marca 161: LOHAN DIST
+✓ Marca 162: SERVIOPTICA DIST
+✓ Marca 163: CRISTOVAM DIST
+✓ Marca 164: DEBORAH SECCO
+
+================================================================================
+RELATÓRIO DE MIGRAÇÃO
+================================================================================
+Total de registros: 138
+✓ Sucesso:          135
+⏭️  Ignorados:        2
+✗ Erros:            1
+================================================================================
+
+⚠️  Log de erros salvo em: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\logs\marcas-errors.json
+
+📊 Total de marcas no banco: 135
+
+✅ Migração concluída com sucesso!

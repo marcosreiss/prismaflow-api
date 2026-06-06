@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "branchId": "cmibvcyed00017m014r66e39w",
+  "dataPath": "C:\\Work\\prismaflow\\prismaflow-api\\migrations\\oticacrista\\data\\produto.xlsx",
+  "totalRows": 783,
+  "created": 35,
+  "skipped": 748,
+  "errors": 0,
+  "ranAt": "2026-02-28T22:58:20.938Z"
+}

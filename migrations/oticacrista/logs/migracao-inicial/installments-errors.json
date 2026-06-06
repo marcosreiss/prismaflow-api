@@ -1,0 +1,1692 @@
+[
+  {
+    "parcela": {
+      "carId": 18,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "1/30/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 19,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "2/28/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 20,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "3/28/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 21,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "4/28/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 22,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "5/28/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 23,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "1/30/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 24,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "2/28/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 25,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "3/28/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 26,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "4/28/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 27,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "60.00",
+      "carVencimento": "5/28/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 28,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "1/30/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 29,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "2/28/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 30,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "3/28/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 31,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "4/28/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 32,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "5/28/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 33,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "1/30/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 34,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "2/28/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 35,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "3/28/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 36,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "4/28/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 37,
+      "carAtendimento": 10023,
+      "carParcelas": 5,
+      "carValorParcela": "58.00",
+      "carVencimento": "5/28/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 38,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "2/7/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 39,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "3/7/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 40,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "4/7/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 41,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "5/7/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 42,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "6/7/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 43,
+      "carAtendimento": 10023,
+      "carParcelas": 6,
+      "carValorParcela": "300.00",
+      "carVencimento": "7/7/17",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10023"
+  },
+  {
+    "parcela": {
+      "carId": 139,
+      "carAtendimento": 10048,
+      "carParcelas": 3,
+      "carValorParcela": "200.00",
+      "carVencimento": "2/1/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/1/17"
+    },
+    "error": "Payment não encontrado para venda 10048"
+  },
+  {
+    "parcela": {
+      "carId": 140,
+      "carAtendimento": 10048,
+      "carParcelas": 3,
+      "carValorParcela": "200.00",
+      "carVencimento": "3/1/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "3/1/17"
+    },
+    "error": "Payment não encontrado para venda 10048"
+  },
+  {
+    "parcela": {
+      "carId": 141,
+      "carAtendimento": 10048,
+      "carParcelas": 3,
+      "carValorParcela": "200.00",
+      "carVencimento": "4/1/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "3/1/17"
+    },
+    "error": "Payment não encontrado para venda 10048"
+  },
+  {
+    "parcela": {
+      "carId": 163,
+      "carAtendimento": 10059,
+      "carParcelas": 3,
+      "carValorParcela": "400.00",
+      "carVencimento": "2/15/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10059"
+  },
+  {
+    "parcela": {
+      "carId": 164,
+      "carAtendimento": 10059,
+      "carParcelas": 3,
+      "carValorParcela": "400.00",
+      "carVencimento": "3/15/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10059"
+  },
+  {
+    "parcela": {
+      "carId": 165,
+      "carAtendimento": 10059,
+      "carParcelas": 3,
+      "carValorParcela": "400.00",
+      "carVencimento": "4/15/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10059"
+  },
+  {
+    "parcela": {
+      "carId": 191,
+      "carAtendimento": 10067,
+      "carParcelas": 4,
+      "carValorParcela": "87.50",
+      "carVencimento": "3/2/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10067"
+  },
+  {
+    "parcela": {
+      "carId": 192,
+      "carAtendimento": 10067,
+      "carParcelas": 4,
+      "carValorParcela": "87.50",
+      "carVencimento": "4/2/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10067"
+  },
+  {
+    "parcela": {
+      "carId": 193,
+      "carAtendimento": 10067,
+      "carParcelas": 4,
+      "carValorParcela": "87.50",
+      "carVencimento": "5/2/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10067"
+  },
+  {
+    "parcela": {
+      "carId": 194,
+      "carAtendimento": 10067,
+      "carParcelas": 4,
+      "carValorParcela": "87.50",
+      "carVencimento": "6/2/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10067"
+  },
+  {
+    "parcela": {
+      "carId": 195,
+      "carAtendimento": 10065,
+      "carParcelas": 5,
+      "carValorParcela": "220.00",
+      "carVencimento": "3/3/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10065"
+  },
+  {
+    "parcela": {
+      "carId": 196,
+      "carAtendimento": 10065,
+      "carParcelas": 5,
+      "carValorParcela": "220.00",
+      "carVencimento": "4/3/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10065"
+  },
+  {
+    "parcela": {
+      "carId": 197,
+      "carAtendimento": 10065,
+      "carParcelas": 5,
+      "carValorParcela": "220.00",
+      "carVencimento": "5/3/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10065"
+  },
+  {
+    "parcela": {
+      "carId": 198,
+      "carAtendimento": 10065,
+      "carParcelas": 5,
+      "carValorParcela": "220.00",
+      "carVencimento": "6/3/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10065"
+  },
+  {
+    "parcela": {
+      "carId": 199,
+      "carAtendimento": 10065,
+      "carParcelas": 5,
+      "carValorParcela": "220.00",
+      "carVencimento": "7/3/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10065"
+  },
+  {
+    "parcela": {
+      "carId": 215,
+      "carAtendimento": 10085,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "3/1/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "3/1/17"
+    },
+    "error": "Payment não encontrado para venda 10085"
+  },
+  {
+    "parcela": {
+      "carId": 216,
+      "carAtendimento": 10085,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "4/1/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "4/4/17"
+    },
+    "error": "Payment não encontrado para venda 10085"
+  },
+  {
+    "parcela": {
+      "carId": 217,
+      "carAtendimento": 10085,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "5/1/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "5/2/17"
+    },
+    "error": "Payment não encontrado para venda 10085"
+  },
+  {
+    "parcela": {
+      "carId": 218,
+      "carAtendimento": 10085,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "6/1/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/5/17"
+    },
+    "error": "Payment não encontrado para venda 10085"
+  },
+  {
+    "parcela": {
+      "carId": 446,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "1/10/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/13/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 447,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "2/10/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/9/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 448,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "3/10/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "4/7/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 449,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "4/10/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "5/8/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 450,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "5/10/17",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/7/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 451,
+      "carAtendimento": 10146,
+      "carParcelas": 6,
+      "carValorParcela": "150.00",
+      "carVencimento": "6/10/17",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "7/7/17"
+    },
+    "error": "Payment não encontrado para venda 10146"
+  },
+  {
+    "parcela": {
+      "carId": 540,
+      "carAtendimento": 10175,
+      "carParcelas": 1,
+      "carValorParcela": "232.00",
+      "carVencimento": "5/15/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/12/17"
+    },
+    "error": "Payment não encontrado para venda 10175"
+  },
+  {
+    "parcela": {
+      "carId": 556,
+      "carAtendimento": 10188,
+      "carParcelas": 3,
+      "carValorParcela": "33.33",
+      "carVencimento": "5/17/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Vencida",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 557,
+      "carAtendimento": 10188,
+      "carParcelas": 3,
+      "carValorParcela": "33.33",
+      "carVencimento": "6/17/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 558,
+      "carAtendimento": 10188,
+      "carParcelas": 3,
+      "carValorParcela": "33.33",
+      "carVencimento": "7/17/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 565,
+      "carAtendimento": 10188,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "5/15/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Vencida",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 566,
+      "carAtendimento": 10188,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "6/15/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 567,
+      "carAtendimento": 10188,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "7/15/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 568,
+      "carAtendimento": 10188,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "8/15/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 10188"
+  },
+  {
+    "parcela": {
+      "carId": 788,
+      "carAtendimento": 10281,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "9/2/17",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "9/4/17"
+    },
+    "error": "Payment não encontrado para venda 10281"
+  },
+  {
+    "parcela": {
+      "carId": 789,
+      "carAtendimento": 10281,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "10/2/17",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/26/17"
+    },
+    "error": "Payment não encontrado para venda 10281"
+  },
+  {
+    "parcela": {
+      "carId": 790,
+      "carAtendimento": 10281,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "11/2/17",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/27/18"
+    },
+    "error": "Payment não encontrado para venda 10281"
+  },
+  {
+    "parcela": {
+      "carId": 791,
+      "carAtendimento": 10281,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "12/2/17",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/30/18"
+    },
+    "error": "Payment não encontrado para venda 10281"
+  },
+  {
+    "parcela": {
+      "carId": 792,
+      "carAtendimento": 10281,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "1/2/18",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/15/18"
+    },
+    "error": "Payment não encontrado para venda 10281"
+  },
+  {
+    "parcela": {
+      "carId": 989,
+      "carAtendimento": 10370,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "1/10/18",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/17/18"
+    },
+    "error": "Payment não encontrado para venda 10370"
+  },
+  {
+    "parcela": {
+      "carId": 990,
+      "carAtendimento": 10370,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "2/10/18",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/5/18"
+    },
+    "error": "Payment não encontrado para venda 10370"
+  },
+  {
+    "parcela": {
+      "carId": 991,
+      "carAtendimento": 10370,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "3/10/18",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "3/10/18"
+    },
+    "error": "Payment não encontrado para venda 10370"
+  },
+  {
+    "parcela": {
+      "carId": 992,
+      "carAtendimento": 10370,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "4/10/18",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/11/18"
+    },
+    "error": "Payment não encontrado para venda 10370"
+  },
+  {
+    "parcela": {
+      "carId": 993,
+      "carAtendimento": 10370,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "5/10/18",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "5/10/18"
+    },
+    "error": "Payment não encontrado para venda 10370"
+  },
+  {
+    "parcela": {
+      "carId": 1031,
+      "carAtendimento": 10387,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "2/15/18",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/20/18"
+    },
+    "error": "Payment não encontrado para venda 10387"
+  },
+  {
+    "parcela": {
+      "carId": 1032,
+      "carAtendimento": 10387,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "3/15/18",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "5/22/18"
+    },
+    "error": "Payment não encontrado para venda 10387"
+  },
+  {
+    "parcela": {
+      "carId": 1033,
+      "carAtendimento": 10387,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "4/15/18",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "12/3/18"
+    },
+    "error": "Payment não encontrado para venda 10387"
+  },
+  {
+    "parcela": {
+      "carId": 1034,
+      "carAtendimento": 10387,
+      "carParcelas": 4,
+      "carValorParcela": "100.00",
+      "carVencimento": "5/15/18",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "12/3/18"
+    },
+    "error": "Payment não encontrado para venda 10387"
+  },
+  {
+    "parcela": {
+      "carId": 1539,
+      "carAtendimento": 10626,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "1/10/19",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "1/4/19"
+    },
+    "error": "Payment não encontrado para venda 10626"
+  },
+  {
+    "parcela": {
+      "carId": 1540,
+      "carAtendimento": 10626,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "2/10/19",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/11/19"
+    },
+    "error": "Payment não encontrado para venda 10626"
+  },
+  {
+    "parcela": {
+      "carId": 1541,
+      "carAtendimento": 10626,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "3/10/19",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/13/19"
+    },
+    "error": "Payment não encontrado para venda 10626"
+  },
+  {
+    "parcela": {
+      "carId": 1542,
+      "carAtendimento": 10626,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "4/10/19",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "4/12/19"
+    },
+    "error": "Payment não encontrado para venda 10626"
+  },
+  {
+    "parcela": {
+      "carId": 1543,
+      "carAtendimento": 10626,
+      "carParcelas": 5,
+      "carValorParcela": "100.00",
+      "carVencimento": "5/10/19",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "5/13/19"
+    },
+    "error": "Payment não encontrado para venda 10626"
+  },
+  {
+    "parcela": {
+      "carId": 1761,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "7/10/19",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "7/10/19"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1762,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "8/10/19",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "8/9/19"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1763,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "9/10/19",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "9/9/19"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1764,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "10/10/19",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/16/19"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1765,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "11/10/19",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/22/20"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1766,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "12/10/19",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/22/20"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1767,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "1/10/20",
+      "carNumeroParcela": 7,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/22/20"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1768,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "2/10/20",
+      "carNumeroParcela": 8,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "9/16/21"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1769,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "3/10/20",
+      "carNumeroParcela": 9,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "9/16/21"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1770,
+      "carAtendimento": 10742,
+      "carParcelas": 10,
+      "carValorParcela": "130.00",
+      "carVencimento": "4/10/20",
+      "carNumeroParcela": 10,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "9/16/21"
+    },
+    "error": "Payment não encontrado para venda 10742"
+  },
+  {
+    "parcela": {
+      "carId": 1991,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "1/20/20",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "1/20/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1992,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "2/20/20",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "2/10/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1993,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "3/20/20",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "3/6/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1994,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "4/20/20",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "4/2/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1995,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "5/20/20",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "5/4/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1996,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "6/20/20",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "6/1/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1997,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "7/20/20",
+      "carNumeroParcela": 7,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "7/2/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 1998,
+      "carAtendimento": 10880,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "8/20/20",
+      "carNumeroParcela": 8,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "8/4/20"
+    },
+    "error": "Payment não encontrado para venda 10880"
+  },
+  {
+    "parcela": {
+      "carId": 2056,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "3/10/20",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/16/20"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2057,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "4/10/20",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "8/12/20"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2058,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "5/10/20",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/16/20"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2059,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "6/10/20",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/4/21"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2060,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "7/10/20",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/1/21"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2061,
+      "carAtendimento": 10922,
+      "carParcelas": 6,
+      "carValorParcela": "175.00",
+      "carVencimento": "8/10/20",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/8/21"
+    },
+    "error": "Payment não encontrado para venda 10922"
+  },
+  {
+    "parcela": {
+      "carId": 2255,
+      "carAtendimento": 11023,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "9/15/20",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/24/20"
+    },
+    "error": "Payment não encontrado para venda 11023"
+  },
+  {
+    "parcela": {
+      "carId": 2256,
+      "carAtendimento": 11023,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "10/15/20",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "12/3/20"
+    },
+    "error": "Payment não encontrado para venda 11023"
+  },
+  {
+    "parcela": {
+      "carId": 2257,
+      "carAtendimento": 11023,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "11/15/20",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/8/21"
+    },
+    "error": "Payment não encontrado para venda 11023"
+  },
+  {
+    "parcela": {
+      "carId": 2258,
+      "carAtendimento": 11023,
+      "carParcelas": 4,
+      "carValorParcela": "120.00",
+      "carVencimento": "12/15/20",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Aberta",
+      "carDataPagamento": null
+    },
+    "error": "Payment não encontrado para venda 11023"
+  },
+  {
+    "parcela": {
+      "carId": 2463,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "4/10/21",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "4/12/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2464,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "5/10/21",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "5/19/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2465,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "6/10/21",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "6/8/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2466,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "7/10/21",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "7/12/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2467,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "8/10/21",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "8/10/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2468,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "9/10/21",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "9/10/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2469,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "10/10/21",
+      "carNumeroParcela": 7,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "10/11/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2470,
+      "carAtendimento": 11176,
+      "carParcelas": 8,
+      "carValorParcela": "250.00",
+      "carVencimento": "11/10/21",
+      "carNumeroParcela": 8,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "11/11/21"
+    },
+    "error": "Payment não encontrado para venda 11176"
+  },
+  {
+    "parcela": {
+      "carId": 2748,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "5/5/22",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "11/12/22"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2749,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "6/5/22",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "11/12/22"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2750,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "7/5/22",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/7/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2751,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "8/5/22",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/7/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2752,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "9/5/22",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/7/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2753,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "10/5/22",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/7/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2754,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "11/5/22",
+      "carNumeroParcela": 7,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/4/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2755,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "12/5/22",
+      "carNumeroParcela": 8,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/4/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2756,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "1/5/23",
+      "carNumeroParcela": 9,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "2/4/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2757,
+      "carAtendimento": 11407,
+      "carParcelas": 10,
+      "carValorParcela": "120.00",
+      "carVencimento": "2/5/23",
+      "carNumeroParcela": 10,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "2/4/23"
+    },
+    "error": "Payment não encontrado para venda 11407"
+  },
+  {
+    "parcela": {
+      "carId": 2856,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "9/17/22",
+      "carNumeroParcela": 1,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "9/16/22"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  },
+  {
+    "parcela": {
+      "carId": 2857,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "10/17/22",
+      "carNumeroParcela": 2,
+      "carParcelaStatus": "Pago com sucesso",
+      "carDataPagamento": "10/7/22"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  },
+  {
+    "parcela": {
+      "carId": 2858,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "11/17/22",
+      "carNumeroParcela": 3,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "11/22/22"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  },
+  {
+    "parcela": {
+      "carId": 2859,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "12/17/22",
+      "carNumeroParcela": 4,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "1/30/23"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  },
+  {
+    "parcela": {
+      "carId": 2860,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "1/17/23",
+      "carNumeroParcela": 5,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "3/23/23"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  },
+  {
+    "parcela": {
+      "carId": 2861,
+      "carAtendimento": 11478,
+      "carParcelas": 6,
+      "carValorParcela": "250.00",
+      "carVencimento": "2/17/23",
+      "carNumeroParcela": 6,
+      "carParcelaStatus": "Pago com atraso",
+      "carDataPagamento": "6/10/23"
+    },
+    "error": "Payment não encontrado para venda 11478"
+  }
+]

@@ -1,0 +1,3899 @@
+================================================================================
+MIGRAÇÃO DE ITENS DE VENDA - ÓTICA CRISTÃ
+================================================================================
+
+Tenant ID: cmibvcyed00007m0118rkgft8
+Branch ID: cmibvcyed00017m014r66e39w
+Arquivo: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\itensAtendimento.xlsx
+
+📂 Lendo arquivo Excel...
+✓ 3871 itens encontrados
+
+🔄 Iniciando migração...
+
+✓ Item: Venda 10021 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10021 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10024 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10025 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10025 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10025 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10025 - Produto 113 (Qtd: 1)
+✓ Item: Venda 10026 - Produto 27 (Qtd: 1)
+✓ Item: Venda 10026 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10026 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10027 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10027 - Produto 121 (Qtd: 1)
+✓ Item: Venda 10028 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10028 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10029 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10031 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10031 - Produto 125 (Qtd: 1)
+⚠️  Item: Produto 126 não existe
+✓ Item: Venda 10032 - Produto 74 (Qtd: 1)
+⚠️  Item: Produto 127 não existe
+✓ Item: Venda 10033 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10034 - Produto 75 (Qtd: 1)
+✓ Item: Venda 10034 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10035 - Produto 130 (Qtd: 1)
+✓ Item: Venda 10035 - Produto 130 (Qtd: 2)
+⚠️  Item: Produto 81 não existe
+✓ Item: Venda 10036 - Produto 72 (Qtd: 1)
+⚠️  Item: Produto 131 não existe
+✓ Item: Venda 10037 - Produto 132 (Qtd: 1)
+✓ Item: Venda 10038 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10038 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10039 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10039 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10040 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10041 - Produto 136 (Qtd: 1)
+✓ Item: Venda 10041 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10041 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10042 - Produto 138 (Qtd: 1)
+✓ Item: Venda 10042 - Produto 141 (Qtd: 1)
+✓ Item: Venda 10042 - Produto 109 (Qtd: 1)
+✓ Item: Venda 10042 - Produto 132 (Qtd: 1)
+✓ Item: Venda 10042 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 140 não existe
+⚠️  Item: Venda 10043 não existe
+⚠️  Item: Venda 10043 não existe
+⚠️  Item: Produto 142 não existe
+✓ Item: Venda 10045 - Produto 143 (Qtd: 1)
+⚠️  Item: Produto 79 não existe
+✓ Item: Venda 10046 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10046 - Produto 40 (Qtd: 1)
+⚠️  Item: Produto 144 não existe
+⚠️  Item: Produto 37 não existe
+⚠️  Item: Venda 10048 não existe
+⚠️  Item: Venda 10048 não existe
+⚠️  Item: Venda 10048 não existe
+⚠️  Item: Venda 10048 não existe
+⚠️  Item: Venda 10048 não existe
+⚠️  Item: Venda 10048 não existe
+✓ Item: Venda 10049 - Produto 40 (Qtd: 1)
+✓ Item: Venda 10049 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10050 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10050 - Produto 148 (Qtd: 1)
+⚠️  Item: Produto 149 não existe
+✓ Item: Venda 10051 - Produto 150 (Qtd: 1)
+✓ Item: Venda 10052 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10052 - Produto 73 (Qtd: 1)
+⚠️  Item: Venda 10054 não existe
+⚠️  Item: Venda 10054 não existe
+✓ Item: Venda 10056 - Produto 154 (Qtd: 1)
+✓ Item: Venda 10057 - Produto 155 (Qtd: 1)
+⚠️  Item: Venda 10058 não existe
+⚠️  Item: Venda 10058 não existe
+✓ Item: Venda 10060 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10060 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10061 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10061 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10061 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10061 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10062 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10062 - Produto 112 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10064 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10064 - Produto 130 (Qtd: 1)
+✓ Item: Venda 10066 - Produto 159 (Qtd: 1)
+✓ Item: Venda 10068 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10068 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 162 não existe
+✓ Item: Venda 10072 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10072 - Produto 72 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10073 - Produto 158 (Qtd: 1)
+✓ Item: Venda 10074 - Produto 70 (Qtd: 1)
+✓ Item: Venda 10075 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10075 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10076 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10077 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10077 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10078 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10078 - Produto 70 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10079 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10079 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10080 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10080 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10082 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10082 - Produto 70 (Qtd: 1)
+✓ Item: Venda 10083 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10083 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10084 - Produto 167 (Qtd: 1)
+⚠️  Item: Venda 10085 não existe
+✓ Item: Venda 10086 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10086 - Produto 178 (Qtd: 1)
+✓ Item: Venda 10087 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10087 - Produto 182 (Qtd: 1)
+✓ Item: Venda 10088 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10088 - Produto 176 (Qtd: 1)
+✓ Item: Venda 10090 - Produto 172 (Qtd: 1)
+✓ Item: Venda 10090 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10091 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10092 - Produto 184 (Qtd: 1)
+✓ Item: Venda 10092 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10093 - Produto 152 (Qtd: 1)
+✓ Item: Venda 10094 - Produto 187 (Qtd: 1)
+✓ Item: Venda 10094 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10095 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10095 - Produto 88 (Qtd: 1)
+✓ Item: Venda 10096 - Produto 72 (Qtd: 1)
+⚠️  Item: Produto 92 não existe
+✓ Item: Venda 10097 - Produto 178 (Qtd: 1)
+✓ Item: Venda 10098 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10098 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10098 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10099 - Produto 182 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10100 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10100 - Produto 21 (Qtd: 1)
+✓ Item: Venda 10101 - Produto 31 (Qtd: 1)
+⚠️  Item: Produto 165 não existe
+✓ Item: Venda 10102 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10103 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10103 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10104 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 96 não existe
+✓ Item: Venda 10105 - Produto 153 (Qtd: 1)
+✓ Item: Venda 10106 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10107 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10107 - Produto 189 (Qtd: 1)
+⚠️  Item: Produto 190 não existe
+✓ Item: Venda 10108 - Produto 189 (Qtd: 1)
+⚠️  Item: Produto 191 não existe
+✓ Item: Venda 10108 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10109 - Produto 164 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10109 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10109 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10109 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10110 - Produto 167 (Qtd: 1)
+✓ Item: Venda 10110 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10110 - Produto 180 (Qtd: 1)
+✓ Item: Venda 10110 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10112 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 193 não existe
+⚠️  Item: Produto 192 não existe
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 100 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10113 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 142 não existe
+✓ Item: Venda 10115 - Produto 112 (Qtd: 1)
+⚠️  Item: Produto 126 não existe
+⚠️  Item: Produto 195 não existe
+✓ Item: Venda 10118 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10118 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10119 - Produto 161 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10120 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10120 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10121 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10121 - Produto 51 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10123 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10125 - Produto 150 (Qtd: 1)
+⚠️  Item: Produto 196 não existe
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10126 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10127 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10127 - Produto 155 (Qtd: 1)
+✓ Item: Venda 10128 - Produto 27 (Qtd: 1)
+⚠️  Item: Produto 28 não existe
+⚠️  Item: Produto 198 não existe
+✓ Item: Venda 10130 - Produto 41 (Qtd: 1)
+✓ Item: Venda 10131 - Produto 199 (Qtd: 1)
+✓ Item: Venda 10132 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10132 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10134 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10134 - Produto 112 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 71 não existe
+✓ Item: Venda 10137 - Produto 202 (Qtd: 1)
+✓ Item: Venda 10137 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10137 - Produto 200 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10399 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10138 - Produto 86 (Qtd: 1)
+✓ Item: Venda 10138 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10139 - Produto 73 (Qtd: 1)
+⚠️  Item: Produto 204 não existe
+⚠️  Item: Produto 205 não existe
+✓ Item: Venda 10140 - Produto 161 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10141 - Produto 154 (Qtd: 1)
+✓ Item: Venda 10142 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10142 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10143 - Produto 112 (Qtd: 1)
+⚠️  Item: Produto 126 não existe
+✓ Item: Venda 10144 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10145 - Produto 206 (Qtd: 1)
+⚠️  Item: Venda 10146 não existe
+⚠️  Item: Venda 10146 não existe
+✓ Item: Venda 10147 - Produto 51 (Qtd: 1)
+⚠️  Item: Produto 165 não existe
+✓ Item: Venda 10148 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10149 - Produto 49 (Qtd: 1)
+⚠️  Item: Produto 207 não existe
+✓ Item: Venda 10150 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10150 - Produto 157 (Qtd: 1)
+⚠️  Item: Produto 208 não existe
+✓ Item: Venda 10151 - Produto 210 (Qtd: 1)
+✓ Item: Venda 10152 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10152 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10153 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10154 - Produto 211 (Qtd: 1)
+✓ Item: Venda 10154 - Produto 212 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10155 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10157 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10157 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10157 - Produto 213 (Qtd: 1)
+✓ Item: Venda 10157 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 84 não existe
+⚠️  Item: Produto 151 não existe
+✓ Item: Venda 10159 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10160 - Produto 215 (Qtd: 1)
+✓ Item: Venda 10160 - Produto 97 (Qtd: 1)
+✓ Item: Venda 10161 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10161 - Produto 73 (Qtd: 1)
+✓ Item: Venda 10162 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10163 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10163 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10164 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10165 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10165 - Produto 21 (Qtd: 1)
+✓ Item: Venda 10165 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10165 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10166 - Produto 10 (Qtd: 1)
+✓ Item: Venda 10166 - Produto 316 (Qtd: 1)
+✓ Item: Venda 10167 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10167 - Produto 153 (Qtd: 1)
+✓ Item: Venda 10167 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10167 - Produto 153 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10168 - Produto 123 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10169 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10170 - Produto 45 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10171 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10171 - Produto 316 (Qtd: 1)
+✓ Item: Venda 10172 - Produto 317 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10174 - Produto 318 (Qtd: 1)
+⚠️  Item: Venda 10175 não existe
+⚠️  Item: Venda 10175 não existe
+⚠️  Item: Produto 326 não existe
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10178 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10180 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10180 - Produto 311 (Qtd: 1)
+✓ Item: Venda 10181 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10182 - Produto 212 (Qtd: 1)
+✓ Item: Venda 10183 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10183 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10184 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10184 - Produto 323 (Qtd: 1)
+✓ Item: Venda 10185 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10185 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10186 - Produto 40 (Qtd: 1)
+✓ Item: Venda 10186 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10187 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10187 - Produto 43 (Qtd: 1)
+⚠️  Item: Venda 10188 não existe
+⚠️  Item: Venda 10188 não existe
+⚠️  Item: Venda 10188 não existe
+✓ Item: Venda 10189 - Produto 44 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10190 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10190 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10192 - Produto 335 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10192 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10193 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10193 - Produto 40 (Qtd: 1)
+✓ Item: Venda 10194 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10194 - Produto 40 (Qtd: 1)
+✓ Item: Venda 10194 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10195 - Produto 335 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10196 - Produto 49 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10198 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10200 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10200 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 336 não existe
+✓ Item: Venda 10201 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10202 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10202 - Produto 337 (Qtd: 1)
+⚠️  Item: Produto 71 não existe
+✓ Item: Venda 10203 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 34 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10206 - Produto 319 (Qtd: 1)
+✓ Item: Venda 10207 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10208 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10208 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10208 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10209 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10210 - Produto 340 (Qtd: 1)
+✓ Item: Venda 10211 - Produto 70 (Qtd: 1)
+✓ Item: Venda 10212 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10212 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10213 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10213 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10213 - Produto 134 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10214 - Produto 341 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10216 - Produto 342 (Qtd: 1)
+✓ Item: Venda 10217 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10217 - Produto 70 (Qtd: 1)
+✓ Item: Venda 10218 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10219 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 343 não existe
+✓ Item: Venda 10220 - Produto 70 (Qtd: 1)
+✓ Item: Venda 10221 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10221 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10222 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10222 - Produto 264 (Qtd: 1)
+✓ Item: Venda 10223 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10223 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10225 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10225 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10226 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10227 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10227 - Produto 112 (Qtd: 1)
+✓ Item: Venda 10228 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10228 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10229 - Produto 349 (Qtd: 1)
+✓ Item: Venda 10229 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10230 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10230 - Produto 43 (Qtd: 1)
+✓ Item: Venda 10231 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10231 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10232 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10233 - Produto 132 (Qtd: 1)
+✓ Item: Venda 10233 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10233 - Produto 19 (Qtd: 1)
+✓ Item: Venda 10233 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10234 - Produto 257 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10235 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10236 - Produto 354 (Qtd: 1)
+✓ Item: Venda 10236 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10236 - Produto 148 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10238 - Produto 201 (Qtd: 1)
+✓ Item: Venda 10239 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 78 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10241 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+⚠️  Item: Produto 100 não existe
+✓ Item: Venda 10242 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10243 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10244 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10244 - Produto 356 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10246 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10246 - Produto 148 (Qtd: 1)
+⚠️  Item: Produto 151 não existe
+✓ Item: Venda 10247 - Produto 330 (Qtd: 1)
+✓ Item: Venda 10248 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10249 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10249 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10249 - Produto 356 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10249 - Produto 359 (Qtd: 1)
+✓ Item: Venda 10250 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10250 - Produto 178 (Qtd: 1)
+✓ Item: Venda 10251 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 361 não existe
+✓ Item: Venda 10252 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10253 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10253 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10254 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10255 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10255 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10257 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 10257 - Produto 329 (Qtd: 1)
+✓ Item: Venda 10258 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10259 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10259 - Produto 123 (Qtd: 1)
+✓ Item: Venda 10260 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10261 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10261 - Produto 154 (Qtd: 1)
+✓ Item: Venda 10261 - Produto 363 (Qtd: 1)
+✓ Item: Venda 10261 - Produto 86 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10262 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10264 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10264 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10264 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10264 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 85 não existe
+✓ Item: Venda 10265 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10266 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10266 - Produto 366 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10267 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10268 - Produto 161 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10270 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10270 - Produto 367 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10270 - Produto 367 (Qtd: 1)
+✓ Item: Venda 10270 - Produto 368 (Qtd: 1)
+✓ Item: Venda 10271 - Produto 363 (Qtd: 1)
+✓ Item: Venda 10271 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10272 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10273 - Produto 86 (Qtd: 1)
+✓ Item: Venda 10273 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10274 - Produto 327 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10275 - Produto 371 (Qtd: 1)
+✓ Item: Venda 10275 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10275 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10275 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10276 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10276 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10277 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10279 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 372 não existe
+✓ Item: Venda 10279 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10280 - Produto 154 (Qtd: 1)
+✓ Item: Venda 10280 - Produto 369 (Qtd: 1)
+⚠️  Item: Venda 10281 não existe
+⚠️  Item: Venda 10281 não existe
+⚠️  Item: Venda 10281 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10283 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 375 não existe
+✓ Item: Venda 10284 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10285 - Produto 95 (Qtd: 1)
+✓ Item: Venda 10285 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10286 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10286 - Produto 380 (Qtd: 1)
+✓ Item: Venda 10286 - Produto 382 (Qtd: 1)
+⚠️  Item: Produto 385 não existe
+✓ Item: Venda 10287 - Produto 386 (Qtd: 1)
+✓ Item: Venda 10287 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10288 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10288 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10289 - Produto 134 (Qtd: 1)
+⚠️  Item: Venda 10290 não existe
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10291 - Produto 167 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10292 - Produto 40 (Qtd: 1)
+✓ Item: Venda 10292 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10293 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10293 - Produto 346 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10296 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10297 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10297 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10298 - Produto 393 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 198 não existe
+✓ Item: Venda 10301 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10303 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10303 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10304 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10304 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10305 - Produto 97 (Qtd: 1)
+✓ Item: Venda 10305 - Produto 352 (Qtd: 1)
+✓ Item: Venda 10306 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10308 - Produto 396 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10310 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10311 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 391 não existe
+✓ Item: Venda 10311 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10311 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10312 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10312 - Produto 201 (Qtd: 1)
+✓ Item: Venda 10313 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10313 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10314 - Produto 373 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10316 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10317 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10318 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10318 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10319 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10319 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10321 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10321 - Produto 172 (Qtd: 1)
+⚠️  Item: Produto 397 não existe
+✓ Item: Venda 10322 - Produto 176 (Qtd: 1)
+✓ Item: Venda 10323 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10324 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10326 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 385 não existe
+✓ Item: Venda 10328 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10329 - Produto 398 (Qtd: 1)
+✓ Item: Venda 10330 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10330 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10331 - Produto 102 (Qtd: 1)
+✓ Item: Venda 10331 - Produto 167 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10333 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10334 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10334 - Produto 367 (Qtd: 1)
+✓ Item: Venda 10334 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10335 - Produto 316 (Qtd: 1)
+⚠️  Item: Produto 397 não existe
+✓ Item: Venda 10336 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10337 - Produto 366 (Qtd: 1)
+⚠️  Item: Produto 400 não existe
+✓ Item: Venda 10339 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10340 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10340 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10342 - Produto 316 (Qtd: 1)
+✓ Item: Venda 10343 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10344 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10344 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10344 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 10345 - Produto 172 (Qtd: 1)
+⚠️  Item: Produto 402 não existe
+✓ Item: Venda 10346 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10347 - Produto 19 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10348 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10349 - Produto 130 (Qtd: 1)
+⚠️  Item: Produto 403 não existe
+✓ Item: Venda 10350 - Produto 161 (Qtd: 1)
+⚠️  Item: Produto 406 não existe
+✓ Item: Venda 10351 - Produto 316 (Qtd: 1)
+✓ Item: Venda 10352 - Produto 407 (Qtd: 1)
+✓ Item: Venda 10352 - Produto 408 (Qtd: 1)
+✓ Item: Venda 10353 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10353 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10354 - Produto 409 (Qtd: 1)
+✓ Item: Venda 10354 - Produto 409 (Qtd: 1)
+⚠️  Item: Produto 385 não existe
+✓ Item: Venda 10356 - Produto 381 (Qtd: 1)
+✓ Item: Venda 10357 - Produto 167 (Qtd: 1)
+✓ Item: Venda 10358 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10358 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10359 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10360 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10360 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10361 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10362 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10362 - Produto 411 (Qtd: 1)
+✓ Item: Venda 10363 - Produto 27 (Qtd: 1)
+✓ Item: Venda 10364 - Produto 123 (Qtd: 1)
+⚠️  Item: Produto 193 não existe
+✓ Item: Venda 10367 - Produto 206 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10368 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10369 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10369 - Produto 45 (Qtd: 1)
+⚠️  Item: Venda 10370 não existe
+✓ Item: Venda 10371 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10371 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10372 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10374 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10373 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10375 - Produto 32 (Qtd: 1)
+✓ Item: Venda 10376 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10376 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10374 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10377 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10378 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10378 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10379 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10380 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 391 não existe
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10380 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10381 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10381 - Produto 173 (Qtd: 1)
+✓ Item: Venda 10382 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+✓ Item: Venda 10382 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10382 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10383 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10383 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10383 - Produto 415 (Qtd: 1)
+✓ Item: Venda 10384 - Produto 206 (Qtd: 1)
+✓ Item: Venda 10385 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10386 - Produto 330 (Qtd: 1)
+⚠️  Item: Venda 10387 não existe
+✓ Item: Venda 10388 - Produto 166 (Qtd: 1)
+✓ Item: Venda 10389 - Produto 390 (Qtd: 1)
+✓ Item: Venda 10390 - Produto 335 (Qtd: 1)
+✓ Item: Venda 10377 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10391 - Produto 86 (Qtd: 1)
+✓ Item: Venda 10391 - Produto 352 (Qtd: 1)
+✓ Item: Venda 10392 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10393 - Produto 49 (Qtd: 1)
+✓ Item: Venda 10394 - Produto 390 (Qtd: 1)
+✓ Item: Venda 10395 - Produto 60 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 401 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10397 - Produto 416 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10398 - Produto 374 (Qtd: 1)
+✓ Item: Venda 10399 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10400 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10400 - Produto 173 (Qtd: 1)
+✓ Item: Venda 10401 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10401 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10400 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10403 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10404 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10404 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10403 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10405 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10405 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10406 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10406 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10407 - Produto 377 (Qtd: 1)
+✓ Item: Venda 10408 - Produto 418 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 419 não existe
+✓ Item: Venda 10410 - Produto 420 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10411 - Produto 421 (Qtd: 1)
+✓ Item: Venda 10412 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10412 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10413 - Produto 422 (Qtd: 1)
+✓ Item: Venda 10414 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10415 - Produto 206 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10416 - Produto 130 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10417 - Produto 423 (Qtd: 1)
+✓ Item: Venda 10418 - Produto 10 (Qtd: 1)
+✓ Item: Venda 10418 - Produto 377 (Qtd: 1)
+✓ Item: Venda 10419 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10419 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10420 - Produto 367 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10421 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10420 - Produto 86 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10422 - Produto 371 (Qtd: 1)
+✓ Item: Venda 10422 - Produto 411 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10424 - Produto 176 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10425 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10423 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10426 - Produto 424 (Qtd: 1)
+✓ Item: Venda 10427 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10427 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10430 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10430 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10431 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10432 - Produto 86 (Qtd: 1)
+✓ Item: Venda 10432 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10433 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10434 - Produto 425 (Qtd: 1)
+✓ Item: Venda 10434 - Produto 154 (Qtd: 1)
+✓ Item: Venda 10431 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10435 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10435 - Produto 429 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10437 - Produto 429 (Qtd: 1)
+✓ Item: Venda 10438 - Produto 86 (Qtd: 1)
+✓ Item: Venda 10438 - Produto 232 (Qtd: 1)
+✓ Item: Venda 10439 - Produto 431 (Qtd: 1)
+✓ Item: Venda 10440 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10440 - Produto 330 (Qtd: 1)
+✓ Item: Venda 10441 - Produto 21 (Qtd: 1)
+⚠️  Item: Produto 85 não existe
+✓ Item: Venda 10441 - Produto 377 (Qtd: 1)
+✓ Item: Venda 10441 - Produto 436 (Qtd: 1)
+✓ Item: Venda 10442 - Produto 335 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10443 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10443 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10444 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10444 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 438 não existe
+✓ Item: Venda 10445 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10445 - Produto 368 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10446 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10447 - Produto 130 (Qtd: 1)
+✓ Item: Venda 10448 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10448 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10449 - Produto 312 (Qtd: 1)
+✓ Item: Venda 10450 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10450 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10450 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10450 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10451 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10452 - Produto 335 (Qtd: 1)
+✓ Item: Venda 10452 - Produto 424 (Qtd: 1)
+✓ Item: Venda 10452 - Produto 439 (Qtd: 1)
+✓ Item: Venda 10453 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10454 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10456 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10456 - Produto 440 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10457 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10457 - Produto 42 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10458 - Produto 376 (Qtd: 1)
+✓ Item: Venda 10459 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10460 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10460 - Produto 177 (Qtd: 1)
+✓ Item: Venda 10461 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10461 - Produto 130 (Qtd: 1)
+✓ Item: Venda 10461 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10462 - Produto 242 (Qtd: 1)
+✓ Item: Venda 10463 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10463 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10464 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10464 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10465 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10465 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10465 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10465 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10466 - Produto 43 (Qtd: 1)
+⚠️  Item: Produto 165 não existe
+⚠️  Item: Produto 151 não existe
+✓ Item: Venda 10468 - Produto 374 (Qtd: 1)
+✓ Item: Venda 10469 - Produto 441 (Qtd: 1)
+✓ Item: Venda 10470 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10470 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10470 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10471 - Produto 444 (Qtd: 1)
+⚠️  Item: Produto 92 não existe
+✓ Item: Venda 10472 - Produto 134 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10473 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 37 não existe
+✓ Item: Venda 10475 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10476 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10476 - Produto 445 (Qtd: 1)
+✓ Item: Venda 10477 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10477 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10477 - Produto 353 (Qtd: 1)
+✓ Item: Venda 10478 - Produto 138 (Qtd: 1)
+✓ Item: Venda 10478 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10479 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10480 - Produto 446 (Qtd: 1)
+⚠️  Item: Produto 447 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10482 - Produto 329 (Qtd: 1)
+✓ Item: Venda 10482 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10482 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10484 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10484 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10485 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10485 - Produto 329 (Qtd: 1)
+✓ Item: Venda 10485 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 448 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10487 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10488 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10489 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10489 - Produto 327 (Qtd: 1)
+⚠️  Item: Produto 397 não existe
+✓ Item: Venda 10490 - Produto 367 (Qtd: 1)
+✓ Item: Venda 10483 - Produto 330 (Qtd: 1)
+✓ Item: Venda 10491 - Produto 449 (Qtd: 1)
+✓ Item: Venda 10470 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10492 - Produto 33 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10493 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10494 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10495 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10496 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10496 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10496 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10497 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10497 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10497 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10498 - Produto 450 (Qtd: 1)
+⚠️  Item: Produto 23 não existe
+✓ Item: Venda 10500 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10500 - Produto 366 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10501 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10501 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10502 - Produto 363 (Qtd: 1)
+✓ Item: Venda 10502 - Produto 330 (Qtd: 1)
+✓ Item: Venda 10502 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10503 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10503 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10504 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10504 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10505 - Produto 178 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10507 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+⚠️  Item: Produto 453 não existe
+✓ Item: Venda 10511 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10514 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10515 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10508 - Produto 319 (Qtd: 1)
+⚠️  Item: Produto 454 não existe
+✓ Item: Venda 10509 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10509 - Produto 455 (Qtd: 1)
+✓ Item: Venda 10510 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10516 - Produto 45 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+✓ Item: Venda 10513 - Produto 150 (Qtd: 1)
+✓ Item: Venda 10513 - Produto 184 (Qtd: 1)
+✓ Item: Venda 10513 - Produto 380 (Qtd: 1)
+✓ Item: Venda 10514 - Produto 456 (Qtd: 1)
+✓ Item: Venda 10517 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10518 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10518 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10519 - Produto 457 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10520 - Produto 456 (Qtd: 1)
+✓ Item: Venda 10521 - Produto 137 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10523 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10523 - Produto 148 (Qtd: 1)
+⚠️  Item: Produto 458 não existe
+✓ Item: Venda 10524 - Produto 461 (Qtd: 1)
+✓ Item: Venda 10525 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10525 - Produto 462 (Qtd: 1)
+✓ Item: Venda 10526 - Produto 463 (Qtd: 1)
+✓ Item: Venda 10527 - Produto 176 (Qtd: 1)
+✓ Item: Venda 10528 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10528 - Produto 464 (Qtd: 1)
+✓ Item: Venda 10529 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10529 - Produto 329 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10530 - Produto 465 (Qtd: 1)
+✓ Item: Venda 10531 - Produto 381 (Qtd: 1)
+✓ Item: Venda 10532 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10533 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10534 - Produto 392 (Qtd: 1)
+✓ Item: Venda 10534 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10535 - Produto 466 (Qtd: 1)
+✓ Item: Venda 10536 - Produto 467 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+⚠️  Item: Produto 469 não existe
+✓ Item: Venda 10537 - Produto 450 (Qtd: 1)
+✓ Item: Venda 10538 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10538 - Produto 470 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10539 - Produto 327 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 23 não existe
+⚠️  Item: Produto 78 não existe
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10543 - Produto 354 (Qtd: 1)
+✓ Item: Venda 10544 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10544 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10545 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10545 - Produto 327 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10546 - Produto 129 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10548 - Produto 95 (Qtd: 1)
+✓ Item: Venda 10548 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10549 - Produto 472 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10552 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10553 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10542 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10554 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10555 - Produto 473 (Qtd: 1)
+✓ Item: Venda 10556 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10556 - Produto 382 (Qtd: 1)
+✓ Item: Venda 10557 - Produto 354 (Qtd: 1)
+✓ Item: Venda 10558 - Produto 88 (Qtd: 1)
+✓ Item: Venda 10559 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10559 - Produto 429 (Qtd: 1)
+✓ Item: Venda 10560 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10561 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10562 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10563 - Produto 60 (Qtd: 1)
+✓ Item: Venda 10563 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10564 - Produto 129 (Qtd: 1)
+⚠️  Item: Produto 474 não existe
+✓ Item: Venda 10565 - Produto 229 (Qtd: 1)
+✓ Item: Venda 10565 - Produto 415 (Qtd: 1)
+✓ Item: Venda 10566 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10567 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10567 - Produto 420 (Qtd: 1)
+✓ Item: Venda 10567 - Produto 368 (Qtd: 1)
+✓ Item: Venda 10568 - Produto 408 (Qtd: 1)
+⚠️  Item: Produto 474 não existe
+✓ Item: Venda 10569 - Produto 470 (Qtd: 1)
+✓ Item: Venda 10570 - Produto 470 (Qtd: 1)
+✓ Item: Venda 10570 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10570 - Produto 368 (Qtd: 1)
+✓ Item: Venda 10572 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10572 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10573 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10574 - Produto 337 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10575 - Produto 476 (Qtd: 1)
+✓ Item: Venda 10576 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10577 - Produto 346 (Qtd: 1)
+⚠️  Item: Produto 87 não existe
+✓ Item: Venda 10571 - Produto 475 (Qtd: 1)
+✓ Item: Venda 10571 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10578 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10578 - Produto 382 (Qtd: 1)
+✓ Item: Venda 10579 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10579 - Produto 330 (Qtd: 1)
+✓ Item: Venda 10580 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10580 - Produto 411 (Qtd: 1)
+✓ Item: Venda 10581 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10581 - Produto 381 (Qtd: 1)
+✓ Item: Venda 10582 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10582 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10583 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10583 - Produto 351 (Qtd: 1)
+⚠️  Item: Produto 94 não existe
+✓ Item: Venda 10584 - Produto 479 (Qtd: 1)
+⚠️  Item: Produto 477 não existe
+✓ Item: Venda 10585 - Produto 480 (Qtd: 1)
+✓ Item: Venda 10586 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10586 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10586 - Produto 411 (Qtd: 1)
+✓ Item: Venda 10587 - Produto 97 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10588 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10588 - Produto 421 (Qtd: 1)
+⚠️  Item: Produto 406 não existe
+✓ Item: Venda 10589 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10590 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10590 - Produto 134 (Qtd: 1)
+✓ Item: Venda 10591 - Produto 450 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10592 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10593 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10594 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10594 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10595 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10595 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Venda 10597 não existe
+⚠️  Item: Venda 10597 não existe
+⚠️  Item: Produto 81 não existe
+✓ Item: Venda 10598 - Produto 201 (Qtd: 1)
+✓ Item: Venda 10599 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10599 - Produto 380 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10601 - Produto 481 (Qtd: 1)
+✓ Item: Venda 10601 - Produto 340 (Qtd: 1)
+⚠️  Item: Produto 336 não existe
+✓ Item: Venda 10602 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10603 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10604 - Produto 376 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+✓ Item: Venda 10604 - Produto 487 (Qtd: 1)
+✓ Item: Venda 10605 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10605 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10606 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10607 - Produto 10 (Qtd: 1)
+✓ Item: Venda 10608 - Produto 148 (Qtd: 1)
+✓ Item: Venda 10609 - Produto 364 (Qtd: 1)
+⚠️  Item: Produto 156 não existe
+✓ Item: Venda 10610 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10611 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10612 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10612 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10613 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10613 - Produto 329 (Qtd: 1)
+✓ Item: Venda 10613 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10613 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10613 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10614 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10614 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10614 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10614 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 491 não existe
+✓ Item: Venda 10615 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10616 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10616 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10616 - Produto 368 (Qtd: 1)
+✓ Item: Venda 10617 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10618 - Produto 492 (Qtd: 1)
+⚠️  Item: Produto 493 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10620 - Produto 450 (Qtd: 1)
+✓ Item: Venda 10620 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10621 - Produto 495 (Qtd: 1)
+⚠️  Item: Produto 397 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10623 - Produto 496 (Qtd: 1)
+✓ Item: Venda 10624 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10624 - Produto 497 (Qtd: 1)
+⚠️  Item: Produto 498 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Venda 10626 não existe
+⚠️  Item: Venda 10626 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10627 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10628 - Produto 72 (Qtd: 1)
+✓ Item: Venda 10629 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10629 - Produto 301 (Qtd: 1)
+⚠️  Item: Produto 389 não existe
+⚠️  Item: Produto 485 não existe
+✓ Item: Venda 10631 - Produto 201 (Qtd: 1)
+✓ Item: Venda 10632 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10633 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10633 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10634 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10634 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10635 - Produto 488 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10636 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10637 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10637 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10638 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10639 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10640 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10641 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10641 - Produto 130 (Qtd: 1)
+✓ Item: Venda 10641 - Produto 411 (Qtd: 1)
+✓ Item: Venda 10642 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10642 - Produto 44 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10643 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10644 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10644 - Produto 354 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10645 - Produto 128 (Qtd: 1)
+✓ Item: Venda 10645 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10646 - Produto 499 (Qtd: 1)
+✓ Item: Venda 10647 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10647 - Produto 178 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10648 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10648 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10649 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10649 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10649 - Produto 145 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10652 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10655 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 196 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10658 - Produto 500 (Qtd: 1)
+✓ Item: Venda 10667 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10659 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10660 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10660 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 501 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10662 - Produto 163 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10662 - Produto 368 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10668 - Produto 502 (Qtd: 1)
+✓ Item: Venda 10668 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10673 - Produto 503 (Qtd: 1)
+✓ Item: Venda 10661 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10663 - Produto 359 (Qtd: 1)
+✓ Item: Venda 10663 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10664 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10665 - Produto 102 (Qtd: 1)
+✓ Item: Venda 10665 - Produto 329 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10669 - Produto 352 (Qtd: 1)
+✓ Item: Venda 10669 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10670 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10670 - Produto 178 (Qtd: 1)
+⚠️  Item: Produto 482 não existe
+✓ Item: Venda 10671 - Produto 178 (Qtd: 1)
+⚠️  Item: Produto 114 não existe
+✓ Item: Venda 10675 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10675 - Produto 504 (Qtd: 1)
+⚠️  Item: Produto 406 não existe
+✓ Item: Venda 10676 - Produto 382 (Qtd: 1)
+✓ Item: Venda 10677 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10677 - Produto 502 (Qtd: 1)
+✓ Item: Venda 10678 - Produto 505 (Qtd: 1)
+✓ Item: Venda 10678 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10679 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10679 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10680 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10680 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10681 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10681 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10682 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10682 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10683 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10683 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10683 - Produto 173 (Qtd: 1)
+✓ Item: Venda 10684 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10684 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10685 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10686 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10686 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10687 - Produto 359 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 92 não existe
+✓ Item: Venda 10688 - Produto 511 (Qtd: 1)
+✓ Item: Venda 10689 - Produto 335 (Qtd: 1)
+✓ Item: Venda 10689 - Produto 161 (Qtd: 1)
+✓ Item: Venda 10690 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 506 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 452 não existe
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 516 não existe
+✓ Item: Venda 10693 - Produto 517 (Qtd: 1)
+✓ Item: Venda 10694 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10694 - Produto 518 (Qtd: 1)
+✓ Item: Venda 10695 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10695 - Produto 481 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10697 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10697 - Produto 519 (Qtd: 1)
+✓ Item: Venda 10697 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10697 - Produto 520 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10698 - Produto 45 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10699 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10700 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10700 - Produto 504 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10701 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10702 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10698 - Produto 231 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10702 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10703 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10704 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10705 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10706 - Produto 200 (Qtd: 1)
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 10706 - Produto 44 (Qtd: 1)
+⚠️  Item: Produto 515 não existe
+✓ Item: Venda 10708 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10708 - Produto 128 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10709 - Produto 521 (Qtd: 1)
+✓ Item: Venda 10709 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10709 - Produto 466 (Qtd: 1)
+✓ Item: Venda 10709 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10710 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10711 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+⚠️  Item: Produto 477 não existe
+✓ Item: Venda 10713 - Produto 522 (Qtd: 1)
+✓ Item: Venda 10714 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 401 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 523 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10716 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10717 - Produto 359 (Qtd: 1)
+✓ Item: Venda 10717 - Produto 412 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10718 - Produto 200 (Qtd: 1)
+⚠️  Item: Produto 489 não existe
+✓ Item: Venda 10721 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10722 - Produto 229 (Qtd: 1)
+⚠️  Item: Produto 525 não existe
+✓ Item: Venda 10723 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10724 - Produto 526 (Qtd: 1)
+✓ Item: Venda 10724 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10724 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10725 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10725 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10726 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10726 - Produto 436 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10727 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 92 não existe
+✓ Item: Venda 10728 - Produto 529 (Qtd: 1)
+⚠️  Item: Produto 516 não existe
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 10730 - Produto 42 (Qtd: 1)
+✓ Item: Venda 10730 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10731 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 506 não existe
+✓ Item: Venda 10732 - Produto 530 (Qtd: 1)
+✓ Item: Venda 10732 - Produto 530 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10733 - Produto 505 (Qtd: 1)
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10735 - Produto 408 (Qtd: 1)
+✓ Item: Venda 10736 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10736 - Produto 382 (Qtd: 1)
+✓ Item: Venda 10737 - Produto 531 (Qtd: 1)
+✓ Item: Venda 10737 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10737 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10738 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10739 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10739 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10739 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10740 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10740 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10741 - Produto 355 (Qtd: 1)
+⚠️  Item: Venda 10742 não existe
+⚠️  Item: Venda 10742 não existe
+⚠️  Item: Venda 10742 não existe
+⚠️  Item: Venda 10742 não existe
+⚠️  Item: Produto 523 não existe
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10744 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10745 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10745 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+⚠️  Item: Produto 160 não existe
+✓ Item: Venda 10748 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10748 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10749 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10750 - Produto 460 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10751 - Produto 532 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10752 - Produto 200 (Qtd: 1)
+⚠️  Item: Produto 474 não existe
+✓ Item: Venda 10753 - Produto 376 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10754 - Produto 533 (Qtd: 1)
+✓ Item: Venda 10755 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10755 - Produto 532 (Qtd: 1)
+✓ Item: Venda 10756 - Produto 203 (Qtd: 1)
+⚠️  Item: Produto 534 não existe
+✓ Item: Venda 10757 - Produto 77 (Qtd: 1)
+⚠️  Item: Produto 534 não existe
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10758 - Produto 200 (Qtd: 1)
+⚠️  Item: Produto 79 não existe
+✓ Item: Venda 10759 - Produto 535 (Qtd: 1)
+✓ Item: Venda 10760 - Produto 335 (Qtd: 1)
+✓ Item: Venda 10761 - Produto 536 (Qtd: 1)
+✓ Item: Venda 10762 - Produto 537 (Qtd: 1)
+✓ Item: Venda 10763 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10765 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10765 - Produto 538 (Qtd: 1)
+✓ Item: Venda 10763 - Produto 539 (Qtd: 1)
+✓ Item: Venda 10764 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10764 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10766 - Produto 102 (Qtd: 1)
+✓ Item: Venda 10766 - Produto 355 (Qtd: 1)
+⚠️  Item: Produto 81 não existe
+⚠️  Item: Produto 372 não existe
+✓ Item: Venda 10769 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10769 - Produto 129 (Qtd: 1)
+✓ Item: Venda 10770 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10770 - Produto 538 (Qtd: 1)
+✓ Item: Venda 10771 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10771 - Produto 537 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10772 - Produto 540 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10773 - Produto 541 (Qtd: 1)
+✓ Item: Venda 10775 - Produto 543 (Qtd: 1)
+✓ Item: Venda 10776 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 506 não existe
+✓ Item: Venda 10780 - Produto 203 (Qtd: 1)
+⚠️  Item: Produto 179 não existe
+✓ Item: Venda 10776 - Produto 544 (Qtd: 1)
+✓ Item: Venda 10776 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10776 - Produto 380 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 10779 - Produto 200 (Qtd: 1)
+✓ Item: Venda 10781 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10781 - Produto 538 (Qtd: 1)
+⚠️  Item: Produto 385 não existe
+⚠️  Item: Produto 114 não existe
+⚠️  Item: Produto 452 não existe
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 10785 - Produto 551 (Qtd: 1)
+✓ Item: Venda 10786 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10786 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10786 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 10778 - Produto 553 (Qtd: 2)
+⚠️  Item: Produto 485 não existe
+✓ Item: Venda 10778 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 554 não existe
+⚠️  Item: Produto 555 não existe
+✓ Item: Venda 10788 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10788 - Produto 551 (Qtd: 1)
+⚠️  Item: Produto 556 não existe
+⚠️  Item: Produto 406 não existe
+⚠️  Item: Produto 556 não existe
+✓ Item: Venda 10791 - Produto 451 (Qtd: 1)
+⚠️  Item: Produto 506 não existe
+⚠️  Item: Produto 556 não existe
+✓ Item: Venda 10792 - Produto 369 (Qtd: 1)
+⚠️  Item: Produto 557 não existe
+✓ Item: Venda 10793 - Produto 558 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+⚠️  Item: Produto 438 não existe
+✓ Item: Venda 10795 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10796 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10796 - Produto 45 (Qtd: 1)
+✓ Item: Venda 10797 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10797 - Produto 528 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Produto 556 não existe
+✓ Item: Venda 10799 - Produto 532 (Qtd: 1)
+✓ Item: Venda 10800 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+✓ Item: Venda 10801 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10802 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10802 - Produto 327 (Qtd: 1)
+✓ Item: Venda 10802 - Produto 368 (Qtd: 1)
+✓ Item: Venda 10803 - Produto 561 (Qtd: 1)
+⚠️  Item: Produto 375 não existe
+✓ Item: Venda 10804 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10805 - Produto 526 (Qtd: 1)
+✓ Item: Venda 10805 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10807 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10808 - Produto 328 (Qtd: 1)
+✓ Item: Venda 10808 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 205 não existe
+✓ Item: Venda 10809 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10810 - Produto 562 (Qtd: 1)
+✓ Item: Venda 10811 - Produto 211 (Qtd: 1)
+✓ Item: Venda 10811 - Produto 558 (Qtd: 1)
+⚠️  Item: Produto 510 não existe
+✓ Item: Venda 10812 - Produto 558 (Qtd: 1)
+⚠️  Item: Produto 506 não existe
+✓ Item: Venda 10813 - Produto 563 (Qtd: 1)
+✓ Item: Venda 10814 - Produto 31 (Qtd: 1)
+✓ Item: Venda 10810 - Produto 335 (Qtd: 1)
+✓ Item: Venda 10815 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10815 - Produto 564 (Qtd: 1)
+✓ Item: Venda 10816 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10816 - Produto 558 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10817 - Produto 173 (Qtd: 1)
+✓ Item: Venda 10818 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10818 - Produto 437 (Qtd: 1)
+✓ Item: Venda 10819 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10819 - Produto 562 (Qtd: 1)
+✓ Item: Venda 10820 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10820 - Produto 565 (Qtd: 1)
+✓ Item: Venda 10821 - Produto 562 (Qtd: 1)
+✓ Item: Venda 10822 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10822 - Produto 564 (Qtd: 1)
+✓ Item: Venda 10823 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10823 - Produto 566 (Qtd: 1)
+✓ Item: Venda 10824 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10825 - Produto 567 (Qtd: 1)
+✓ Item: Venda 10826 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10827 - Produto 335 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Venda 10829 não existe
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10830 - Produto 481 (Qtd: 1)
+✓ Item: Venda 10831 - Produto 373 (Qtd: 1)
+✓ Item: Venda 10832 - Produto 373 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10833 - Produto 568 (Qtd: 1)
+✓ Item: Venda 10834 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10835 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10836 - Produto 381 (Qtd: 1)
+⚠️  Item: Produto 570 não existe
+✓ Item: Venda 10838 - Produto 562 (Qtd: 1)
+⚠️  Item: Produto 571 não existe
+✓ Item: Venda 10839 - Produto 481 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+✓ Item: Venda 10840 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 498 não existe
+✓ Item: Venda 10841 - Produto 481 (Qtd: 1)
+✓ Item: Venda 10842 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10842 - Produto 409 (Qtd: 1)
+✓ Item: Venda 10843 - Produto 528 (Qtd: 1)
+⚠️  Item: Produto 78 não existe
+✓ Item: Venda 10843 - Produto 572 (Qtd: 1)
+✓ Item: Venda 10844 - Produto 573 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 574 não existe
+⚠️  Item: Produto 506 não existe
+✓ Item: Venda 10846 - Produto 444 (Qtd: 1)
+✓ Item: Venda 10847 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10847 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 10848 - Produto 456 (Qtd: 1)
+✓ Item: Venda 10849 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10849 - Produto 467 (Qtd: 1)
+✓ Item: Venda 10849 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10848 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10850 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10851 - Produto 537 (Qtd: 1)
+✓ Item: Venda 10851 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+⚠️  Item: Produto 575 não existe
+⚠️  Item: Produto 343 não existe
+✓ Item: Venda 10853 - Produto 543 (Qtd: 1)
+✓ Item: Venda 10853 - Produto 88 (Qtd: 1)
+✓ Item: Venda 10853 - Produto 543 (Qtd: 1)
+✓ Item: Venda 10854 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10855 - Produto 102 (Qtd: 1)
+✓ Item: Venda 10855 - Produto 496 (Qtd: 1)
+✓ Item: Venda 10856 - Produto 468 (Qtd: 1)
+✓ Item: Venda 10856 - Produto 468 (Qtd: 1)
+⚠️  Item: Produto 485 não existe
+✓ Item: Venda 10857 - Produto 382 (Qtd: 1)
+✓ Item: Venda 10858 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 576 não existe
+⚠️  Item: Produto 101 não existe
+⚠️  Item: Produto 469 não existe
+✓ Item: Venda 10859 - Produto 373 (Qtd: 1)
+✓ Item: Venda 10860 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10860 - Produto 373 (Qtd: 1)
+✓ Item: Venda 10861 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10861 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10862 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 577 não existe
+⚠️  Item: Produto 485 não existe
+✓ Item: Venda 10864 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10865 - Produto 538 (Qtd: 1)
+✓ Item: Venda 10866 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10866 - Produto 563 (Qtd: 1)
+✓ Item: Venda 10867 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10867 - Produto 558 (Qtd: 1)
+✓ Item: Venda 10867 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10867 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10868 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10868 - Produto 578 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 10869 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10870 - Produto 579 (Qtd: 1)
+✓ Item: Venda 10869 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10871 - Produto 580 (Qtd: 1)
+✓ Item: Venda 10872 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10872 - Produto 558 (Qtd: 1)
+✓ Item: Venda 10873 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10873 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10874 - Produto 581 (Qtd: 1)
+✓ Item: Venda 10875 - Produto 450 (Qtd: 1)
+✓ Item: Venda 10876 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 10877 - Produto 318 (Qtd: 1)
+✓ Item: Venda 10877 - Produto 466 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10878 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 477 não existe
+✓ Item: Venda 10879 - Produto 582 (Qtd: 1)
+⚠️  Item: Venda 10880 não existe
+⚠️  Item: Venda 10880 não existe
+⚠️  Item: Venda 10880 não existe
+✓ Item: Venda 10881 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10882 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10882 - Produto 351 (Qtd: 1)
+✓ Item: Venda 10883 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10884 - Produto 451 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10886 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10886 - Produto 355 (Qtd: 1)
+✓ Item: Venda 10887 - Produto 393 (Qtd: 1)
+⚠️  Item: Produto 192 não existe
+✓ Item: Venda 10889 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10889 - Produto 573 (Qtd: 1)
+⚠️  Item: Produto 491 não existe
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 10891 - Produto 460 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10892 - Produto 584 (Qtd: 1)
+✓ Item: Venda 10893 - Produto 563 (Qtd: 1)
+✓ Item: Venda 10894 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10895 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10895 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10896 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10896 - Produto 369 (Qtd: 1)
+✓ Item: Venda 10897 - Produto 585 (Qtd: 1)
+✓ Item: Venda 10898 - Produto 537 (Qtd: 1)
+✓ Item: Venda 10899 - Produto 475 (Qtd: 1)
+✓ Item: Venda 10899 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10900 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10900 - Produto 462 (Qtd: 1)
+✓ Item: Venda 10901 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10901 - Produto 558 (Qtd: 1)
+✓ Item: Venda 10902 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10902 - Produto 586 (Qtd: 1)
+✓ Item: Venda 10903 - Produto 587 (Qtd: 1)
+✓ Item: Venda 10904 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10905 - Produto 203 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 10906 - Produto 563 (Qtd: 1)
+⚠️  Item: Produto 452 não existe
+✓ Item: Venda 10907 - Produto 558 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10910 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10912 - Produto 393 (Qtd: 1)
+✓ Item: Venda 10913 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10914 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10915 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 71 não existe
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 10918 - Produto 240 (Qtd: 1)
+✓ Item: Venda 10919 - Produto 393 (Qtd: 1)
+✓ Item: Venda 10921 - Produto 591 (Qtd: 1)
+⚠️  Item: Venda 10922 não existe
+⚠️  Item: Venda 10922 não existe
+✓ Item: Venda 10909 - Produto 589 (Qtd: 1)
+✓ Item: Venda 10909 - Produto 589 (Qtd: 1)
+✓ Item: Venda 10909 - Produto 572 (Qtd: 1)
+✓ Item: Venda 10910 - Produto 593 (Qtd: 1)
+✓ Item: Venda 10911 - Produto 590 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 10923 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+⚠️  Item: Produto 26 não existe
+⚠️  Item: Produto 430 não existe
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 100 não existe
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 10927 - Produto 340 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10928 - Produto 373 (Qtd: 1)
+✓ Item: Venda 10928 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10929 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10930 - Produto 328 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10931 - Produto 45 (Qtd: 1)
+⚠️  Item: Produto 79 não existe
+✓ Item: Venda 10932 - Produto 594 (Qtd: 1)
+⚠️  Item: Produto 571 não existe
+✓ Item: Venda 10934 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10934 - Produto 496 (Qtd: 1)
+✓ Item: Venda 10935 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10935 - Produto 44 (Qtd: 1)
+✓ Item: Venda 10935 - Produto 462 (Qtd: 1)
+✓ Item: Venda 10935 - Produto 411 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 10936 - Produto 595 (Qtd: 1)
+✓ Item: Venda 10937 - Produto 596 (Qtd: 1)
+⚠️  Item: Produto 85 não existe
+✓ Item: Venda 10939 - Produto 450 (Qtd: 1)
+✓ Item: Venda 10929 - Produto 599 (Qtd: 1)
+✓ Item: Venda 10940 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10941 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 71 não existe
+✓ Item: Venda 10942 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10942 - Produto 201 (Qtd: 1)
+✓ Item: Venda 10942 - Produto 163 (Qtd: 1)
+✓ Item: Venda 10942 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10943 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10943 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10943 - Produto 561 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+✓ Item: Venda 10945 - Produto 77 (Qtd: 1)
+✓ Item: Venda 10945 - Produto 380 (Qtd: 1)
+✓ Item: Venda 10946 - Produto 393 (Qtd: 1)
+✓ Item: Venda 10947 - Produto 450 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Produto 600 não existe
+✓ Item: Venda 10949 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10950 - Produto 460 (Qtd: 1)
+✓ Item: Venda 10950 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10951 - Produto 137 (Qtd: 1)
+✓ Item: Venda 10951 - Produto 552 (Qtd: 1)
+✓ Item: Venda 10951 - Produto 563 (Qtd: 1)
+✓ Item: Venda 10951 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10951 - Produto 31 (Qtd: 1)
+⚠️  Item: Produto 485 não existe
+✓ Item: Venda 10952 - Produto 467 (Qtd: 1)
+✓ Item: Venda 10953 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10954 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10954 - Produto 532 (Qtd: 1)
+⚠️  Item: Produto 391 não existe
+✓ Item: Venda 10955 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10955 - Produto 532 (Qtd: 1)
+✓ Item: Venda 10956 - Produto 111 (Qtd: 1)
+✓ Item: Venda 10956 - Produto 319 (Qtd: 1)
+⚠️  Item: Produto 601 não existe
+✓ Item: Venda 10956 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 10957 - Produto 348 (Qtd: 1)
+✓ Item: Venda 10960 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10960 - Produto 602 (Qtd: 1)
+✓ Item: Venda 10962 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10962 - Produto 346 (Qtd: 1)
+✓ Item: Venda 10963 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10963 - Produto 602 (Qtd: 1)
+✓ Item: Venda 10963 - Produto 108 (Qtd: 1)
+✓ Item: Venda 10963 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10964 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10964 - Produto 596 (Qtd: 1)
+⚠️  Item: Produto 603 não existe
+✓ Item: Venda 10965 - Produto 604 (Qtd: 1)
+✓ Item: Venda 10966 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10967 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10967 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 326 não existe
+✓ Item: Venda 10969 - Produto 602 (Qtd: 1)
+✓ Item: Venda 10967 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 608 não existe
+✓ Item: Venda 10970 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 605 não existe
+⚠️  Item: Produto 404 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 10974 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 605 não existe
+✓ Item: Venda 10975 - Produto 366 (Qtd: 1)
+✓ Item: Venda 10975 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10975 - Produto 563 (Qtd: 1)
+✓ Item: Venda 10975 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10976 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 10976 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10977 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10977 - Produto 381 (Qtd: 1)
+✓ Item: Venda 10974 - Produto 602 (Qtd: 1)
+✓ Item: Venda 10973 - Produto 602 (Qtd: 1)
+✓ Item: Venda 10973 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10973 - Produto 602 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 10978 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10980 - Produto 612 (Qtd: 1)
+✓ Item: Venda 10981 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10981 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 10981 - Produto 613 (Qtd: 1)
+⚠️  Item: Venda 10982 não existe
+⚠️  Item: Venda 10982 não existe
+✓ Item: Venda 10983 - Produto 122 (Qtd: 1)
+✓ Item: Venda 10983 - Produto 558 (Qtd: 1)
+✓ Item: Venda 10983 - Produto 615 (Qtd: 1)
+⚠️  Item: Produto 28 não existe
+✓ Item: Venda 10984 - Produto 547 (Qtd: 1)
+⚠️  Item inválido: itemAtendimento inválido ou ausente
+✓ Item: Venda 10984 - Produto 412 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+✓ Item: Venda 10985 - Produto 364 (Qtd: 1)
+✓ Item: Venda 10985 - Produto 442 (Qtd: 1)
+✓ Item: Venda 10985 - Produto 616 (Qtd: 1)
+✓ Item: Venda 10986 - Produto 137 (Qtd: 1)
+⚠️  Item: Produto 598 não existe
+✓ Item: Venda 10987 - Produto 203 (Qtd: 1)
+✓ Item: Venda 10987 - Produto 380 (Qtd: 1)
+✓ Item: Venda 10988 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10988 - Produto 364 (Qtd: 1)
+✓ Item: Venda 10989 - Produto 546 (Qtd: 1)
+✓ Item: Venda 10989 - Produto 468 (Qtd: 1)
+⚠️  Item: Produto 490 não existe
+✓ Item: Venda 10990 - Produto 365 (Qtd: 1)
+✓ Item: Venda 10990 - Produto 145 (Qtd: 1)
+✓ Item: Venda 10991 - Produto 617 (Qtd: 1)
+✓ Item: Venda 10991 - Produto 618 (Qtd: 1)
+✓ Item: Venda 10992 - Produto 135 (Qtd: 1)
+✓ Item: Venda 10993 - Produto 488 (Qtd: 1)
+✓ Item: Venda 10993 - Produto 568 (Qtd: 1)
+✓ Item: Venda 10993 - Produto 133 (Qtd: 1)
+✓ Item: Venda 10993 - Produto 616 (Qtd: 1)
+✓ Item: Venda 10992 - Produto 564 (Qtd: 1)
+✓ Item: Venda 10992 - Produto 120 (Qtd: 1)
+✓ Item: Venda 10994 - Produto 558 (Qtd: 1)
+✓ Item: Venda 10995 - Produto 618 (Qtd: 1)
+✓ Item: Venda 10995 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10996 - Produto 547 (Qtd: 1)
+✓ Item: Venda 10996 - Produto 560 (Qtd: 1)
+✓ Item: Venda 10996 - Produto 146 (Qtd: 1)
+✓ Item: Venda 10997 - Produto 623 (Qtd: 1)
+⚠️  Item: Produto 620 não existe
+✓ Item: Venda 10998 - Produto 624 (Qtd: 1)
+⚠️  Item: Produto 101 não existe
+✓ Item: Venda 10999 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11000 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11001 - Produto 460 (Qtd: 1)
+⚠️  Item inválido: itemAtendimento inválido ou ausente
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11002 - Produto 602 (Qtd: 1)
+✓ Item: Venda 11003 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11004 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11004 - Produto 625 (Qtd: 1)
+⚠️  Item: Produto 620 não existe
+✓ Item: Venda 11006 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11006 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11006 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11007 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11007 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11008 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11005 - Produto 626 (Qtd: 1)
+✓ Item: Venda 11009 - Produto 627 (Qtd: 1)
+✓ Item: Venda 11009 - Produto 628 (Qtd: 1)
+✓ Item: Venda 11010 - Produto 54 (Qtd: 1)
+✓ Item: Venda 11011 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11012 - Produto 561 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 11014 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11014 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 620 não existe
+✓ Item: Venda 11015 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 620 não existe
+✓ Item: Venda 11017 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11018 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11019 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11019 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11020 - Produto 585 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11022 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11022 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11022 - Produto 531 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+⚠️  Item: Venda 11023 não existe
+⚠️  Item: Venda 11023 não existe
+⚠️  Item: Produto 630 não existe
+✓ Item: Venda 11025 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 11026 - Produto 317 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11026 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 35 não existe
+⚠️  Item: Produto 391 não existe
+✓ Item: Venda 11029 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11029 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 196 não existe
+✓ Item: Venda 11031 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11032 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11032 - Produto 45 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 391 não existe
+✓ Item: Venda 11035 - Produto 318 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11035 - Produto 641 (Qtd: 1)
+⚠️  Item: Produto 630 não existe
+✓ Item: Venda 11036 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11036 - Produto 368 (Qtd: 1)
+✓ Item: Venda 11037 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11037 - Produto 381 (Qtd: 1)
+⚠️  Item: Produto 506 não existe
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 11038 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11038 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11038 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11038 - Produto 532 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11040 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11041 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11042 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11042 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11042 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11042 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 391 não existe
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11042 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11040 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11044 - Produto 137 (Qtd: 1)
+⚠️  Item: Produto 559 não existe
+✓ Item: Venda 11046 - Produto 18 (Qtd: 1)
+✓ Item: Venda 11016 - Produto 462 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11047 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11048 - Produto 318 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 11048 - Produto 563 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11051 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11051 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 391 não existe
+⚠️  Item: Produto 620 não existe
+✓ Item: Venda 11053 - Produto 231 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11054 - Produto 373 (Qtd: 1)
+⚠️  Item: Produto 643 não existe
+✓ Item: Venda 11055 - Produto 538 (Qtd: 1)
+✓ Item: Venda 11056 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11056 - Produto 602 (Qtd: 1)
+⚠️  Item: Produto 645 não existe
+⚠️  Item: Produto 646 não existe
+✓ Item: Venda 11058 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11059 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11059 - Produto 647 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11061 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11061 - Produto 238 (Qtd: 1)
+✓ Item: Venda 11061 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11061 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11062 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11062 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11063 - Produto 460 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11065 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11064 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11064 - Produto 648 (Qtd: 1)
+✓ Item: Venda 11067 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11067 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11068 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11068 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11069 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11069 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 649 não existe
+✓ Item: Venda 11071 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11072 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11073 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11071 - Produto 476 (Qtd: 1)
+✓ Item: Venda 11071 - Produto 572 (Qtd: 1)
+✓ Item: Venda 11071 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11072 - Produto 650 (Qtd: 1)
+✓ Item: Venda 11073 - Produto 651 (Qtd: 1)
+✓ Item: Venda 11075 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Produto 653 não existe
+✓ Item: Venda 11076 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11077 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11078 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11078 - Produto 654 (Qtd: 1)
+✓ Item: Venda 11077 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11079 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11080 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11080 - Produto 479 (Qtd: 1)
+✓ Item: Venda 11081 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11082 - Produto 617 (Qtd: 1)
+✓ Item: Venda 11082 - Produto 573 (Qtd: 1)
+✓ Item: Venda 11083 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11083 - Produto 231 (Qtd: 1)
+⚠️  Item: Produto 185 não existe
+✓ Item: Venda 11084 - Produto 45 (Qtd: 1)
+✓ Item: Venda 11085 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11086 - Produto 496 (Qtd: 1)
+✓ Item: Venda 11087 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11087 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11088 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11073 - Produto 651 (Qtd: 1)
+✓ Item: Venda 11089 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11089 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11090 - Produto 450 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item inválido: itemAtendimento inválido ou ausente
+✓ Item: Venda 11092 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 577 não existe
+✓ Item: Venda 11094 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11094 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11095 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11095 - Produto 650 (Qtd: 1)
+✓ Item: Venda 11096 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11096 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+⚠️  Item: Produto 491 não existe
+✓ Item: Venda 11098 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11099 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11100 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11100 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11101 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11101 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11103 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11103 - Produto 532 (Qtd: 1)
+⚠️  Item: Produto 91 não existe
+✓ Item: Venda 11104 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11104 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 631 não existe
+⚠️  Item: Produto 600 não existe
+⚠️  Item: Produto 672 não existe
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 11108 - Produto 538 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11110 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11110 - Produto 673 (Qtd: 1)
+⚠️  Item: Produto 630 não existe
+✓ Item: Venda 11111 - Produto 90 (Qtd: 1)
+✓ Item: Venda 11108 - Produto 411 (Qtd: 1)
+✓ Item: Venda 11108 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11110 - Produto 145 (Qtd: 1)
+✓ Item: Venda 11111 - Produto 675 (Qtd: 1)
+✓ Item: Venda 11111 - Produto 90 (Qtd: 1)
+✓ Item: Venda 11111 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11112 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11114 - Produto 475 (Qtd: 1)
+✓ Item: Venda 11115 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11115 - Produto 355 (Qtd: 1)
+⚠️  Item: Produto 672 não existe
+✓ Item: Venda 11117 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11112 - Produto 676 (Qtd: 1)
+✓ Item: Venda 11115 - Produto 145 (Qtd: 1)
+⚠️  Item: Venda 11118 não existe
+✓ Item: Venda 11119 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11119 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11119 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11120 - Produto 505 (Qtd: 1)
+✓ Item: Venda 11121 - Produto 656 (Qtd: 1)
+✓ Item: Venda 11121 - Produto 678 (Qtd: 1)
+✓ Item: Venda 11122 - Produto 366 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 11124 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11124 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11125 - Produto 451 (Qtd: 1)
+⚠️  Item: Produto 362 não existe
+✓ Item: Venda 11126 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 404 não existe
+✓ Item: Venda 11127 - Produto 650 (Qtd: 1)
+✓ Item: Venda 11128 - Produto 628 (Qtd: 1)
+✓ Item: Venda 11129 - Produto 18 (Qtd: 1)
+✓ Item: Venda 11130 - Produto 552 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11132 - Produto 617 (Qtd: 1)
+✓ Item: Venda 11132 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11133 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11133 - Produto 346 (Qtd: 1)
+⚠️  Item: Produto 605 não existe
+✓ Item: Venda 11134 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 474 não existe
+✓ Item: Venda 11135 - Produto 681 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11136 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11137 - Produto 626 (Qtd: 1)
+✓ Item: Venda 11138 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11138 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11122 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11139 - Produto 505 (Qtd: 1)
+✓ Item: Venda 11140 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11141 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11142 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11142 - Produto 683 (Qtd: 1)
+⚠️  Item: Produto 684 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11144 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11145 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11146 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11146 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11147 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11147 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11148 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11149 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11149 - Produto 45 (Qtd: 1)
+✓ Item: Venda 11150 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11150 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11151 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11151 - Produto 538 (Qtd: 1)
+✓ Item: Venda 11152 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11153 - Produto 446 (Qtd: 1)
+✓ Item: Venda 11154 - Produto 387 (Qtd: 1)
+⚠️  Item: Venda 11155 não existe
+⚠️  Item: Venda 11155 não existe
+⚠️  Item: Venda 11156 não existe
+⚠️  Item: Venda 11156 não existe
+⚠️  Item: Venda 11156 não existe
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11157 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11157 - Produto 442 (Qtd: 1)
+⚠️  Item: Produto 685 não existe
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 11158 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11159 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11159 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11160 - Produto 496 (Qtd: 1)
+✓ Item: Venda 11161 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11161 - Produto 411 (Qtd: 1)
+✓ Item: Venda 11162 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11162 - Produto 561 (Qtd: 1)
+✓ Item: Venda 11162 - Produto 551 (Qtd: 1)
+✓ Item: Venda 11163 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11164 - Produto 463 (Qtd: 1)
+✓ Item: Venda 11165 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11165 - Produto 44 (Qtd: 1)
+⚠️  Item: Produto 630 não existe
+✓ Item: Venda 11166 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11167 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11167 - Produto 686 (Qtd: 1)
+⚠️  Item: Produto 509 não existe
+✓ Item: Venda 11168 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11169 - Produto 687 (Qtd: 1)
+✓ Item: Venda 11170 - Produto 346 (Qtd: 1)
+⚠️  Item: Produto 401 não existe
+✓ Item: Venda 11171 - Produto 613 (Qtd: 1)
+⚠️  Item: Produto 324 não existe
+✓ Item: Venda 11172 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11173 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 131 não existe
+✓ Item: Venda 11175 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 556 não existe
+⚠️  Item: Venda 11176 não existe
+⚠️  Item: Venda 11176 não existe
+✓ Item: Venda 11177 - Produto 543 (Qtd: 1)
+✓ Item: Venda 11178 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11178 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11179 - Produto 18 (Qtd: 1)
+✓ Item: Venda 11180 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11181 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11181 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11182 - Produto 384 (Qtd: 1)
+✓ Item: Venda 11183 - Produto 387 (Qtd: 1)
+✓ Item: Venda 11184 - Produto 467 (Qtd: 1)
+✓ Item: Venda 11185 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11185 - Produto 145 (Qtd: 1)
+✓ Item: Venda 11186 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11187 - Produto 388 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+⚠️  Item: Venda 11189 não existe
+⚠️  Item: Venda 11190 não existe
+⚠️  Item: Venda 11190 não existe
+✓ Item: Venda 11187 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11187 - Produto 120 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11188 - Produto 592 (Qtd: 1)
+✓ Item: Venda 11191 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11192 - Produto 463 (Qtd: 1)
+✓ Item: Venda 11193 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11193 - Produto 496 (Qtd: 1)
+✓ Item: Venda 11194 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11194 - Produto 496 (Qtd: 1)
+✓ Item: Venda 11195 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11196 - Produto 349 (Qtd: 1)
+✓ Item: Venda 11196 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11197 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11197 - Produto 695 (Qtd: 1)
+✓ Item: Venda 11198 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 556 não existe
+✓ Item: Venda 11199 - Produto 467 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11200 - Produto 98 (Qtd: 1)
+✓ Item: Venda 11200 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11201 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11201 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11202 - Produto 591 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11204 - Produto 693 (Qtd: 1)
+✓ Item: Venda 11204 - Produto 696 (Qtd: 1)
+✓ Item: Venda 11205 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11206 - Produto 317 (Qtd: 1)
+✓ Item: Venda 11207 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11207 - Produto 544 (Qtd: 1)
+✓ Item: Venda 11208 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11208 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11209 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11209 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11209 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11210 - Produto 542 (Qtd: 1)
+⚠️  Item: Venda 11211 não existe
+✓ Item: Venda 11207 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11212 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 672 não existe
+⚠️  Item: Produto 659 não existe
+✓ Item: Venda 11213 - Produto 697 (Qtd: 1)
+✓ Item: Venda 11214 - Produto 698 (Qtd: 1)
+✓ Item: Venda 11215 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11216 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11216 - Produto 532 (Qtd: 1)
+⚠️  Item: Produto 430 não existe
+⚠️  Item: Produto 699 não existe
+✓ Item: Venda 11218 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11218 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11219 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11219 - Produto 553 (Qtd: 1)
+⚠️  Item: Produto 662 não existe
+✓ Item: Venda 11220 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11221 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11222 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11222 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11223 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11223 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11224 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11224 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11225 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11225 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11223 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11226 - Produto 328 (Qtd: 1)
+✓ Item: Venda 11227 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11227 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11227 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 700 não existe
+✓ Item: Venda 11229 - Produto 657 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11230 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11230 - Produto 565 (Qtd: 1)
+✓ Item: Venda 11231 - Produto 702 (Qtd: 1)
+✓ Item: Venda 11231 - Produto 146 (Qtd: 1)
+⚠️  Item: Venda 11232 não existe
+⚠️  Item: Venda 11232 não existe
+⚠️  Item: Venda 11233 não existe
+⚠️  Item: Venda 11233 não existe
+✓ Item: Venda 11234 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11235 - Produto 388 (Qtd: 1)
+✓ Item: Venda 11236 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11237 - Produto 670 (Qtd: 1)
+✓ Item: Venda 11237 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11238 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11238 - Produto 565 (Qtd: 1)
+✓ Item: Venda 11239 - Produto 640 (Qtd: 1)
+⚠️  Item: Venda 11240 não existe
+⚠️  Item: Venda 11240 não existe
+⚠️  Item: Venda 11240 não existe
+⚠️  Item: Venda 11240 não existe
+✓ Item: Venda 11241 - Produto 624 (Qtd: 1)
+✓ Item: Venda 11242 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11242 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11242 - Produto 451 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11244 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11244 - Produto 565 (Qtd: 1)
+✓ Item: Venda 11245 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11245 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11246 - Produto 636 (Qtd: 1)
+✓ Item: Venda 11247 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11247 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11248 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11248 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11248 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11249 - Produto 388 (Qtd: 1)
+✓ Item: Venda 11250 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11250 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11251 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11252 - Produto 670 (Qtd: 1)
+✓ Item: Venda 11252 - Produto 686 (Qtd: 1)
+✓ Item: Venda 11253 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11254 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11255 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11256 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11256 - Produto 703 (Qtd: 1)
+⚠️  Item: Venda 11257 não existe
+⚠️  Item: Venda 11257 não existe
+✓ Item: Venda 11258 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11258 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11259 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11260 - Produto 704 (Qtd: 1)
+⚠️  Item: Venda 11261 não existe
+✓ Item: Venda 11262 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11262 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11262 - Produto 387 (Qtd: 1)
+✓ Item: Venda 11263 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11263 - Produto 602 (Qtd: 1)
+✓ Item: Venda 11264 - Produto 560 (Qtd: 1)
+⚠️  Item: Produto 707 não existe
+✓ Item: Venda 11266 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11266 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11266 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11267 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11267 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11268 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11268 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11269 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11270 - Produto 708 (Qtd: 1)
+✓ Item: Venda 11271 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11271 - Produto 709 (Qtd: 1)
+✓ Item: Venda 11272 - Produto 102 (Qtd: 1)
+⚠️  Item: Produto 447 não existe
+✓ Item: Venda 11274 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11274 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11275 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11276 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11276 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11277 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11278 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11279 - Produto 439 (Qtd: 1)
+✓ Item: Venda 11280 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11280 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11281 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11281 - Produto 346 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11282 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11282 - Produto 586 (Qtd: 1)
+✓ Item: Venda 11283 - Produto 446 (Qtd: 1)
+✓ Item: Venda 11284 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11285 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11286 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11286 - Produto 479 (Qtd: 1)
+✓ Item: Venda 11287 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11287 - Produto 710 (Qtd: 1)
+✓ Item: Venda 11288 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11288 - Produto 319 (Qtd: 1)
+✓ Item: Venda 11289 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11290 - Produto 526 (Qtd: 1)
+✓ Item: Venda 11290 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11291 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11292 - Produto 551 (Qtd: 1)
+✓ Item: Venda 11293 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11293 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11294 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11294 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11294 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11295 - Produto 421 (Qtd: 1)
+✓ Item: Venda 11296 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11296 - Produto 365 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11298 - Produto 694 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11298 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11298 - Produto 711 (Qtd: 1)
+✓ Item: Venda 11299 - Produto 423 (Qtd: 1)
+✓ Item: Venda 11300 - Produto 138 (Qtd: 1)
+✓ Item: Venda 11300 - Produto 45 (Qtd: 1)
+✓ Item: Venda 11301 - Produto 460 (Qtd: 1)
+✓ Item: Venda 11301 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11302 - Produto 335 (Qtd: 1)
+✓ Item: Venda 11302 - Produto 113 (Qtd: 1)
+✓ Item: Venda 11303 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11304 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11304 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11304 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11304 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11305 - Produto 712 (Qtd: 1)
+✓ Item: Venda 11306 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11306 - Produto 109 (Qtd: 1)
+✓ Item: Venda 11307 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11307 - Produto 252 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11309 - Produto 387 (Qtd: 1)
+✓ Item: Venda 11310 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11310 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11311 - Produto 704 (Qtd: 1)
+✓ Item: Venda 11312 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11312 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11313 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11314 - Produto 467 (Qtd: 1)
+✓ Item: Venda 11315 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11316 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11318 - Produto 407 (Qtd: 1)
+✓ Item: Venda 11319 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 11320 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11321 - Produto 714 (Qtd: 1)
+✓ Item: Venda 11322 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11322 - Produto 715 (Qtd: 1)
+✓ Item: Venda 11323 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 556 não existe
+✓ Item: Venda 11324 - Produto 537 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11325 - Produto 705 (Qtd: 1)
+⚠️  Item: Venda 11326 não existe
+✓ Item: Venda 11327 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11327 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11328 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11329 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11329 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11330 - Produto 213 (Qtd: 1)
+✓ Item: Venda 11330 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11331 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11332 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11332 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11333 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11333 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11334 - Produto 27 (Qtd: 1)
+✓ Item: Venda 11335 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11336 - Produto 108 (Qtd: 1)
+✓ Item: Venda 11337 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11338 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11338 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11338 - Produto 411 (Qtd: 1)
+✓ Item: Venda 11339 - Produto 457 (Qtd: 1)
+✓ Item: Venda 11339 - Produto 538 (Qtd: 1)
+✓ Item: Venda 11340 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11341 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11341 - Produto 714 (Qtd: 1)
+✓ Item: Venda 11342 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11342 - Produto 411 (Qtd: 1)
+✓ Item: Venda 11343 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11344 - Produto 88 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 11345 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11345 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11345 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11345 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11346 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 555 não existe
+✓ Item: Venda 11347 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11348 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11348 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11349 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11350 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11350 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11351 - Produto 57 (Qtd: 1)
+✓ Item: Venda 11352 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11353 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11353 - Produto 602 (Qtd: 1)
+✓ Item: Venda 11354 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11354 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11355 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11355 - Produto 294 (Qtd: 1)
+⚠️  Item: Venda 11356 não existe
+⚠️  Item: Venda 11356 não existe
+✓ Item: Venda 11357 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11358 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11358 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11358 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11358 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11359 - Produto 54 (Qtd: 1)
+✓ Item: Venda 11359 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 700 não existe
+✓ Item: Venda 11359 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11360 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11360 - Produto 54 (Qtd: 1)
+✓ Item: Venda 11361 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11361 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11362 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11363 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 646 não existe
+✓ Item: Venda 11364 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11364 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11364 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11364 - Produto 423 (Qtd: 1)
+✓ Item: Venda 11364 - Produto 561 (Qtd: 1)
+✓ Item: Venda 11365 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11365 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11366 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11366 - Produto 718 (Qtd: 1)
+✓ Item: Venda 11367 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11367 - Produto 436 (Qtd: 1)
+✓ Item: Venda 11368 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11368 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11369 - Produto 606 (Qtd: 1)
+✓ Item: Venda 11369 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11370 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11370 - Produto 719 (Qtd: 1)
+✓ Item: Venda 11371 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11371 - Produto 521 (Qtd: 1)
+✓ Item: Venda 11372 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11372 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11373 - Produto 669 (Qtd: 1)
+⚠️  Item: Produto 720 não existe
+✓ Item: Venda 11374 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11374 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11374 - Produto 318 (Qtd: 1)
+✓ Item: Venda 11374 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11374 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11375 - Produto 229 (Qtd: 1)
+✓ Item: Venda 11375 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11376 - Produto 234 (Qtd: 1)
+✓ Item: Venda 11376 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11377 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11377 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11378 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11379 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11379 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11380 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11380 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11381 - Produto 387 (Qtd: 1)
+✓ Item: Venda 11382 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11383 - Produto 340 (Qtd: 1)
+✓ Item: Venda 11384 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11384 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11385 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11385 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11386 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11386 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11388 - Produto 591 (Qtd: 1)
+✓ Item: Venda 11389 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11389 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11390 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11390 - Produto 503 (Qtd: 1)
+✓ Item: Venda 11391 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11391 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11392 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11392 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11393 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11393 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11394 - Produto 473 (Qtd: 1)
+✓ Item: Venda 11395 - Produto 573 (Qtd: 1)
+✓ Item: Venda 11396 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11396 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11397 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11398 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11398 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11398 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11398 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11399 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11399 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11399 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11399 - Produto 366 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11399 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11399 - Produto 368 (Qtd: 1)
+✓ Item: Venda 11400 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11400 - Produto 561 (Qtd: 1)
+✓ Item: Venda 11401 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11402 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11402 - Produto 329 (Qtd: 1)
+✓ Item: Venda 11403 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11404 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11404 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11405 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11405 - Produto 721 (Qtd: 1)
+✓ Item: Venda 11406 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11406 - Produto 558 (Qtd: 1)
+⚠️  Item: Venda 11407 não existe
+⚠️  Item: Venda 11407 não existe
+⚠️  Item: Venda 11407 não existe
+⚠️  Item: Venda 11407 não existe
+⚠️  Item: Venda 11408 não existe
+⚠️  Item: Venda 11408 não existe
+⚠️  Item: Venda 11408 não existe
+✓ Item: Venda 11409 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11409 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11409 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11409 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11409 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11410 - Produto 201 (Qtd: 1)
+⚠️  Item: Venda 11411 não existe
+✓ Item: Venda 11412 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11413 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11414 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11414 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11415 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11416 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11416 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11417 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11417 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11418 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11418 - Produto 481 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11420 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11420 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11420 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11420 - Produto 537 (Qtd: 1)
+✓ Item: Venda 11421 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11422 - Produto 19 (Qtd: 1)
+✓ Item: Venda 11423 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11423 - Produto 628 (Qtd: 1)
+✓ Item: Venda 11424 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11424 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11425 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11425 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11426 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11426 - Produto 329 (Qtd: 1)
+✓ Item: Venda 11427 - Produto 18 (Qtd: 1)
+✓ Item: Venda 11428 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11428 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11428 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11429 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11429 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11430 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11430 - Produto 723 (Qtd: 2)
+✓ Item: Venda 11431 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11431 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11432 - Produto 380 (Qtd: 1)
+✓ Item: Venda 11433 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11433 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11434 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11434 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11435 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11435 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11436 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11436 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11437 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11438 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11438 - Produto 602 (Qtd: 1)
+✓ Item: Venda 11438 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11439 - Produto 355 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 707 não existe
+✓ Item: Venda 11442 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11442 - Produto 725 (Qtd: 1)
+✓ Item: Venda 11443 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11444 - Produto 18 (Qtd: 1)
+✓ Item: Venda 11445 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11446 - Produto 563 (Qtd: 1)
+⚠️  Item: Venda 11447 não existe
+⚠️  Item: Venda 11447 não existe
+⚠️  Item: Venda 11447 não existe
+⚠️  Item: Venda 11447 não existe
+✓ Item: Venda 11448 - Produto 488 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11449 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11449 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11450 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11450 - Produto 232 (Qtd: 1)
+⚠️  Item: Produto 658 não existe
+✓ Item: Venda 11452 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11452 - Produto 479 (Qtd: 1)
+✓ Item: Venda 11453 - Produto 476 (Qtd: 1)
+✓ Item: Venda 11454 - Produto 705 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11454 - Produto 31 (Qtd: 1)
+✓ Item: Venda 11455 - Produto 728 (Qtd: 1)
+⚠️  Item: Produto 631 não existe
+✓ Item: Venda 11456 - Produto 719 (Qtd: 1)
+✓ Item: Venda 11457 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11457 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11458 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11458 - Produto 148 (Qtd: 1)
+✓ Item: Venda 11459 - Produto 705 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11460 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11461 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11461 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11462 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11463 - Produto 546 (Qtd: 1)
+⚠️  Item: Venda 11464 não existe
+✓ Item: Venda 11465 - Produto 203 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11466 - Produto 726 (Qtd: 1)
+⚠️  Item: Produto 571 não existe
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11468 - Produto 669 (Qtd: 1)
+⚠️  Item: Produto 707 não existe
+✓ Item: Venda 11469 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11469 - Produto 306 (Qtd: 1)
+✓ Item: Venda 11470 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11470 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11471 - Produto 203 (Qtd: 1)
+⚠️  Item: Produto 555 não existe
+✓ Item: Venda 11472 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11472 - Produto 558 (Qtd: 1)
+✓ Item: Venda 11473 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11473 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11474 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11474 - Produto 730 (Qtd: 1)
+✓ Item: Venda 11475 - Produto 487 (Qtd: 1)
+✓ Item: Venda 11476 - Produto 731 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11477 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 732 não existe
+⚠️  Item: Venda 11478 não existe
+⚠️  Item: Venda 11478 não existe
+✓ Item: Venda 11479 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11480 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11480 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11481 - Produto 726 (Qtd: 1)
+⚠️  Item: Produto 734 não existe
+✓ Item: Venda 11482 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11482 - Produto 503 (Qtd: 1)
+✓ Item: Venda 11483 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11484 - Produto 466 (Qtd: 1)
+✓ Item: Venda 11485 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11485 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11486 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11486 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11487 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11487 - Produto 553 (Qtd: 1)
+⚠️  Item: Venda 11488 não existe
+✓ Item: Venda 11489 - Produto 735 (Qtd: 1)
+⚠️  Item: Produto 653 não existe
+✓ Item: Venda 11490 - Produto 58 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11492 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11492 - Produto 148 (Qtd: 1)
+✓ Item: Venda 11492 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11493 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11496 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11496 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11496 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11494 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11494 - Produto 444 (Qtd: 1)
+✓ Item: Venda 11495 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11495 - Produto 730 (Qtd: 1)
+✓ Item: Venda 11497 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11497 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11498 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11498 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11498 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11499 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11499 - Produto 730 (Qtd: 1)
+✓ Item: Venda 11500 - Produto 89 (Qtd: 1)
+✓ Item: Venda 11500 - Produto 618 (Qtd: 1)
+✓ Item: Venda 11501 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11502 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11502 - Produto 345 (Qtd: 1)
+✓ Item: Venda 11503 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11503 - Produto 467 (Qtd: 1)
+✓ Item: Venda 11504 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11505 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11505 - Produto 736 (Qtd: 1)
+✓ Item: Venda 11505 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11505 - Produto 551 (Qtd: 1)
+✓ Item: Venda 11505 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11506 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11506 - Produto 553 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11508 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11509 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Venda 11510 não existe
+✓ Item: Venda 11511 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11511 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11512 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11512 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11513 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11513 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11514 - Produto 338 (Qtd: 1)
+✓ Item: Venda 11515 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11515 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11516 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11516 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11516 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11516 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11517 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11517 - Produto 530 (Qtd: 1)
+✓ Item: Venda 11518 - Produto 111 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11519 - Produto 137 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11520 - Produto 288 (Qtd: 1)
+✓ Item: Venda 11521 - Produto 47 (Qtd: 1)
+✓ Item: Venda 11522 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11523 - Produto 42 (Qtd: 1)
+✓ Item: Venda 11524 - Produto 148 (Qtd: 1)
+✓ Item: Venda 11525 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11525 - Produto 374 (Qtd: 1)
+⚠️  Item: Venda 11526 não existe
+⚠️  Item: Venda 11526 não existe
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11527 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11527 - Produto 120 (Qtd: 4)
+✓ Item: Venda 11528 - Produto 636 (Qtd: 1)
+✓ Item: Venda 11529 - Produto 690 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11530 - Produto 450 (Qtd: 1)
+✓ Item: Venda 11530 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11531 - Produto 135 (Qtd: 1)
+⚠️  Item: Produto 574 não existe
+✓ Item: Venda 11532 - Produto 159 (Qtd: 1)
+✓ Item: Venda 11533 - Produto 690 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11534 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11534 - Produto 738 (Qtd: 1)
+✓ Item: Venda 11534 - Produto 411 (Qtd: 1)
+✓ Item: Venda 11535 - Produto 739 (Qtd: 1)
+✓ Item: Venda 11536 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11537 - Produto 544 (Qtd: 1)
+✓ Item: Venda 11538 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11538 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11539 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11540 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 583 não existe
+✓ Item: Venda 11541 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11542 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11542 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11543 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11543 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11544 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11545 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11545 - Produto 740 (Qtd: 1)
+✓ Item: Venda 11546 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11546 - Produto 741 (Qtd: 1)
+✓ Item: Venda 11547 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11547 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11548 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11548 - Produto 740 (Qtd: 1)
+✓ Item: Venda 11548 - Produto 368 (Qtd: 1)
+✓ Item: Venda 11549 - Produto 184 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11550 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11550 - Produto 742 (Qtd: 1)
+✓ Item: Venda 11551 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11552 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11553 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11553 - Produto 725 (Qtd: 1)
+✓ Item: Venda 11554 - Produto 77 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+⚠️  Item: Venda 11555 não existe
+✓ Item: Venda 11556 - Produto 736 (Qtd: 1)
+✓ Item: Venda 11557 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11557 - Produto 54 (Qtd: 1)
+⚠️  Item: Produto 700 não existe
+✓ Item: Venda 11559 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11560 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+✓ Item: Venda 11562 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11562 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11563 - Produto 750 (Qtd: 1)
+✓ Item: Venda 11563 - Produto 751 (Qtd: 1)
+✓ Item: Venda 11564 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11565 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11565 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11566 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11567 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11567 - Produto 287 (Qtd: 1)
+✓ Item: Venda 11569 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11569 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11570 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11570 - Produto 753 (Qtd: 1)
+⚠️  Item: Venda 11571 não existe
+✓ Item: Venda 11572 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11573 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11573 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11574 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11574 - Produto 753 (Qtd: 1)
+✓ Item: Venda 11575 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11576 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11576 - Produto 754 (Qtd: 1)
+✓ Item: Venda 11577 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11577 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11577 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11578 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11578 - Produto 745 (Qtd: 1)
+✓ Item: Venda 11579 - Produto 693 (Qtd: 1)
+✓ Item: Venda 11579 - Produto 755 (Qtd: 1)
+✓ Item: Venda 11580 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11580 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11580 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11580 - Produto 673 (Qtd: 1)
+⚠️  Item: Venda 11581 não existe
+⚠️  Item: Venda 11581 não existe
+⚠️  Item: Venda 11581 não existe
+✓ Item: Venda 11582 - Produto 365 (Qtd: 1)
+✓ Item: Venda 11582 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11583 - Produto 690 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11584 - Produto 757 (Qtd: 1)
+✓ Item: Venda 11585 - Produto 693 (Qtd: 1)
+✓ Item: Venda 11585 - Produto 758 (Qtd: 1)
+✓ Item: Venda 11586 - Produto 706 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11587 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11588 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11589 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11589 - Produto 758 (Qtd: 1)
+✓ Item: Venda 11590 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11590 - Produto 613 (Qtd: 1)
+✓ Item: Venda 11591 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 597 não existe
+✓ Item: Venda 11592 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 588 não existe
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11594 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11594 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11595 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11596 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11596 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11597 - Produto 363 (Qtd: 1)
+✓ Item: Venda 11597 - Produto 346 (Qtd: 1)
+⚠️  Item: Venda 11598 não existe
+✓ Item: Venda 11599 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11599 - Produto 760 (Qtd: 1)
+✓ Item: Venda 11600 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11601 - Produto 122 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11602 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11602 - Produto 761 (Qtd: 1)
+✓ Item: Venda 11603 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11603 - Produto 328 (Qtd: 1)
+✓ Item: Venda 11603 - Produto 747 (Qtd: 1)
+✓ Item: Venda 11603 - Produto 762 (Qtd: 1)
+✓ Item: Venda 11604 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11604 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11605 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11605 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11605 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11606 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11606 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11607 - Produto 359 (Qtd: 1)
+✓ Item: Venda 11607 - Produto 463 (Qtd: 1)
+✓ Item: Venda 11608 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11608 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11609 - Produto 621 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11610 - Produto 133 (Qtd: 1)
+⚠️  Item: Venda 11611 não existe
+⚠️  Item: Venda 11611 não existe
+✓ Item: Venda 11612 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11613 - Produto 747 (Qtd: 1)
+✓ Item: Venda 11613 - Produto 763 (Qtd: 1)
+✓ Item: Venda 11614 - Produto 184 (Qtd: 1)
+✓ Item: Venda 11615 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11615 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11616 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11617 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11618 - Produto 724 (Qtd: 1)
+✓ Item: Venda 11619 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11620 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11620 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11621 - Produto 691 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11622 - Produto 764 (Qtd: 1)
+✓ Item: Venda 11622 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 765 não existe
+✓ Item: Venda 11622 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11623 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11623 - Produto 745 (Qtd: 1)
+✓ Item: Venda 11624 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11624 - Produto 753 (Qtd: 1)
+✓ Item: Venda 11625 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11626 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 597 não existe
+✓ Item: Venda 11627 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11628 - Produto 90 (Qtd: 1)
+⚠️  Item: Produto 597 não existe
+✓ Item: Venda 11629 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11629 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11630 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11631 - Produto 591 (Qtd: 1)
+✓ Item: Venda 11631 - Produto 751 (Qtd: 1)
+⚠️  Item: Produto 701 não existe
+✓ Item: Venda 11632 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11632 - Produto 590 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11634 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11634 - Produto 766 (Qtd: 1)
+✓ Item: Venda 11635 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11636 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11637 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11637 - Produto 530 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11638 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11639 - Produto 203 (Qtd: 1)
+✓ Item: Venda 11639 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11640 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11640 - Produto 753 (Qtd: 1)
+✓ Item: Venda 11641 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11641 - Produto 565 (Qtd: 1)
+✓ Item: Venda 11642 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11642 - Produto 758 (Qtd: 1)
+✓ Item: Venda 11643 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11643 - Produto 754 (Qtd: 1)
+✓ Item: Venda 11644 - Produto 163 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11645 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11645 - Produto 745 (Qtd: 1)
+✓ Item: Venda 11646 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11647 - Produto 633 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+⚠️  Item: Venda 11648 não existe
+⚠️  Item: Venda 11648 não existe
+✓ Item: Venda 11649 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11649 - Produto 740 (Qtd: 1)
+✓ Item: Venda 11650 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11650 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11651 - Produto 753 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11652 - Produto 108 (Qtd: 1)
+✓ Item: Venda 11653 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11653 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11654 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11655 - Produto 754 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11656 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11656 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11656 - Produto 761 (Qtd: 1)
+✓ Item: Venda 11657 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11657 - Produto 767 (Qtd: 1)
+✓ Item: Venda 11657 - Produto 727 (Qtd: 1)
+✓ Item: Venda 11657 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11657 - Produto 120 (Qtd: 1)
+⚠️  Item: Venda 11658 não existe
+⚠️  Item: Venda 11658 não existe
+✓ Item: Venda 11659 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11659 - Produto 768 (Qtd: 1)
+✓ Item: Venda 11660 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11661 - Produto 437 (Qtd: 1)
+✓ Item: Venda 11662 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11662 - Produto 753 (Qtd: 1)
+✓ Item: Venda 11663 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11663 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11664 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11665 - Produto 77 (Qtd: 1)
+⚠️  Item: Produto 555 não existe
+✓ Item: Venda 11666 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11666 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11667 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11668 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11668 - Produto 754 (Qtd: 1)
+✓ Item: Venda 11669 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11670 - Produto 442 (Qtd: 1)
+✓ Item: Venda 11670 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11671 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11671 - Produto 544 (Qtd: 1)
+✓ Item: Venda 11672 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11672 - Produto 758 (Qtd: 1)
+✓ Item: Venda 11673 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11673 - Produto 44 (Qtd: 1)
+✓ Item: Venda 11674 - Produto 769 (Qtd: 1)
+✓ Item: Venda 11675 - Produto 749 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11676 - Produto 86 (Qtd: 1)
+✓ Item: Venda 11676 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11677 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11677 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11677 - Produto 770 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11679 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11679 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11680 - Produto 437 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11682 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11683 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11684 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11685 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11685 - Produto 694 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11686 - Produto 437 (Qtd: 1)
+✓ Item: Venda 11687 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11687 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11688 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11688 - Produto 771 (Qtd: 1)
+✓ Item: Venda 11689 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11689 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11690 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11691 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11692 - Produto 201 (Qtd: 1)
+⚠️  Item: Produto 672 não existe
+✓ Item: Venda 11692 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11693 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11694 - Produto 772 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11696 - Produto 363 (Qtd: 1)
+✓ Item: Venda 11696 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11697 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11697 - Produto 774 (Qtd: 1)
+✓ Item: Venda 11698 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11698 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11699 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11699 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11700 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11700 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11701 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11701 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11701 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11702 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11702 - Produto 681 (Qtd: 1)
+✓ Item: Venda 11703 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11704 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11704 - Produto 768 (Qtd: 1)
+✓ Item: Venda 11705 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11706 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11707 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11708 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11708 - Produto 775 (Qtd: 1)
+✓ Item: Venda 11709 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11710 - Produto 776 (Qtd: 1)
+✓ Item: Venda 11711 - Produto 777 (Qtd: 1)
+✓ Item: Venda 11712 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11713 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11713 - Produto 778 (Qtd: 1)
+✓ Item: Venda 11714 - Produto 691 (Qtd: 1)
+✓ Item: Venda 11714 - Produto 779 (Qtd: 1)
+✓ Item: Venda 11715 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11716 - Produto 780 (Qtd: 1)
+✓ Item: Venda 11717 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11717 - Produto 743 (Qtd: 1)
+✓ Item: Venda 11718 - Produto 137 (Qtd: 1)
+⚠️  Item: Produto 555 não existe
+✓ Item: Venda 11719 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11719 - Produto 761 (Qtd: 1)
+✓ Item: Venda 11720 - Produto 629 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11721 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11721 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11722 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11722 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11722 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11722 - Produto 781 (Qtd: 1)
+✓ Item: Venda 11723 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11723 - Produto 782 (Qtd: 1)
+✓ Item: Venda 11723 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11724 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11725 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11725 - Produto 528 (Qtd: 1)
+✓ Item: Venda 11725 - Produto 146 (Qtd: 1)
+⚠️  Item: Produto 84 não existe
+✓ Item: Venda 11727 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11727 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11728 - Produto 661 (Qtd: 1)
+✓ Item: Venda 11728 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11729 - Produto 633 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11729 - Produto 120 (Qtd: 1)
+✓ Item: Venda 11730 - Produto 705 (Qtd: 1)
+✓ Item: Venda 11730 - Produto 783 (Qtd: 1)
+✓ Item: Venda 11731 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11732 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11732 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11732 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11733 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11733 - Produto 784 (Qtd: 1)
+✓ Item: Venda 11733 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11733 - Produto 761 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11735 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11736 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11736 - Produto 785 (Qtd: 1)
+✓ Item: Venda 11737 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11737 - Produto 786 (Qtd: 1)
+✓ Item: Venda 11737 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11737 - Produto 787 (Qtd: 1)
+✓ Item: Venda 11738 - Produto 764 (Qtd: 1)
+✓ Item: Venda 11739 - Produto 780 (Qtd: 1)
+✓ Item: Venda 11740 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11740 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11741 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11741 - Produto 761 (Qtd: 1)
+✓ Item: Venda 11742 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11743 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11743 - Produto 761 (Qtd: 1)
+⚠️  Item: Produto 597 não existe
+✓ Item: Venda 11745 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11745 - Produto 615 (Qtd: 1)
+⚠️  Item: Produto 672 não existe
+✓ Item: Venda 11746 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11747 - Produto 488 (Qtd: 1)
+✓ Item: Venda 11747 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11748 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11748 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11749 - Produto 621 (Qtd: 1)
+⚠️  Item: Produto 765 não existe
+✓ Item: Venda 11750 - Produto 791 (Qtd: 1)
+✓ Item: Venda 11750 - Produto 792 (Qtd: 1)
+✓ Item: Venda 11750 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11751 - Produto 793 (Qtd: 1)
+✓ Item: Venda 11752 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11752 - Produto 768 (Qtd: 1)
+✓ Item: Venda 11753 - Produto 88 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11753 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11753 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11753 - Produto 789 (Qtd: 1)
+✓ Item: Venda 11753 - Produto 745 (Qtd: 1)
+✓ Item: Venda 11754 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11755 - Produto 795 (Qtd: 1)
+✓ Item: Venda 11755 - Produto 148 (Qtd: 1)
+✓ Item: Venda 11756 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11756 - Produto 796 (Qtd: 1)
+✓ Item: Venda 11757 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11757 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11758 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11759 - Produto 442 (Qtd: 1)
+⚠️  Item: Venda 11760 não existe
+⚠️  Item: Venda 11760 não existe
+✓ Item: Venda 11761 - Produto 446 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11763 - Produto 88 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 11764 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11764 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11765 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11766 - Produto 526 (Qtd: 1)
+⚠️  Item: Produto 597 não existe
+✓ Item: Venda 11767 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11767 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11767 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11767 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11768 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 798 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 799 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 793 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11769 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11770 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11770 - Produto 800 (Qtd: 1)
+✓ Item: Venda 11771 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11772 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11773 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11773 - Produto 801 (Qtd: 1)
+✓ Item: Venda 11774 - Produto 481 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11776 - Produto 98 (Qtd: 1)
+✓ Item: Venda 11777 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11779 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11780 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11781 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11781 - Produto 804 (Qtd: 1)
+✓ Item: Venda 11782 - Produto 621 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11782 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11782 - Produto 148 (Qtd: 1)
+✓ Item: Venda 11782 - Produto 530 (Qtd: 1)
+✓ Item: Venda 11782 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11783 - Produto 673 (Qtd: 1)
+✓ Item: Venda 11784 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11784 - Produto 805 (Qtd: 1)
+✓ Item: Venda 11784 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11784 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11785 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11786 - Produto 756 (Qtd: 2)
+✓ Item: Venda 11787 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11787 - Produto 804 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11789 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11790 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11791 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11791 - Produto 502 (Qtd: 1)
+✓ Item: Venda 11792 - Produto 412 (Qtd: 1)
+✓ Item: Venda 11792 - Produto 806 (Qtd: 1)
+✓ Item: Venda 11793 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11793 - Produto 804 (Qtd: 1)
+✓ Item: Venda 11794 - Produto 88 (Qtd: 1)
+⚠️  Item: Produto 666 não existe
+⚠️  Item: Produto 569 não existe
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11796 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11796 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11797 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11797 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11798 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11798 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11799 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11800 - Produto 502 (Qtd: 1)
+✓ Item: Venda 11800 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11801 - Produto 317 (Qtd: 1)
+✓ Item: Venda 11802 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11803 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11803 - Produto 382 (Qtd: 1)
+✓ Item: Venda 11804 - Produto 657 (Qtd: 1)
+✓ Item: Venda 11804 - Produto 463 (Qtd: 1)
+⚠️  Item: Produto 131 não existe
+✓ Item: Venda 11805 - Produto 804 (Qtd: 1)
+✓ Item: Venda 11806 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11806 - Produto 804 (Qtd: 1)
+✓ Item: Venda 11807 - Produto 806 (Qtd: 1)
+✓ Item: Venda 11808 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11808 - Produto 530 (Qtd: 1)
+✓ Item: Venda 11809 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11809 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11809 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11809 - Produto 807 (Qtd: 1)
+⚠️  Item: Venda 11810 não existe
+⚠️  Item: Venda 11810 não existe
+✓ Item: Venda 11811 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11811 - Produto 615 (Qtd: 1)
+✓ Item: Venda 11812 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11812 - Produto 808 (Qtd: 1)
+✓ Item: Venda 11813 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11814 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11815 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11815 - Produto 379 (Qtd: 1)
+✓ Item: Venda 11816 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11816 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11817 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11817 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11818 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11818 - Produto 374 (Qtd: 1)
+✓ Item: Venda 11819 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11820 - Produto 809 (Qtd: 1)
+✓ Item: Venda 11820 - Produto 810 (Qtd: 1)
+✓ Item: Venda 11821 - Produto 705 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11822 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11823 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11823 - Produto 364 (Qtd: 1)
+✓ Item: Venda 11823 - Produto 146 (Qtd: 1)
+⚠️  Item: Venda 11824 não existe
+✓ Item: Venda 11825 - Produto 811 (Qtd: 1)
+✓ Item: Venda 11826 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11826 - Produto 563 (Qtd: 1)
+✓ Item: Venda 11827 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11827 - Produto 807 (Qtd: 1)
+✓ Item: Venda 11828 - Produto 355 (Qtd: 1)
+✓ Item: Venda 11829 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11829 - Produto 804 (Qtd: 1)
+✓ Item: Venda 11829 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11830 - Produto 789 (Qtd: 1)
+✓ Item: Venda 11830 - Produto 812 (Qtd: 1)
+✓ Item: Venda 11831 - Produto 806 (Qtd: 1)
+✓ Item: Venda 11832 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11832 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11833 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11833 - Produto 45 (Qtd: 1)
+✓ Item: Venda 11834 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11835 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11835 - Produto 758 (Qtd: 1)
+✓ Item: Venda 11836 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11836 - Produto 813 (Qtd: 1)
+✓ Item: Venda 11837 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11838 - Produto 706 (Qtd: 1)
+✓ Item: Venda 11838 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11838 - Produto 641 (Qtd: 1)
+✓ Item: Venda 11839 - Produto 346 (Qtd: 1)
+✓ Item: Venda 11839 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11840 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11840 - Produto 814 (Qtd: 1)
+✓ Item: Venda 11840 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11840 - Produto 815 (Qtd: 1)
+✓ Item: Venda 11841 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11841 - Produto 815 (Qtd: 1)
+✓ Item: Venda 11841 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11842 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11843 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11843 - Produto 330 (Qtd: 1)
+✓ Item: Venda 11843 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11843 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11844 - Produto 629 (Qtd: 1)
+✓ Item: Venda 11845 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11845 - Produto 816 (Qtd: 1)
+✓ Item: Venda 11846 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11846 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11847 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11847 - Produto 817 (Qtd: 1)
+✓ Item: Venda 11848 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11848 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11849 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11850 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11850 - Produto 818 (Qtd: 1)
+⚠️  Item: Produto 549 não existe
+✓ Item: Venda 11852 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11853 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11854 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11855 - Produto 789 (Qtd: 1)
+✓ Item: Venda 11855 - Produto 821 (Qtd: 1)
+✓ Item: Venda 11856 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11856 - Produto 481 (Qtd: 1)
+✓ Item: Venda 11857 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11857 - Produto 532 (Qtd: 1)
+✓ Item: Venda 11858 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11858 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11859 - Produto 822 (Qtd: 1)
+✓ Item: Venda 11860 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11860 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11861 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11861 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11862 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11862 - Produto 823 (Qtd: 1)
+✓ Item: Venda 11863 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11863 - Produto 808 (Qtd: 1)
+✓ Item: Venda 11863 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11863 - Produto 824 (Qtd: 1)
+✓ Item: Venda 11864 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11864 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11865 - Produto 200 (Qtd: 1)
+✓ Item: Venda 11866 - Produto 547 (Qtd: 1)
+⚠️  Item: Produto 716 não existe
+✓ Item: Venda 11867 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11867 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11868 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11868 - Produto 565 (Qtd: 1)
+✓ Item: Venda 11869 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11869 - Produto 725 (Qtd: 1)
+✓ Item: Venda 11870 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11870 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11871 - Produto 783 (Qtd: 1)
+✓ Item: Venda 11872 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11872 - Produto 381 (Qtd: 1)
+✓ Item: Venda 11873 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11873 - Produto 776 (Qtd: 1)
+✓ Item: Venda 11874 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11874 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11875 - Produto 633 (Qtd: 1)
+✓ Item: Venda 11875 - Produto 761 (Qtd: 1)
+✓ Item: Venda 11876 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11876 - Produto 231 (Qtd: 1)
+✓ Item: Venda 11877 - Produto 200 (Qtd: 1)
+✓ Item: Venda 11878 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11878 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11878 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11879 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11879 - Produto 825 (Qtd: 1)
+✓ Item: Venda 11880 - Produto 774 (Qtd: 1)
+✓ Item: Venda 11880 - Produto 586 (Qtd: 1)
+✓ Item: Venda 11880 - Produto 200 (Qtd: 1)
+✓ Item: Venda 11881 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11881 - Produto 602 (Qtd: 1)
+✓ Item: Venda 11882 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11882 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11883 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11883 - Produto 530 (Qtd: 1)
+✓ Item: Venda 11884 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11884 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11885 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11885 - Produto 807 (Qtd: 1)
+✓ Item: Venda 11886 - Produto 88 (Qtd: 1)
+⚠️  Item: Produto 575 não existe
+✓ Item: Venda 11887 - Produto 86 (Qtd: 1)
+✓ Item: Venda 11887 - Produto 782 (Qtd: 1)
+✓ Item: Venda 11888 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11888 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11889 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11889 - Produto 826 (Qtd: 1)
+✓ Item: Venda 11890 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11890 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11891 - Produto 827 (Qtd: 1)
+✓ Item: Venda 11892 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11892 - Produto 778 (Qtd: 1)
+✓ Item: Venda 11893 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11893 - Produto 828 (Qtd: 1)
+⚠️  Item: Produto 829 não existe
+✓ Item: Venda 11895 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11895 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11896 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11896 - Produto 830 (Qtd: 1)
+✓ Item: Venda 11897 - Produto 749 (Qtd: 1)
+⚠️  Item: Produto 832 não existe
+✓ Item: Venda 11898 - Produto 636 (Qtd: 2)
+✓ Item: Venda 11899 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11900 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11900 - Produto 366 (Qtd: 1)
+✓ Item: Venda 11901 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11901 - Produto 833 (Qtd: 1)
+✓ Item: Venda 11902 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11902 - Produto 834 (Qtd: 1)
+✓ Item: Venda 11903 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11903 - Produto 792 (Qtd: 1)
+✓ Item: Venda 11904 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11904 - Produto 835 (Qtd: 1)
+✓ Item: Venda 11905 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11905 - Produto 836 (Qtd: 1)
+✓ Item: Venda 11906 - Produto 102 (Qtd: 1)
+✓ Item: Venda 11906 - Produto 837 (Qtd: 1)
+✓ Item: Venda 11907 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11907 - Produto 502 (Qtd: 1)
+✓ Item: Venda 11908 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11908 - Produto 783 (Qtd: 1)
+✓ Item: Venda 11909 - Produto 838 (Qtd: 1)
+⚠️  Item: Produto 839 não existe
+✓ Item: Venda 11910 - Produto 135 (Qtd: 1)
+✓ Item: Venda 11911 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11911 - Produto 840 (Qtd: 1)
+✓ Item: Venda 11912 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11912 - Produto 817 (Qtd: 1)
+✓ Item: Venda 11913 - Produto 704 (Qtd: 1)
+✓ Item: Venda 11914 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11915 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11915 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11916 - Produto 841 (Qtd: 1)
+✓ Item: Venda 11917 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11917 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11918 - Produto 803 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11919 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11919 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11920 - Produto 749 (Qtd: 1)
+⚠️  Item: Produto 839 não existe
+✓ Item: Venda 11921 - Produto 803 (Qtd: 1)
+⚠️  Item: Produto 839 não existe
+✓ Item: Venda 11922 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11923 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11924 - Produto 803 (Qtd: 1)
+⚠️  Item: Produto 732 não existe
+✓ Item: Venda 11925 - Produto 642 (Qtd: 1)
+✓ Item: Venda 11926 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11926 - Produto 792 (Qtd: 1)
+✓ Item: Venda 11926 - Produto 749 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11927 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11928 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11928 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11929 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11930 - Produto 693 (Qtd: 1)
+✓ Item: Venda 11930 - Produto 553 (Qtd: 1)
+✓ Item: Venda 11930 - Produto 146 (Qtd: 1)
+✓ Item: Venda 11931 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11932 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11932 - Produto 842 (Qtd: 1)
+✓ Item: Venda 11932 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 732 não existe
+✓ Item: Venda 11933 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11933 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11934 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11935 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11935 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11936 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11936 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11937 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11937 - Produto 728 (Qtd: 1)
+✓ Item: Venda 11938 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11939 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11940 - Produto 803 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 11941 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11941 - Produto 843 (Qtd: 1)
+✓ Item: Venda 11942 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11942 - Produto 844 (Qtd: 1)
+✓ Item: Venda 11943 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11943 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11944 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11945 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11946 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11947 - Produto 621 (Qtd: 1)
+✓ Item: Venda 11947 - Produto 845 (Qtd: 1)
+✓ Item: Venda 11948 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11948 - Produto 775 (Qtd: 1)
+✓ Item: Venda 11949 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11949 - Produto 797 (Qtd: 1)
+✓ Item: Venda 11950 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11950 - Produto 846 (Qtd: 1)
+✓ Item: Venda 11951 - Produto 848 (Qtd: 1)
+✓ Item: Venda 11952 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11953 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11953 - Produto 201 (Qtd: 1)
+✓ Item: Venda 11954 - Produto 792 (Qtd: 1)
+✓ Item: Venda 11955 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11955 - Produto 849 (Qtd: 1)
+✓ Item: Venda 11956 - Produto 111 (Qtd: 1)
+✓ Item: Venda 11956 - Produto 792 (Qtd: 1)
+✓ Item: Venda 11957 - Produto 704 (Qtd: 1)
+✓ Item: Venda 11958 - Produto 86 (Qtd: 1)
+✓ Item: Venda 11959 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11959 - Produto 850 (Qtd: 1)
+✓ Item: Venda 11960 - Produto 77 (Qtd: 1)
+✓ Item: Venda 11960 - Produto 774 (Qtd: 1)
+✓ Item: Venda 11961 - Produto 749 (Qtd: 1)
+⚠️  Item: Produto 545 não existe
+✓ Item: Venda 11962 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11963 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11963 - Produto 373 (Qtd: 1)
+✓ Item: Venda 11964 - Produto 806 (Qtd: 1)
+✓ Item: Venda 11964 - Produto 806 (Qtd: 1)
+✓ Item: Venda 11965 - Produto 830 (Qtd: 1)
+✓ Item: Venda 11966 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11966 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11967 - Produto 844 (Qtd: 1)
+✓ Item: Venda 11968 - Produto 451 (Qtd: 1)
+✓ Item: Venda 11969 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11969 - Produto 590 (Qtd: 1)
+✓ Item: Venda 11970 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11970 - Produto 790 (Qtd: 1)
+✓ Item: Venda 11971 - Produto 546 (Qtd: 1)
+✓ Item: Venda 11972 - Produto 627 (Qtd: 1)
+✓ Item: Venda 11972 - Produto 775 (Qtd: 1)
+✓ Item: Venda 11973 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11973 - Produto 376 (Qtd: 1)
+✓ Item: Venda 11974 - Produto 122 (Qtd: 1)
+✓ Item: Venda 11974 - Produto 851 (Qtd: 1)
+✓ Item: Venda 11975 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11975 - Produto 45 (Qtd: 1)
+✓ Item: Venda 11976 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11976 - Produto 776 (Qtd: 1)
+✓ Item: Venda 11977 - Produto 746 (Qtd: 1)
+✓ Item: Venda 11977 - Produto 817 (Qtd: 1)
+✓ Item: Venda 11978 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11979 - Produto 747 (Qtd: 1)
+✓ Item: Venda 11980 - Produto 547 (Qtd: 1)
+✓ Item: Venda 11980 - Produto 852 (Qtd: 1)
+✓ Item: Venda 11981 - Produto 363 (Qtd: 1)
+✓ Item: Venda 11981 - Produto 801 (Qtd: 1)
+✓ Item: Venda 11982 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11982 - Produto 853 (Qtd: 1)
+✓ Item: Venda 11983 - Produto 206 (Qtd: 1)
+✓ Item: Venda 11984 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11985 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11985 - Produto 393 (Qtd: 1)
+✓ Item: Venda 11986 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11987 - Produto 137 (Qtd: 1)
+✓ Item: Venda 11987 - Produto 233 (Qtd: 1)
+✓ Item: Venda 11988 - Produto 379 (Qtd: 1)
+✓ Item: Venda 11989 - Produto 133 (Qtd: 1)
+✓ Item: Venda 11989 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11989 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11989 - Produto 562 (Qtd: 1)
+✓ Item: Venda 11990 - Produto 726 (Qtd: 1)
+✓ Item: Venda 11991 - Produto 690 (Qtd: 1)
+✓ Item: Venda 11991 - Produto 854 (Qtd: 1)
+✓ Item: Venda 11992 - Produto 704 (Qtd: 1)
+✓ Item: Venda 11993 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11994 - Produto 749 (Qtd: 1)
+✓ Item: Venda 11994 - Produto 856 (Qtd: 1)
+✓ Item: Venda 11995 - Produto 830 (Qtd: 1)
+✓ Item: Venda 11996 - Produto 88 (Qtd: 1)
+✓ Item: Venda 11996 - Produto 560 (Qtd: 1)
+✓ Item: Venda 11997 - Produto 86 (Qtd: 1)
+✓ Item: Venda 11997 - Produto 830 (Qtd: 1)
+✓ Item: Venda 11997 - Produto 641 (Qtd: 1)
+✓ Item: Venda 11998 - Produto 803 (Qtd: 1)
+✓ Item: Venda 11998 - Produto 857 (Qtd: 1)
+✓ Item: Venda 11999 - Produto 792 (Qtd: 1)
+✓ Item: Venda 12000 - Produto 580 (Qtd: 1)
+✓ Item: Venda 12001 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12002 - Produto 789 (Qtd: 1)
+✓ Item: Venda 12003 - Produto 122 (Qtd: 1)
+✓ Item: Venda 12004 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12004 - Produto 792 (Qtd: 1)
+✓ Item: Venda 12005 - Produto 621 (Qtd: 1)
+✓ Item: Venda 12005 - Produto 231 (Qtd: 1)
+✓ Item: Venda 12006 - Produto 393 (Qtd: 1)
+✓ Item: Venda 12007 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12007 - Produto 532 (Qtd: 1)
+✓ Item: Venda 12008 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12008 - Produto 858 (Qtd: 1)
+✓ Item: Venda 12009 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12010 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12010 - Produto 380 (Qtd: 1)
+✓ Item: Venda 12011 - Produto 830 (Qtd: 1)
+✓ Item: Venda 12012 - Produto 86 (Qtd: 1)
+✓ Item: Venda 12012 - Produto 590 (Qtd: 1)
+✓ Item: Venda 12013 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12013 - Produto 859 (Qtd: 1)
+✓ Item: Venda 12014 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12014 - Produto 860 (Qtd: 1)
+✓ Item: Venda 12015 - Produto 451 (Qtd: 1)
+✓ Item: Venda 12016 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12016 - Produto 714 (Qtd: 1)
+✓ Item: Venda 12017 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12017 - Produto 861 (Qtd: 1)
+✓ Item: Venda 12018 - Produto 481 (Qtd: 1)
+✓ Item: Venda 12019 - Produto 806 (Qtd: 1)
+✓ Item: Venda 12020 - Produto 816 (Qtd: 1)
+✓ Item: Venda 12021 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12021 - Produto 376 (Qtd: 1)
+⚠️  Item: Produto 569 não existe
+✓ Item: Venda 12023 - Produto 466 (Qtd: 1)
+✓ Item: Venda 12024 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12024 - Produto 233 (Qtd: 1)
+✓ Item: Venda 12025 - Produto 864 (Qtd: 1)
+✓ Item: Venda 12026 - Produto 792 (Qtd: 1)
+✓ Item: Venda 12027 - Produto 690 (Qtd: 1)
+✓ Item: Venda 12027 - Produto 783 (Qtd: 1)
+✓ Item: Venda 12028 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12028 - Produto 714 (Qtd: 1)
+✓ Item: Venda 12029 - Produto 852 (Qtd: 1)
+✓ Item: Venda 12030 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12031 - Produto 790 (Qtd: 1)
+✓ Item: Venda 12032 - Produto 747 (Qtd: 1)
+✓ Item: Venda 12032 - Produto 763 (Qtd: 1)
+✓ Item: Venda 12033 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12033 - Produto 113 (Qtd: 1)
+✓ Item: Venda 12034 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12034 - Produto 800 (Qtd: 1)
+✓ Item: Venda 12035 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12036 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12036 - Produto 804 (Qtd: 1)
+✓ Item: Venda 12037 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12037 - Produto 776 (Qtd: 1)
+✓ Item: Venda 12038 - Produto 747 (Qtd: 1)
+✓ Item: Venda 12039 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12039 - Produto 865 (Qtd: 1)
+✓ Item: Venda 12040 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12041 - Produto 547 (Qtd: 1)
+✓ Item: Venda 12041 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12041 - Produto 866 (Qtd: 1)
+✓ Item: Venda 12042 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12042 - Produto 807 (Qtd: 1)
+✓ Item: Venda 12043 - Produto 636 (Qtd: 1)
+✓ Item: Venda 12044 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12045 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12045 - Produto 867 (Qtd: 1)
+✓ Item: Venda 12046 - Produto 806 (Qtd: 1)
+✓ Item: Venda 12047 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12047 - Produto 817 (Qtd: 1)
+✓ Item: Venda 12048 - Produto 88 (Qtd: 1)
+✓ Item: Venda 12048 - Produto 818 (Qtd: 1)
+✓ Item: Venda 12049 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12049 - Produto 868 (Qtd: 1)
+✓ Item: Venda 12050 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12050 - Produto 844 (Qtd: 1)
+✓ Item: Venda 12051 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12051 - Produto 778 (Qtd: 1)
+✓ Item: Venda 12052 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12053 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12053 - Produto 776 (Qtd: 1)
+✓ Item: Venda 12054 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12054 - Produto 728 (Qtd: 1)
+✓ Item: Venda 12044 - Produto 804 (Qtd: 1)
+✓ Item: Venda 12055 - Produto 642 (Qtd: 1)
+✓ Item: Venda 12056 - Produto 363 (Qtd: 1)
+✓ Item: Venda 12056 - Produto 869 (Qtd: 1)
+✓ Item: Venda 12057 - Produto 863 (Qtd: 1)
+✓ Item: Venda 12057 - Produto 201 (Qtd: 1)
+✓ Item: Venda 12057 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12057 - Produto 201 (Qtd: 1)
+✓ Item: Venda 12058 - Produto 783 (Qtd: 1)
+✓ Item: Venda 12059 - Produto 137 (Qtd: 1)
+✓ Item: Venda 12060 - Produto 77 (Qtd: 1)
+✓ Item: Venda 12060 - Produto 813 (Qtd: 1)
+✓ Item: Venda 12061 - Produto 636 (Qtd: 1)
+✓ Item: Venda 12062 - Produto 871 (Qtd: 1)
+✓ Item: Venda 12063 - Produto 111 (Qtd: 1)
+✓ Item: Venda 12063 - Produto 806 (Qtd: 1)
+✓ Item: Venda 12063 - Produto 451 (Qtd: 1)
+✓ Item: Venda 12064 - Produto 137 (Qtd: 1)
+✓ Item: Venda 12064 - Produto 642 (Qtd: 1)
+✓ Item: Venda 12065 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 732 não existe
+✓ Item: Venda 12066 - Produto 88 (Qtd: 1)
+✓ Item: Venda 12066 - Produto 870 (Qtd: 1)
+✓ Item: Venda 12067 - Produto 863 (Qtd: 1)
+✓ Item: Venda 12067 - Produto 804 (Qtd: 1)
+✓ Item: Venda 12068 - Produto 122 (Qtd: 1)
+✓ Item: Venda 12068 - Produto 872 (Qtd: 1)
+✓ Item: Venda 12068 - Produto 451 (Qtd: 1)
+✓ Item: Venda 12068 - Produto 873 (Qtd: 1)
+✓ Item: Venda 12069 - Produto 88 (Qtd: 1)
+✓ Item: Venda 12069 - Produto 743 (Qtd: 1)
+✓ Item: Venda 12070 - Produto 546 (Qtd: 1)
+⚠️  Item: Produto 839 não existe
+✓ Item: Venda 12071 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12071 - Produto 44 (Qtd: 1)
+✓ Item: Venda 12072 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12072 - Produto 874 (Qtd: 1)
+✓ Item: Venda 12073 - Produto 137 (Qtd: 1)
+✓ Item: Venda 12073 - Produto 818 (Qtd: 1)
+✓ Item: Venda 12074 - Produto 875 (Qtd: 1)
+✓ Item: Venda 12075 - Produto 844 (Qtd: 1)
+✓ Item: Venda 12076 - Produto 450 (Qtd: 1)
+✓ Item: Venda 12077 - Produto 875 (Qtd: 1)
+✓ Item: Venda 12078 - Produto 803 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 12079 - Produto 876 (Qtd: 1)
+✓ Item: Venda 12080 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12080 - Produto 821 (Qtd: 1)
+✓ Item: Venda 12081 - Produto 864 (Qtd: 1)
+✓ Item: Venda 12082 - Produto 778 (Qtd: 1)
+✓ Item: Venda 12083 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12083 - Produto 877 (Qtd: 1)
+✓ Item: Venda 12084 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12084 - Produto 558 (Qtd: 1)
+✓ Item: Venda 12085 - Produto 705 (Qtd: 1)
+✓ Item: Venda 12085 - Produto 812 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 753 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 584 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 380 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 586 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 864 (Qtd: 1)
+✓ Item: Venda 12086 - Produto 641 (Qtd: 1)
+✓ Item: Venda 12087 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12087 - Produto 878 (Qtd: 1)
+✓ Item: Venda 12088 - Produto 481 (Qtd: 1)
+✓ Item: Venda 12089 - Produto 102 (Qtd: 1)
+✓ Item: Venda 12089 - Produto 783 (Qtd: 1)
+✓ Item: Venda 12090 - Produto 138 (Qtd: 1)
+✓ Item: Venda 12090 - Produto 774 (Qtd: 1)
+✓ Item: Venda 12091 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12091 - Produto 148 (Qtd: 1)
+✓ Item: Venda 12092 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12092 - Produto 879 (Qtd: 1)
+✓ Item: Venda 12093 - Produto 764 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 12094 - Produto 120 (Qtd: 1)
+✓ Item: Venda 12095 - Produto 138 (Qtd: 1)
+✓ Item: Venda 12095 - Produto 558 (Qtd: 1)
+✓ Item: Venda 12096 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12096 - Produto 303 (Qtd: 1)
+✓ Item: Venda 12097 - Produto 804 (Qtd: 1)
+✓ Item: Venda 12097 - Produto 726 (Qtd: 1)
+✓ Item: Venda 12097 - Produto 784 (Qtd: 1)
+✓ Item: Venda 12098 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12098 - Produto 880 (Qtd: 1)
+✓ Item: Venda 12099 - Produto 547 (Qtd: 1)
+✓ Item: Venda 12100 - Produto 881 (Qtd: 1)
+✓ Item: Venda 12101 - Produto 203 (Qtd: 1)
+✓ Item: Venda 12102 - Produto 877 (Qtd: 1)
+✓ Item: Venda 12103 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12103 - Produto 767 (Qtd: 1)
+✓ Item: Venda 12104 - Produto 882 (Qtd: 1)
+✓ Item: Venda 12104 - Produto 778 (Qtd: 1)
+⚠️  Item: Venda 12105 não existe
+⚠️  Item: Venda 12105 não existe
+✓ Item: Venda 12106 - Produto 863 (Qtd: 1)
+✓ Item: Venda 12106 - Produto 859 (Qtd: 1)
+✓ Item: Venda 12107 - Produto 636 (Qtd: 2)
+✓ Item: Venda 12108 - Produto 636 (Qtd: 1)
+✓ Item: Venda 12109 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12109 - Produto 642 (Qtd: 1)
+✓ Item: Venda 12110 - Produto 838 (Qtd: 1)
+✓ Item: Venda 12111 - Produto 206 (Qtd: 1)
+✓ Item: Venda 12112 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12112 - Produto 883 (Qtd: 1)
+✓ Item: Venda 12113 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12114 - Produto 546 (Qtd: 1)
+✓ Item: Venda 12114 - Produto 880 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 12115 - Produto 120 (Qtd: 1)
+✓ Item: Venda 12116 - Produto 547 (Qtd: 1)
+✓ Item: Venda 12116 - Produto 642 (Qtd: 1)
+✓ Item: Venda 12117 - Produto 138 (Qtd: 1)
+✓ Item: Venda 12117 - Produto 880 (Qtd: 1)
+✓ Item: Venda 12118 - Produto 635 (Qtd: 1)
+✓ Item: Venda 12119 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12119 - Produto 880 (Qtd: 1)
+✓ Item: Venda 12120 - Produto 859 (Qtd: 1)
+✓ Item: Venda 12121 - Produto 133 (Qtd: 1)
+⚠️  Item: Produto 713 não existe
+✓ Item: Venda 12122 - Produto 879 (Qtd: 1)
+✓ Item: Venda 12123 - Produto 456 (Qtd: 1)
+✓ Item: Venda 12124 - Produto 749 (Qtd: 1)
+✓ Item: Venda 12124 - Produto 881 (Qtd: 1)
+✓ Item: Venda 12125 - Produto 803 (Qtd: 1)
+✓ Item: Venda 12125 - Produto 373 (Qtd: 1)
+✓ Item: Venda 12126 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12126 - Produto 880 (Qtd: 1)
+✓ Item: Venda 12127 - Produto 863 (Qtd: 1)
+✓ Item: Venda 12127 - Produto 884 (Qtd: 1)
+✓ Item: Venda 12128 - Produto 133 (Qtd: 1)
+✓ Item: Venda 12128 - Produto 558 (Qtd: 1)
+✓ Item: Venda 12129 - Produto 746 (Qtd: 1)
+✓ Item: Venda 12129 - Produto 885 (Qtd: 1)
+✓ Item: Venda 12130 - Produto 387 (Qtd: 1)
+✓ Item: Venda 12130 - Produto 563 (Qtd: 1)
+✓ Item: Venda 12130 - Produto 146 (Qtd: 1)
+
+================================================================================
+RELATÓRIO DE MIGRAÇÃO
+================================================================================
+Total de registros: 3871
+✓ Sucesso:          3024
+⏭️  Ignorados:        847
+✗ Erros:            0
+================================================================================
+
+⚠️  Log de erros salvo em: C:\Work\prismaflow\prismaflow-api\migrations\otica-crista\data\logs\sale-items-errors.json
+
+📊 Total de itens no banco: 3024
+
+✅ Migração concluída com sucesso!

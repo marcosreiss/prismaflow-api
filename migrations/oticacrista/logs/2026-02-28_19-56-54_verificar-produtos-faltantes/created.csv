@@ -1,0 +1,36 @@
+name,description,costPrice,salePrice,stockQuantity,minimumStock,category,isActive,tenantId,branchId,brandId,prodId,prodTipo
+LENTE VS1.53 SENSITY AR NR/BC,"Importado produto.xlsx (ID:113, tipo:PRODUTO)",1250,2500,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,113,PRODUTO
+LENTE BIF. ULTEX TRANS IV,"Importado produto.xlsx (ID:121, tipo:PRODUTO)",425,850,4,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,121,PRODUTO
+LENTE BIF. ULTEX INC,"Importado produto.xlsx (ID:128, tipo:PRODUTO)",175,350,4,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,128,PRODUTO
+LENTE BIF. BIOVIS INC,"Importado produto.xlsx (ID:129, tipo:PRODUTO)",175,350,5,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,129,PRODUTO
+LENTE BIF. BIOVIS TRANT II,"Importado produto.xlsx (ID:130, tipo:PRODUTO)",250,500,5,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,130,PRODUTO
+LENTE BIF. ULTEX TRANS VII,"Importado produto.xlsx (ID:157, tipo:PRODUTO)",510,1020,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,157,PRODUTO
+LENTE BIF. BIOVIS FOTO,"Importado produto.xlsx (ID:158, tipo:PRODUTO)",510,1020,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,158,PRODUTO
+ARMAÇÃO FOX,"Importado produto.xlsx (ID:163, tipo:PRODUTO)",215,430,2,0,ACCESSORY,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,240,163,PRODUTO
+LENTE PR DAYNAMIC1.5 AR CX,"Importado produto.xlsx (ID:231, tipo:PRODUTO)",1119,2238,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,231,PRODUTO
+LENTE PR DAYNAMIC1.5 SENSITY AR CX,"Importado produto.xlsx (ID:233, tipo:PRODUTO)",1677,3354,4,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,233,PRODUTO
+LENTE BIF. BIOVIS TRANST IV,"Importado produto.xlsx (ID:264, tipo:PRODUTO)",425,850,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,264,PRODUTO
+LENTE BIF. ULTEX TRANT II,"Importado produto.xlsx (ID:301, tipo:PRODUTO)",250,500,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,301,PRODUTO
+LENTE HOYA VS1.50 SENSITY,"Importado produto.xlsx (ID:367, tipo:PRODUTO)",175,350,10,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,367,PRODUTO
+LENTE HOYA VS1.50  AR BLUE,"Importado produto.xlsx (ID:376, tipo:PRODUTO)",500,1000,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,376,PRODUTO
+LENTE P 1.50 AO COMPACTA INC,"Importado produto.xlsx (ID:495, tipo:PRODUTO)",250,500,12,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,211,495,PRODUTO
+LENTE BIOVIS 1.59 INCOLOR,"Importado produto.xlsx (ID:540, tipo:PRODUTO)",250,500,9,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,213,540,PRODUTO
+LENTE BIFOCAL ULTEX INC,"Importado produto.xlsx (ID:562, tipo:PRODUTO)",200,400,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,283,562,PRODUTO
+LENTE BIF. ULTEX FOTO,"Importado produto.xlsx (ID:565, tipo:PRODUTO)",300,600,4,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,283,565,PRODUTO
+LENTE BIF. ULTEX INC.,"Importado produto.xlsx (ID:573, tipo:PRODUTO)",150,300,96,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,291,573,PRODUTO
+LENTE BIOVIS INC,"Importado produto.xlsx (ID:578, tipo:PRODUTO)",150,300,9,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,295,578,PRODUTO
+LENTE ARGOS 1.50 SENSITY AR NR/BC,"Importado produto.xlsx (ID:602, tipo:PRODUTO)",1300,2600,11,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,602,PRODUTO
+LENTE BIF BIOVIS INC,"Importado produto.xlsx (ID:612, tipo:PRODUTO)",150,300,9,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,267,612,PRODUTO
+LENTE ARGOS 1.50 AR NR/BC,"Importado produto.xlsx (ID:642, tipo:PRODUTO)",870,1740,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,642,PRODUTO
+LENTE BIF ULTEX INC,"Importado produto.xlsx (ID:651, tipo:PRODUTO)",175,350,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,295,651,PRODUTO
+LENTE PR DAYNAMIC1.59 AR CX,"Importado produto.xlsx (ID:759, tipo:PRODUTO)",1200,2400,10,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,759,PRODUTO
+LENTE PR DAYNAMIC1.5 SOLAR,"Importado produto.xlsx (ID:770, tipo:PRODUTO)",1000,2000,9,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,770,PRODUTO
+LENTE PR DAYNAMIC1.53 NORISK BLUE,"Importado produto.xlsx (ID:791, tipo:PRODUTO)",1450,2900,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,791,PRODUTO
+LENTE PR DAYNAMIC1.5 NORISK BLUE,"Importado produto.xlsx (ID:792, tipo:PRODUTO)",1900,3800,1,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,792,PRODUTO
+LENTE PR DAYNAMIC1.5 SENSITY AR BLUE,"Importado produto.xlsx (ID:813, tipo:PRODUTO)",2100,4200,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,813,PRODUTO
+LENTE BIFOCAL BIOVIS FOTO,"Importado produto.xlsx (ID:820, tipo:PRODUTO)",350,700,10,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,324,820,PRODUTO
+LENTE PR DAYNAMIC1.5 SENSITY II,"Importado produto.xlsx (ID:825, tipo:PRODUTO)",1620,3240,6,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,825,PRODUTO
+LENTE BIFOCAL ULTEX FOTO,"Importado produto.xlsx (ID:848, tipo:PRODUTO)",300,600,9,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,326,848,PRODUTO
+LENTE PR DAYNAMIC SENSITY AR NORISK,"Importado produto.xlsx (ID:859, tipo:PRODUTO)",1900,3800,7,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,859,PRODUTO
+LENTE PR DAYNAMIC1.60 AR NR/BC,"Importado produto.xlsx (ID:872, tipo:PRODUTO)",1870,3740,18,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,872,PRODUTO
+LENTE PR DAYNAMIC1.60 SOLAR,"Importado produto.xlsx (ID:873, tipo:PRODUTO)",1500,3000,8,0,LENS,true,cmibvcyed00007m0118rkgft8,cmibvcyed00017m014r66e39w,214,873,PRODUTO

@@ -1,10 +1,9 @@
-// gerar o CSV de correspondência
 import fs from "node:fs";
 import path from "node:path";
 
 export interface BrandMapping {
     oldId: number;
-    newId: number;
+    newId: number | null;
     status: "CREATED" | "EXISTING";
     oldName: string;
     newName: string;
@@ -31,14 +30,18 @@ export function saveBrandMapping(
     const rows = mappings.map((mapping) => {
         return [
             mapping.oldId,
-            mapping.newId,
+            mapping.newId ?? "",
             mapping.status,
             csvEscape(mapping.oldName),
             csvEscape(mapping.newName),
         ].join(",");
     });
 
-    fs.writeFileSync(filePath, header + rows.join("\n"), "utf-8");
+    fs.writeFileSync(
+        filePath,
+        header + rows.join("\n"),
+        "utf-8"
+    );
 
     console.log(`Mapeamento salvo em: ${filePath}`);
 }

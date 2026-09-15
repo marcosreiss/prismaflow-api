@@ -10,6 +10,7 @@ import {
 } from "./mapping/brand.mapping";
 
 const TENANT_ID = "cmibvcyed00007m0118rkgft8";
+const DRY_RUN = true;
 
 async function main() {
     const startedAt = new Date();
@@ -18,6 +19,7 @@ async function main() {
     console.log(" MIGRAÇÃO: BRAND");
     console.log("=================================");
     console.log(`Tenant: ${TENANT_ID}`);
+    console.log(`DRY RUN: ${DRY_RUN ? "SIM" : "NÃO"}`);
     console.log("");
 
     const oldBrands = loadBrands();
@@ -62,6 +64,24 @@ async function main() {
                 continue;
             }
 
+            if (DRY_RUN) {
+                created++;
+
+                mappings.push({
+                    oldId: oldBrand.marcaId,
+                    newId: null,
+                    status: "CREATED",
+                    oldName: oldBrand.marcaNome,
+                    newName: brandData.name,
+                });
+
+                console.log(
+                    `[DRY RUN - CRIARIA] ${oldBrand.marcaId} | ${oldBrand.marcaNome}`
+                );
+
+                continue;
+            }
+
             const newBrand = await prisma.brand.create({
                 data: brandData,
             });
@@ -92,30 +112,33 @@ async function main() {
     }
 
     const finishedAt = new Date();
-
     const timestamp = formatTimestamp(finishedAt);
 
     saveBrandMapping(mappings, timestamp);
 
-    saveExecutionReport({
-        table: "Brand",
-        tenantId: TENANT_ID,
-        startedAt: startedAt.toISOString(),
-        finishedAt: finishedAt.toISOString(),
-        total: oldBrands.length,
-        created,
-        existing,
-        errors,
-    }, timestamp);
+    saveExecutionReport(
+        {
+            table: "Brand",
+            tenantId: TENANT_ID,
+            dryRun: DRY_RUN,
+            startedAt: startedAt.toISOString(),
+            finishedAt: finishedAt.toISOString(),
+            total: oldBrands.length,
+            created,
+            existing,
+            errors,
+        },
+        timestamp
+    );
 
     console.log("");
     console.log("=================================");
     console.log(" MIGRAÇÃO FINALIZADA");
     console.log("=================================");
-    console.log(`Total:     ${oldBrands.length}`);
-    console.log(`Criados:   ${created}`);
-    console.log(`Existentes:${existing}`);
-    console.log(`Erros:     ${errors}`);
+    console.log(`Total:      ${oldBrands.length}`);
+    console.log(`Criados:    ${created}`);
+    console.log(`Existentes: ${existing}`);
+    console.log(`Erros:      ${errors}`);
 }
 
 function saveBrandError(
@@ -158,6 +181,7 @@ function saveExecutionReport(
     report: {
         table: string;
         tenantId: string;
+        dryRun: boolean;
         startedAt: string;
         finishedAt: string;
         total: number;

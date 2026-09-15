@@ -10,7 +10,7 @@ import {
 } from "./mapping/brand.mapping";
 
 const TENANT_ID = "cmibvcyed00007m0118rkgft8";
-const DRY_RUN = true;
+const DRY_RUN = false; // Altere para true se quiser apenas simular a migração sem criar registros
 
 async function main() {
     const startedAt = new Date();

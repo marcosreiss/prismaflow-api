@@ -10,8 +10,7 @@ export interface BrandMapping {
 }
 
 export function saveBrandMapping(
-    mappings: BrandMapping[],
-    timestamp: string
+    mappings: BrandMapping[]
 ): void {
     const outputDir = path.resolve(
         process.cwd(),
@@ -20,10 +19,18 @@ export function saveBrandMapping(
 
     fs.mkdirSync(outputDir, { recursive: true });
 
-    const filePath = path.join(
+    const finalPath = path.join(
         outputDir,
-        `01-brand-mapping-${timestamp}.csv`
+        "01-brand-mapping.csv"
     );
+
+    /*
+     * Escrevemos primeiro em um arquivo temporário.
+     *
+     * Somente depois que o conteúdo estiver completamente
+     * escrito substituímos o mapping definitivo.
+     */
+    const tempPath = `${finalPath}.tmp`;
 
     const header = "old_id,new_id,status,old_name,new_name\n";
 
@@ -38,12 +45,14 @@ export function saveBrandMapping(
     });
 
     fs.writeFileSync(
-        filePath,
+        tempPath,
         header + rows.join("\n"),
         "utf-8"
     );
 
-    console.log(`Mapeamento salvo em: ${filePath}`);
+    fs.renameSync(tempPath, finalPath);
+
+    console.log(`Mapeamento salvo em: ${finalPath}`);
 }
 
 function csvEscape(value: string): string {

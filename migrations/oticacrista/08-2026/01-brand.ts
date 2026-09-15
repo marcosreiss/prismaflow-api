@@ -112,24 +112,35 @@ async function main() {
     }
 
     const finishedAt = new Date();
+
+    /*
+     * Só substituímos o mapping definitivo se não houve erro.
+     *
+     * Isso evita que uma execução incompleta destrua
+     * um mapping válido de uma execução anterior.
+     */
+    if (errors === 0) {
+        saveBrandMapping(mappings);
+    } else {
+        console.log("");
+        console.log(
+            "O mapping não foi atualizado porque ocorreram erros."
+        );
+    }
+
     const timestamp = formatTimestamp(finishedAt);
 
-    saveBrandMapping(mappings, timestamp);
-
-    saveExecutionReport(
-        {
-            table: "Brand",
-            tenantId: TENANT_ID,
-            dryRun: DRY_RUN,
-            startedAt: startedAt.toISOString(),
-            finishedAt: finishedAt.toISOString(),
-            total: oldBrands.length,
-            created,
-            existing,
-            errors,
-        },
-        timestamp
-    );
+    saveExecutionReport({
+        table: "Brand",
+        tenantId: TENANT_ID,
+        dryRun: DRY_RUN,
+        startedAt: startedAt.toISOString(),
+        finishedAt: finishedAt.toISOString(),
+        total: oldBrands.length,
+        created,
+        existing,
+        errors,
+    }, timestamp);
 
     console.log("");
     console.log("=================================");

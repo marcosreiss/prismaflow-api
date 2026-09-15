@@ -1,0 +1,11 @@
+{
+  "table": "Brand",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": true,
+  "startedAt": "2026-09-15T22:22:13.656Z",
+  "finishedAt": "2026-09-15T22:22:26.169Z",
+  "total": 138,
+  "created": 18,
+  "existing": 120,
+  "errors": 0
+}

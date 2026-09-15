@@ -1,0 +1,14 @@
+{
+  "migration": "02-product",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": true,
+  "startedAt": "2026-09-15T22:52:59.804Z",
+  "finishedAt": "2026-09-15T22:58:28.977Z",
+  "durationMs": 329173,
+  "total": 787,
+  "created": 371,
+  "existing": 412,
+  "pending": 4,
+  "errors": 0,
+  "mappingSaved": false
+}

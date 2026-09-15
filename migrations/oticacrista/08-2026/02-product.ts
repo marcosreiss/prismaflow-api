@@ -31,7 +31,7 @@ const DRY_RUN = true;
  */
 const INPUT_PATH = path.resolve(
     __dirname,
-    "../../../../input/produto.csv",
+    "./input/produto.csv",
 );
 
 const REPORTS_PATH = path.resolve(

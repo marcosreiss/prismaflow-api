@@ -22,7 +22,7 @@ const TENANT_ID = "cmibvcyed00007m0118rkgft8";
  * false = execução real
  * true  = apenas simulação
  */
-const DRY_RUN = true;
+const DRY_RUN = false;
 
 /*
  * CSV antigo de produtos.

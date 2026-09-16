@@ -31,7 +31,8 @@ export function detectCategory(
      */
     if (
         normalized.includes("ARMACAO") ||
-        normalized.includes("OCULOS")
+        normalized.includes("OCULOS") ||
+        normalized.includes("SOLAR")
     ) {
         return "FRAME";
     }
@@ -39,13 +40,27 @@ export function detectCategory(
     /*
      * LENS
      */
-    if (normalized.includes("LENTE")) {
+    if (
+        normalized.includes("LENTE") ||
+        normalized.includes("VARILUX")
+    ) {
         return "LENS";
     }
 
     /*
-     * ACCESSORY e qualquer outro caso
-     * ficam para decisão manual no script principal.
+     * ACCESSORY
+     */
+    if (
+        normalized.includes("COLORACAO") ||
+        normalized.includes("RENEGOCIACAO") ||
+        normalized.includes("ACORDO")
+    ) {
+        return "ACCESSORY";
+    }
+
+    /*
+     * Qualquer outro caso
+     * fica para decisão manual no script principal.
      */
     return null;
 }

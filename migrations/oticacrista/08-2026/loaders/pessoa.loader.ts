@@ -25,7 +25,7 @@ export interface PessoaCsv {
 export function loadPessoa(): PessoaCsv[] {
     const filePath = path.resolve(
         __dirname,
-        "../../input/pessoa.csv",
+        "../input/pessoa.csv",
     );
 
     if (!fs.existsSync(filePath)) {

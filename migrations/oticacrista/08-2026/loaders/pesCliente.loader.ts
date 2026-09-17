@@ -22,7 +22,7 @@ export interface PesClienteCsv {
 export function loadPesCliente(): PesClienteCsv[] {
     const filePath = path.resolve(
         __dirname,
-        "../../input/pesCliente.csv",
+        "../input/pesCliente.csv",
     );
 
     if (!fs.existsSync(filePath)) {

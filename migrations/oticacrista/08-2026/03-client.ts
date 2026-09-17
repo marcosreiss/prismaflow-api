@@ -1,17 +1,15 @@
 // migrations/oticacrista/08-2026/03-client.ts
 
-import readline from "readline/promises";
-import { stdin as input, stdout as output } from "process";
-import { PrismaClient, Client } from "@prisma/client";
+import fs from "fs";
+import path from "path";
+import {
+    Client,
+    PrismaClient,
+} from "@prisma/client";
 
 import {
-    loadPessoa,
-    PessoaCsv,
-} from "./loaders/pessoa.loader";
-
-import {
-    loadPesCliente,
-    PesClienteCsv,
+    loadClientSources,
+    type ClientSource,
 } from "./loaders/pesCliente.loader";
 
 import {
@@ -19,6 +17,7 @@ import {
     normalizeCpf,
     normalizeName,
     normalizePhone,
+    normalizeRg,
 } from "./converters/client.converter";
 
 import {
@@ -29,7 +28,12 @@ import {
     loadClientMapping,
 } from "./mapping/client.mapping";
 
-const prisma = new PrismaClient();
+/* =========================================================
+ * CONFIGURAÇÃO
+ * ========================================================= */
+
+const prisma =
+    new PrismaClient();
 
 const TENANT_ID =
     "cmibvcyed00007m0118rkgft8";
@@ -39,12 +43,26 @@ const BRANCH_ID =
 
 const DRY_RUN = true;
 
-interface SourceRecord {
-    pessoa: PessoaCsv;
-    cliente: PesClienteCsv;
-}
+const REPORTS_PATH = path.resolve(
+    __dirname,
+    "reports",
+);
 
-interface MatchResult {
+const ERRORS_PATH = path.join(
+    REPORTS_PATH,
+    "errors",
+);
+
+const EXECUTIONS_PATH = path.join(
+    REPORTS_PATH,
+    "executions",
+);
+
+/* =========================================================
+ * TIPOS
+ * ========================================================= */
+
+interface ClientMatchResult {
     client: Client | null;
     matchedBy:
     | "CPF"
@@ -54,35 +72,74 @@ interface MatchResult {
     | "PENDING";
 }
 
-function clean(
-    value: string | null | undefined,
-): string | null {
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return null;
-    }
-
-    const result = value.trim();
-
-    return result || null;
+interface ClientIndexes {
+    cpfIndex: Map<string, Client[]>;
+    rgIndex: Map<string, Client[]>;
+    birthDateIndex: Map<string, Client[]>;
+    phoneIndex: Map<string, Client[]>;
 }
 
-function normalizeRg(
-    value: string | null | undefined,
-): string | null {
-    const normalized = clean(value);
+/* =========================================================
+ * RELATÓRIOS
+ * ========================================================= */
 
-    if (!normalized) {
-        return null;
+function createTimestamp(): string {
+    return new Date()
+        .toISOString()
+        .replace(/[:.]/g, "-");
+}
+
+function saveJson(
+    directory: string,
+    filename: string,
+    data: unknown,
+): void {
+    fs.mkdirSync(
+        directory,
+        { recursive: true },
+    );
+
+    fs.writeFileSync(
+        path.join(
+            directory,
+            filename,
+        ),
+        JSON.stringify(
+            data,
+            null,
+            2,
+        ),
+        "utf-8",
+    );
+}
+
+/* =========================================================
+ * INDEXAÇÃO
+ * ========================================================= */
+
+function buildKey(
+    name: string,
+    value: string,
+): string {
+    return `${normalizeName(name)}|${value}`;
+}
+
+function addToIndex(
+    index: Map<string, Client[]>,
+    key: string,
+    client: Client,
+): void {
+    const current =
+        index.get(key);
+
+    if (current) {
+        current.push(client);
+    } else {
+        index.set(
+            key,
+            [client],
+        );
     }
-
-    return normalized
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, "")
-        .toUpperCase();
 }
 
 function normalizeDate(
@@ -97,55 +154,35 @@ function normalizeDate(
         .slice(0, 10);
 }
 
-function normalizeGenderName(
-    value: string | null | undefined,
-): string | null {
-    const normalized = normalizeName(value);
-
-    if (!normalized) {
-        return null;
-    }
-
-    return normalized;
-}
-
-function buildKey(
-    name: string,
-    value: string,
-): string {
-    return `${normalizeName(name)}|${value}`;
-}
-
 function buildClientIndexes(
     clients: Client[],
-) {
-    const cpfIndex = new Map<string, Client[]>();
-    const rgIndex = new Map<string, Client[]>();
-    const birthDateIndex = new Map<string, Client[]>();
-    const phoneIndex = new Map<string, Client[]>();
+): ClientIndexes {
+    const cpfIndex =
+        new Map<string, Client[]>();
+
+    const rgIndex =
+        new Map<string, Client[]>();
+
+    const birthDateIndex =
+        new Map<string, Client[]>();
+
+    const phoneIndex =
+        new Map<string, Client[]>();
 
     for (const client of clients) {
-        const normalizedName =
-            normalizeName(client.name);
-
-        if (!normalizedName) {
-            continue;
-        }
-
         if (client.cpf) {
             const cpf =
-                normalizeCpf(client.cpf);
+                normalizeCpf(
+                    client.cpf,
+                );
 
             if (cpf) {
-                const key =
+                addToIndex(
+                    cpfIndex,
                     buildKey(
                         client.name,
                         cpf,
-                    );
-
-                addToIndex(
-                    cpfIndex,
-                    key,
+                    ),
                     client,
                 );
             }
@@ -153,18 +190,17 @@ function buildClientIndexes(
 
         if (client.rg) {
             const rg =
-                normalizeRg(client.rg);
+                normalizeRg(
+                    client.rg,
+                );
 
             if (rg) {
-                const key =
+                addToIndex(
+                    rgIndex,
                     buildKey(
                         client.name,
                         rg,
-                    );
-
-                addToIndex(
-                    rgIndex,
-                    key,
+                    ),
                     client,
                 );
             }
@@ -177,15 +213,12 @@ function buildClientIndexes(
                 );
 
             if (date) {
-                const key =
+                addToIndex(
+                    birthDateIndex,
                     buildKey(
                         client.name,
                         date,
-                    );
-
-                addToIndex(
-                    birthDateIndex,
-                    key,
+                    ),
                     client,
                 );
             }
@@ -196,22 +229,21 @@ function buildClientIndexes(
             client.phone02,
             client.phone03,
         ]) {
-            const normalizedPhone =
-                normalizePhone(phone);
+            const normalized =
+                normalizePhone(
+                    phone,
+                );
 
-            if (!normalizedPhone) {
+            if (!normalized) {
                 continue;
             }
 
-            const key =
-                buildKey(
-                    client.name,
-                    normalizedPhone,
-                );
-
             addToIndex(
                 phoneIndex,
-                key,
+                buildKey(
+                    client.name,
+                    normalized,
+                ),
                 client,
             );
         }
@@ -225,29 +257,19 @@ function buildClientIndexes(
     };
 }
 
-function addToIndex(
-    index: Map<string, Client[]>,
-    key: string,
-    client: Client,
-): void {
-    const current =
-        index.get(key);
-
-    if (current) {
-        current.push(client);
-    } else {
-        index.set(key, [client]);
-    }
-}
+/* =========================================================
+ * MATCHING
+ * ========================================================= */
 
 function findUnique(
-    candidates: Client[] | undefined,
+    candidates:
+        | Client[]
+        | undefined,
 ): Client | null {
-    if (!candidates) {
-        return null;
-    }
-
-    if (candidates.length !== 1) {
+    if (
+        !candidates ||
+        candidates.length !== 1
+    ) {
         return null;
     }
 
@@ -255,13 +277,18 @@ function findUnique(
 }
 
 function findMatch(
-    pessoa: PessoaCsv,
-    converted: ReturnType<typeof convertClient>,
-    indexes: ReturnType<typeof buildClientIndexes>,
-): MatchResult {
-    const name = normalizeName(
-        pessoa.pesNome,
-    );
+    source: ClientSource,
+    indexes: ClientIndexes,
+): ClientMatchResult {
+    const {
+        pessoa,
+        cliente,
+    } = source;
+
+    const name =
+        normalizeName(
+            pessoa.pesNome,
+        );
 
     if (!name) {
         return {
@@ -274,7 +301,9 @@ function findMatch(
      * 1. NOME + CPF
      */
     const cpf =
-        normalizeCpf(pessoa.pesDoc);
+        normalizeCpf(
+            pessoa.pesDoc,
+        );
 
     if (cpf) {
         const candidates =
@@ -286,7 +315,9 @@ function findMatch(
             );
 
         const client =
-            findUnique(candidates);
+            findUnique(
+                candidates,
+            );
 
         if (client) {
             return {
@@ -310,7 +341,9 @@ function findMatch(
      * 2. NOME + RG
      */
     const rg =
-        normalizeRg(converted.rg);
+        normalizeRg(
+            cliente.cliRg,
+        );
 
     if (rg) {
         const candidates =
@@ -322,7 +355,9 @@ function findMatch(
             );
 
         const client =
-            findUnique(candidates);
+            findUnique(
+                candidates,
+            );
 
         if (client) {
             return {
@@ -345,6 +380,9 @@ function findMatch(
     /*
      * 3. NOME + DATA DE NASCIMENTO
      */
+    const converted =
+        convertClient(source);
+
     const birthDate =
         normalizeDate(
             converted.bornDate,
@@ -360,12 +398,15 @@ function findMatch(
             );
 
         const client =
-            findUnique(candidates);
+            findUnique(
+                candidates,
+            );
 
         if (client) {
             return {
                 client,
-                matchedBy: "BIRTH_DATE",
+                matchedBy:
+                    "BIRTH_DATE",
             };
         }
 
@@ -398,7 +439,9 @@ function findMatch(
             );
 
         const client =
-            findUnique(candidates);
+            findUnique(
+                candidates,
+            );
 
         if (client) {
             return {
@@ -418,124 +461,109 @@ function findMatch(
         }
     }
 
-    /*
-     * Nenhuma combinação encontrou
-     * uma correspondência segura.
-     */
     return {
         client: null,
         matchedBy: "PENDING",
     };
 }
 
-async function askFiliation(
-    pessoa: PessoaCsv,
-    cliente: PesClienteCsv,
-): Promise<{
-    motherName: string | null;
-    fatherName: string | null;
-}> {
-    const filiation =
-        clean(cliente.cliFiliacao);
+/* =========================================================
+ * INDEXAÇÃO DINÂMICA
+ * ========================================================= */
 
-    if (!filiation) {
-        return {
-            motherName: null,
-            fatherName: null,
-        };
-    }
-
-    const matches =
-        filiation.match(/\bE\b/gi);
-
-    const occurrences =
-        matches?.length ?? 0;
-
-    /*
-     * Nenhum E:
-     * somente mãe.
-     */
-    if (occurrences === 0) {
-        return {
-            motherName: filiation,
-            fatherName: null,
-        };
-    }
-
-    /*
-     * Um E:
-     * mãe + pai.
-     */
-    if (occurrences === 1) {
-        const parts =
-            filiation.split(
-                /\s+\bE\b\s+/i,
+function addClientToIndexes(
+    client: Client,
+    indexes: ClientIndexes,
+): void {
+    if (client.cpf) {
+        const cpf =
+            normalizeCpf(
+                client.cpf,
             );
 
-        return {
-            motherName:
-                clean(parts[0]),
-            fatherName:
-                clean(parts[1]),
-        };
+        if (cpf) {
+            addToIndex(
+                indexes.cpfIndex,
+                buildKey(
+                    client.name,
+                    cpf,
+                ),
+                client,
+            );
+        }
     }
 
-    /*
-     * Mais de um E:
-     * pedir manualmente.
-     */
-    console.log("\n");
-    console.log(
-        "========================================",
-    );
-    console.log(
-        "⚠ FILIAÇÃO COM MAIS DE UM 'E'",
-    );
-    console.log(
-        "========================================",
-    );
-    console.log(
-        `cliPessoa: ${cliente.cliPessoa}`,
-    );
-    console.log(
-        `Nome: ${pessoa.pesNome}`,
-    );
-    console.log(
-        `Filiação: ${filiation}`,
-    );
-    console.log(
-        `Quantidade de E: ${occurrences}`,
-    );
-    console.log(
-        "Informe manualmente a separação.",
-    );
+    if (client.rg) {
+        const rg =
+            normalizeRg(
+                client.rg,
+            );
 
-    const rl = readline.createInterface({
-        input,
-        output,
-    });
+        if (rg) {
+            addToIndex(
+                indexes.rgIndex,
+                buildKey(
+                    client.name,
+                    rg,
+                ),
+                client,
+            );
+        }
+    }
 
-    const mother =
-        await rl.question(
-            "Nome da MÃE: ",
+    if (client.bornDate) {
+        const date =
+            normalizeDate(
+                client.bornDate,
+            );
+
+        if (date) {
+            addToIndex(
+                indexes.birthDateIndex,
+                buildKey(
+                    client.name,
+                    date,
+                ),
+                client,
+            );
+        }
+    }
+
+    for (const phone of [
+        client.phone01,
+        client.phone02,
+        client.phone03,
+    ]) {
+        const normalized =
+            normalizePhone(
+                phone,
+            );
+
+        if (!normalized) {
+            continue;
+        }
+
+        addToIndex(
+            indexes.phoneIndex,
+            buildKey(
+                client.name,
+                normalized,
+            ),
+            client,
         );
-
-    const father =
-        await rl.question(
-            "Nome do PAI: ",
-        );
-
-    rl.close();
-
-    return {
-        motherName: clean(mother),
-        fatherName: clean(father),
-    };
+    }
 }
 
-async function main() {
+/* =========================================================
+ * MAIN
+ * ========================================================= */
+
+async function main(): Promise<void> {
+    const startedAt =
+        new Date();
+
     console.log(
-        "========================================",
+        "\n========================================",
     );
     console.log(
         "MIGRAÇÃO DE CLIENTES",
@@ -543,81 +571,33 @@ async function main() {
     console.log(
         "========================================",
     );
-
-    console.log(
-        `TENANT: ${TENANT_ID}`,
-    );
-
-    console.log(
-        `BRANCH: ${BRANCH_ID}`,
-    );
-
     console.log(
         `DRY_RUN: ${DRY_RUN}`,
     );
-
+    console.log(
+        `Tenant: ${TENANT_ID}`,
+    );
+    console.log(
+        `Branch: ${BRANCH_ID}`,
+    );
     console.log(
         "========================================\n",
     );
 
-    const pessoas =
-        loadPessoa();
-
-    const clientes =
-        loadPesCliente();
-
-    console.log(
-        `Pessoas carregadas: ${pessoas.length}`,
-    );
-
-    console.log(
-        `Clientes carregados: ${clientes.length}`,
-    );
-
-    /*
-     * Relaciona pesCliente.cliPessoa
-     * com pessoa.pesId.
-     */
-    const pessoaMap =
-        new Map<string, PessoaCsv>();
-
-    for (const pessoa of pessoas) {
-        pessoaMap.set(
-            pessoa.pesId,
-            pessoa,
-        );
-    }
-
-    const sources: SourceRecord[] = [];
-
-    for (const cliente of clientes) {
-        const pessoa =
-            pessoaMap.get(
-                cliente.cliPessoa,
-            );
-
-        if (!pessoa) {
-            console.log(
-                `⚠ PENDING | cliPessoa=${cliente.cliPessoa} | pessoa não encontrada`,
-            );
-
-            continue;
-        }
-
-        sources.push({
-            pessoa,
-            cliente,
-        });
-    }
+    const {
+        sources,
+        orphanClients,
+    } =
+        loadClientSources();
 
     console.log(
         `Registros relacionados: ${sources.length}`,
     );
 
-    /*
-     * Carrega os clientes já existentes
-     * no tenant.
-     */
+    console.log(
+        `Clientes sem pessoa: ${orphanClients.length}`,
+    );
+
     const existingClients =
         await prisma.client.findMany({
             where: {
@@ -626,7 +606,7 @@ async function main() {
         });
 
     console.log(
-        `Clientes existentes no tenant: ${existingClients.length}`,
+        `Clientes existentes: ${existingClients.length}`,
     );
 
     const indexes =
@@ -641,28 +621,50 @@ async function main() {
         createTemporaryMappingFile();
     }
 
+    const pendingRecords:
+        unknown[] = [];
+
+    const errors:
+        unknown[] = [];
+
     let created = 0;
     let existing = 0;
-    let pending = 0;
-    let errors = 0;
+    let pending =
+        orphanClients.length;
+    let errorCount = 0;
 
-    for (let i = 0; i < sources.length; i++) {
-        const {
-            pessoa,
-            cliente,
-        } = sources[i];
+    /*
+     * Registra clientes sem pessoa
+     * como PENDING.
+     */
+    for (const orphan of orphanClients) {
+        pendingRecords.push({
+            oldId:
+                orphan.cliente.cliPessoa,
+            name: null,
+            status: "PENDING",
+            reason: orphan.reason,
+        });
+    }
+
+    /*
+     * Processamento dos clientes
+     */
+    for (
+        let i = 0;
+        i < sources.length;
+        i++
+    ) {
+        const source =
+            sources[i];
 
         const oldId =
-            cliente.cliPessoa;
+            source.cliente.cliPessoa;
 
         console.log(
-            `\n[${i + 1}/${sources.length}] ${pessoa.pesNome}`,
+            `\n[${i + 1}/${sources.length}] ${source.pessoa.pesNome}`,
         );
 
-        /*
-         * Se já existe mapping, não processa
-         * novamente.
-         */
         if (mapping.has(oldId)) {
             console.log(
                 `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
@@ -673,35 +675,35 @@ async function main() {
         }
 
         try {
-            /*
-             * Primeiro convertemos sem filiação.
-             * A filiação manual só será solicitada
-             * quando realmente precisarmos criar
-             * o registro.
-             */
-            const preliminary =
+            const converted =
                 convertClient(
-                    pessoa,
-                    cliente,
+                    source,
                 );
 
             const match =
                 findMatch(
-                    pessoa,
-                    preliminary,
+                    source,
                     indexes,
                 );
 
             if (match.client) {
                 console.log(
-                    `→ EXISTING | ${pessoa.pesNome} | matchedBy=${match.matchedBy} | id=${match.client.id}`,
+                    `✓ EXISTING | ${converted.name} | matchedBy=${match.matchedBy} | new_id=${match.client.id}`,
                 );
 
                 if (!DRY_RUN) {
                     appendTemporaryMapping({
                         oldId,
-                        newId: match.client.id,
-                        name: pessoa.pesNome,
+                        newId:
+                            match.client.id,
+                        status:
+                            "EXISTING",
+                        oldName:
+                            source.pessoa
+                                .pesNome,
+                        newName:
+                            match.client
+                                .name,
                         matchedBy:
                             match.matchedBy,
                     });
@@ -717,56 +719,254 @@ async function main() {
             }
 
             /*
-             * Sem correspondência segura.
-             *
-             * Aqui NÃO criamos automaticamente.
+             * CPF duplicado no banco:
+             * não criamos automaticamente.
+             */
+            if (converted.cpf) {
+                const cpf =
+                    normalizeCpf(
+                        converted.cpf,
+                    );
+
+                const cpfClients =
+                    existingClients.filter(
+                        (client) =>
+                            normalizeCpf(
+                                client.cpf,
+                            ) === cpf,
+                    );
+
+                if (
+                    cpfClients.length > 0
+                ) {
+                    pendingRecords.push({
+                        oldId,
+                        name:
+                            converted.name,
+                        status:
+                            "PENDING",
+                        reason:
+                            "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+                        cpf:
+                            converted.cpf,
+                    });
+
+                    console.log(
+                        `→ PENDING | CPF em conflito | ${converted.name}`,
+                    );
+
+                    pending++;
+                    continue;
+                }
+            }
+
+            /*
+             * CREATE
+             */
+            if (!DRY_RUN) {
+                const createdClient =
+                    await prisma.client.create({
+                        data: {
+                            name:
+                                converted.name,
+                            nickname:
+                                converted.nickname,
+                            cpf:
+                                converted.cpf,
+                            rg:
+                                converted.rg,
+                            bornDate:
+                                converted.bornDate,
+                            gender:
+                                converted.gender,
+                            fatherName:
+                                converted.fatherName,
+                            motherName:
+                                converted.motherName,
+                            spouse:
+                                converted.spouse,
+                            email:
+                                converted.email,
+                            company:
+                                converted.company,
+                            occupation:
+                                converted.occupation,
+                            street:
+                                converted.street,
+                            number:
+                                converted.number,
+                            neighborhood:
+                                converted.neighborhood,
+                            city:
+                                converted.city,
+                            uf:
+                                converted.uf,
+                            cep:
+                                converted.cep,
+                            complement:
+                                converted.complement,
+                            isBlacklisted:
+                                converted.isBlacklisted,
+                            obs:
+                                converted.obs,
+                            phone01:
+                                converted.phone01,
+                            phone02:
+                                converted.phone02,
+                            phone03:
+                                converted.phone03,
+                            reference01:
+                                converted.reference01,
+                            reference02:
+                                converted.reference02,
+                            reference03:
+                                converted.reference03,
+                            isActive:
+                                true,
+                            tenantId:
+                                TENANT_ID,
+                            branchId:
+                                BRANCH_ID,
+                        },
+                    });
+
+                addClientToIndexes(
+                    createdClient,
+                    indexes,
+                );
+
+                appendTemporaryMapping({
+                    oldId,
+                    newId:
+                        createdClient.id,
+                    status: "CREATED",
+                    oldName:
+                        source.pessoa
+                            .pesNome,
+                    newName:
+                        createdClient.name,
+                    matchedBy:
+                        "CREATE",
+                });
+
+                mapping.set(
+                    oldId,
+                    createdClient.id,
+                );
+
+                created++;
+
+                console.log(
+                    `✓ CREATED | ${converted.name} | new_id=${createdClient.id}`,
+                );
+
+                continue;
+            }
+
+            /*
+             * DRY_RUN:
+             * apenas identifica o CREATE.
              */
             console.log(
-                `→ PENDING | ${pessoa.pesNome}`,
+                `→ CREATE [DRY_RUN] | ${converted.name}`,
             );
 
-            console.log(
-                `   CPF: ${pessoa.pesDoc || "-"}`,
-            );
-
-            console.log(
-                `   RG: ${cliente.cliRg || "-"}`,
-            );
-
-            console.log(
-                `   Nascimento: ${pessoa.pesDataNasc || "-"}`,
-            );
-
-            console.log(
-                `   Celular: ${pessoa.pesCel || "-"}`,
-            );
-
-            pending++;
-
+            created++;
         } catch (error) {
-            errors++;
+            errorCount++;
+
+            const record = {
+                oldId,
+                name:
+                    source.pessoa
+                        .pesNome,
+                status: "ERROR",
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : String(error),
+            };
+
+            errors.push(record);
 
             console.error(
-                `✗ ERROR | ${pessoa.pesNome}`,
+                `✗ ERROR | ${source.pessoa.pesNome}`,
             );
 
             console.error(error);
         }
     }
 
+    const finishedAt =
+        new Date();
+
     /*
-     * Neste primeiro passe estamos apenas
-     * fazendo a análise/matching.
-     *
-     * A criação ficará liberada quando
-     * DRY_RUN=false e o fluxo de pending
-     * estiver definido.
+     * Mapping definitivo somente
+     * quando não existem erros.
      */
-    if (!DRY_RUN && errors === 0) {
-        finalizeClientMapping();
-    } else if (!DRY_RUN) {
-        discardTemporaryMapping();
+    if (!DRY_RUN) {
+        if (errorCount === 0) {
+            finalizeClientMapping();
+        } else {
+            discardTemporaryMapping();
+
+            console.log(
+                "\n⚠️ Existem erros. Mapping não foi substituído.",
+            );
+        }
     }
+
+    /*
+     * Relatório de PENDING / ERROR
+     */
+    if (
+        pendingRecords.length > 0 ||
+        errors.length > 0
+    ) {
+        saveJson(
+            ERRORS_PATH,
+            `03-client-errors-${createTimestamp()}.json`,
+            {
+                pending:
+                    pendingRecords,
+                errors,
+            },
+        );
+    }
+
+    /*
+     * Relatório da execução.
+     */
+    saveJson(
+        EXECUTIONS_PATH,
+        `03-client-${createTimestamp()}.json`,
+        {
+            migration:
+                "03-client",
+            tenantId:
+                TENANT_ID,
+            branchId:
+                BRANCH_ID,
+            dryRun:
+                DRY_RUN,
+            startedAt,
+            finishedAt,
+            durationMs:
+                finishedAt.getTime() -
+                startedAt.getTime(),
+            total:
+                sources.length +
+                orphanClients.length,
+            created,
+            existing,
+            pending,
+            errors:
+                errorCount,
+            mappingSaved:
+                errorCount === 0 &&
+                !DRY_RUN,
+        },
+    );
 
     console.log(
         "\n========================================",
@@ -778,7 +978,7 @@ async function main() {
         "========================================",
     );
     console.log(
-        `Total:     ${sources.length}`,
+        `Total:     ${sources.length + orphanClients.length}`,
     );
     console.log(
         `Created:   ${created}`,
@@ -790,18 +990,23 @@ async function main() {
         `Pending:   ${pending}`,
     );
     console.log(
-        `Errors:    ${errors}`,
+        `Errors:    ${errorCount}`,
     );
     console.log(
-        "========================================",
+        "========================================\n",
     );
 }
 
 main()
     .catch((error) => {
+        console.error(
+            "\nERRO FATAL:",
+        );
         console.error(error);
         process.exitCode = 1;
     })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+    .finally(
+        async () => {
+            await prisma.$disconnect();
+        },
+    );

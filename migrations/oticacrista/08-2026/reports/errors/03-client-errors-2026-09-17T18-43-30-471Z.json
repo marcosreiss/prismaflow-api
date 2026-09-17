@@ -1,0 +1,571 @@
+{
+  "pending": [
+    {
+      "oldId": "9",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "25",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "35",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "46",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "49",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "76",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "79",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "84",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "136",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "137",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "154",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "157",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "193",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "215",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "224",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "245",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "288",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "303",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "335",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "403",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "422",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "528",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "568",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "596",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "607",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "631",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "631",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "711",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "714",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "718",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "762",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "762",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "802",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "820",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "835",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "837",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "837",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "838",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "840",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "840",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "841",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "842",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "843",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "844",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "846",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "847",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "848",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "849",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "849",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "851",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "852",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "853",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "856",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "856",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "866",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "866",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "866",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "867",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "867",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "867",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "868",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "870",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "871",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "873",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "876",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "876",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "885",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "885",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "898",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "971",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1003",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1032",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1108",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1545",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1591",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "1905",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "2071",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "2479",
+      "name": null,
+      "status": "PENDING",
+      "reason": "cliPessoa não possui correspondente em pessoa.csv."
+    },
+    {
+      "oldId": "764",
+      "name": "ESPEDITO JOSE DE SOUSA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "23804157300"
+    },
+    {
+      "oldId": "927",
+      "name": "JANIA MARIA SOUZA DE AQUINO",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "28139623334"
+    },
+    {
+      "oldId": "1435",
+      "name": "MARINALVA VIANA ANDRADE",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "14075121291"
+    },
+    {
+      "oldId": "1648",
+      "name": "CREUSA CAMPOS DE AMORIM",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "25430645320"
+    },
+    {
+      "oldId": "1899",
+      "name": "RAIMUNA NONATA DA SILVA PEREIRA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "57164410330"
+    },
+    {
+      "oldId": "1933",
+      "name": "KEYLA DO SOCORRO RIBEIRO",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "94345317304"
+    },
+    {
+      "oldId": "2020",
+      "name": "LENTE DE CONTATO  SOLOTICA/FRESHLOOK",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "00000000000"
+    },
+    {
+      "oldId": "2093",
+      "name": "LENTE DE CONTATO SOLOTICA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "00000000000"
+    },
+    {
+      "oldId": "2103",
+      "name": "MARIA DAS GRAÇAS SILVA SAMENEZES",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "49400029349"
+    },
+    {
+      "oldId": "2245",
+      "name": "ANAILDES DOS SANTOS SOUZA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "02294012364"
+    },
+    {
+      "oldId": "2301",
+      "name": "JOZEMARY FRAZÃO PEREIRA FERREIRA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "00330927370"
+    },
+    {
+      "oldId": "2332",
+      "name": "EDISON SOUZA PINHEIRO",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "00000000000"
+    },
+    {
+      "oldId": "2396",
+      "name": "BENEDITO REINALDO BARROS RIBEIRO",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "09532137300"
+    },
+    {
+      "oldId": "2655",
+      "name": "MARIA DO ROSARIO GOMES CANTANHENDE",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "71883401372"
+    }
+  ],
+  "errors": []
+}

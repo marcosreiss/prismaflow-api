@@ -1,8 +1,9 @@
 // migrations/oticacrista/08-2026/converters/client.converter.ts
 
-import { Gender } from "@prisma/client";
-import { PessoaCsv } from "../loaders/pessoa.loader";
-import { PesClienteCsv } from "../loaders/pesCliente.loader";
+import type { Gender } from "@prisma/client";
+import type {
+    ClientSource,
+} from "../loaders/pesCliente.loader";
 
 export interface ClientConverted {
     name: string;
@@ -34,14 +35,21 @@ export interface ClientConverted {
     reference03: string | null;
 }
 
-function clean(value: string | null | undefined): string | null {
-    if (value === null || value === undefined) {
+function clean(
+    value: string | null | undefined,
+): string | null {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return null;
     }
 
     const result = value.trim();
 
-    return result === "" ? null : result;
+    return result === ""
+        ? null
+        : result;
 }
 
 export function normalizeCpf(
@@ -53,7 +61,8 @@ export function normalizeCpf(
         return null;
     }
 
-    const digits = cleaned.replace(/\D/g, "");
+    const digits =
+        cleaned.replace(/\D/g, "");
 
     return digits || null;
 }
@@ -67,7 +76,10 @@ export function normalizePhone(
         return null;
     }
 
-    return cleaned.replace(/\D/g, "") || null;
+    return (
+        cleaned.replace(/\D/g, "") ||
+        null
+    );
 }
 
 export function normalizeName(
@@ -81,8 +93,30 @@ export function normalizeName(
 
     return cleaned
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .replace(
+            /[\u0300-\u036f]/g,
+            "",
+        )
         .replace(/\s+/g, " ")
+        .toUpperCase();
+}
+
+export function normalizeRg(
+    value: string | null | undefined,
+): string | null {
+    const cleaned = clean(value);
+
+    if (!cleaned) {
+        return null;
+    }
+
+    return cleaned
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            "",
+        )
+        .replace(/\s+/g, "")
         .toUpperCase();
 }
 
@@ -95,39 +129,48 @@ function parseDate(
         return null;
     }
 
-    /*
-     * Os arquivos antigos utilizam datas como:
-     *
-     * 1/24/58
-     * 7/30/62
-     * 12/25/78
-     *
-     * Também podemos encontrar datas em outros formatos.
-     */
-
-    const match = cleaned.match(
-        /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/,
-    );
+    const match =
+        cleaned.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/,
+        );
 
     if (!match) {
         return null;
     }
 
-    const month = Number(match[1]);
-    const day = Number(match[2]);
-    let year = Number(match[3]);
+    const month =
+        Number(match[1]);
+
+    const day =
+        Number(match[2]);
+
+    let year =
+        Number(match[3]);
 
     if (year < 100) {
-        year += year >= 30 ? 1900 : 2000;
+        /*
+         * 00–25 → 2000–2025
+         * 26–99 → 1926–1999
+         */
+        year =
+            year <= 25
+                ? 2000 + year
+                : 1900 + year;
     }
 
-    const date = new Date(
-        Date.UTC(year, month - 1, day),
-    );
+    const date =
+        new Date(
+            Date.UTC(
+                year,
+                month - 1,
+                day,
+            ),
+        );
 
     if (
         date.getUTCFullYear() !== year ||
-        date.getUTCMonth() !== month - 1 ||
+        date.getUTCMonth() !==
+        month - 1 ||
         date.getUTCDate() !== day
     ) {
         return null;
@@ -139,65 +182,75 @@ function parseDate(
 function convertGender(
     value: string | null | undefined,
 ): Gender | null {
-    const normalized = normalizeName(value);
+    const normalized =
+        normalizeName(value);
 
     if (!normalized) {
         return null;
     }
 
-    if (normalized === "MASCULINO") {
-        return Gender.MALE;
+    if (
+        normalized === "MASCULINO"
+    ) {
+        return "MALE";
     }
 
-    if (normalized === "FEMININO") {
-        return Gender.FEMALE;
+    if (
+        normalized === "FEMININO"
+    ) {
+        return "FEMALE";
     }
 
-    return Gender.OTHER;
+    return "OTHER";
 }
 
 function convertSpc(
     value: string | null | undefined,
 ): boolean {
-    const normalized = normalizeName(value);
+    const normalized =
+        normalizeName(value);
 
-    if (normalized === "SIM") {
-        return true;
-    }
-
-    return false;
+    return normalized === "SIM";
 }
 
 function buildReference(
     name: string | null | undefined,
     contact: string | null | undefined,
 ): string | null {
-    const referenceName = clean(name);
-    const referenceContact = clean(contact);
+    const referenceName =
+        clean(name);
 
-    if (!referenceName && !referenceContact) {
+    const referenceContact =
+        clean(contact);
+
+    if (
+        !referenceName &&
+        !referenceContact
+    ) {
         return null;
     }
 
-    if (referenceName && referenceContact) {
+    if (
+        referenceName &&
+        referenceContact
+    ) {
         return `${referenceName} - ${referenceContact}`;
     }
 
-    return referenceName ?? referenceContact;
+    return (
+        referenceName ??
+        referenceContact
+    );
 }
 
 function buildObs(
-    pessoa: PessoaCsv,
-    cliente: PesClienteCsv,
+    pessoa: ClientSource["pessoa"],
+    cliente: ClientSource["cliente"],
 ): string | null {
     const observations: string[] = [];
 
-    /*
-     * Estes são os campos do modelo antigo que não possuem
-     * correspondência no Client.
-     */
-
-    const contato = clean(pessoa.pesContato);
+    const contato =
+        clean(pessoa.pesContato);
 
     if (contato) {
         observations.push(
@@ -205,7 +258,8 @@ function buildObs(
         );
     }
 
-    const site = clean(pessoa.pesSite);
+    const site =
+        clean(pessoa.pesSite);
 
     if (site) {
         observations.push(
@@ -213,7 +267,10 @@ function buildObs(
         );
     }
 
-    const atendimentos = clean(cliente.cliAtendimentos);
+    const atendimentos =
+        clean(
+            cliente.cliAtendimentos,
+        );
 
     if (atendimentos) {
         observations.push(
@@ -227,87 +284,126 @@ function buildObs(
 }
 
 export function convertClient(
-    pessoa: PessoaCsv,
-    cliente: PesClienteCsv,
-    filiation?: {
-        motherName: string | null;
-        fatherName: string | null;
-    },
+    source: ClientSource,
 ): ClientConverted {
+    const {
+        pessoa,
+        cliente,
+    } = source;
+
     return {
-        name: pessoa.pesNome.trim(),
+        name:
+            clean(pessoa.pesNome) ??
+            "SEM NOME",
 
         nickname: null,
 
-        cpf: normalizeCpf(pessoa.pesDoc),
+        cpf:
+            normalizeCpf(
+                pessoa.pesDoc,
+            ),
 
-        rg: clean(cliente.cliRg),
+        rg:
+            clean(cliente.cliRg),
 
-        bornDate: parseDate(pessoa.pesDataNasc),
+        bornDate:
+            parseDate(
+                pessoa.pesDataNasc,
+            ),
 
-        gender: convertGender(pessoa.pesSexo),
-
-        motherName: filiation?.motherName ?? null,
-
-        fatherName: filiation?.fatherName ?? null,
-
-        spouse: clean(cliente.cliConjuge),
-
-        email: clean(pessoa.pesEmail),
-
-        company: clean(cliente.cliEmpresa),
-
-        occupation: clean(cliente.cliProfissao),
-
-        street: clean(pessoa.pesRua),
+        gender:
+            convertGender(
+                pessoa.pesSexo,
+            ),
 
         /*
-         * Não existe uma separação confiável de número
-         * no campo antigo pesRua.
+         * A filiação completa é preservada
+         * no campo motherName.
          *
-         * Portanto não vamos inventar.
+         * Não tentamos separar mãe e pai.
+         */
+        motherName:
+            clean(
+                cliente.cliFiliacao,
+            ),
+
+        fatherName: null,
+
+        spouse:
+            clean(
+                cliente.cliConjuge,
+            ),
+
+        email:
+            clean(pessoa.pesEmail),
+
+        company:
+            clean(cliente.cliEmpresa),
+
+        occupation:
+            clean(
+                cliente.cliProfissao,
+            ),
+
+        street:
+            clean(pessoa.pesRua),
+
+        /*
+         * Não existe separação confiável
+         * do número em pesRua.
          */
         number: null,
 
-        neighborhood: clean(pessoa.pesBairro),
+        neighborhood:
+            clean(pessoa.pesBairro),
 
-        city: clean(pessoa.pesCidade),
+        city:
+            clean(pessoa.pesCidade),
 
-        uf: clean(pessoa.pesUf),
+        uf:
+            clean(pessoa.pesUf),
 
-        cep: clean(pessoa.pesCep),
+        cep:
+            clean(pessoa.pesCep),
 
-        complement: clean(pessoa.pesComp),
+        complement:
+            clean(pessoa.pesComp),
 
-        isBlacklisted: convertSpc(cliente.cliSpc),
+        isBlacklisted:
+            convertSpc(
+                cliente.cliSpc,
+            ),
 
-        obs: buildObs(pessoa, cliente),
+        obs:
+            buildObs(
+                pessoa,
+                cliente,
+            ),
 
-        /*
-         * Telefones da própria pessoa.
-         */
-        phone01: clean(pessoa.pesCel),
+        phone01:
+            clean(pessoa.pesCel),
 
-        phone02: clean(pessoa.pesTel),
+        phone02:
+            clean(pessoa.pesTel),
 
         phone03: null,
 
-        /*
-         * Referências são separadas dos telefones do cliente.
-         */
-        reference01: buildReference(
-            cliente.cliRefNome1,
-            cliente.cliRefContato1,
-        ),
+        reference01:
+            buildReference(
+                cliente.cliRefNome1,
+                cliente.cliRefContato1,
+            ),
 
-        reference02: buildReference(
-            cliente.cliRefNome2,
-            cliente.cliRefContato2,
-        ),
+        reference02:
+            buildReference(
+                cliente.cliRefNome2,
+                cliente.cliRefContato2,
+            ),
 
-        reference03: buildReference(
-            cliente.cliRefNome3,
-            cliente.cliRefContato3,
-        ),
+        reference03:
+            buildReference(
+                cliente.cliRefNome3,
+                cliente.cliRefContato3,
+            ),
     };
 }

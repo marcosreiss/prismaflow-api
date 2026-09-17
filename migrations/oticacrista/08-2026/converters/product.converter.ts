@@ -1,3 +1,5 @@
+//migrations/oticacrista/08-2026/converters/product.converter.ts
+
 import type { ProductCategory } from "@prisma/client";
 import type { OldProduct } from "../loaders/product.loader";
 

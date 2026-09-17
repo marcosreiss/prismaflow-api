@@ -194,6 +194,7 @@ Estrutura conceitual:
 migrations/
 └── oticacrista/
     └── 08-2026/
+        ├── input/
         ├── loaders/
         ├── converters/
         ├── mapping/

@@ -1,0 +1,29 @@
+{
+  "pending": [
+    {
+      "oldId": 168,
+      "name": "SOLDA",
+      "status": "PENDING",
+      "reason": "Registro identificado como SERVICO e não tratado pela migração de Product."
+    },
+    {
+      "oldId": 169,
+      "name": "TROCA DE PLAQUETA",
+      "status": "PENDING",
+      "reason": "Registro identificado como SERVICO e não tratado pela migração de Product."
+    },
+    {
+      "oldId": 170,
+      "name": "COLOCAÇAO DE PARAFUSOS",
+      "status": "PENDING",
+      "reason": "Registro identificado como SERVICO e não tratado pela migração de Product."
+    },
+    {
+      "oldId": 171,
+      "name": "TROCA DE NYLON",
+      "status": "PENDING",
+      "reason": "Registro identificado como SERVICO e não tratado pela migração de Product."
+    }
+  ],
+  "errors": []
+}

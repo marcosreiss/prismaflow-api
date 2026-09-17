@@ -1,3 +1,5 @@
+// migrations/oticacrista/08-2026/02-product.ts
+
 import fs from "fs";
 import path from "path";
 import readline from "readline";
@@ -254,6 +256,7 @@ async function main(): Promise<void> {
     const mappings: ProductMapping[] = [];
 
     const errors: unknown[] = [];
+    const pendingRecords: unknown[] = [];
 
     let created = 0;
     let existing = 0;
@@ -286,6 +289,13 @@ async function main(): Promise<void> {
                     brandOldId: product.brandOldId,
                     brandNewId: null,
                     category: null,
+                });
+
+                pendingRecords.push({
+                    oldId: product.oldId,
+                    name: product.name,
+                    status: "PENDING",
+                    reason: "Registro identificado como SERVICO e não tratado pela migração de Product.",
                 });
 
                 pending++;
@@ -461,11 +471,14 @@ async function main(): Promise<void> {
     /*
      * Relatório de erros
      */
-    if (errors.length > 0) {
+    if (errors.length > 0 || pendingRecords.length > 0) {
         saveJson(
             ERRORS_PATH,
             `02-product-errors-${createTimestamp()}.json`,
-            errors,
+            {
+                pending: pendingRecords,
+                errors,
+            },
         );
     }
 

@@ -1,3 +1,5 @@
+// migrations/oticacrista/08-2026/converters/client.converter.ts
+
 import { Gender } from "@prisma/client";
 import { PessoaCsv } from "../loaders/pessoa.loader";
 import { PesClienteCsv } from "../loaders/pesCliente.loader";

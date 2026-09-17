@@ -1,3 +1,5 @@
+// migrations/oticacrista/08-2026/mapping/client.mapping.ts
+
 import fs from "fs";
 import path from "path";
 

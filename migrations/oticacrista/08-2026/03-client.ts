@@ -1,3 +1,5 @@
+// migrations/oticacrista/08-2026/03-client.ts
+
 import readline from "readline/promises";
 import { stdin as input, stdout as output } from "process";
 import { PrismaClient, Client } from "@prisma/client";

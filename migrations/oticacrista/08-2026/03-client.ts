@@ -41,7 +41,7 @@ const TENANT_ID =
 const BRANCH_ID =
     "cmibvcyed00017m014r66e39w";
 
-const DRY_RUN = true;
+const DRY_RUN = false;
 
 const REPORTS_PATH = path.resolve(
     __dirname,

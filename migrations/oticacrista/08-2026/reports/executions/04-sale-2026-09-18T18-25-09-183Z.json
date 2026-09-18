@@ -1,0 +1,17 @@
+{
+  "migration": "04-sale",
+  "executedAt": "2026-09-18T18:25:09.182Z",
+  "dryRun": true,
+  "total": 2094,
+  "created": 2052,
+  "existing": 0,
+  "pending": 42,
+  "errors": 0,
+  "totalItems": 3820,
+  "subtotal": 1446473.8710000005,
+  "discount": 92668.31999999998,
+  "salesTotal": 1353805.5510000007,
+  "paidAmount": 1435364.364000001,
+  "financialInconsistencies": 1747,
+  "mappingSaved": true
+}

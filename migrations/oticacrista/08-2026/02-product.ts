@@ -14,17 +14,24 @@ import {
     type ProductMapping,
 } from "./mapping/product.mapping";
 
+import {
+    saveServiceMapping,
+    type ServiceMapping,
+} from "./mapping/service.mapping";
+
 /* =========================================================
  * CONFIGURAÇÃO
  * ========================================================= */
 
 const TENANT_ID = "cmibvcyed00007m0118rkgft8";
 
+const BRANCH_ID = "cmibvcyed00017m014r66e39w";
+
 /*
  * false = execução real
  * true  = apenas simulação
  */
-const DRY_RUN = false;
+const DRY_RUN = true;
 
 /*
  * CSV antigo de produtos.
@@ -228,12 +235,13 @@ async function main(): Promise<void> {
     console.log("========================================");
     console.log(`DRY_RUN: ${DRY_RUN}`);
     console.log(`Tenant: ${TENANT_ID}`);
+    console.log(`Branch: ${BRANCH_ID}`);
     console.log(`Arquivo: ${INPUT_PATH}`);
     console.log("========================================\n");
 
     if (DRY_RUN) {
         console.log(
-            "⚠️ DRY_RUN habilitado: nenhuma alteração será feita no banco.\n",
+            "⚠️ DRY_RUN habilitado: nenhuma alteração será feita no banco ou nos mappings.\n",
         );
     } else {
         console.log(
@@ -255,11 +263,17 @@ async function main(): Promise<void> {
 
     const mappings: ProductMapping[] = [];
 
+    const serviceMappings: ServiceMapping[] = [];
+
     const errors: unknown[] = [];
     const pendingRecords: unknown[] = [];
 
     let created = 0;
     let existing = 0;
+
+    let servicesCreated = 0;
+    let servicesExisting = 0;
+
     let pending = 0;
 
     for (const oldProduct of products) {
@@ -267,8 +281,14 @@ async function main(): Promise<void> {
             const product = convertProduct(oldProduct);
 
             /*
-             * SERVIÇO não será tratado como Product.
+             * =================================================
+             * SERVIÇOS
+             * =================================================
+             *
+             * Registros SERVICO são migrados para OpticalService,
+             * não para Product.
              */
+
             const normalizedType = product.oldType
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
@@ -277,30 +297,94 @@ async function main(): Promise<void> {
 
             if (normalizedType === "SERVICO") {
                 console.log(
-                    `\n⏭️ [SERVIÇO] ${product.name} (old_id=${product.oldId})`,
+                    `\n🔧 [SERVIÇO] ${product.name} (old_id=${product.oldId})`,
                 );
 
-                mappings.push({
+                /*
+                 * Procura serviço existente por:
+                 *
+                 * tenantId + name
+                 */
+                const existingService =
+                    await prisma.opticalService.findFirst({
+                        where: {
+                            tenantId: TENANT_ID,
+                            name: product.name,
+                        },
+                    });
+
+                if (existingService) {
+                    console.log(
+                        `✓ SERVICE EXISTING | ${product.name} | new_id=${existingService.id}`,
+                    );
+
+                    serviceMappings.push({
+                        oldId: product.oldId,
+                        newId: existingService.id,
+                        status: "EXISTING",
+                        oldName: product.name,
+                        newName: existingService.name,
+                    });
+
+                    servicesExisting++;
+
+                    continue;
+                }
+
+                /*
+                 * DRY_RUN:
+                 *
+                 * Simula a criação, mas NÃO cria registro
+                 * e NÃO adiciona nada ao mapping.
+                 */
+                if (DRY_RUN) {
+                    console.log(
+                        `→ SERVICE CREATE [DRY_RUN] | ${product.name} | price=${product.salePrice}`,
+                    );
+
+                    servicesCreated++;
+
+                    continue;
+                }
+
+                /*
+                 * Execução real:
+                 * cria o OpticalService.
+                 */
+                const createdService =
+                    await prisma.opticalService.create({
+                        data: {
+                            name: product.name,
+                            description: null,
+                            price: product.salePrice,
+                            isActive: true,
+                            tenantId: TENANT_ID,
+                            branchId: BRANCH_ID,
+                        },
+                    });
+
+                console.log(
+                    `✓ SERVICE CREATED | ${product.name} | new_id=${createdService.id}`,
+                );
+
+                serviceMappings.push({
                     oldId: product.oldId,
-                    newId: null,
-                    status: "PENDING",
+                    newId: createdService.id,
+                    status: "CREATED",
                     oldName: product.name,
-                    newName: product.name,
-                    brandOldId: product.brandOldId,
-                    brandNewId: null,
-                    category: null,
+                    newName: createdService.name,
                 });
 
-                pendingRecords.push({
-                    oldId: product.oldId,
-                    name: product.name,
-                    status: "PENDING",
-                    reason: "Registro identificado como SERVICO e não tratado pela migração de Product.",
-                });
+                servicesCreated++;
 
-                pending++;
                 continue;
             }
+
+            /*
+             * =================================================
+             * PRODUTOS
+             * =================================================
+             */
 
             /*
              * Categoria automática ou manual.
@@ -376,18 +460,13 @@ async function main(): Promise<void> {
                     `→ CREATE [DRY_RUN] | ${product.name} | marca=${brand.newName} | categoria=${category}`,
                 );
 
-                mappings.push({
-                    oldId: product.oldId,
-                    newId: null,
-                    status: "CREATED",
-                    oldName: product.name,
-                    newName: product.name,
-                    brandOldId,
-                    brandNewId,
-                    category,
-                });
-
+                /*
+                 * IMPORTANTE:
+                 *
+                 * No DRY_RUN não adicionamos mapping.
+                 */
                 created++;
+
                 continue;
             }
 
@@ -446,31 +525,53 @@ async function main(): Promise<void> {
     const finishedAt = new Date();
 
     /*
-     * Mapping só é salvo se NÃO houver erros.
+     * =========================================================
+     * MAPPINGS
+     * =========================================================
      *
-     * Isso protege o último mapping válido.
+     * Mapping só é salvo em execução REAL.
+     *
+     * DRY_RUN:
+     * - não cria
+     * - não altera
+     * - não sobrescreve
+     * - não cria arquivo temporário
+     *
+     * Execução real:
+     * - salva somente se não houver erros
+     * - preserva o último mapping válido em caso de erro
      */
+
     if (errors.length === 0) {
         if (!DRY_RUN) {
             saveProductMapping(mappings);
 
+            saveServiceMapping(serviceMappings);
+
             console.log(
                 "\n✓ Mapping de produtos atualizado com sucesso.",
             );
+
+            console.log(
+                "✓ Mapping de serviços atualizado com sucesso.",
+            );
         } else {
             console.log(
-                "\n✓ DRY_RUN finalizado. Mapping não foi alterado.",
+                "\n✓ DRY_RUN finalizado. Nenhum mapping foi criado ou alterado.",
             );
         }
     } else {
         console.log(
-            "\n⚠️ Existem erros. O mapping anterior NÃO será substituído.",
+            "\n⚠️ Existem erros. Os mappings anteriores NÃO serão substituídos.",
         );
     }
 
     /*
-     * Relatório de erros
+     * =========================================================
+     * RELATÓRIO DE ERROS / PENDING
+     * =========================================================
      */
+
     if (errors.length > 0 || pendingRecords.length > 0) {
         saveJson(
             ERRORS_PATH,
@@ -483,38 +584,90 @@ async function main(): Promise<void> {
     }
 
     /*
-     * Relatório da execução
+     * =========================================================
+     * RELATÓRIO DA EXECUÇÃO
+     * =========================================================
      */
+
     saveJson(
         EXECUTIONS_PATH,
         `02-product-${createTimestamp()}.json`,
         {
             migration: "02-product",
             tenantId: TENANT_ID,
+            branchId: BRANCH_ID,
             dryRun: DRY_RUN,
             startedAt,
             finishedAt,
             durationMs:
                 finishedAt.getTime() -
                 startedAt.getTime(),
+
             total: products.length,
-            created,
-            existing,
+
+            products: {
+                created,
+                existing,
+            },
+
+            services: {
+                created: servicesCreated,
+                existing: servicesExisting,
+            },
+
             pending,
+
             errors: errors.length,
-            mappingSaved:
+
+            productMappingSaved:
+                errors.length === 0 && !DRY_RUN,
+
+            serviceMappingSaved:
                 errors.length === 0 && !DRY_RUN,
         },
     );
 
+    /*
+     * =========================================================
+     * RESUMO
+     * =========================================================
+     */
+
     console.log("\n========================================");
     console.log("RESUMO");
     console.log("========================================");
-    console.log(`Total:     ${products.length}`);
-    console.log(`Created:   ${created}`);
-    console.log(`Existing:  ${existing}`);
-    console.log(`Pending:   ${pending}`);
-    console.log(`Errors:    ${errors.length}`);
+
+    console.log(`Total:              ${products.length}`);
+
+    console.log("");
+    console.log("PRODUTOS");
+    console.log(`Created:            ${created}`);
+    console.log(`Existing:           ${existing}`);
+
+    console.log("");
+    console.log("SERVIÇOS");
+    console.log(`Created:            ${servicesCreated}`);
+    console.log(`Existing:           ${servicesExisting}`);
+
+    console.log("");
+    console.log(`Pending:            ${pending}`);
+    console.log(`Errors:             ${errors.length}`);
+
+    console.log("");
+    console.log(
+        `Product mapping:    ${errors.length === 0 && !DRY_RUN
+            ? "SALVO"
+            : "NÃO SALVO"
+        }`,
+    );
+
+    console.log(
+        `Service mapping:    ${errors.length === 0 && !DRY_RUN
+            ? "SALVO"
+            : "NÃO SALVO"
+        }`,
+    );
+
     console.log("========================================\n");
 }
 

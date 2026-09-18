@@ -132,6 +132,73 @@ Por isso utilizamos arquivos de **mapping**.
 
 ---
 
+# Planejamento da migração
+
+A ideia é fazer tabela por tabela, sempre validando antes de continuar.
+
+A sequência provavelmente será:
+
+### Fase 1 — cadastros básicos
+
+```
+1. Branch
+2. Brand
+3. Product
+```
+
+### Fase 2 — clientes
+
+```
+4. pessoa + pesCliente → Client
+```
+
+### Fase 3 — vendas
+
+```
+5. atendimento → Sale
+6. itensAtendimento → Items
+```
+
+### Fase 4 — financeiro
+
+```
+7. carne → PaymentInstallment
+8. PaymentMethodItem
+9. Payment
+10. finReceita → descobrir antes
+11. finDespesa → descobrir antes
+```
+
+### Fase 5 — informações complementares
+
+```
+12. Prescription
+13. FrameDetails
+14. Protocol
+```
+
+A ordem exata vamos definir conforme os próximos dados.
+
+---
+
+E cada etapa será executada manualmente:
+
+```
+node migrations/oticacrista/08-2026/01-brands.js
+```
+
+validamos.
+
+Depois:
+
+```
+node migrations/oticacrista/08-2026/02-products.js
+```
+
+validamos.
+
+---
+
 # 3. Estratégia de mapping de IDs
 
 O banco legado possui IDs próprios.

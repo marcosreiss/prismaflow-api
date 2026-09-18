@@ -13,7 +13,7 @@ export interface ServiceMapping {
 
 const MAPPING_PATH = path.resolve(
     process.cwd(),
-    "migrations/oticacrista/08-2026/reports/mappings/02-service-mapping.csv"
+    "migrations/oticacrista/08-2026/reports/mappings/02-service-mapping.csv",
 );
 
 const TEMP_MAPPING_PATH = `${MAPPING_PATH}.tmp`;

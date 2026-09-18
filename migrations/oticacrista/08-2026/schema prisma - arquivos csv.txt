@@ -1,0 +1,615 @@
+schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id                  String               @id @default(cuid())
+  name                String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  branches            Branch[]
+  brands              Brand[]
+  Client              Client[]
+  frameDetails        FrameDetails[]
+  itemOpticalServices ItemOpticalService[]
+  itemProducts        ItemProduct[]
+  OpticalService      OpticalService[]
+  payments            Payment[]
+  Prescription        Prescription[]
+  products            Product[]
+  protocols           Protocol[]
+  sales               Sale[]
+  users               User[]
+  paymentMethodItems  PaymentMethodItem[]
+  paymentInstallments PaymentInstallment[]
+  expenses            Expense[]
+}
+
+model Branch {
+  id                  String               @id @default(cuid())
+  name                String
+  tenantId            String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  tenant              Tenant               @relation(fields: [tenantId], references: [id])
+  Client              Client[]
+  frameDetails        FrameDetails[]
+  itemOpticalServices ItemOpticalService[]
+  itemProducts        ItemProduct[]
+  OpticalService      OpticalService[]
+  payments            Payment[]
+  paymentInstallments PaymentInstallment[]
+  Prescription        Prescription[]
+  Product             Product[]
+  protocols           Protocol[]
+  sales               Sale[]
+  users               User[]
+  paymentMethodItems  PaymentMethodItem[]
+  expenses            Expense[]
+
+  @@unique([tenantId, name], name: "branch_name_per_tenant_unique")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        Role
+  tenantId    String
+  branchId    String?
+  createdById String?
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  branch      Branch?  @relation(fields: [branchId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "User_branchId_fkey")
+  @@index([tenantId], map: "User_tenantId_fkey")
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  name        String
+  isActive    Boolean   @default(true)
+  tenantId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  products    Product[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId], map: "Brand_tenantId_fkey")
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String?
+  costPrice     Float?
+  markup        Float?
+  salePrice     Float?
+  stockQuantity Int?            @default(0)
+  minimumStock  Int?            @default(0)
+  category      ProductCategory
+  isActive      Boolean         @default(true)
+  tenantId      String
+  branchId      String?
+  brandId       Int?
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  ItemProduct   ItemProduct[]
+  branch        Branch?         @relation(fields: [branchId], references: [id])
+  brand         Brand?          @relation(fields: [brandId], references: [id])
+  tenant        Tenant          @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Product_branchId_fkey")
+  @@index([brandId], map: "Product_brandId_fkey")
+  @@index([tenantId], map: "Product_tenantId_fkey")
+}
+
+model OpticalService {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String?
+  price              Float
+  isActive           Boolean              @default(true)
+  tenantId           String
+  branchId           String
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  ItemOpticalService ItemOpticalService[]
+  branch             Branch               @relation(fields: [branchId], references: [id])
+  tenant             Tenant               @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "OpticalService_branchId_fkey")
+  @@index([tenantId], map: "OpticalService_tenantId_fkey")
+}
+
+model Client {
+  id            Int            @id @default(autoincrement())
+  name          String
+  nickname      String?
+  cpf           String?
+  rg            String?
+  bornDate      DateTime?      @db.Date
+  gender        Gender?
+  fatherName    String?
+  motherName    String?
+  spouse        String?
+  email         String?
+  company       String?
+  occupation    String?
+  street        String?
+  number        String?
+  neighborhood  String?
+  city          String?
+  uf            String?
+  cep           String?
+  complement    String?
+  isBlacklisted Boolean?       @default(false)
+  obs           String?
+  phone01       String?
+  phone02       String?
+  phone03       String?
+  reference01   String?
+  reference02   String?
+  reference03   String?
+  isActive      Boolean        @default(true)
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  branch        Branch         @relation(fields: [branchId], references: [id])
+  tenant        Tenant         @relation(fields: [tenantId], references: [id])
+  prescriptions Prescription[]
+  Sale          Sale[]
+
+  @@unique([cpf, tenantId])
+  @@index([branchId], map: "Client_branchId_fkey")
+  @@index([tenantId], map: "Client_tenantId_fkey")
+}
+
+model Prescription {
+  id                 Int       @id @default(autoincrement())
+  clientId           Int
+  prescriptionDate   DateTime? @db.Date
+  doctorName         String?
+  crm                String?
+  odSphericalFar     String?
+  odCylindricalFar   String?
+  odAxisFar          String?
+  odDnpFar           String?
+  odSphericalNear    String?
+  odCylindricalNear  String?
+  odAxisNear         String?
+  odDnpNear          String?
+  oeSphericalFar     String?
+  oeCylindricalFar   String?
+  oeAxisFar          String?
+  oeDnpFar           String?
+  oeSphericalNear    String?
+  oeCylindricalNear  String?
+  oeAxisNear         String?
+  oeDnpNear          String?
+  odPellicleFar      String?
+  odPellicleNear     String?
+  oePellicleFar      String?
+  oePellicleNear     String?
+  frameAndRef        String?
+  lensType           String?
+  notes              String?
+  additionRight      String?
+  additionLeft       String?
+  opticalCenterRight String?
+  opticalCenterLeft  String?
+  isActive           Boolean   @default(true)
+  tenantId           String
+  branchId           String
+  createdById        String?
+  updatedById        String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  branch             Branch    @relation(fields: [branchId], references: [id])
+  client             Client    @relation(fields: [clientId], references: [id])
+  tenant             Tenant    @relation(fields: [tenantId], references: [id])
+  sales              Sale[]
+
+  @@index([branchId], map: "Prescription_branchId_fkey")
+  @@index([clientId], map: "Prescription_clientId_fkey")
+  @@index([tenantId], map: "Prescription_tenantId_fkey")
+}
+
+model Sale {
+  id             Int                  @id @default(autoincrement())
+  clientId       Int
+  saleDate       DateTime?            @db.Date
+  prescriptionId Int?
+  subtotal       Float?               @default(0)
+  discount       Float?               @default(0)
+  total          Float?               @default(0)
+  notes          String?
+  isActive       Boolean              @default(true)
+  tenantId       String
+  branchId       String
+  createdById    String?
+  updatedById    String?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  serviceItems   ItemOpticalService[]
+  productItems   ItemProduct[]
+  payment        Payment?             @relation("SalePayment")
+  protocol       Protocol?            @relation("SaleProtocol")
+  branch         Branch               @relation(fields: [branchId], references: [id])
+  client         Client               @relation(fields: [clientId], references: [id])
+  prescription   Prescription?        @relation(fields: [prescriptionId], references: [id])
+  tenant         Tenant               @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Sale_branchId_fkey")
+  @@index([clientId], map: "Sale_clientId_fkey")
+  @@index([prescriptionId], map: "Sale_prescriptionId_fkey")
+  @@index([tenantId], map: "Sale_tenantId_fkey")
+}
+
+model ItemProduct {
+  id           Int           @id @default(autoincrement())
+  saleId       Int
+  productId    Int
+  unitPrice    Float
+  quantity     Int           @default(1)
+  tenantId     String
+  branchId     String
+  createdById  String?
+  updatedById  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  frameDetails FrameDetails?
+  branch       Branch        @relation(fields: [branchId], references: [id])
+  product      Product       @relation(fields: [productId], references: [id])
+  sale         Sale          @relation(fields: [saleId], references: [id])
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "ItemProduct_branchId_fkey")
+  @@index([productId], map: "ItemProduct_productId_fkey")
+  @@index([saleId], map: "ItemProduct_saleId_fkey")
+  @@index([tenantId], map: "ItemProduct_tenantId_fkey")
+}
+
+model FrameDetails {
+  id            Int               @id @default(autoincrement())
+  itemProductId Int               @unique
+  material      FrameMaterialType
+  reference     String?
+  color         String?
+  isActive      Boolean           @default(true)
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  branch        Branch            @relation(fields: [branchId], references: [id])
+  itemProduct   ItemProduct       @relation(fields: [itemProductId], references: [id])
+  tenant        Tenant            @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "FrameDetails_branchId_fkey")
+  @@index([tenantId], map: "FrameDetails_tenantId_fkey")
+}
+
+model ItemOpticalService {
+  id          Int            @id @default(autoincrement())
+  saleId      Int
+  serviceId   Int
+  unitPrice   Float
+  tenantId    String
+  branchId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  branch      Branch         @relation(fields: [branchId], references: [id])
+  sale        Sale           @relation(fields: [saleId], references: [id])
+  service     OpticalService @relation(fields: [serviceId], references: [id])
+  tenant      Tenant         @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "ItemOpticalService_branchId_fkey")
+  @@index([saleId], map: "ItemOpticalService_saleId_fkey")
+  @@index([serviceId], map: "ItemOpticalService_serviceId_fkey")
+  @@index([tenantId], map: "ItemOpticalService_tenantId_fkey")
+}
+
+model Payment {
+  id               Int                 @id @default(autoincrement())
+  saleId           Int                 @unique
+  status           PaymentStatus       @default(PENDING)
+  subtotal         Float               @default(0)
+  discount         Float               @default(0)
+  total            Float               @default(0)
+  paidAmount       Float               @default(0)
+  installmentsPaid Int                 @default(0)
+  lastPaymentAt    DateTime?           @db.Date
+  isActive         Boolean             @default(true)
+  tenantId         String
+  branchId         String
+  createdById      String?
+  updatedById      String?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  branch           Branch              @relation(fields: [branchId], references: [id])
+  sale             Sale                @relation("SalePayment", fields: [saleId], references: [id])
+  tenant           Tenant              @relation(fields: [tenantId], references: [id])
+  methods          PaymentMethodItem[]
+
+  @@index([branchId], map: "Payment_branchId_fkey")
+  @@index([tenantId], map: "Payment_tenantId_fkey")
+}
+
+model Protocol {
+  id          Int      @id @default(autoincrement())
+  saleId      Int?     @unique
+  book        String?
+  page        Int?
+  os          String?
+  isActive    Boolean  @default(true)
+  tenantId    String
+  branchId    String
+  createdById String?
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  branch      Branch   @relation(fields: [branchId], references: [id])
+  sale        Sale?    @relation("SaleProtocol", fields: [saleId], references: [id])
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Protocol_branchId_fkey")
+  @@index([tenantId], map: "Protocol_tenantId_fkey")
+}
+
+model PaymentMethodItem {
+  id               Int                  @id @default(autoincrement())
+  paymentId        Int
+  method           PaymentMethod
+  amount           Float                @default(0)
+  installments     Int?
+  firstDueDate     DateTime?            @db.Date
+  isPaid           Boolean              @default(false)
+  paidAt           DateTime?            @db.Date
+  tenantId         String
+  branchId         String
+  createdById      String?
+  updatedById      String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  payment          Payment              @relation(fields: [paymentId], references: [id])
+  tenant           Tenant               @relation(fields: [tenantId], references: [id])
+  branch           Branch               @relation(fields: [branchId], references: [id])
+  installmentItems PaymentInstallment[]
+
+  @@index([paymentId], map: "PaymentMethodItem_paymentId_fkey")
+  @@index([tenantId], map: "PaymentMethodItem_tenantId_fkey")
+  @@index([branchId], map: "PaymentMethodItem_branchId_fkey")
+}
+
+model PaymentInstallment {
+  id                  Int               @id @default(autoincrement())
+  paymentMethodItemId Int
+  sequence            Int
+  amount              Float             @default(0)
+  paidAmount          Float             @default(0)
+  dueDate             DateTime?         @db.Date
+  paidAt              DateTime?         @db.Date
+  isActive            Boolean           @default(true)
+  tenantId            String
+  branchId            String
+  createdById         String?
+  updatedById         String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  paymentMethodItem   PaymentMethodItem @relation(fields: [paymentMethodItemId], references: [id])
+  tenant              Tenant            @relation(fields: [tenantId], references: [id])
+  branch              Branch            @relation(fields: [branchId], references: [id])
+
+  @@index([paymentMethodItemId], map: "PaymentInstallment_paymentMethodItemId_fkey")
+  @@index([tenantId], map: "PaymentInstallment_tenantId_fkey")
+  @@index([branchId], map: "PaymentInstallment_branchId_fkey")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+}
+
+enum ProductCategory {
+  FRAME
+  LENS
+  ACCESSORY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum FrameMaterialType {
+  ACETATE
+  METAL
+  RIMLESS
+  NYLON
+  TITANIUM
+  WOOD
+  OTHERS
+}
+
+enum PaymentMethod {
+  PIX
+  MONEY
+  DEBIT
+  CREDIT
+  INSTALLMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+}
+
+model Expense {
+  id            Int            @id @default(autoincrement())
+  description   String
+  amount        Float
+  dueDate       DateTime       @db.Date
+  status        ExpenseStatus  @default(SCHEDULED)
+  paymentDate   DateTime?      @db.Date
+  paymentMethod PaymentMethod?
+  tenantId      String
+  branchId      String
+  createdById   String?
+  updatedById   String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  branch Branch @relation(fields: [branchId], references: [id])
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@index([branchId], map: "Expense_branchId_fkey")
+  @@index([tenantId], map: "Expense_tenantId_fkey")
+}
+
+enum ExpenseStatus {
+  SCHEDULED
+  PAID
+}
+
+
+estrutura dos dados no csv: 
+
+marca.csv
+
+marcaId,marcaNome
+1,Sem Marca
+2,JEAN MONIER
+3,JEAN PIERRE
+4,PLATINI
+5,COROLLA
+6,OPTIMAX
+7,BURGUESE
+8,MAXLINE
+
+
+produto.csv
+
+prodId,prodNome,prodMarca,prodPrecoCompra,prodPrecoVenda,prodPercentual,prodQtd,prodTipo
+1,Produto Indisponivel,1,0,0,0,0,PRODUTO
+8,ARMAÇÃO NYLON,5,"190,00","380,00",100,4,PRODUTO
+10,ARMAÇÃO BALGRIF,21,"150,00","300,00",100,1,PRODUTO
+18,OCULOS SOLAR PROSOL,13,200,"400,00",100,0,PRODUTO
+19,OCULOS SOLAR PIERRE CARDIN,9,"275,00","550,00",100,0,PRODUTO
+21,SOLAR Z FORA DE LINHA,38,"270,00","540,00",100,1,PRODUTO
+23,SOLAR Z FORA DE LINHA,67,"240,00","480,00",100,0,PRODUTO
+24,SOLAR Z FORA DE LINHA,2,0,0,0,1,PRODUTO
+26,SOLAR Z FORA DE LINHA,68,"175,00","350,00",100,0,PRODUTO
+27,SOLAR MAXLINE,8,"330,00","660,00",100,0,PRODUTO
+28,SOLAR Z FORA DE LINHA,4,"260,00","520,00",100,0,PRODUTO
+30,SOLAR Z FORA DE LINHA,71,0,0,0,1,PRODUTO
+168,SOLDA,1,0,"15,00",0,0,SERVIÇO
+169,TROCA DE PLAQUETA,1,0,"5,00",0,0,SERVIÇO
+170,COLOCAÇAO DE PARAFUSOS,1,0,"3,00",0,0,SERVIÇO
+171,TROCA DE NYLON,1,0,"5,00",0,0,SERVIÇO
+
+
+pessoa.csv
+
+pesId,pesNome,pesCel,pesTel,pesRua,pesBairro,pesCidade,pesUf,pesCep,pesComp,pesEmail,pesTipo,pesDoc,pesDataNasc,pesSexo,pesContato,pesSite
+1,DESENVOLVEDOR,,,,,,,,,,1,,,----,DESENVOLVEDOR,----
+2,SODRÉ,9992-1810,,,,,,,,,1,,,Masculino,----,----
+3,MARIA DA PAZ PINHEIRO,8208-2373,8853-6130,RUA 07 QD 41 Nº 05,IPEM SÃO CRISTOVAM,SÃO LUÍS,MA,,Ao lado da escola de natacao Novo Oriente,11.04.22-L4F53-3325,3,438.016.923-53,1/24/58,Feminino,----,----
+7,ANGELA MARIA PEREIRA SOUSA,,99917-5487,08 QD 42 Nº07,CIDADE OLIMPICA,SÃO LUÍS,MA,,PROX. IGREJA CATOLICA,,3,280.623.703-30,7/30/62,Feminino,----,----
+8,ANA DE LOURDES MATOS DA SILVA,99992-7558,98780-4997,DR. PAULO RAMOS Nº74        PROFISSAO: PROFESSORA,CENTRO,MORROS,MA,,PROX. COMERCIO MARIO,12.03.15-1761,3,437.944.593-34,8/7/59,Feminino,----,----
+10,ANA CREUSA PACHECO GONÇALVES CRUZ,98278-0442,98278-0442,SANTO ANTÔNIO Nº 20,AURORA,SÃO LUÍS,MA,,PROX. MOTEL SENSUALLY,,3,210.798.892-72,7/26/61,Feminino,----,----
+11,ASTROGILDO FONSECA MENDES,(98)98705-7289,(98)98236-0629,PANAQUATIRA Nº12,VILA NAZARÉ MAIOBÃO,SÃO LUÍS,MA,,,,3,178.221.903-00,10/17/59,Masculino,----,----
+12,ANA PAULA MENDES FEITOSA SILVA,(98)98828-4207,(98)3222-6355,DOS LIRIOS Nº 40,RESID. RESENDE V. EMBRATEL,SÃO LUIS,MA,,,,3,027.316.703-04,12/29/91,Feminino,----,----
+13,ANA MARIA GOMES GONÇALVES,8808-7044,,DAS FLORES Nº30,CRUZEIRO DO ANIL,SÃO LUIS,MA,,ATRAS DA ESCOLA Mª DO CARMO,05.11.14 DISPENSADO DEBITO,3,177.224.623-91,6/27/59,Feminino,----,----
+
+
+pesCliente.csv
+
+cliPessoa,cliConjuge,cliFiliacao,cliRefNome1,cliRefContato1,cliRefNome2,cliRefContato2,cliRefNome3,cliRefContato3,cliSpc,cliRg,cliProfissao,cliEmpresa,cliAtendimentos
+3,WALLACE FERREIRA LOBATO,MARIA DOMINGAS RIBEIRO,ADALGISA,98821-9191,NYAARA THAYAN - NETA,9215-5872,,,Não,1550160 SSPMA,,,"03.10.16-L3F  -2120=1.280, AP  , 15.01.19-L3F89-2644; 06.03.20-L4F11-2901"
+7,JOSE FIRMINO SOUSA SETUBAL,,JOSE FIRMINO SOUSA SETUBAL, 984210405,,,,,Não,994782 SSPMA,EMPREGADA DOMESTICA,AUTONOMA,
+8,MILTON ALVES TEIXEIRA GOMES,Mª VIEIRA MATOS DA SILVA E VALDEMAR PIRES F. DA SILVA,JUSTINA,(98)3247-8030/98885-2780,ANA VERONICA,(98)98850-9432,,,Não,1550008 SSPMA,PROFESSORA,ARRUDINHA BR402,
+9,CONJUGE DO CLIENTE,,REF 1,123,REF2,456,REF3,780,Não,,,,
+10,VIÚVA,Mª JOSÉ PACHECO E AFONSO DE SOUSA GONÇALVES,MAGDA,(98)99961-7027,,,,,Não,,,,
+11,Mª RITA CORREIA MENDES,RAIMUNDA FONSECA MENDES,RAIMUNDA - MÃE,(98)3274-0726,,,,,Não,040830712010-4 SSPMA,DESIGNER,AUTONOMO,
+12,SOLTEIRA,IVONETE DE FATIMA MENDES E JOAO SERGIO FEITOSA SILVA,IVONETE,(98)98827-3403,WANDERLEY,(98)3242-9751,,,Não,027013762004-3 SSPMA,ESTUDANTE,,
+13,,MARENILDE GOMES GONÇALVES E ADRONICO DE JESUS ARANHA,VERA,(98)99621-5999,MOISES,(98)3221-1255,,,Não,21048922002-5 SSPMA,DEPILADORA,AUTONOMA,"01/12/2009-SOLAR, 29.04.10-341; 09.09.10-SOLAR; 17.01.11- SOLAR"
+14,,,AURIMAR - FILHA,(98)98118-5760,JOELSON - FILHO,(98)98888-7973,RICARDO,8271-0498,Não,1558084 SSPMA,APOSENTADA,,"05.05.16-2033=780,; 29.09.17-2348, 2349=990; 05.05.16-2033=780,"
+15,ANEZIA PINTO FERNANDES,RITA MARQUES DA SILVA E ANTONIO GOMES DA SILVA,,,,,,,Não,12562711999-2 SSPMA,TAXISTA,AUTONOMO,14/08/2010-451
+
+
+atendimento.csv
+
+ateId,ateColaborador,ateCliente,ateDataCompra,ateDataVencimento,ateTotal,atePago,ateFormaPagamento,ateEntrada
+10021,2,7,10-Feb-15,10-Feb-15,"960,00",Carnê aberto,CARNÊ,
+10024,2,20,12-Aug-16,23-Sep-16,"550,00",Carnê concluído,CARNÊ,"0,00"
+10025,2,21,07-Dec-16,07-Feb-17,"1800,00",Carnê concluído,CARNÊ,"0,00"
+10026,,17,12-Feb-16,12-May-16,"700,00",Carnê concluído,CARNÊ,"0,00"
+10027,,15,03-Jun-16,05-Jul-16,"800,00",Carnê concluído,CARNÊ,"160,00"
+10028,,14,05-May-16,05-Jun-16,"780,00",Carnê concluído,CARNÊ,"0,00"
+10029,,11,08-May-12,10-Jun-12,"450,00",Carnê aberto,CARNÊ,"0,00"
+10031,2,16,22-Feb-16,22-Mar-16,"800,00",Carnê concluído,CARNÊ,"0,00"
+10032,2,24,10-Dec-14,10-Jan-15,"1200,00",Carnê concluído,CARNÊ,"0,00"
+
+itensAtendimento.csv
+
+itemAtendimento,itemProduto,itemQtd,itemTotalParcial,itemDesc,itemTotalGeral,itemObs
+10021,73,1,700.00,"40,00",660.00,
+10021,60,1,300.00,0,300.00,EA9316COL03 52 17 135
+10024,45,1,650.00,100,550.00,"RX OD +1,50-0,00 00 35; OE+2,25-0,00 00 34,5 AD3,00"
+10025,111,1,350.00,10,340.00,REF. J83143 D322 54 15 135
+10025,112,1,340.00,40,300.00,"OS 2151 RX OD+050-050 170º 30,5; OE+050-100 10º 33,5 DR MAURO CESAR 2942"
+10025,77,1,340.00,0,340.00,REF. P93114 D241 52 17 135
+10025,113,1,820.00,0,820.00,"YSABELLY OS2152 RX OD+050-400 10º 30,0; OE PL-400 165º 30,5; DR MAURO CESAR 2942"
+10026,27,1,520.00,120,400.00,REF. ML 238 COL.1 58-15 135
+10026,72,1,500.00,220,280.00,"DR. AMILAR 3291 RXOD +150-050 90º; OE+200-050 90º DNP 30/31,5"
+10026,120,1,100.00,80,20.00,
+
+
+carne.csv
+
+carId,carAtendimento,carParcelas,carValorParcela,carVencimento,carNumeroParcela,carParcelaStatus,carDataPagamento
+1,10021,6,R$ 160.00,10-Mar-15,1,Pago com sucesso,09-Mar-15
+2,10021,6,R$ 160.00,10-Apr-15,2,Pago com atraso,15-May-15
+3,10021,6,R$ 160.00,10-May-15,3,Pago com atraso,08-Jun-15
+4,10021,6,R$ 160.00,10-Jun-15,4,Pago com atraso,09-Oct-15
+5,10021,6,R$ 160.00,10-Jul-15,5,Vencida,
+6,10021,6,R$ 160.00,10-Aug-15,6,Vencida,
+18,10023,5,R$ 60.00,30-Jan-17,1,Aberta,
+19,10023,5,R$ 60.00,28-Feb-17,2,Aberta,
+20,10023,5,R$ 60.00,28-Mar-17,3,Aberta,
+21,10023,5,R$ 60.00,28-Apr-17,4,Aberta,
+
+
+

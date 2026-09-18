@@ -1,0 +1,22 @@
+{
+  "migration": "02-product",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "branchId": "cmibvcyed00017m014r66e39w",
+  "dryRun": true,
+  "startedAt": "2026-09-18T15:06:15.951Z",
+  "finishedAt": "2026-09-18T15:07:32.458Z",
+  "durationMs": 76507,
+  "total": 787,
+  "products": {
+    "created": 0,
+    "existing": 783
+  },
+  "services": {
+    "created": 4,
+    "existing": 0
+  },
+  "pending": 0,
+  "errors": 0,
+  "productMappingSaved": false,
+  "serviceMappingSaved": false
+}

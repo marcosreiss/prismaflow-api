@@ -31,7 +31,7 @@ const BRANCH_ID = "cmibvcyed00017m014r66e39w";
  * false = execução real
  * true  = apenas simulação
  */
-const DRY_RUN = true;
+const DRY_RUN = false;
 
 /*
  * CSV antigo de produtos.

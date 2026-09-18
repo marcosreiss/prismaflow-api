@@ -3,54 +3,46 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { PrismaClient } from "@prisma/client";
+import {
+    PaymentMethod,
+    PaymentStatus,
+    PrismaClient,
+} from "@prisma/client";
 
 import {
     loadAtendimentoSources,
-    SaleSource,
 } from "./loaders/atendimento.loader";
 
-import { convertSale } from "./converters/sale.converter";
 import {
-    convertSaleItem,
-    ItemSaleConverted,
-} from "./converters/item-sale.converter";
+    convertSale,
+    isCarnePayment,
+} from "./converters/sale.converter";
 
 const prisma = new PrismaClient();
 
-const BASE_DIR = path.resolve(
-    __dirname,
-);
+const BASE_DIR =
+    path.resolve(__dirname);
 
-const REPORTS_DIR = path.join(
-    BASE_DIR,
-    "reports",
-);
+const REPORTS_DIR =
+    path.join(BASE_DIR, "reports");
 
-const LOGS_DIR = path.join(
-    REPORTS_DIR,
-    "logs",
-);
+const LOGS_DIR =
+    path.join(REPORTS_DIR, "logs");
 
-const ERRORS_DIR = path.join(
-    REPORTS_DIR,
-    "errors",
-);
+const ERRORS_DIR =
+    path.join(REPORTS_DIR, "errors");
 
-const EXECUTIONS_DIR = path.join(
-    REPORTS_DIR,
-    "executions",
-);
+const EXECUTIONS_DIR =
+    path.join(REPORTS_DIR, "executions");
 
-const MAPPINGS_DIR = path.join(
-    REPORTS_DIR,
-    "mappings",
-);
+const MAPPINGS_DIR =
+    path.join(REPORTS_DIR, "mappings");
 
-const MAPPING_PATH = path.join(
-    MAPPINGS_DIR,
-    "04-sale-mapping.csv",
-);
+const MAPPING_PATH =
+    path.join(
+        MAPPINGS_DIR,
+        "04-sale-mapping.csv",
+    );
 
 const TEMP_MAPPING_PATH =
     `${MAPPING_PATH}.tmp`;
@@ -61,10 +53,15 @@ const TENANT_ID =
 const BRANCH_ID =
     "cmibvcyed00017m014r66e39w";
 
-const DRY_RUN =
-    process.env.DRY_RUN !== "false";
+const DRY_RUN = true;
 
 const MONEY_TOLERANCE = 0.5;
+
+interface MappingRecord {
+    oldId: number;
+    newId: number | null;
+    status: "CREATED" | "EXISTING";
+}
 
 interface PendingRecord {
     oldId: number;
@@ -78,27 +75,33 @@ interface ErrorRecord {
     stack?: string;
 }
 
-interface SaleMapping {
+interface ProductMapping {
     oldId: number;
-    newId: number | null;
-    status: "CREATED" | "EXISTING";
+    newId: number;
+    status: string;
 }
 
-function ensureReportDirectories(): void {
-    for (const directory of [
+interface ServiceMapping {
+    oldId: number;
+    newId: number;
+    status: string;
+}
+
+function ensureDirectories(): void {
+    [
         REPORTS_DIR,
         LOGS_DIR,
         ERRORS_DIR,
         EXECUTIONS_DIR,
         MAPPINGS_DIR,
-    ]) {
+    ].forEach((directory) => {
         fs.mkdirSync(directory, {
             recursive: true,
         });
-    }
+    });
 }
 
-function timestamp(): string {
+function nowForFileName(): string {
     return new Date()
         .toISOString()
         .replace(/[:.]/g, "-");
@@ -107,21 +110,22 @@ function timestamp(): string {
 function writeLog(
     message: string,
 ): void {
-    ensureReportDirectories();
+    ensureDirectories();
 
-    const logPath = path.join(
-        LOGS_DIR,
-        `04-sale-${new Date()
+    const date =
+        new Date()
             .toISOString()
-            .slice(0, 10)}.log`,
-    );
+            .slice(0, 10);
 
-    const line =
-        `[${new Date().toISOString()}] ${message}\n`;
+    const filePath =
+        path.join(
+            LOGS_DIR,
+            `04-sale-${date}.log`,
+        );
 
     fs.appendFileSync(
-        logPath,
-        line,
+        filePath,
+        `[${new Date().toISOString()}] ${message}\n`,
         "utf8",
     );
 }
@@ -136,8 +140,49 @@ function nearlyEqual(
     );
 }
 
+function readMappingFile<T>(
+    filePath: string,
+): T[] {
+    if (!fs.existsSync(filePath)) {
+        return [];
+    }
+
+    const lines =
+        fs
+            .readFileSync(
+                filePath,
+                "utf8",
+            )
+            .split(/\r?\n/)
+            .filter(Boolean);
+
+    if (lines.length <= 1) {
+        return [];
+    }
+
+    return lines
+        .slice(1)
+        .map((line) => {
+            const fields =
+                line.split(",");
+
+            return {
+                oldId: Number(fields[0]),
+                newId: Number(fields[1]),
+                status: fields[2],
+            } as T;
+        })
+        .filter(
+            (record) =>
+                Number.isFinite(
+                    (record as { oldId: number })
+                        .oldId,
+                ),
+        );
+}
+
 function createTempMapping(): void {
-    ensureReportDirectories();
+    ensureDirectories();
 
     fs.writeFileSync(
         TEMP_MAPPING_PATH,
@@ -147,7 +192,7 @@ function createTempMapping(): void {
 }
 
 function appendMapping(
-    mapping: SaleMapping,
+    mapping: MappingRecord,
 ): void {
     fs.appendFileSync(
         TEMP_MAPPING_PATH,
@@ -157,6 +202,16 @@ function appendMapping(
 }
 
 function finalizeMapping(): void {
+    if (
+        fs.existsSync(
+            MAPPING_PATH,
+        )
+    ) {
+        fs.unlinkSync(
+            MAPPING_PATH,
+        );
+    }
+
     fs.renameSync(
         TEMP_MAPPING_PATH,
         MAPPING_PATH,
@@ -165,134 +220,146 @@ function finalizeMapping(): void {
 
 function discardTempMapping(): void {
     if (
-        fs.existsSync(TEMP_MAPPING_PATH)
+        fs.existsSync(
+            TEMP_MAPPING_PATH,
+        )
     ) {
-        fs.unlinkSync(TEMP_MAPPING_PATH);
-    }
-}
-
-function calculateItems(
-    source: SaleSource,
-): {
-    items: ItemSaleConverted[];
-    subtotal: number;
-    discount: number;
-    total: number;
-    legacyItemTotal: number;
-} {
-    const items = source.itens.map(
-        convertSaleItem,
-    );
-
-    const subtotal = items.reduce(
-        (sum, item) =>
-            sum + item.totalPartial,
-        0,
-    );
-
-    const discount = items.reduce(
-        (sum, item) =>
-            sum + item.discount,
-        0,
-    );
-
-    const total =
-        subtotal - discount;
-
-    const legacyItemTotal =
-        items.reduce(
-            (sum, item) =>
-                sum + item.totalGeneral,
-            0,
+        fs.unlinkSync(
+            TEMP_MAPPING_PATH,
         );
-
-    return {
-        items,
-        subtotal,
-        discount,
-        total,
-        legacyItemTotal,
-    };
-}
-
-function isPaidCarne(
-    status: string | null,
-): boolean {
-    if (!status) {
-        return false;
     }
-
-    return status
-        .toLowerCase()
-        .includes("pago");
 }
 
-function calculatePaidAmount(
-    sale: ReturnType<typeof convertSale>,
-): number {
+function mapPaymentMethod(
+    legacyMethod: string | null,
+): PaymentMethod | null {
     const method =
-        sale.paymentMethod?.toUpperCase() ?? "";
+        (
+            legacyMethod ?? ""
+        ).trim().toUpperCase();
 
-    /*
-     * Carnê:
-     *
-     * paidAmount =
-     * entrada + parcelas efetivamente pagas.
-     */
-    if (method === "CARNÊ") {
-        const paidInstallments =
-            sale.carne.reduce(
-                (sum, parcela) =>
-                    sum +
-                    (isPaidCarne(
-                        parcela.status,
-                    )
-                        ? parcela.installmentAmount
-                        : 0),
-                0,
-            );
+    switch (method) {
+        case "DINHEIRO":
+        case "MONEY":
+            return PaymentMethod.MONEY;
 
-        return (
-            sale.entryAmount +
-            paidInstallments
-        );
+        case "DÉBITO":
+        case "DEBIT":
+            return PaymentMethod.DEBIT;
+
+        case "CRÉDITO":
+        case "CREDITO":
+        case "CREDIT":
+            return PaymentMethod.CREDIT;
+
+        case "CARNÊ":
+        case "CARNE":
+        case "CARNET":
+            return PaymentMethod.INSTALLMENT;
+
+        case "PIX":
+            return PaymentMethod.PIX;
+
+        default:
+            return null;
     }
+}
 
-    /*
-     * Nos demais métodos, o legado informa
-     * explicitamente que o pagamento foi
-     * concluído com sucesso.
-     */
-    const status =
-        sale.paymentStatus?.toLowerCase() ??
-        "";
-
+function calculatePaymentStatus(
+    paidAmount: number,
+    total: number,
+): PaymentStatus {
     if (
-        status.includes("pago com sucesso")
+        nearlyEqual(
+            paidAmount,
+            total,
+        ) ||
+        paidAmount > total
     ) {
-        return sale.legacyTotal;
+        return PaymentStatus.CONFIRMED;
     }
 
-    /*
-     * Caso não seja possível determinar
-     * o pagamento pelo status, usamos a
-     * entrada como valor conhecido.
-     */
-    return sale.entryAmount;
+    return PaymentStatus.PENDING;
+}
+
+function loadProductMappings(): ProductMapping[] {
+    return readMappingFile<ProductMapping>(
+        path.join(
+            MAPPINGS_DIR,
+            "02-product-mapping.csv",
+        ),
+    );
+}
+
+function loadServiceMappings(): ServiceMapping[] {
+    return readMappingFile<ServiceMapping>(
+        path.join(
+            MAPPINGS_DIR,
+            "02-service-mapping.csv",
+        ),
+    );
+}
+
+function resolveClientId(
+    oldClientId: number,
+): number | null {
+    const mappings =
+        readMappingFile<{
+            oldId: number;
+            newId: number;
+            status: string;
+        }>(
+            path.join(
+                MAPPINGS_DIR,
+                "03-client-mapping.csv",
+            ),
+        );
+
+    const mapping =
+        mappings.find(
+            (item) =>
+                item.oldId === oldClientId,
+        );
+
+    return mapping?.newId ?? null;
+}
+
+function resolveProductId(
+    oldProductId: number,
+    mappings: ProductMapping[],
+): number | null {
+    const mapping =
+        mappings.find(
+            (item) =>
+                item.oldId === oldProductId,
+        );
+
+    return mapping?.newId ?? null;
+}
+
+function resolveServiceId(
+    oldProductId: number,
+    mappings: ServiceMapping[],
+): number | null {
+    const mapping =
+        mappings.find(
+            (item) =>
+                item.oldId === oldProductId,
+        );
+
+    return mapping?.newId ?? null;
 }
 
 function writePendingReport(
-    pending: PendingRecord[],
+    records: PendingRecord[],
 ): void {
-    const reportPath = path.join(
-        ERRORS_DIR,
-        `04-sale-pending-${timestamp()}.json`,
-    );
-
     fs.writeFileSync(
-        reportPath,
+        path.join(
+            ERRORS_DIR,
+            `04-sale-pending-${nowForFileName()}.json`,
+        ),
         JSON.stringify(
-            pending,
+            records,
             null,
             2,
         ),
@@ -301,17 +368,15 @@ function writePendingReport(
 }
 
 function writeErrorReport(
-    errors: ErrorRecord[],
+    records: ErrorRecord[],
 ): void {
-    const reportPath = path.join(
-        ERRORS_DIR,
-        `04-sale-errors-${timestamp()}.json`,
-    );
-
     fs.writeFileSync(
-        reportPath,
+        path.join(
+            ERRORS_DIR,
+            `04-sale-errors-${nowForFileName()}.json`,
+        ),
         JSON.stringify(
-            errors,
+            records,
             null,
             2,
         ),
@@ -322,13 +387,11 @@ function writeErrorReport(
 function writeExecutionReport(
     data: Record<string, unknown>,
 ): void {
-    const reportPath = path.join(
-        EXECUTIONS_DIR,
-        `04-sale-${timestamp()}.json`,
-    );
-
     fs.writeFileSync(
-        reportPath,
+        path.join(
+            EXECUTIONS_DIR,
+            `04-sale-${nowForFileName()}.json`,
+        ),
         JSON.stringify(
             data,
             null,
@@ -339,7 +402,7 @@ function writeExecutionReport(
 }
 
 async function main(): Promise<void> {
-    ensureReportDirectories();
+    ensureDirectories();
 
     writeLog(
         `Iniciando migration 04-sale | DRY_RUN=${DRY_RUN}`,
@@ -348,7 +411,12 @@ async function main(): Promise<void> {
     const sources =
         loadAtendimentoSources();
 
-    const mappings: SaleMapping[] = [];
+    const productMappings =
+        loadProductMappings();
+
+    const serviceMappings =
+        loadServiceMappings();
+
     const pending: PendingRecord[] = [];
     const errors: ErrorRecord[] = [];
 
@@ -356,7 +424,6 @@ async function main(): Promise<void> {
     let existing = 0;
 
     let totalItems = 0;
-
     let totalSubtotal = 0;
     let totalDiscount = 0;
     let totalSales = 0;
@@ -372,20 +439,22 @@ async function main(): Promise<void> {
                 convertSale(source);
 
             try {
+                /*
+                 * ---------------------------------------------------------
+                 * 1. VALIDAÇÕES BÁSICAS
+                 * ---------------------------------------------------------
+                 */
+
                 if (!sale.oldId) {
                     pending.push({
                         oldId: 0,
                         reason:
-                            "ATENDIMENTO_SEM_ID",
+                            "VENDA_SEM_ID",
                     });
 
                     continue;
                 }
 
-                /*
-                 * Toda venda precisa possuir cliente
-                 * relacionado ao mapping da migration 03.
-                 */
                 if (!sale.oldClientId) {
                     pending.push({
                         oldId: sale.oldId,
@@ -396,41 +465,12 @@ async function main(): Promise<void> {
                     continue;
                 }
 
-                const clientMappingPath =
-                    path.join(
-                        MAPPINGS_DIR,
-                        "03-client-mapping.csv",
+                const clientId =
+                    resolveClientId(
+                        sale.oldClientId,
                     );
 
-                if (
-                    !fs.existsSync(
-                        clientMappingPath,
-                    )
-                ) {
-                    throw new Error(
-                        "03-client-mapping.csv não encontrado.",
-                    );
-                }
-
-                const clientMappings =
-                    fs
-                        .readFileSync(
-                            clientMappingPath,
-                            "utf8",
-                        )
-                        .split(/\r?\n/)
-                        .slice(1)
-                        .filter(Boolean);
-
-                const clientMapping =
-                    clientMappings.find(
-                        (line) =>
-                            line.startsWith(
-                                `${sale.oldClientId},`,
-                            ),
-                    );
-
-                if (!clientMapping) {
+                if (!clientId) {
                     pending.push({
                         oldId: sale.oldId,
                         reason:
@@ -444,172 +484,54 @@ async function main(): Promise<void> {
                     continue;
                 }
 
-                const clientFields =
-                    clientMapping.split(",");
+                /*
+                 * ---------------------------------------------------------
+                 * 2. VALIDAÇÃO DOS ITENS
+                 * ---------------------------------------------------------
+                 */
 
-                const clientId =
-                    Number(clientFields[1]);
-
-                if (!clientId) {
+                if (sale.items.length === 0) {
                     pending.push({
                         oldId: sale.oldId,
                         reason:
-                            "CLIENTE_SEM_NEW_ID",
-                        details: {
-                            oldClientId:
-                                sale.oldClientId,
-                        },
+                            "VENDA_SEM_ITENS",
                     });
 
                     continue;
                 }
 
-                const itemData =
-                    calculateItems(source);
-
-                totalItems +=
-                    itemData.items.length;
-
-                totalSubtotal +=
-                    itemData.subtotal;
-
-                totalDiscount +=
-                    itemData.discount;
-
-                totalSales +=
-                    itemData.total;
-
-                /*
-                 * Regra financeira definida:
-                 *
-                 * sale.total =
-                 * subtotal - desconto
-                 *
-                 * E comparamos contra:
-                 * 1. ateTotal
-                 * 2. SUM(itemTotalGeral)
-                 */
-                const totalFromItems =
-                    itemData.total;
-
-                const totalFromAtendimento =
-                    sale.legacyTotal;
-
-                const totalFromLegacyItems =
-                    itemData.legacyItemTotal;
-
-                if (
-                    !nearlyEqual(
-                        totalFromItems,
-                        totalFromAtendimento,
-                    )
-                ) {
-                    financialInconsistencies++;
-
-                    writeLog(
-                        `INCONSISTÊNCIA venda ${sale.oldId}: ` +
-                        `calculado=${totalFromItems.toFixed(2)} ` +
-                        `ateTotal=${totalFromAtendimento.toFixed(2)}`,
-                    );
-                }
-
-                if (
-                    !nearlyEqual(
-                        totalFromItems,
-                        totalFromLegacyItems,
-                    )
-                ) {
-                    financialInconsistencies++;
-
-                    writeLog(
-                        `INCONSISTÊNCIA itens venda ${sale.oldId}: ` +
-                        `calculado=${totalFromItems.toFixed(2)} ` +
-                        `itemTotalGeral=${totalFromLegacyItems.toFixed(2)}`,
-                    );
-                }
-
-                /*
-                 * Verificação de itens sem produto.
-                 *
-                 * O mapping 02-product contém tanto
-                 * produtos quanto serviços.
-                 */
-                const productMappingPath =
-                    path.join(
-                        MAPPINGS_DIR,
-                        "02-product-mapping.csv",
-                    );
-
-                const serviceMappingPath =
-                    path.join(
-                        MAPPINGS_DIR,
-                        "02-service-mapping.csv",
-                    );
-
-                const productMappings =
-                    fs.existsSync(
-                        productMappingPath,
-                    )
-                        ? fs
-                            .readFileSync(
-                                productMappingPath,
-                                "utf8",
-                            )
-                            .split(/\r?\n/)
-                            .slice(1)
-                            .filter(Boolean)
-                        : [];
-
-                const serviceMappings =
-                    fs.existsSync(
-                        serviceMappingPath,
-                    )
-                        ? fs
-                            .readFileSync(
-                                serviceMappingPath,
-                                "utf8",
-                            )
-                            .split(/\r?\n/)
-                            .slice(1)
-                            .filter(Boolean)
-                        : [];
-
-                const unresolvedItems =
-                    itemData.items.filter(
+                const unresolvedProducts =
+                    sale.items.filter(
                         (item) => {
-                            const product =
-                                productMappings.find(
-                                    (line) =>
-                                        line.startsWith(
-                                            `${item.oldProductId},`,
-                                        ),
+                            const productId =
+                                resolveProductId(
+                                    item.oldProductId,
+                                    productMappings,
                                 );
 
-                            const service =
-                                serviceMappings.find(
-                                    (line) =>
-                                        line.startsWith(
-                                            `${item.oldProductId},`,
-                                        ),
+                            const serviceId =
+                                resolveServiceId(
+                                    item.oldProductId,
+                                    serviceMappings,
                                 );
 
                             return (
-                                !product &&
-                                !service
+                                !productId &&
+                                !serviceId
                             );
                         },
                     );
 
                 if (
-                    unresolvedItems.length > 0
+                    unresolvedProducts.length > 0
                 ) {
                     pending.push({
                         oldId: sale.oldId,
                         reason:
                             "ITEM_SEM_MAPPING",
                         details: {
-                            items:
-                                unresolvedItems,
+                            products:
+                                unresolvedProducts,
                         },
                     });
 
@@ -617,31 +539,112 @@ async function main(): Promise<void> {
                 }
 
                 /*
-                 * Verifica se a Sale já existe.
-                 *
-                 * Não criamos duplicata.
+                 * ---------------------------------------------------------
+                 * 3. VALIDAÇÃO FINANCEIRA DA SALE
+                 * ---------------------------------------------------------
                  */
-                const existingSale =
-                    await prisma.sale.findFirst({
+
+                const calculatedTotal =
+                    sale.total;
+
+                if (
+                    !nearlyEqual(
+                        calculatedTotal,
+                        sale.legacyTotal,
+                    )
+                ) {
+                    financialInconsistencies++;
+
+                    writeLog(
+                        `INCONSISTÊNCIA FINANCEIRA ` +
+                        `venda=${sale.oldId} ` +
+                        `calculado=${calculatedTotal.toFixed(2)} ` +
+                        `ateTotal=${sale.legacyTotal.toFixed(2)}`,
+                    );
+                }
+
+                if (
+                    !nearlyEqual(
+                        calculatedTotal,
+                        sale.legacyItemsTotal,
+                    )
+                ) {
+                    financialInconsistencies++;
+
+                    writeLog(
+                        `INCONSISTÊNCIA NOS ITENS ` +
+                        `venda=${sale.oldId} ` +
+                        `calculado=${calculatedTotal.toFixed(2)} ` +
+                        `itemTotalGeral=${sale.legacyItemsTotal.toFixed(2)}`,
+                    );
+                }
+
+                /*
+                 * ---------------------------------------------------------
+                 * 4. EXISTÊNCIA
+                 * ---------------------------------------------------------
+                 *
+                 * Sale não possui legacyId no schema atual.
+                 *
+                 * Portanto usamos uma combinação conservadora:
+                 *
+                 * clientId + saleDate + total + tenant + branch
+                 *
+                 * Se houver mais de uma candidata, não escolhemos
+                 * arbitrariamente: a venda fica PENDING.
+                 */
+
+                const candidates =
+                    await prisma.sale.findMany({
                         where: {
-                            tenantId: TENANT_ID,
-                            branchId: BRANCH_ID,
-                            legacyId: sale.oldId,
+                            tenantId:
+                                TENANT_ID,
+                            branchId:
+                                BRANCH_ID,
+                            clientId,
+                            saleDate:
+                                sale.saleDate,
+                            total: {
+                                gte:
+                                    sale.total -
+                                    MONEY_TOLERANCE,
+                                lte:
+                                    sale.total +
+                                    MONEY_TOLERANCE,
+                            },
+                        },
+                        select: {
+                            id: true,
                         },
                     });
 
-                if (existingSale) {
-                    existing++;
-
-                    mappings.push({
+                if (candidates.length > 1) {
+                    pending.push({
                         oldId: sale.oldId,
-                        newId: existingSale.id,
-                        status: "EXISTING",
+                        reason:
+                            "MULTIPLAS_SALES_CANDIDATAS",
+                        details: {
+                            candidates,
+                            clientId,
+                            saleDate:
+                                sale.saleDate,
+                            total:
+                                sale.total,
+                        },
                     });
+
+                    continue;
+                }
+
+                if (candidates.length === 1) {
+                    const newId =
+                        candidates[0].id;
+
+                    existing++;
 
                     appendMapping({
                         oldId: sale.oldId,
-                        newId: existingSale.id,
+                        newId,
                         status: "EXISTING",
                     });
 
@@ -649,37 +652,380 @@ async function main(): Promise<void> {
                 }
 
                 /*
-                 * DRY_RUN percorre exatamente o mesmo
-                 * fluxo lógico, mas não persiste.
+                 * ---------------------------------------------------------
+                 * 5. DRY RUN
+                 * ---------------------------------------------------------
                  */
+
                 if (DRY_RUN) {
                     created++;
 
-                    mappings.push({
-                        oldId: sale.oldId,
-                        newId: null,
-                        status: "CREATED",
-                    });
-
                     appendMapping({
                         oldId: sale.oldId,
                         newId: null,
                         status: "CREATED",
                     });
 
+                    totalItems +=
+                        sale.items.length;
+
+                    totalSubtotal +=
+                        sale.subtotal;
+
+                    totalDiscount +=
+                        sale.discount;
+
+                    totalSales +=
+                        sale.total;
+
+                    totalPaid +=
+                        sale.paidAmount;
+
                     continue;
                 }
 
                 /*
-                 * A criação efetiva da Sale será feita
-                 * somente após fecharmos os campos
-                 * exatos dos models atuais.
+                 * ---------------------------------------------------------
+                 * 6. PERSISTÊNCIA
+                 * ---------------------------------------------------------
                  *
-                 * Este bloco propositalmente não cria
-                 * dados com schema presumido.
+                 * Sale + Items + Payment + Methods +
+                 * Installments são criados dentro da mesma
+                 * transação.
                  */
-                throw new Error(
-                    "Schema de criação da Sale ainda precisa ser conectado aos campos exatos do model atual.",
+
+                const createdSale =
+                    await prisma.$transaction(
+                        async (tx) => {
+                            const createdSale =
+                                await tx.sale.create({
+                                    data: {
+                                        clientId,
+
+                                        saleDate:
+                                            sale.saleDate,
+
+                                        subtotal:
+                                            sale.subtotal,
+
+                                        discount:
+                                            sale.discount,
+
+                                        total:
+                                            sale.total,
+
+                                        notes:
+                                            sale.items
+                                                .map(
+                                                    (item) =>
+                                                        item.observation,
+                                                )
+                                                .filter(Boolean)
+                                                .join("\n") ||
+                                            null,
+
+                                        isActive:
+                                            true,
+
+                                        tenantId:
+                                            TENANT_ID,
+
+                                        branchId:
+                                            BRANCH_ID,
+                                    },
+                                });
+
+                            /*
+                             * ---------------------------------------------------
+                             * ITENS
+                             * ---------------------------------------------------
+                             */
+
+                            for (const item of sale.items) {
+                                const productId =
+                                    resolveProductId(
+                                        item.oldProductId,
+                                        productMappings,
+                                    );
+
+                                const serviceId =
+                                    resolveServiceId(
+                                        item.oldProductId,
+                                        serviceMappings,
+                                    );
+
+                                if (productId) {
+                                    const quantity =
+                                        item.quantity > 0
+                                            ? item.quantity
+                                            : 1;
+
+                                    const unitPrice =
+                                        item.totalPartial /
+                                        quantity;
+
+                                    await tx.itemProduct.create({
+                                        data: {
+                                            saleId:
+                                                createdSale.id,
+
+                                            productId,
+
+                                            unitPrice,
+
+                                            quantity,
+
+                                            tenantId:
+                                                TENANT_ID,
+
+                                            branchId:
+                                                BRANCH_ID,
+                                        },
+                                    });
+
+                                    continue;
+                                }
+
+                                if (serviceId) {
+                                    await tx.itemOpticalService.create({
+                                        data: {
+                                            saleId:
+                                                createdSale.id,
+
+                                            serviceId,
+
+                                            unitPrice:
+                                                item.totalPartial,
+
+                                            tenantId:
+                                                TENANT_ID,
+
+                                            branchId:
+                                                BRANCH_ID,
+                                        },
+                                    });
+
+                                    continue;
+                                }
+
+                                throw new Error(
+                                    `Item ${item.oldProductId} ` +
+                                    `não possui mapping durante a transação.`,
+                                );
+                            }
+
+                            /*
+                             * ---------------------------------------------------
+                             * PAYMENT
+                             * ---------------------------------------------------
+                             *
+                             * Uma Sale possui exatamente um Payment.
+                             *
+                             * O desconto dos itens já está na Sale.
+                             * Portanto:
+                             *
+                             * payment.discount = 0
+                             * payment.subtotal = sale.total
+                             * payment.total = sale.total
+                             */
+
+                            const paymentStatus =
+                                calculatePaymentStatus(
+                                    sale.paidAmount,
+                                    sale.total,
+                                );
+
+                            const payment =
+                                await tx.payment.create({
+                                    data: {
+                                        saleId:
+                                            createdSale.id,
+
+                                        status:
+                                            paymentStatus,
+
+                                        subtotal:
+                                            sale.total,
+
+                                        discount: 0,
+
+                                        total:
+                                            sale.total,
+
+                                        paidAmount:
+                                            sale.paidAmount,
+
+                                        installmentsPaid:
+                                            sale.installmentsPaid,
+
+                                        lastPaymentAt:
+                                            sale.lastPaymentAt,
+
+                                        isActive:
+                                            true,
+
+                                        tenantId:
+                                            TENANT_ID,
+
+                                        branchId:
+                                            BRANCH_ID,
+                                    },
+                                });
+
+                            /*
+                             * ---------------------------------------------------
+                             * PAYMENT METHOD ITEM
+                             * ---------------------------------------------------
+                             */
+
+                            const method =
+                                mapPaymentMethod(
+                                    sale.paymentMethod,
+                                );
+
+                            if (!method) {
+                                throw new Error(
+                                    `Forma de pagamento não mapeada: ` +
+                                    `${sale.paymentMethod ?? "(vazia)"}`,
+                                );
+                            }
+
+                            const isCarne =
+                                isCarnePayment(
+                                    sale.paymentMethod,
+                                );
+
+                            const methodItem =
+                                await tx.paymentMethodItem.create({
+                                    data: {
+                                        paymentId:
+                                            payment.id,
+
+                                        method,
+
+                                        amount:
+                                            sale.total,
+
+                                        installments:
+                                            isCarne
+                                                ? sale.carne.length
+                                                : null,
+
+                                        firstDueDate:
+                                            isCarne
+                                                ? (
+                                                    sale.carne[0]
+                                                        ?.dueDate ??
+                                                    sale.dueDate
+                                                )
+                                                : null,
+
+                                        isPaid:
+                                            nearlyEqual(
+                                                sale.paidAmount,
+                                                sale.total,
+                                            ) ||
+                                            sale.paidAmount >
+                                            sale.total,
+
+                                        paidAt:
+                                            sale.lastPaymentAt,
+
+                                        tenantId:
+                                            TENANT_ID,
+
+                                        branchId:
+                                            BRANCH_ID,
+                                    },
+                                });
+
+                            /*
+                             * ---------------------------------------------------
+                             * PAYMENT INSTALLMENTS
+                             * ---------------------------------------------------
+                             *
+                             * Somente carnê gera parcelas.
+                             *
+                             * A entrada não é criada como parcela porque
+                             * ela já está representada em Payment.paidAmount.
+                             */
+                            if (isCarne) {
+                                for (const installment of sale.carne) {
+                                    const paid =
+                                        installment.paymentDate !==
+                                        null ||
+                                        (
+                                            installment.status ??
+                                            ""
+                                        )
+                                            .toLowerCase()
+                                            .includes("pago");
+
+                                    await tx.paymentInstallment.create({
+                                        data: {
+                                            paymentMethodItemId:
+                                                methodItem.id,
+
+                                            sequence:
+                                                installment.sequence,
+
+                                            amount:
+                                                installment.installmentAmount,
+
+                                            paidAmount:
+                                                paid
+                                                    ? installment.installmentAmount
+                                                    : 0,
+
+                                            dueDate:
+                                                installment.dueDate,
+
+                                            paidAt:
+                                                installment.paymentDate,
+
+                                            isActive:
+                                                true,
+
+                                            tenantId:
+                                                TENANT_ID,
+
+                                            branchId:
+                                                BRANCH_ID,
+                                        },
+                                    });
+                                }
+                            }
+
+                            return createdSale;
+                        },
+                    );
+
+                created++;
+
+                appendMapping({
+                    oldId: sale.oldId,
+                    newId: createdSale.id,
+                    status: "CREATED",
+                });
+
+                totalItems +=
+                    sale.items.length;
+
+                totalSubtotal +=
+                    sale.subtotal;
+
+                totalDiscount +=
+                    sale.discount;
+
+                totalSales +=
+                    sale.total;
+
+                totalPaid +=
+                    sale.paidAmount;
+
+                writeLog(
+                    `CREATED venda antiga=${sale.oldId} ` +
+                    `nova=${createdSale.id}`,
                 );
             } catch (error) {
                 const message =
@@ -700,48 +1046,66 @@ async function main(): Promise<void> {
                 });
 
                 writeLog(
-                    `ERROR venda ${sale.oldId}: ${message}`,
+                    `ERROR venda=${sale.oldId}: ${message}`,
                 );
             }
         }
 
+        /*
+         * Mapping só substitui o anterior se
+         * toda a execução estiver livre de ERROR.
+         *
+         * PENDING não impede o mapping.
+         */
         if (errors.length === 0) {
             finalizeMapping();
         } else {
             discardTempMapping();
         }
 
-        totalPaid = sources.reduce(
-            (sum, source) =>
-                sum +
-                calculatePaidAmount(
-                    convertSale(source),
-                ),
-            0,
+        writePendingReport(
+            pending,
         );
 
-        writePendingReport(pending);
-        writeErrorReport(errors);
+        writeErrorReport(
+            errors,
+        );
 
         writeExecutionReport({
-            migration: "04-sale",
-            dryRun: DRY_RUN,
+            migration:
+                "04-sale",
+
             executedAt:
                 new Date().toISOString(),
 
-            total: sources.length,
+            dryRun:
+                DRY_RUN,
+
+            total:
+                sources.length,
 
             created,
             existing,
 
-            pending: pending.length,
-            errors: errors.length,
+            pending:
+                pending.length,
+
+            errors:
+                errors.length,
 
             totalItems,
-            subtotal: totalSubtotal,
-            discount: totalDiscount,
-            salesTotal: totalSales,
-            paidAmount: totalPaid,
+
+            subtotal:
+                totalSubtotal,
+
+            discount:
+                totalDiscount,
+
+            salesTotal:
+                totalSales,
+
+            paidAmount:
+                totalPaid,
 
             financialInconsistencies,
 
@@ -750,22 +1114,30 @@ async function main(): Promise<void> {
         });
 
         writeLog(
-            `Migration finalizada | total=${sources.length} ` +
-            `created=${created} existing=${existing} ` +
-            `pending=${pending.length} errors=${errors.length}`,
+            `Finalizada migration 04-sale | ` +
+            `total=${sources.length} ` +
+            `created=${created} ` +
+            `existing=${existing} ` +
+            `pending=${pending.length} ` +
+            `errors=${errors.length}`,
         );
+    } catch (error) {
+        discardTempMapping();
+
+        writeLog(
+            `FATAL: ${error instanceof Error
+                ? error.stack ??
+                error.message
+                : String(error)
+            }`,
+        );
+
+        throw error;
     } finally {
         await prisma.$disconnect();
     }
 }
 
-main().catch((error) => {
-    writeLog(
-        `FATAL: ${error instanceof Error
-            ? error.stack ?? error.message
-            : String(error)
-        }`,
-    );
-
+main().catch(() => {
     process.exit(1);
 });

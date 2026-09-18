@@ -2,6 +2,25 @@
 
 import { SaleSource } from "../loaders/atendimento.loader";
 
+export interface SaleItemConverted {
+    oldProductId: number;
+    quantity: number;
+    totalPartial: number;
+    discount: number;
+    totalGeneral: number;
+    observation: string | null;
+}
+
+export interface CarneInstallmentConverted {
+    oldId: number;
+    installments: number;
+    installmentAmount: number;
+    dueDate: Date | null;
+    sequence: number;
+    status: string | null;
+    paymentDate: Date | null;
+}
+
 export interface SaleConverted {
     oldId: number;
     oldClientId: number | null;
@@ -16,19 +35,18 @@ export interface SaleConverted {
 
     entryAmount: number;
 
-    installments: number;
+    items: SaleItemConverted[];
 
-    items: Record<string, string>[];
+    carne: CarneInstallmentConverted[];
 
-    carne: {
-        id: number;
-        installments: number;
-        installmentAmount: number;
-        dueDate: Date | null;
-        installmentNumber: number;
-        status: string | null;
-        paymentDate: Date | null;
-    }[];
+    subtotal: number;
+    discount: number;
+    total: number;
+    legacyItemsTotal: number;
+
+    paidAmount: number;
+    installmentsPaid: number;
+    lastPaymentAt: Date | null;
 
     source: SaleSource;
 }
@@ -46,28 +64,45 @@ function parseMoney(
         return 0;
     }
 
+    let parsed = normalized;
+
     /*
-     * Legacy Access uses Brazilian monetary formatting:
+     * Aceita:
+     * 700.00
+     * 40,00
      * 1.234,56
-     * 960,00
-     * 0,00
      */
-    const parsed = normalized
-        .replace(/\./g, "")
-        .replace(",", ".")
-        .replace(/[^\d.-]/g, "");
+    if (
+        parsed.includes(",") &&
+        parsed.includes(".")
+    ) {
+        parsed = parsed
+            .replace(/\./g, "")
+            .replace(",", ".");
+    } else if (parsed.includes(",")) {
+        parsed = parsed.replace(",", ".");
+    }
 
-    const number = Number(parsed);
+    const number = Number(
+        parsed.replace(/[^\d.-]/g, ""),
+    );
 
-    return Number.isFinite(number) ? number : 0;
+    return Number.isFinite(number)
+        ? number
+        : 0;
 }
 
 function parseInteger(
     value: string | undefined | null,
 ): number {
-    const number = Number.parseInt(clean(value), 10);
+    const number = Number.parseInt(
+        clean(value),
+        10,
+    );
 
-    return Number.isFinite(number) ? number : 0;
+    return Number.isFinite(number)
+        ? number
+        : 0;
 }
 
 function parseDate(
@@ -80,8 +115,7 @@ function parseDate(
     }
 
     /*
-     * Dates from the legacy database may appear as:
-     *
+     * Formato legado:
      * 10-Feb-15
      * 23-Sep-16
      * 09-Apr-22
@@ -111,7 +145,8 @@ function parseDate(
         dec: 11,
     };
 
-    const month = months[match[2].toLowerCase()];
+    const month =
+        months[match[2].toLowerCase()];
 
     if (month === undefined) {
         return null;
@@ -119,13 +154,13 @@ function parseDate(
 
     let year = Number(match[3]);
 
+    /*
+     * Regra definida para a migration:
+     *
+     * 00–25 -> 2000–2025
+     * 26–99 -> 1926–1999
+     */
     if (year < 100) {
-        /*
-         * Regra definida para a migration:
-         *
-         * 00–25 -> 2000–2025
-         * 26–99 -> 1926–1999
-         */
         year =
             year <= 25
                 ? 2000 + year
@@ -150,50 +185,101 @@ function parseDate(
 }
 
 function normalizePaymentMethod(
-    value: string | undefined | null,
+    value: string | null,
 ): string | null {
-    const normalized = clean(value);
-
-    if (!normalized) {
-        return null;
-    }
-
-    return normalized.toUpperCase();
-}
-
-function normalizePaymentStatus(
-    value: string | undefined | null,
-): string | null {
-    const normalized = clean(value);
+    const normalized =
+        clean(value).toUpperCase();
 
     return normalized || null;
 }
 
-function convertCarne(source: SaleSource) {
-    return source.carne.map((parcela) => ({
-        id: parseInteger(parcela.carId),
+function isPaidInstallment(
+    status: string | null,
+    paymentDate: Date | null,
+): boolean {
+    /*
+     * A existência da data de pagamento é
+     * o indicador mais confiável.
+     *
+     * O status também é considerado para
+     * cobrir registros onde a data não foi
+     * preenchida.
+     */
+    if (paymentDate) {
+        return true;
+    }
+
+    if (!status) {
+        return false;
+    }
+
+    const normalized =
+        status.toLowerCase();
+
+    return (
+        normalized.includes("pago") ||
+        normalized.includes("quitado") ||
+        normalized.includes("conclu")
+    );
+}
+
+function convertItems(
+    source: SaleSource,
+): SaleItemConverted[] {
+    return source.itens.map((item) => ({
+        oldProductId: parseInteger(
+            item.itemProduto,
+        ),
+
+        quantity: parseInteger(
+            item.itemQtd,
+        ),
+
+        totalPartial: parseMoney(
+            item.itemTotalParcial,
+        ),
+
+        discount: parseMoney(
+            item.itemDesc,
+        ),
+
+        totalGeneral: parseMoney(
+            item.itemTotalGeral,
+        ),
+
+        observation:
+            clean(item.itemObs) || null,
+    }));
+}
+
+function convertCarne(
+    source: SaleSource,
+): CarneInstallmentConverted[] {
+    return source.carne.map((item) => ({
+        oldId: parseInteger(item.carId),
 
         installments: parseInteger(
-            parcela.carParcelas,
+            item.carParcelas,
         ),
 
         installmentAmount: parseMoney(
-            parcela.carValorParcela,
+            item.carValorParcela,
         ),
 
         dueDate: parseDate(
-            parcela.carVencimento,
+            item.carVencimento,
         ),
 
-        installmentNumber: parseInteger(
-            parcela.carNumeroParcela,
+        sequence: parseInteger(
+            item.carNumeroParcela,
         ),
 
         status:
-            clean(parcela.carParcelaStatus) || null,
+            clean(item.carParcelaStatus) ||
+            null,
 
         paymentDate: parseDate(
-            parcela.carDataPagamento,
+            item.carDataPagamento,
         ),
     }));
 }
@@ -201,14 +287,127 @@ function convertCarne(source: SaleSource) {
 export function convertSale(
     source: SaleSource,
 ): SaleConverted {
-    const atendimento = source.atendimento;
+    const atendimento =
+        source.atendimento;
+
+    const items =
+        convertItems(source);
+
+    const carne =
+        convertCarne(source);
+
+    const subtotal = items.reduce(
+        (sum, item) =>
+            sum + item.totalPartial,
+        0,
+    );
+
+    const discount = items.reduce(
+        (sum, item) =>
+            sum + item.discount,
+        0,
+    );
+
+    const total =
+        subtotal - discount;
+
+    const legacyItemsTotal =
+        items.reduce(
+            (sum, item) =>
+                sum + item.totalGeneral,
+            0,
+        );
+
+    const paidCarne =
+        carne.reduce(
+            (sum, installment) =>
+                sum +
+                (isPaidInstallment(
+                    installment.status,
+                    installment.paymentDate,
+                )
+                    ? installment.installmentAmount
+                    : 0),
+            0,
+        );
+
+    const installmentsPaid =
+        carne.filter((installment) =>
+            isPaidInstallment(
+                installment.status,
+                installment.paymentDate,
+            ),
+        ).length;
+
+    const paymentMethod =
+        normalizePaymentMethod(
+            atendimento.ateFormaPagamento,
+        );
+
+    const isCarne =
+        paymentMethod === "CARNÊ" ||
+        paymentMethod === "CARNE";
+
+    const paymentStatus =
+        clean(atendimento.atePago) ||
+        null;
+
+    const isPaidByStatus =
+        paymentStatus
+            ?.toLowerCase()
+            .includes("pago com sucesso") ??
+        false;
+
+    const paidAmount = isCarne
+        ? atendimento.ateEntrada
+            ? parseMoney(
+                atendimento.ateEntrada,
+            ) + paidCarne
+            : paidCarne
+        : isPaidByStatus
+            ? total
+            : parseMoney(
+                atendimento.ateEntrada,
+            );
+
+    const paymentDates =
+        carne
+            .map(
+                (installment) =>
+                    installment.paymentDate,
+            )
+            .filter(
+                (date): date is Date =>
+                    date !== null,
+            );
+
+    const lastPaymentAt =
+        paymentDates.length > 0
+            ? new Date(
+                Math.max(
+                    ...paymentDates.map(
+                        (date) =>
+                            date.getTime(),
+                    ),
+                ),
+            )
+            : isPaidByStatus
+                ? parseDate(
+                    atendimento.ateDataCompra,
+                )
+                : null;
 
     return {
-        oldId: parseInteger(atendimento.ateId),
+        oldId: parseInteger(
+            atendimento.ateId,
+        ),
 
-        oldClientId: atendimento.ateCliente
-            ? parseInteger(atendimento.ateCliente)
-            : null,
+        oldClientId:
+            clean(atendimento.ateCliente)
+                ? parseInteger(
+                    atendimento.ateCliente,
+                )
+                : null,
 
         saleDate: parseDate(
             atendimento.ateDataCompra,
@@ -222,32 +421,44 @@ export function convertSale(
             atendimento.ateTotal,
         ),
 
-        paymentMethod: normalizePaymentMethod(
-            atendimento.ateFormaPagamento,
-        ),
+        paymentMethod,
 
-        paymentStatus: normalizePaymentStatus(
-            atendimento.atePago,
-        ),
+        paymentStatus,
 
         entryAmount: parseMoney(
             atendimento.ateEntrada,
         ),
 
-        installments: source.carne.length
-            ? Math.max(
-                ...source.carne.map((parcela) =>
-                    parseInteger(
-                        parcela.carNumeroParcela,
-                    ),
-                ),
-            )
-            : 0,
+        items,
 
-        items: source.itens,
+        carne,
 
-        carne: convertCarne(source),
+        subtotal,
+
+        discount,
+
+        total,
+
+        legacyItemsTotal,
+
+        paidAmount,
+
+        installmentsPaid,
+
+        lastPaymentAt,
 
         source,
     };
+}
+
+export function isCarnePayment(
+    paymentMethod: string | null,
+): boolean {
+    const normalized =
+        clean(paymentMethod).toUpperCase();
+
+    return (
+        normalized === "CARNÊ" ||
+        normalized === "CARNE"
+    );
 }

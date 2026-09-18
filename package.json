@@ -37,7 +37,7 @@
     "@types/express": "^5.0.5",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.13.5",
     "prisma": "^6.16.3",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.16",

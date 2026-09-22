@@ -1,7 +1,7 @@
 //migrations/oticacrista/08-2026/mapping/product.mapping.ts
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 export interface ProductMapping {
     oldId: number;

@@ -1,8 +1,8 @@
 // migrations/oticacrista/08-2026/02-product.ts
 
-import fs from "fs";
-import path from "path";
-import readline from "readline";
+import fs from "node:fs";
+import path from "node:path";
+import readline from "node:readline";
 
 import { prisma } from "../../../src/config/prisma";
 

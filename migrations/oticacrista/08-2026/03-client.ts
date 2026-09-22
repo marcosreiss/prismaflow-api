@@ -1,7 +1,7 @@
 // migrations/oticacrista/08-2026/03-client.ts
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import {
     Client,
     PrismaClient,

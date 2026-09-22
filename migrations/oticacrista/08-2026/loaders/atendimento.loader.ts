@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export interface AtendimentoCsv {
+export interface AtendimentoCsv extends Record<string, string> {
     ateId: string;
     ateColaborador: string;
     ateCliente: string;
@@ -15,7 +15,7 @@ export interface AtendimentoCsv {
     ateEntrada: string;
 }
 
-export interface CarneCsv {
+export interface CarneCsv extends Record<string, string> {
     carId: string;
     carAtendimento: string;
     carParcelas: string;
@@ -26,9 +26,7 @@ export interface CarneCsv {
     carDataPagamento: string;
 }
 
-export interface ItemAtendimentoCsv {
-    [key: string]: string;
-}
+export interface ItemAtendimentoCsv extends Record<string, string> { }
 
 export interface SaleSource {
     atendimento: AtendimentoCsv;

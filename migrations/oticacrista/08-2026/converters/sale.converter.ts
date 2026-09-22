@@ -66,20 +66,16 @@ function parseMoney(
 
     let parsed = normalized;
 
-    /*
-     * Aceita:
-     * 700.00
-     * 40,00
-     * 1.234,56
-     */
-    if (
-        parsed.includes(",") &&
-        parsed.includes(".")
-    ) {
-        parsed = parsed
-            .replace(/\./g, "")
-            .replace(",", ".");
+    if (parsed.includes(",") && parsed.includes(".")) {
+        // Se a vírgula vem ANTES do ponto (ex: 1,100.00 -> americano)
+        if (parsed.indexOf(",") < parsed.indexOf(".")) {
+            parsed = parsed.replace(/,/g, ""); // Apenas remove as vírgulas de milhar
+        } else {
+            // Se o ponto vem ANTES da vírgula (ex: 1.100,00 -> brasileiro)
+            parsed = parsed.replace(/\./g, "").replace(",", ".");
+        }
     } else if (parsed.includes(",")) {
+        // Apenas vírgula (ex: 40,00)
         parsed = parsed.replace(",", ".");
     }
 

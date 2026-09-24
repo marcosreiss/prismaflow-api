@@ -1,109 +1,13 @@
 {
   "pending": [
     {
-      "oldId": "9",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "25",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "35",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
       "oldId": "46",
       "name": null,
       "status": "PENDING",
       "reason": "cliPessoa não possui correspondente em pessoa.csv."
     },
     {
-      "oldId": "49",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
       "oldId": "76",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "79",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "84",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "136",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "137",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "154",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "157",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "193",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "215",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "224",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "245",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "288",
-      "name": null,
-      "status": "PENDING",
-      "reason": "cliPessoa não possui correspondente em pessoa.csv."
-    },
-    {
-      "oldId": "303",
       "name": null,
       "status": "PENDING",
       "reason": "cliPessoa não possui correspondente em pessoa.csv."

@@ -23,7 +23,7 @@ ateId,ateColaborador,ateCliente,ateDataCompra,ateDataVencimento,ateTotal,atePago
 10045,,28,14-Jun-16,,"1015,00",Pago com sucesso em dinheiro,DINHEIRO,"0,00"
 10046,2,38,28-Nov-16,05-Jan-17,"690,00",Carnê concluído,CARNÊ,"0,00"
 10047,2,39,07-Jul-16,23-Jan-17,"580,00",Carnê concluído,CARNÊ,"464,00"
-10048,2,41,27-May-16,01-Feb-17,"1250,00",Carnê concluído,CARNÊ,"650,00"
+10048,2,740,27-May-16,01-Feb-17,"1250,00",Carnê concluído,CARNÊ,"650,00"
 10049,2,42,12-Jan-16,18-Jan-16,"600,00",Carnê concluído,CARNÊ,"0,00"
 10050,2,43,30-Oct-15,17-Apr-16,"1200,00",Carnê concluído,CARNÊ,"1000,00"
 10051,2,44,29-Oct-15,12-Aug-16,"1600,00",Carnê concluído,CARNÊ,"1000,00"

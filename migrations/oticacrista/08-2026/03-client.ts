@@ -1,7 +1,3 @@
-// migrations/oticacrista/08-2026/03-client.ts
-
-import fs from "node:fs";
-import path from "node:path";
 import {
     Client,
     PrismaClient,
@@ -10,15 +6,37 @@ import {
 import {
     loadClientSources,
     type ClientSource,
+    type OrphanClient,
+    type OrphanPessoa,
 } from "./loaders/pesCliente.loader";
 
 import {
     convertClient,
     normalizeCpf,
-    normalizeName,
-    normalizePhone,
-    normalizeRg,
 } from "./converters/client.converter";
+
+import {
+    convertOrphanClient,
+    convertOrphanPessoa,
+} from "./converters/orphan-client.converter";
+
+import {
+    createClient,
+} from "./service/client/client.persistence";
+
+import {
+    buildClientIndexes,
+} from "./service/client/client.index";
+
+import {
+    findClientMatch,
+} from "./service/client/client.matcher";
+
+import {
+    createTimestamp,
+    saveClientErrors,
+    saveClientExecution,
+} from "./service/client/client.report";
 
 import {
     createTemporaryMappingFile,
@@ -41,516 +59,458 @@ const TENANT_ID =
 const BRANCH_ID =
     "cmibvcyed00017m014r66e39w";
 
-const DRY_RUN = false;
-
-const REPORTS_PATH = path.resolve(
-    __dirname,
-    "reports",
-);
-
-const ERRORS_PATH = path.join(
-    REPORTS_PATH,
-    "errors",
-);
-
-const EXECUTIONS_PATH = path.join(
-    REPORTS_PATH,
-    "executions",
-);
+const DRY_RUN = true;
 
 /* =========================================================
  * TIPOS
  * ========================================================= */
 
-interface ClientMatchResult {
-    client: Client | null;
-    matchedBy:
-    | "CPF"
-    | "RG"
-    | "BIRTH_DATE"
-    | "PHONE"
-    | "PENDING";
+interface MigrationCounters {
+    created: number;
+    existing: number;
+    pending: number;
+    errors: number;
 }
 
-interface ClientIndexes {
-    cpfIndex: Map<string, Client[]>;
-    rgIndex: Map<string, Client[]>;
-    birthDateIndex: Map<string, Client[]>;
-    phoneIndex: Map<string, Client[]>;
+interface MigrationReports {
+    pending: unknown[];
+    errors: unknown[];
 }
 
 /* =========================================================
- * RELATÓRIOS
+ * HELPERS
  * ========================================================= */
 
-function createTimestamp(): string {
-    return new Date()
-        .toISOString()
-        .replace(/[:.]/g, "-");
-}
-
-function saveJson(
-    directory: string,
-    filename: string,
-    data: unknown,
-): void {
-    fs.mkdirSync(
-        directory,
-        { recursive: true },
-    );
-
-    fs.writeFileSync(
-        path.join(
-            directory,
-            filename,
-        ),
-        JSON.stringify(
-            data,
-            null,
-            2,
-        ),
-        "utf-8",
-    );
-}
-
-/* =========================================================
- * INDEXAÇÃO
- * ========================================================= */
-
-function buildKey(
-    name: string,
-    value: string,
-): string {
-    return `${normalizeName(name)}|${value}`;
-}
-
-function addToIndex(
-    index: Map<string, Client[]>,
-    key: string,
-    client: Client,
-): void {
-    const current =
-        index.get(key);
-
-    if (current) {
-        current.push(client);
-    } else {
-        index.set(
-            key,
-            [client],
-        );
-    }
-}
-
-function normalizeDate(
-    value: Date | null,
-): string | null {
-    if (!value) {
-        return null;
+function hasCpfConflict(
+    convertedCpf: string | null,
+    existingClients: Client[],
+): boolean {
+    if (!convertedCpf) {
+        return false;
     }
 
-    return value
-        .toISOString()
-        .slice(0, 10);
-}
-
-function buildClientIndexes(
-    clients: Client[],
-): ClientIndexes {
-    const cpfIndex =
-        new Map<string, Client[]>();
-
-    const rgIndex =
-        new Map<string, Client[]>();
-
-    const birthDateIndex =
-        new Map<string, Client[]>();
-
-    const phoneIndex =
-        new Map<string, Client[]>();
-
-    for (const client of clients) {
-        if (client.cpf) {
-            const cpf =
-                normalizeCpf(
-                    client.cpf,
-                );
-
-            if (cpf) {
-                addToIndex(
-                    cpfIndex,
-                    buildKey(
-                        client.name,
-                        cpf,
-                    ),
-                    client,
-                );
-            }
-        }
-
-        if (client.rg) {
-            const rg =
-                normalizeRg(
-                    client.rg,
-                );
-
-            if (rg) {
-                addToIndex(
-                    rgIndex,
-                    buildKey(
-                        client.name,
-                        rg,
-                    ),
-                    client,
-                );
-            }
-        }
-
-        if (client.bornDate) {
-            const date =
-                normalizeDate(
-                    client.bornDate,
-                );
-
-            if (date) {
-                addToIndex(
-                    birthDateIndex,
-                    buildKey(
-                        client.name,
-                        date,
-                    ),
-                    client,
-                );
-            }
-        }
-
-        for (const phone of [
-            client.phone01,
-            client.phone02,
-            client.phone03,
-        ]) {
-            const normalized =
-                normalizePhone(
-                    phone,
-                );
-
-            if (!normalized) {
-                continue;
-            }
-
-            addToIndex(
-                phoneIndex,
-                buildKey(
-                    client.name,
-                    normalized,
-                ),
-                client,
-            );
-        }
-    }
-
-    return {
-        cpfIndex,
-        rgIndex,
-        birthDateIndex,
-        phoneIndex,
-    };
-}
-
-/* =========================================================
- * MATCHING
- * ========================================================= */
-
-function findUnique(
-    candidates:
-        | Client[]
-        | undefined,
-): Client | null {
-    if (
-        !candidates ||
-        candidates.length !== 1
-    ) {
-        return null;
-    }
-
-    return candidates[0];
-}
-
-function findMatch(
-    source: ClientSource,
-    indexes: ClientIndexes,
-): ClientMatchResult {
-    const {
-        pessoa,
-        cliente,
-    } = source;
-
-    const name =
-        normalizeName(
-            pessoa.pesNome,
-        );
-
-    if (!name) {
-        return {
-            client: null,
-            matchedBy: "PENDING",
-        };
-    }
-
-    /*
-     * 1. NOME + CPF
-     */
     const cpf =
-        normalizeCpf(
-            pessoa.pesDoc,
-        );
+        normalizeCpf(convertedCpf);
 
-    if (cpf) {
-        const candidates =
-            indexes.cpfIndex.get(
-                buildKey(
-                    pessoa.pesNome,
-                    cpf,
-                ),
-            );
-
-        const client =
-            findUnique(
-                candidates,
-            );
-
-        if (client) {
-            return {
-                client,
-                matchedBy: "CPF",
-            };
-        }
-
-        if (
-            candidates &&
-            candidates.length > 1
-        ) {
-            return {
-                client: null,
-                matchedBy: "PENDING",
-            };
-        }
+    if (!cpf) {
+        return false;
     }
 
-    /*
-     * 2. NOME + RG
-     */
-    const rg =
-        normalizeRg(
-            cliente.cliRg,
-        );
+    return existingClients.some(
+        (client) =>
+            normalizeCpf(client.cpf) ===
+            cpf,
+    );
+}
 
-    if (rg) {
-        const candidates =
-            indexes.rgIndex.get(
-                buildKey(
-                    pessoa.pesNome,
-                    rg,
-                ),
-            );
+function addPending(
+    reports: MigrationReports,
+    record: unknown,
+): void {
+    reports.pending.push(record);
+}
 
-        const client =
-            findUnique(
-                candidates,
-            );
+function addError(
+    reports: MigrationReports,
+    record: unknown,
+): void {
+    reports.errors.push(record);
+}
 
-        if (client) {
-            return {
-                client,
-                matchedBy: "RG",
-            };
-        }
+async function persistClient(
+    converted: ReturnType<typeof convertClient>,
+    oldId: string,
+    oldName: string,
+    indexes: ReturnType<
+        typeof buildClientIndexes
+    >,
+    mapping: Map<string, number>,
+    counters: MigrationCounters,
+): Promise<Client> {
+    const client =
+        await createClient({
+            prisma,
+            data: converted,
+            tenantId: TENANT_ID,
+            branchId: BRANCH_ID,
+            indexes,
+        });
 
-        if (
-            candidates &&
-            candidates.length > 1
-        ) {
-            return {
-                client: null,
-                matchedBy: "PENDING",
-            };
-        }
-    }
+    appendTemporaryMapping({
+        oldId,
+        newId: client.id,
+        status: "CREATED",
+        oldName,
+        newName: client.name,
+        matchedBy: "CREATE",
+    });
 
-    /*
-     * 3. NOME + DATA DE NASCIMENTO
-     */
-    const converted =
-        convertClient(source);
+    mapping.set(
+        oldId,
+        client.id,
+    );
 
-    const birthDate =
-        normalizeDate(
-            converted.bornDate,
-        );
+    counters.created++;
 
-    if (birthDate) {
-        const candidates =
-            indexes.birthDateIndex.get(
-                buildKey(
-                    pessoa.pesNome,
-                    birthDate,
-                ),
-            );
+    console.log(
+        `✓ CREATED | ${client.name} | new_id=${client.id}`,
+    );
 
-        const client =
-            findUnique(
-                candidates,
-            );
-
-        if (client) {
-            return {
-                client,
-                matchedBy:
-                    "BIRTH_DATE",
-            };
-        }
-
-        if (
-            candidates &&
-            candidates.length > 1
-        ) {
-            return {
-                client: null,
-                matchedBy: "PENDING",
-            };
-        }
-    }
-
-    /*
-     * 4. NOME + CELULAR
-     */
-    const phone =
-        normalizePhone(
-            pessoa.pesCel,
-        );
-
-    if (phone) {
-        const candidates =
-            indexes.phoneIndex.get(
-                buildKey(
-                    pessoa.pesNome,
-                    phone,
-                ),
-            );
-
-        const client =
-            findUnique(
-                candidates,
-            );
-
-        if (client) {
-            return {
-                client,
-                matchedBy: "PHONE",
-            };
-        }
-
-        if (
-            candidates &&
-            candidates.length > 1
-        ) {
-            return {
-                client: null,
-                matchedBy: "PENDING",
-            };
-        }
-    }
-
-    return {
-        client: null,
-        matchedBy: "PENDING",
-    };
+    return client;
 }
 
 /* =========================================================
- * INDEXAÇÃO DINÂMICA
+ * CLIENTES RELACIONADOS
  * ========================================================= */
 
-function addClientToIndexes(
-    client: Client,
-    indexes: ClientIndexes,
-): void {
-    if (client.cpf) {
-        const cpf =
-            normalizeCpf(
-                client.cpf,
-            );
+async function processSource(
+    source: ClientSource,
+    index: number,
+    total: number,
+    existingClients: Client[],
+    indexes: ReturnType<
+        typeof buildClientIndexes
+    >,
+    mapping: Map<string, number>,
+    reports: MigrationReports,
+    counters: MigrationCounters,
+): Promise<void> {
+    const oldId =
+        source.cliente.cliPessoa;
 
-        if (cpf) {
-            addToIndex(
-                indexes.cpfIndex,
-                buildKey(
-                    client.name,
-                    cpf,
-                ),
-                client,
-            );
-        }
-    }
+    const oldName =
+        source.pessoa.pesNome;
 
-    if (client.rg) {
-        const rg =
-            normalizeRg(
-                client.rg,
-            );
+    console.log(
+        `\n[${index}/${total}] ${oldName}`,
+    );
 
-        if (rg) {
-            addToIndex(
-                indexes.rgIndex,
-                buildKey(
-                    client.name,
-                    rg,
-                ),
-                client,
-            );
-        }
-    }
-
-    if (client.bornDate) {
-        const date =
-            normalizeDate(
-                client.bornDate,
-            );
-
-        if (date) {
-            addToIndex(
-                indexes.birthDateIndex,
-                buildKey(
-                    client.name,
-                    date,
-                ),
-                client,
-            );
-        }
-    }
-
-    for (const phone of [
-        client.phone01,
-        client.phone02,
-        client.phone03,
-    ]) {
-        const normalized =
-            normalizePhone(
-                phone,
-            );
-
-        if (!normalized) {
-            continue;
-        }
-
-        addToIndex(
-            indexes.phoneIndex,
-            buildKey(
-                client.name,
-                normalized,
-            ),
-            client,
+    if (mapping.has(oldId)) {
+        console.log(
+            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
         );
+
+        counters.existing++;
+        return;
+    }
+
+    try {
+        const converted =
+            convertClient(source);
+
+        const match =
+            findClientMatch(
+                source,
+                indexes,
+            );
+
+        if (match.client) {
+            console.log(
+                `✓ EXISTING | ${converted.name} | matchedBy=${match.matchedBy} | new_id=${match.client.id}`,
+            );
+
+            if (!DRY_RUN) {
+                appendTemporaryMapping({
+                    oldId,
+                    newId: match.client.id,
+                    status: "EXISTING",
+                    oldName,
+                    newName:
+                        match.client.name,
+                    matchedBy:
+                        match.matchedBy,
+                });
+            }
+
+            mapping.set(
+                oldId,
+                match.client.id,
+            );
+
+            counters.existing++;
+            return;
+        }
+
+        if (
+            hasCpfConflict(
+                converted.cpf,
+                existingClients,
+            )
+        ) {
+            addPending(
+                reports,
+                {
+                    oldId,
+                    name: converted.name,
+                    status: "PENDING",
+                    reason:
+                        "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+                    cpf: converted.cpf,
+                },
+            );
+
+            console.log(
+                `→ PENDING | CPF em conflito | ${converted.name}`,
+            );
+
+            counters.pending++;
+            return;
+        }
+
+        if (!DRY_RUN) {
+            await persistClient(
+                converted,
+                oldId,
+                oldName,
+                indexes,
+                mapping,
+                counters,
+            );
+
+            return;
+        }
+
+        console.log(
+            `→ CREATE [DRY_RUN] | ${converted.name}`,
+        );
+
+        counters.created++;
+    } catch (error) {
+        counters.errors++;
+
+        const record = {
+            oldId,
+            name: oldName,
+            status: "ERROR",
+            error:
+                error instanceof Error
+                    ? error.message
+                    : String(error),
+        };
+
+        addError(
+            reports,
+            record,
+        );
+
+        console.error(
+            `✗ ERROR | ${oldName}`,
+        );
+
+        console.error(error);
+    }
+}
+
+/* =========================================================
+ * PESCLIENTE SEM PESSOA
+ * ========================================================= */
+
+async function processOrphanClient(
+    orphan: OrphanClient,
+    index: number,
+    total: number,
+    indexes: ReturnType<
+        typeof buildClientIndexes
+    >,
+    mapping: Map<string, number>,
+    reports: MigrationReports,
+    counters: MigrationCounters,
+): Promise<void> {
+    const oldId =
+        orphan.cliente.cliPessoa;
+
+    console.log(
+        `\n[ÓRFÃO PESCLIENTE ${index}/${total}] cliPessoa=${oldId}`,
+    );
+
+    if (mapping.has(oldId)) {
+        console.log(
+            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
+        );
+
+        counters.existing++;
+        return;
+    }
+
+    try {
+        const converted =
+            convertOrphanClient(
+                orphan,
+            );
+
+        if (!DRY_RUN) {
+            const client =
+                await createClient({
+                    prisma,
+                    data: converted,
+                    tenantId: TENANT_ID,
+                    branchId: BRANCH_ID,
+                    indexes,
+                });
+
+            appendTemporaryMapping({
+                oldId,
+                newId: client.id,
+                status: "CREATED",
+                oldName:
+                    `PESCLIENTE ${oldId}`,
+                newName: client.name,
+                matchedBy:
+                    "ORPHAN_PESCLIENTE",
+            });
+
+            mapping.set(
+                oldId,
+                client.id,
+            );
+
+            counters.created++;
+
+            console.log(
+                `✓ CREATED ORPHAN | ${client.name} | new_id=${client.id}`,
+            );
+
+            return;
+        }
+
+        console.log(
+            `→ CREATE ORPHAN [DRY_RUN] | ${converted.name}`,
+        );
+
+        counters.created++;
+    } catch (error) {
+        counters.errors++;
+
+        const record = {
+            oldId,
+            name:
+                `PESCLIENTE ${oldId}`,
+            status: "ERROR",
+            orphanType:
+                "PESCLIENTE_WITHOUT_PESSOA",
+            error:
+                error instanceof Error
+                    ? error.message
+                    : String(error),
+        };
+
+        addError(
+            reports,
+            record,
+        );
+
+        console.error(
+            `✗ ERROR ORPHAN | cliPessoa=${oldId}`,
+        );
+
+        console.error(error);
+    }
+}
+
+/* =========================================================
+ * PESSOA SEM PESCLIENTE
+ * ========================================================= */
+
+async function processOrphanPessoa(
+    orphan: OrphanPessoa,
+    index: number,
+    total: number,
+    indexes: ReturnType<
+        typeof buildClientIndexes
+    >,
+    mapping: Map<string, number>,
+    reports: MigrationReports,
+    counters: MigrationCounters,
+): Promise<void> {
+    const oldId =
+        orphan.pessoa.pesId;
+
+    const oldName =
+        orphan.pessoa.pesNome;
+
+    console.log(
+        `\n[ÓRFÃO PESSOA ${index}/${total}] ${oldName}`,
+    );
+
+    if (mapping.has(oldId)) {
+        console.log(
+            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
+        );
+
+        counters.existing++;
+        return;
+    }
+
+    try {
+        const converted =
+            convertOrphanPessoa(
+                orphan,
+            );
+
+        if (!DRY_RUN) {
+            const client =
+                await createClient({
+                    prisma,
+                    data: converted,
+                    tenantId: TENANT_ID,
+                    branchId: BRANCH_ID,
+                    indexes,
+                });
+
+            appendTemporaryMapping({
+                oldId,
+                newId: client.id,
+                status: "CREATED",
+                oldName,
+                newName: client.name,
+                matchedBy:
+                    "ORPHAN_PESSOA",
+            });
+
+            mapping.set(
+                oldId,
+                client.id,
+            );
+
+            counters.created++;
+
+            console.log(
+                `✓ CREATED ORPHAN | ${client.name} | new_id=${client.id}`,
+            );
+
+            return;
+        }
+
+        console.log(
+            `→ CREATE ORPHAN [DRY_RUN] | ${converted.name}`,
+        );
+
+        counters.created++;
+    } catch (error) {
+        counters.errors++;
+
+        const record = {
+            oldId,
+            name: oldName,
+            status: "ERROR",
+            orphanType:
+                "PESSOA_WITHOUT_PESCLIENTE",
+            error:
+                error instanceof Error
+                    ? error.message
+                    : String(error),
+        };
+
+        addError(
+            reports,
+            record,
+        );
+
+        console.error(
+            `✗ ERROR ORPHAN | ${oldName}`,
+        );
+
+        console.error(error);
     }
 }
 
@@ -565,21 +525,27 @@ async function main(): Promise<void> {
     console.log(
         "\n========================================",
     );
+
     console.log(
         "MIGRAÇÃO DE CLIENTES",
     );
+
     console.log(
         "========================================",
     );
+
     console.log(
         `DRY_RUN: ${DRY_RUN}`,
     );
+
     console.log(
         `Tenant: ${TENANT_ID}`,
     );
+
     console.log(
         `Branch: ${BRANCH_ID}`,
     );
+
     console.log(
         "========================================\n",
     );
@@ -587,15 +553,19 @@ async function main(): Promise<void> {
     const {
         sources,
         orphanClients,
-    } =
-        loadClientSources();
+        orphanPessoas,
+    } = loadClientSources();
 
     console.log(
         `Registros relacionados: ${sources.length}`,
     );
 
     console.log(
-        `Clientes sem pessoa: ${orphanClients.length}`,
+        `pesCliente sem pessoa: ${orphanClients.length}`,
+    );
+
+    console.log(
+        `pessoa sem pesCliente: ${orphanPessoas.length}`,
     );
 
     const existingClients =
@@ -621,280 +591,85 @@ async function main(): Promise<void> {
         createTemporaryMappingFile();
     }
 
-    const pendingRecords:
-        unknown[] = [];
+    const reports:
+        MigrationReports = {
+        pending: [],
+        errors: [],
+    };
 
-    const errors:
-        unknown[] = [];
-
-    let created = 0;
-    let existing = 0;
-    let pending =
-        orphanClients.length;
-    let errorCount = 0;
-
-    /*
-     * Registra clientes sem pessoa
-     * como PENDING.
-     */
-    for (const orphan of orphanClients) {
-        pendingRecords.push({
-            oldId:
-                orphan.cliente.cliPessoa,
-            name: null,
-            status: "PENDING",
-            reason: orphan.reason,
-        });
-    }
+    const counters:
+        MigrationCounters = {
+        created: 0,
+        existing: 0,
+        pending: 0,
+        errors: 0,
+    };
 
     /*
-     * Processamento dos clientes
+     * 1. Clientes que possuem
+     * pessoa + pesCliente.
      */
     for (
         let i = 0;
         i < sources.length;
         i++
     ) {
-        const source =
-            sources[i];
-
-        const oldId =
-            source.cliente.cliPessoa;
-
-        console.log(
-            `\n[${i + 1}/${sources.length}] ${source.pessoa.pesNome}`,
+        await processSource(
+            sources[i],
+            i + 1,
+            sources.length,
+            existingClients,
+            indexes,
+            mapping,
+            reports,
+            counters,
         );
+    }
 
-        if (mapping.has(oldId)) {
-            console.log(
-                `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
-            );
+    /*
+     * 2. pesCliente sem pessoa.
+     *
+     * Criamos um Client parcial para
+     * preservar o relacionamento das
+     * vendas futuras.
+     */
+    for (
+        let i = 0;
+        i < orphanClients.length;
+        i++
+    ) {
+        await processOrphanClient(
+            orphanClients[i],
+            i + 1,
+            orphanClients.length,
+            indexes,
+            mapping,
+            reports,
+            counters,
+        );
+    }
 
-            existing++;
-            continue;
-        }
-
-        try {
-            const converted =
-                convertClient(
-                    source,
-                );
-
-            const match =
-                findMatch(
-                    source,
-                    indexes,
-                );
-
-            if (match.client) {
-                console.log(
-                    `✓ EXISTING | ${converted.name} | matchedBy=${match.matchedBy} | new_id=${match.client.id}`,
-                );
-
-                if (!DRY_RUN) {
-                    appendTemporaryMapping({
-                        oldId,
-                        newId:
-                            match.client.id,
-                        status:
-                            "EXISTING",
-                        oldName:
-                            source.pessoa
-                                .pesNome,
-                        newName:
-                            match.client
-                                .name,
-                        matchedBy:
-                            match.matchedBy,
-                    });
-                }
-
-                mapping.set(
-                    oldId,
-                    match.client.id,
-                );
-
-                existing++;
-                continue;
-            }
-
-            /*
-             * CPF duplicado no banco:
-             * não criamos automaticamente.
-             */
-            if (converted.cpf) {
-                const cpf =
-                    normalizeCpf(
-                        converted.cpf,
-                    );
-
-                const cpfClients =
-                    existingClients.filter(
-                        (client) =>
-                            normalizeCpf(
-                                client.cpf,
-                            ) === cpf,
-                    );
-
-                if (
-                    cpfClients.length > 0
-                ) {
-                    pendingRecords.push({
-                        oldId,
-                        name:
-                            converted.name,
-                        status:
-                            "PENDING",
-                        reason:
-                            "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
-                        cpf:
-                            converted.cpf,
-                    });
-
-                    console.log(
-                        `→ PENDING | CPF em conflito | ${converted.name}`,
-                    );
-
-                    pending++;
-                    continue;
-                }
-            }
-
-            /*
-             * CREATE
-             */
-            if (!DRY_RUN) {
-                const createdClient =
-                    await prisma.client.create({
-                        data: {
-                            name:
-                                converted.name,
-                            nickname:
-                                converted.nickname,
-                            cpf:
-                                converted.cpf,
-                            rg:
-                                converted.rg,
-                            bornDate:
-                                converted.bornDate,
-                            gender:
-                                converted.gender,
-                            fatherName:
-                                converted.fatherName,
-                            motherName:
-                                converted.motherName,
-                            spouse:
-                                converted.spouse,
-                            email:
-                                converted.email,
-                            company:
-                                converted.company,
-                            occupation:
-                                converted.occupation,
-                            street:
-                                converted.street,
-                            number:
-                                converted.number,
-                            neighborhood:
-                                converted.neighborhood,
-                            city:
-                                converted.city,
-                            uf:
-                                converted.uf,
-                            cep:
-                                converted.cep,
-                            complement:
-                                converted.complement,
-                            isBlacklisted:
-                                converted.isBlacklisted,
-                            obs:
-                                converted.obs,
-                            phone01:
-                                converted.phone01,
-                            phone02:
-                                converted.phone02,
-                            phone03:
-                                converted.phone03,
-                            reference01:
-                                converted.reference01,
-                            reference02:
-                                converted.reference02,
-                            reference03:
-                                converted.reference03,
-                            isActive:
-                                true,
-                            tenantId:
-                                TENANT_ID,
-                            branchId:
-                                BRANCH_ID,
-                        },
-                    });
-
-                addClientToIndexes(
-                    createdClient,
-                    indexes,
-                );
-
-                appendTemporaryMapping({
-                    oldId,
-                    newId:
-                        createdClient.id,
-                    status: "CREATED",
-                    oldName:
-                        source.pessoa
-                            .pesNome,
-                    newName:
-                        createdClient.name,
-                    matchedBy:
-                        "CREATE",
-                });
-
-                mapping.set(
-                    oldId,
-                    createdClient.id,
-                );
-
-                created++;
-
-                console.log(
-                    `✓ CREATED | ${converted.name} | new_id=${createdClient.id}`,
-                );
-
-                continue;
-            }
-
-            /*
-             * DRY_RUN:
-             * apenas identifica o CREATE.
-             */
-            console.log(
-                `→ CREATE [DRY_RUN] | ${converted.name}`,
-            );
-
-            created++;
-        } catch (error) {
-            errorCount++;
-
-            const record = {
-                oldId,
-                name:
-                    source.pessoa
-                        .pesNome,
-                status: "ERROR",
-                error:
-                    error instanceof Error
-                        ? error.message
-                        : String(error),
-            };
-
-            errors.push(record);
-
-            console.error(
-                `✗ ERROR | ${source.pessoa.pesNome}`,
-            );
-
-            console.error(error);
-        }
+    /*
+     * 3. pessoa sem pesCliente.
+     *
+     * Criamos um Client utilizando
+     * somente os dados disponíveis
+     * em pessoa.csv.
+     */
+    for (
+        let i = 0;
+        i < orphanPessoas.length;
+        i++
+    ) {
+        await processOrphanPessoa(
+            orphanPessoas[i],
+            i + 1,
+            orphanPessoas.length,
+            indexes,
+            mapping,
+            reports,
+            counters,
+        );
     }
 
     const finishedAt =
@@ -904,9 +679,15 @@ async function main(): Promise<void> {
      * Mapping definitivo somente
      * quando não existem erros.
      */
+    let mappingSaved =
+        false;
+
     if (!DRY_RUN) {
-        if (errorCount === 0) {
+        if (
+            counters.errors === 0
+        ) {
             finalizeClientMapping();
+            mappingSaved = true;
         } else {
             discardTemporaryMapping();
 
@@ -917,81 +698,78 @@ async function main(): Promise<void> {
     }
 
     /*
-     * Relatório de PENDING / ERROR
+     * Relatório de PENDING / ERROR.
      */
-    if (
-        pendingRecords.length > 0 ||
-        errors.length > 0
-    ) {
-        saveJson(
-            ERRORS_PATH,
-            `03-client-errors-${createTimestamp()}.json`,
-            {
-                pending:
-                    pendingRecords,
-                errors,
-            },
-        );
-    }
+    saveClientErrors(
+        reports.pending,
+        reports.errors,
+    );
 
     /*
      * Relatório da execução.
      */
-    saveJson(
-        EXECUTIONS_PATH,
-        `03-client-${createTimestamp()}.json`,
-        {
-            migration:
-                "03-client",
-            tenantId:
-                TENANT_ID,
-            branchId:
-                BRANCH_ID,
-            dryRun:
-                DRY_RUN,
-            startedAt,
-            finishedAt,
-            durationMs:
-                finishedAt.getTime() -
-                startedAt.getTime(),
-            total:
-                sources.length +
-                orphanClients.length,
-            created,
-            existing,
-            pending,
-            errors:
-                errorCount,
-            mappingSaved:
-                errorCount === 0 &&
-                !DRY_RUN,
-        },
-    );
+    saveClientExecution({
+        migration: "03-client",
+        tenantId: TENANT_ID,
+        branchId: BRANCH_ID,
+        dryRun: DRY_RUN,
+        startedAt,
+        finishedAt,
+        total:
+            sources.length +
+            orphanClients.length +
+            orphanPessoas.length,
+        created: counters.created,
+        existing: counters.existing,
+        pending: counters.pending,
+        errors: counters.errors,
+        mappingSaved,
+    });
 
     console.log(
         "\n========================================",
     );
+
     console.log(
         "RESUMO",
     );
+
     console.log(
         "========================================",
     );
+
     console.log(
-        `Total:     ${sources.length + orphanClients.length}`,
+        `Total:     ${sources.length +
+        orphanClients.length +
+        orphanPessoas.length
+        }`,
     );
+
     console.log(
-        `Created:   ${created}`,
+        `Created:   ${counters.created}`,
     );
+
     console.log(
-        `Existing:  ${existing}`,
+        `Existing:  ${counters.existing}`,
     );
+
     console.log(
-        `Pending:   ${pending}`,
+        `Pending:   ${counters.pending}`,
     );
+
     console.log(
-        `Errors:    ${errorCount}`,
+        `Errors:    ${counters.errors}`,
     );
+
+    console.log(
+        `Mapping:   ${mappingSaved
+            ? "SAVED"
+            : DRY_RUN
+                ? "DRY_RUN"
+                : "NOT_SAVED"
+        }`,
+    );
+
     console.log(
         "========================================\n",
     );
@@ -1002,7 +780,9 @@ main()
         console.error(
             "\nERRO FATAL:",
         );
+
         console.error(error);
+
         process.exitCode = 1;
     })
     .finally(

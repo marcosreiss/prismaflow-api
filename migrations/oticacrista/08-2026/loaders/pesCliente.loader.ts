@@ -51,9 +51,15 @@ export interface OrphanClient {
     reason: string;
 }
 
+export interface OrphanPessoa {
+    pessoa: PessoaCsv;
+    reason: string;
+}
+
 export interface ClientSources {
     sources: ClientSource[];
     orphanClients: OrphanClient[];
+    orphanPessoas: OrphanPessoa[];
 }
 
 function loadCsv<T>(filePath: string): T[] {
@@ -104,9 +110,20 @@ export function loadClientSources(): ClientSources {
         );
     }
 
+    const clientePessoaIds =
+        new Set<string>();
+
     const sources: ClientSource[] = [];
     const orphanClients: OrphanClient[] = [];
+    const orphanPessoas: OrphanPessoa[] = [];
 
+    /**
+     * Consolida pesCliente + pessoa quando ambos existem.
+     *
+     * Quando o pesCliente existe, mas sua pessoa correspondente
+     * não existe, o registro é preservado como órfão para que
+     * a migration possa criar um Client parcial e gerar o mapping.
+     */
     for (const cliente of clientes) {
         const pessoa =
             pessoaMap.get(
@@ -123,14 +140,42 @@ export function loadClientSources(): ClientSources {
             continue;
         }
 
+        clientePessoaIds.add(
+            cliente.cliPessoa,
+        );
+
         sources.push({
             pessoa,
             cliente,
         });
     }
 
+    /**
+     * Identifica pessoas que existem em pessoa.csv,
+     * mas não possuem registro correspondente em pesCliente.csv.
+     *
+     * Essas pessoas também devem ser preservadas para que
+     * a migration possa criar um Client utilizando somente
+     * os dados disponíveis em pessoa.csv.
+     */
+    for (const pessoa of pessoas) {
+        if (
+            !clientePessoaIds.has(
+                pessoa.pesId,
+            )
+        ) {
+            orphanPessoas.push({
+                pessoa,
+                reason:
+                    "pessoa não possui correspondente em pesCliente.csv.",
+            });
+        }
+    }
+
     return {
         sources,
         orphanClients,
+        orphanPessoas,
     };
 }
+

@@ -17,6 +17,7 @@ export interface MigrationExecutionReport {
     created: number;
     existing: number;
     errors: number;
+    pending?: number;
 }
 
 export interface MigrationContext {

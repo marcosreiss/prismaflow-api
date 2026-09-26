@@ -12,7 +12,7 @@ import {
     type OrphanClient,
     type OrphanPessoa,
 } from "./client.loader";
-import { convertClient, normalizeCpf } from "./client.converter";
+import { convertClient } from "./client.converter";
 import {
     convertOrphanClient,
     convertOrphanPessoa,
@@ -30,6 +30,16 @@ interface Counters {
     pending: number;
     errors: number;
 }
+
+/**
+ * Guarda oldId -> { id, name } do cliente já resolvido nesta execução
+ * (criado ou casado com um existente). Precisa do nome, e não só do
+ * newId, porque quando um oldId repetido aparece de novo (duplicata no
+ * CSV de origem) reaproveitamos esse registro via registerExisting,
+ * que grava newName no mapping — sem o nome aqui, essa coluna ficaria
+ * vazia para os casos de duplicata.
+ */
+type ResolvedMap = Map<string, { id: number; name: string }>;
 
 /**
  * Verifica se o CPF do registro convertido já pertence a outro cliente
@@ -53,7 +63,7 @@ async function persistNewClient(
     oldName: string,
     matchedBy: string,
     indexes: ClientIndexes,
-    mapping: Map<string, number>,
+    resolved: ResolvedMap,
     counters: Counters,
     report: ReturnType<typeof createClientReport>,
     logger: ReturnType<typeof createMigrationLogger>,
@@ -76,7 +86,7 @@ async function persistNewClient(
 
     const client = result.client as Client;
 
-    mapping.set(oldId, client.id);
+    resolved.set(oldId, { id: client.id, name: client.name });
 
     report.appendMapping({
         oldId,
@@ -93,14 +103,14 @@ async function persistNewClient(
 function registerExisting(
     oldId: string,
     oldName: string,
-    client: Client,
+    client: { id: number; name: string },
     matchedBy: string,
-    mapping: Map<string, number>,
+    resolved: ResolvedMap,
     counters: Counters,
     report: ReturnType<typeof createClientReport>,
     logger: ReturnType<typeof createMigrationLogger>,
 ): void {
-    mapping.set(oldId, client.id);
+    resolved.set(oldId, { id: client.id, name: client.name });
     counters.existing++;
 
     if (!migrationConfig.dryRun) {
@@ -122,7 +132,7 @@ async function processSource(
     index: number,
     total: number,
     indexes: ClientIndexes,
-    mapping: Map<string, number>,
+    resolved: ResolvedMap,
     counters: Counters,
     report: ReturnType<typeof createClientReport>,
     logger: ReturnType<typeof createMigrationLogger>,
@@ -132,13 +142,15 @@ async function processSource(
 
     logger.info(`[${index}/${total}] ${oldName}`);
 
-    if (mapping.has(oldId)) {
+    const alreadyResolved = resolved.get(oldId);
+
+    if (alreadyResolved) {
         registerExisting(
             oldId,
             oldName,
-            { id: mapping.get(oldId) } as Client,
+            alreadyResolved,
             "ALREADY_MAPPED",
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -157,7 +169,7 @@ async function processSource(
                 oldName,
                 match.client,
                 match.matchedBy,
-                mapping,
+                resolved,
                 counters,
                 report,
                 logger,
@@ -190,7 +202,7 @@ async function processSource(
             oldName,
             "CREATE",
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -210,7 +222,7 @@ async function processOrphanClient(
     index: number,
     total: number,
     indexes: ClientIndexes,
-    mapping: Map<string, number>,
+    resolved: ResolvedMap,
     counters: Counters,
     report: ReturnType<typeof createClientReport>,
     logger: ReturnType<typeof createMigrationLogger>,
@@ -220,13 +232,15 @@ async function processOrphanClient(
 
     logger.info(`[ÓRFÃO PESCLIENTE ${index}/${total}] cliPessoa=${oldId}`);
 
-    if (mapping.has(oldId)) {
+    const alreadyResolved = resolved.get(oldId);
+
+    if (alreadyResolved) {
         registerExisting(
             oldId,
             label,
-            { id: mapping.get(oldId) } as Client,
+            alreadyResolved,
             "ALREADY_MAPPED",
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -249,7 +263,7 @@ async function processOrphanClient(
             label,
             "ORPHAN_PESCLIENTE",
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -274,7 +288,7 @@ async function processOrphanPessoa(
     index: number,
     total: number,
     indexes: ClientIndexes,
-    mapping: Map<string, number>,
+    resolved: ResolvedMap,
     counters: Counters,
     report: ReturnType<typeof createClientReport>,
     logger: ReturnType<typeof createMigrationLogger>,
@@ -284,13 +298,15 @@ async function processOrphanPessoa(
 
     logger.info(`[ÓRFÃO PESSOA ${index}/${total}] ${oldName}`);
 
-    if (mapping.has(oldId)) {
+    const alreadyResolved = resolved.get(oldId);
+
+    if (alreadyResolved) {
         registerExisting(
             oldId,
             oldName,
-            { id: mapping.get(oldId) } as Client,
+            alreadyResolved,
             "ALREADY_MAPPED",
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -303,8 +319,11 @@ async function processOrphanPessoa(
         const converted = convertOrphanPessoa(orphan);
 
         /*
-         * pessoa órfã tem CPF (vem de pessoa.csv) — a mesma verificação
-         * de conflito de CPF usada em processSource se aplica aqui.
+         * pessoa órfã tem CPF (vem de pessoa.csv). Se o CPF já
+         * pertence a um cliente existente, reaproveitamos esse
+         * cliente em vez de criar um novo — aqui não há nome de
+         * pesCliente para desambiguar contra, então o CPF sozinho
+         * já é a evidência mais forte disponível.
          */
         const conflict = await findCpfConflict(converted.cpf);
 
@@ -314,7 +333,7 @@ async function processOrphanPessoa(
                 oldName,
                 conflict,
                 "CPF",
-                mapping,
+                resolved,
                 counters,
                 report,
                 logger,
@@ -329,7 +348,7 @@ async function processOrphanPessoa(
             oldName,
             "ORPHAN_PESSOA",
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -388,7 +407,7 @@ async function main(): Promise<void> {
     logger.info("");
 
     const indexes = buildClientIndexes(existingClients);
-    const mapping = new Map<string, number>();
+    const resolved: ResolvedMap = new Map();
 
     if (!migrationConfig.dryRun) {
         report.startMapping();
@@ -410,7 +429,7 @@ async function main(): Promise<void> {
             i + 1,
             sources.length,
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -427,7 +446,7 @@ async function main(): Promise<void> {
             i + 1,
             orphanClients.length,
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,
@@ -444,7 +463,7 @@ async function main(): Promise<void> {
             i + 1,
             orphanPessoas.length,
             indexes,
-            mapping,
+            resolved,
             counters,
             report,
             logger,

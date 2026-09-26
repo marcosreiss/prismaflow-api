@@ -1,18 +1,18 @@
 // migrations/oticacrista/01-brand.ts
 
-import { prisma } from "../../src/config/prisma";
+import { prisma } from "../../../src/config/prisma";
 
-import { migrationConfig } from "./shared/config";
-import { createMigrationLogger } from "./shared/logger";
-import { formatTimestamp } from "./shared/utils";
+import { migrationConfig } from "../shared/config";
+import { createMigrationLogger } from "../shared/logger";
+import { formatTimestamp } from "../shared/utils";
 
-import { loadBrands } from "./brands/brand.loader";
-import { convertBrand } from "./brands/brand.converter";
-import { persistBrand } from "./brands/brand.persistence";
+import { loadBrands } from "./brand.loader";
+import { convertBrand } from "./brand.converter";
+import { persistBrand } from "./brand.persistence";
 import {
     createBrandReport,
     type BrandMapping,
-} from "./brands/brand.report";
+} from "./brand.report";
 
 async function main() {
     const startedAt = new Date();

@@ -37,7 +37,8 @@ const migrationDir = path.resolve(
 
 const migrationFile = path.join(
     migrationDir,
-    `01-${entity}.ts`
+    entity,
+    `${entity}.ts`
 );
 
 if (!fs.existsSync(migrationDir)) {

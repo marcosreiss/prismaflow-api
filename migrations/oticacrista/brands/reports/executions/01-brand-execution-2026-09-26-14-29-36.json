@@ -1,0 +1,12 @@
+{
+  "entity": "Brand",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": false,
+  "startedAt": "2026-09-26T14:29:25.711Z",
+  "finishedAt": "2026-09-26T14:29:36.807Z",
+  "durationMs": 11096,
+  "total": 138,
+  "created": 0,
+  "existing": 138,
+  "errors": 0
+}

@@ -1,103 +1,138 @@
-/**
- * Responsável pelos relatórios da execução.
- */
+// migrations/oticacrista/client/client.report.ts
 
 import fs from "node:fs";
 import path from "node:path";
 
-const REPORTS_PATH = path.resolve(
-    __dirname,
-    "../../reports",
-);
+import { createMappingWriter } from "../shared/mapping";
+import { formatTimestamp, serializeError } from "../shared/utils";
+import type { MigrationExecutionReport } from "../shared/types";
 
-export const ERRORS_PATH = path.join(
-    REPORTS_PATH,
-    "errors",
-);
+const MAPPING_HEADER = "old_id,new_id,status,old_name,new_name,matched_by";
 
-export const EXECUTIONS_PATH =
-    path.join(
-        REPORTS_PATH,
-        "executions",
-    );
-
-export function createTimestamp(): string {
-    return new Date()
-        .toISOString()
-        .replace(/[:.]/g, "-");
+export interface ClientMappingRow {
+    oldId: string;
+    newId: number | null;
+    status: "CREATED" | "EXISTING";
+    oldName: string;
+    newName: string;
+    matchedBy: string;
 }
 
-export function saveJson(
-    directory: string,
-    filename: string,
-    data: unknown,
-): void {
-    fs.mkdirSync(
-        directory,
-        {
-            recursive: true,
-        },
-    );
-
-    fs.writeFileSync(
-        path.join(
-            directory,
-            filename,
-        ),
-        JSON.stringify(
-            data,
-            null,
-            2,
-        ),
-        "utf-8",
-    );
+interface SaveClientErrorOptions {
+    oldId: string;
+    name: string;
+    orphanType?: string;
+    error: unknown;
 }
 
-export function saveClientErrors(
-    pending: unknown[],
-    errors: unknown[],
-): void {
-    if (
-        pending.length === 0 &&
-        errors.length === 0
-    ) {
-        return;
+interface SaveClientPendingOptions {
+    oldId: string;
+    name: string;
+    reason: string;
+    cpf?: string | null;
+    ambiguousBy?: string[];
+}
+
+interface ClientReportOptions {
+    entityReportsDir: string;
+    mappingsDir: string;
+}
+
+export function createClientReport(options: ClientReportOptions) {
+    const errorsDir = path.join(options.entityReportsDir, "errors");
+    const executionsDir = path.join(options.entityReportsDir, "executions");
+
+    fs.mkdirSync(errorsDir, { recursive: true });
+    fs.mkdirSync(executionsDir, { recursive: true });
+
+    const clientMapping = createMappingWriter(options.mappingsDir, "client");
+
+    const pendingRecords: SaveClientPendingOptions[] = [];
+    const errorRecords: unknown[] = [];
+
+    function startMapping(): void {
+        clientMapping.create(MAPPING_HEADER);
     }
 
-    saveJson(
-        ERRORS_PATH,
-        `03-client-errors-${createTimestamp()}.json`,
-        {
-            pending,
-            errors,
-        },
-    );
-}
+    function appendMapping(row: ClientMappingRow): void {
+        clientMapping.append([
+            row.oldId,
+            row.newId,
+            row.status,
+            row.oldName,
+            row.newName,
+            row.matchedBy,
+        ]);
+    }
 
-export function saveClientExecution(
-    data: {
-        migration: string;
-        tenantId: string;
-        branchId: string;
-        dryRun: boolean;
-        startedAt: Date;
-        finishedAt: Date;
-        total: number;
-        created: number;
-        existing: number;
-        pending: number;
-        errors: number;
-        mappingSaved: boolean;
-    },
-): void {
-    saveJson(
-        EXECUTIONS_PATH,
-        `03-client-${createTimestamp()}.json`,
-        {
-            ...data,
-            durationMs:
-                data.finishedAt.getTime() -
-                data.startedAt.getTime(),
-        },
-    );
+    function finalizeMapping(): void {
+        clientMapping.finalize();
+    }
+
+    function discardMapping(): void {
+        clientMapping.discard();
+    }
+
+    function addPending(record: SaveClientPendingOptions): void {
+        pendingRecords.push(record);
+    }
+
+    function addError({
+        oldId,
+        name,
+        orphanType,
+        error,
+    }: SaveClientErrorOptions): void {
+        errorRecords.push({
+            oldId,
+            name,
+            orphanType,
+            occurredAt: new Date().toISOString(),
+            error: serializeError(error),
+        });
+    }
+
+    /**
+     * Grava pendências e erros acumulados durante a execução em um
+     * único arquivo (evita gerar um JSON por registro, já que ambos
+     * são relatórios de "análise manual necessária").
+     */
+    function savePendingAndErrors(): void {
+        if (pendingRecords.length === 0 && errorRecords.length === 0) {
+            return;
+        }
+
+        const timestamp = formatTimestamp(new Date());
+
+        fs.writeFileSync(
+            path.join(errorsDir, `client-errors-${timestamp}.json`),
+            JSON.stringify(
+                { pending: pendingRecords, errors: errorRecords },
+                null,
+                2,
+            ),
+            "utf-8",
+        );
+    }
+
+    function saveExecution(report: MigrationExecutionReport): void {
+        const timestamp = formatTimestamp(new Date(report.finishedAt));
+
+        fs.writeFileSync(
+            path.join(executionsDir, `client-execution-${timestamp}.json`),
+            JSON.stringify(report, null, 2),
+            "utf-8",
+        );
+    }
+
+    return {
+        startMapping,
+        appendMapping,
+        finalizeMapping,
+        discardMapping,
+        addPending,
+        addError,
+        savePendingAndErrors,
+        saveExecution,
+    };
 }

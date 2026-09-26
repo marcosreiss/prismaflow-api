@@ -1,640 +1,400 @@
-/**
- * Orquestrador da migração, não concentra regra de negócio de baixo nível.
- */
+// migrations/oticacrista/client/client.ts
 
-import {
-    Client,
-    PrismaClient,
-} from "@prisma/client";
+import { PrismaClient, type Client } from "@prisma/client";
+
+import { migrationConfig } from "../shared/config";
+import { createMigrationLogger } from "../shared/logger";
+import { formatTimestamp } from "../shared/utils";
 
 import {
     loadClientSources,
     type ClientSource,
     type OrphanClient,
     type OrphanPessoa,
-} from "./loaders/pesCliente.loader";
-
-import {
-    convertClient,
-    normalizeCpf,
-} from "./converters/client.converter";
-
+} from "./client.loader";
+import { convertClient, normalizeCpf } from "./client.converter";
 import {
     convertOrphanClient,
     convertOrphanPessoa,
-} from "./converters/orphan-client.converter";
+} from "./client.orphan-converter";
+import { buildClientIndexes, type ClientIndexes } from "./client.index";
+import { findClientMatch } from "./client.matcher";
+import { createClient, findClientByCpf } from "./client.persistence";
+import { createClientReport } from "./client.report";
 
-import {
-    createClient,
-    findClientByCpf,
-} from "./service/client/client.persistence";
+const prisma = new PrismaClient();
 
-import {
-    buildClientIndexes,
-} from "./service/client/client.index";
-
-import {
-    findClientMatch,
-} from "./service/client/client.matcher";
-
-import {
-    createTimestamp,
-    saveClientErrors,
-    saveClientExecution,
-} from "./service/client/client.report";
-
-import {
-    createTemporaryMappingFile,
-    appendTemporaryMapping,
-    finalizeClientMapping,
-    discardTemporaryMapping,
-    loadClientMapping,
-} from "./mapping/client.mapping";
-
-/* =========================================================
- * CONFIGURAÇÃO
- * ========================================================= */
-
-const prisma =
-    new PrismaClient();
-
-const TENANT_ID =
-    "cmibvcyed00007m0118rkgft8";
-
-const BRANCH_ID =
-    "cmibvcyed00017m014r66e39w";
-
-const DRY_RUN = false;
-
-/* =========================================================
- * TIPOS
- * ========================================================= */
-
-interface MigrationCounters {
+interface Counters {
     created: number;
     existing: number;
     pending: number;
     errors: number;
 }
 
-interface MigrationReports {
-    pending: unknown[];
-    errors: unknown[];
+/**
+ * Verifica se o CPF do registro convertido já pertence a outro cliente
+ * existente no banco. Usado como trava de segurança: nunca criar um
+ * Client novo com um CPF que já existe em outro registro, mesmo que o
+ * matcher não tenha encontrado correspondência segura por nome + CPF
+ * (o banco também não permite CPF duplicado no tenant).
+ *
+ * Usado nos três fluxos (source, orphanClient, orphanPessoa) da mesma
+ * forma — antes havia uma checagem equivalente só no fluxo de pessoa
+ * órfã (via findClientByCpf contra o banco); aqui ela foi generalizada
+ * para os três, usando o mesmo findClientByCpf.
+ */
+async function findCpfConflict(cpf: string | null): Promise<Client | null> {
+    return findClientByCpf(prisma, cpf, migrationConfig.tenantId);
 }
 
-/* =========================================================
- * HELPERS
- * ========================================================= */
-
-function hasCpfConflict(
-    convertedCpf: string | null,
-    existingClients: Client[],
-): boolean {
-    if (!convertedCpf) {
-        return false;
-    }
-
-    const cpf =
-        normalizeCpf(convertedCpf);
-
-    if (!cpf) {
-        return false;
-    }
-
-    return existingClients.some(
-        (client) =>
-            normalizeCpf(client.cpf) ===
-            cpf,
-    );
-}
-
-function addPending(
-    reports: MigrationReports,
-    record: unknown,
-): void {
-    reports.pending.push(record);
-}
-
-function addError(
-    reports: MigrationReports,
-    record: unknown,
-): void {
-    reports.errors.push(record);
-}
-
-async function persistClient(
-    converted: ReturnType<typeof convertClient>,
+async function persistNewClient(
+    data: ReturnType<typeof convertClient>,
     oldId: string,
     oldName: string,
-    indexes: ReturnType<
-        typeof buildClientIndexes
-    >,
+    matchedBy: string,
+    indexes: ClientIndexes,
     mapping: Map<string, number>,
-    counters: MigrationCounters,
-): Promise<Client> {
-    const client =
-        await createClient({
-            prisma,
-            data: converted,
-            tenantId: TENANT_ID,
-            branchId: BRANCH_ID,
-            indexes,
-        });
+    counters: Counters,
+    report: ReturnType<typeof createClientReport>,
+    logger: ReturnType<typeof createMigrationLogger>,
+): Promise<void> {
+    const result = await createClient({
+        prisma,
+        data,
+        tenantId: migrationConfig.tenantId,
+        branchId: migrationConfig.branchId,
+        indexes,
+        dryRun: migrationConfig.dryRun,
+    });
 
-    appendTemporaryMapping({
+    counters.created++;
+
+    if (migrationConfig.dryRun) {
+        logger.info(`[CREATE DRY_RUN] ${oldId} | ${data.name}`);
+        return;
+    }
+
+    const client = result.client as Client;
+
+    mapping.set(oldId, client.id);
+
+    report.appendMapping({
         oldId,
         newId: client.id,
         status: "CREATED",
         oldName,
         newName: client.name,
-        matchedBy: "CREATE",
+        matchedBy,
     });
 
-    mapping.set(
-        oldId,
-        client.id,
-    );
-
-    counters.created++;
-
-    console.log(
-        `✓ CREATED | ${client.name} | new_id=${client.id}`,
-    );
-
-    return client;
+    logger.info(`[CREATED] ${oldId} → ${client.id} | ${client.name}`);
 }
 
-/* =========================================================
- * CLIENTES RELACIONADOS
- * ========================================================= */
+function registerExisting(
+    oldId: string,
+    oldName: string,
+    client: Client,
+    matchedBy: string,
+    mapping: Map<string, number>,
+    counters: Counters,
+    report: ReturnType<typeof createClientReport>,
+    logger: ReturnType<typeof createMigrationLogger>,
+): void {
+    mapping.set(oldId, client.id);
+    counters.existing++;
+
+    if (!migrationConfig.dryRun) {
+        report.appendMapping({
+            oldId,
+            newId: client.id,
+            status: "EXISTING",
+            oldName,
+            newName: client.name,
+            matchedBy,
+        });
+    }
+
+    logger.info(`[EXISTING] ${oldId} → ${client.id} | matchedBy=${matchedBy}`);
+}
 
 async function processSource(
     source: ClientSource,
     index: number,
     total: number,
-    existingClients: Client[],
-    indexes: ReturnType<
-        typeof buildClientIndexes
-    >,
+    indexes: ClientIndexes,
     mapping: Map<string, number>,
-    reports: MigrationReports,
-    counters: MigrationCounters,
+    counters: Counters,
+    report: ReturnType<typeof createClientReport>,
+    logger: ReturnType<typeof createMigrationLogger>,
 ): Promise<void> {
-    const oldId =
-        source.cliente.cliPessoa;
+    const oldId = source.cliente.cliPessoa;
+    const oldName = source.pessoa.pesNome;
 
-    const oldName =
-        source.pessoa.pesNome;
-
-    console.log(
-        `\n[${index}/${total}] ${oldName}`,
-    );
+    logger.info(`[${index}/${total}] ${oldName}`);
 
     if (mapping.has(oldId)) {
-        console.log(
-            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
+        registerExisting(
+            oldId,
+            oldName,
+            { id: mapping.get(oldId) } as Client,
+            "ALREADY_MAPPED",
+            mapping,
+            counters,
+            report,
+            logger,
         );
 
-        counters.existing++;
         return;
     }
 
     try {
-        const converted =
-            convertClient(source);
-
-        const match =
-            findClientMatch(
-                source,
-                indexes,
-            );
+        const converted = convertClient(source);
+        const match = findClientMatch(source, indexes);
 
         if (match.client) {
-            console.log(
-                `✓ EXISTING | ${converted.name} | matchedBy=${match.matchedBy} | new_id=${match.client.id}`,
-            );
-
-            if (!DRY_RUN) {
-                appendTemporaryMapping({
-                    oldId,
-                    newId: match.client.id,
-                    status: "EXISTING",
-                    oldName,
-                    newName:
-                        match.client.name,
-                    matchedBy:
-                        match.matchedBy,
-                });
-            }
-
-            mapping.set(
-                oldId,
-                match.client.id,
-            );
-
-            counters.existing++;
-            return;
-        }
-
-        if (
-            hasCpfConflict(
-                converted.cpf,
-                existingClients,
-            )
-        ) {
-            addPending(
-                reports,
-                {
-                    oldId,
-                    name: converted.name,
-                    status: "PENDING",
-                    reason:
-                        "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
-                    cpf: converted.cpf,
-                },
-            );
-
-            console.log(
-                `→ PENDING | CPF em conflito | ${converted.name}`,
-            );
-
-            counters.pending++;
-            return;
-        }
-
-        if (!DRY_RUN) {
-            await persistClient(
-                converted,
+            registerExisting(
                 oldId,
                 oldName,
-                indexes,
+                match.client,
+                match.matchedBy,
                 mapping,
                 counters,
+                report,
+                logger,
             );
 
             return;
         }
 
-        console.log(
-            `→ CREATE [DRY_RUN] | ${converted.name}`,
-        );
+        const conflict = await findCpfConflict(converted.cpf);
 
-        counters.created++;
+        if (conflict) {
+            report.addPending({
+                oldId,
+                name: converted.name,
+                reason:
+                    "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+                cpf: converted.cpf,
+                ambiguousBy: match.ambiguousBy,
+            });
+
+            counters.pending++;
+            logger.warning(`[PENDING] CPF em conflito | ${converted.name}`);
+
+            return;
+        }
+
+        await persistNewClient(
+            converted,
+            oldId,
+            oldName,
+            "CREATE",
+            indexes,
+            mapping,
+            counters,
+            report,
+            logger,
+        );
     } catch (error) {
         counters.errors++;
 
-        const record = {
-            oldId,
-            name: oldName,
-            status: "ERROR",
-            error:
-                error instanceof Error
-                    ? error.message
-                    : String(error),
-        };
+        report.addError({ oldId, name: oldName, error });
 
-        addError(
-            reports,
-            record,
-        );
-
-        console.error(
-            `✗ ERROR | ${oldName}`,
-        );
-
-        console.error(error);
+        logger.error(`[ERRO] ${oldName}`);
+        logger.error(error instanceof Error ? error.message : String(error));
     }
 }
-
-/* =========================================================
- * PESCLIENTE SEM PESSOA
- * ========================================================= */
 
 async function processOrphanClient(
     orphan: OrphanClient,
     index: number,
     total: number,
-    indexes: ReturnType<
-        typeof buildClientIndexes
-    >,
+    indexes: ClientIndexes,
     mapping: Map<string, number>,
-    reports: MigrationReports,
-    counters: MigrationCounters,
+    counters: Counters,
+    report: ReturnType<typeof createClientReport>,
+    logger: ReturnType<typeof createMigrationLogger>,
 ): Promise<void> {
-    const oldId =
-        orphan.cliente.cliPessoa;
+    const oldId = orphan.cliente.cliPessoa;
+    const label = `PESCLIENTE ${oldId}`;
 
-    console.log(
-        `\n[ÓRFÃO PESCLIENTE ${index}/${total}] cliPessoa=${oldId}`,
-    );
+    logger.info(`[ÓRFÃO PESCLIENTE ${index}/${total}] cliPessoa=${oldId}`);
 
     if (mapping.has(oldId)) {
-        console.log(
-            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
+        registerExisting(
+            oldId,
+            label,
+            { id: mapping.get(oldId) } as Client,
+            "ALREADY_MAPPED",
+            mapping,
+            counters,
+            report,
+            logger,
         );
 
-        counters.existing++;
         return;
     }
 
     try {
-        const converted =
-            convertOrphanClient(
-                orphan,
-            );
+        const converted = convertOrphanClient(orphan);
 
-        if (!DRY_RUN) {
-            const client =
-                await createClient({
-                    prisma,
-                    data: converted,
-                    tenantId: TENANT_ID,
-                    branchId: BRANCH_ID,
-                    indexes,
-                });
-
-            appendTemporaryMapping({
-                oldId,
-                newId: client.id,
-                status: "CREATED",
-                oldName:
-                    `PESCLIENTE ${oldId}`,
-                newName: client.name,
-                matchedBy:
-                    "ORPHAN_PESCLIENTE",
-            });
-
-            mapping.set(
-                oldId,
-                client.id,
-            );
-
-            counters.created++;
-
-            console.log(
-                `✓ CREATED ORPHAN | ${client.name} | new_id=${client.id}`,
-            );
-
-            return;
-        }
-
-        console.log(
-            `→ CREATE ORPHAN [DRY_RUN] | ${converted.name}`,
+        /*
+         * pesCliente órfão não tem CPF (não vem de pessoa.csv), então
+         * não há conflito de CPF possível aqui — segue direto para
+         * criação.
+         */
+        await persistNewClient(
+            converted,
+            oldId,
+            label,
+            "ORPHAN_PESCLIENTE",
+            indexes,
+            mapping,
+            counters,
+            report,
+            logger,
         );
-
-        counters.created++;
     } catch (error) {
         counters.errors++;
 
-        const record = {
+        report.addError({
             oldId,
-            name:
-                `PESCLIENTE ${oldId}`,
-            status: "ERROR",
-            orphanType:
-                "PESCLIENTE_WITHOUT_PESSOA",
-            error:
-                error instanceof Error
-                    ? error.message
-                    : String(error),
-        };
+            name: label,
+            orphanType: "PESCLIENTE_WITHOUT_PESSOA",
+            error,
+        });
 
-        addError(
-            reports,
-            record,
-        );
-
-        console.error(
-            `✗ ERROR ORPHAN | cliPessoa=${oldId}`,
-        );
-
-        console.error(error);
+        logger.error(`[ERRO ÓRFÃO] cliPessoa=${oldId}`);
+        logger.error(error instanceof Error ? error.message : String(error));
     }
 }
-
-/* =========================================================
- * PESSOA SEM PESCLIENTE
- * ========================================================= */
 
 async function processOrphanPessoa(
     orphan: OrphanPessoa,
     index: number,
     total: number,
-    indexes: ReturnType<
-        typeof buildClientIndexes
-    >,
+    indexes: ClientIndexes,
     mapping: Map<string, number>,
-    reports: MigrationReports,
-    counters: MigrationCounters,
+    counters: Counters,
+    report: ReturnType<typeof createClientReport>,
+    logger: ReturnType<typeof createMigrationLogger>,
 ): Promise<void> {
-    const oldId =
-        orphan.pessoa.pesId;
+    const oldId = orphan.pessoa.pesId;
+    const oldName = orphan.pessoa.pesNome;
 
-    const oldName =
-        orphan.pessoa.pesNome;
-
-    console.log(
-        `\n[ÓRFÃO PESSOA ${index}/${total}] ${oldName}`,
-    );
+    logger.info(`[ÓRFÃO PESSOA ${index}/${total}] ${oldName}`);
 
     if (mapping.has(oldId)) {
-        console.log(
-            `→ EXISTING MAPPING | oldId=${oldId} | newId=${mapping.get(oldId)}`,
+        registerExisting(
+            oldId,
+            oldName,
+            { id: mapping.get(oldId) } as Client,
+            "ALREADY_MAPPED",
+            mapping,
+            counters,
+            report,
+            logger,
         );
 
-        counters.existing++;
         return;
     }
 
     try {
-        const converted =
-            convertOrphanPessoa(
-                orphan,
-            );
+        const converted = convertOrphanPessoa(orphan);
 
-        const existingByCpf =
-            await findClientByCpf(
-                prisma,
-                converted.cpf,
-                TENANT_ID,
-            );
+        /*
+         * pessoa órfã tem CPF (vem de pessoa.csv) — a mesma verificação
+         * de conflito de CPF usada em processSource se aplica aqui.
+         */
+        const conflict = await findCpfConflict(converted.cpf);
 
-        if (existingByCpf) {
-            appendTemporaryMapping({
+        if (conflict) {
+            registerExisting(
                 oldId,
-                newId: existingByCpf.id,
-                status: "EXISTING",
                 oldName,
-                newName: existingByCpf.name,
-                matchedBy: "CPF",
-            });
-
-            mapping.set(
-                oldId,
-                existingByCpf.id,
-            );
-
-            counters.existing++;
-
-            console.log(
-                `→ EXISTING BY CPF | ${oldName} | new_id=${existingByCpf.id}`,
+                conflict,
+                "CPF",
+                mapping,
+                counters,
+                report,
+                logger,
             );
 
             return;
         }
 
-        if (!DRY_RUN) {
-            const client =
-                await createClient({
-                    prisma,
-                    data: converted,
-                    tenantId: TENANT_ID,
-                    branchId: BRANCH_ID,
-                    indexes,
-                });
-
-            appendTemporaryMapping({
-                oldId,
-                newId: client.id,
-                status: "CREATED",
-                oldName,
-                newName: client.name,
-                matchedBy:
-                    "ORPHAN_PESSOA",
-            });
-
-            mapping.set(
-                oldId,
-                client.id,
-            );
-
-            counters.created++;
-
-            console.log(
-                `✓ CREATED ORPHAN | ${client.name} | new_id=${client.id}`,
-            );
-
-            return;
-        }
-
-        console.log(
-            `→ CREATE ORPHAN [DRY_RUN] | ${converted.name}`,
+        await persistNewClient(
+            converted,
+            oldId,
+            oldName,
+            "ORPHAN_PESSOA",
+            indexes,
+            mapping,
+            counters,
+            report,
+            logger,
         );
-
-        counters.created++;
     } catch (error) {
         counters.errors++;
 
-        const record = {
+        report.addError({
             oldId,
             name: oldName,
-            status: "ERROR",
-            orphanType:
-                "PESSOA_WITHOUT_PESCLIENTE",
-            error:
-                error instanceof Error
-                    ? error.message
-                    : String(error),
-        };
+            orphanType: "PESSOA_WITHOUT_PESCLIENTE",
+            error,
+        });
 
-        addError(
-            reports,
-            record,
-        );
-
-        console.error(
-            `✗ ERROR ORPHAN | ${oldName}`,
-        );
-
-        console.error(error);
+        logger.error(`[ERRO ÓRFÃO] ${oldName}`);
+        logger.error(error instanceof Error ? error.message : String(error));
     }
 }
 
-/* =========================================================
- * MAIN
- * ========================================================= */
-
 async function main(): Promise<void> {
-    const startedAt =
-        new Date();
+    const startedAt = new Date();
 
-    console.log(
-        "\n========================================",
-    );
+    const logger = createMigrationLogger({
+        entity: "client",
+        entityReportsDir: "./migrations/oticacrista/client/reports",
+        executionTimestamp: formatTimestamp(startedAt),
+    });
 
-    console.log(
-        "MIGRAÇÃO DE CLIENTES",
-    );
+    const report = createClientReport({
+        entityReportsDir: "./migrations/oticacrista/client/reports",
+        mappingsDir: "./migrations/oticacrista/mappings",
+    });
 
-    console.log(
-        "========================================",
-    );
+    logger.info("=================================");
+    logger.info("MIGRAÇÃO: CLIENT");
+    logger.info("=================================");
+    logger.info(`Tenant: ${migrationConfig.tenantId}`);
+    logger.info(`Branch: ${migrationConfig.branchId ?? "NÃO DEFINIDA"}`);
+    logger.info(`DRY RUN: ${migrationConfig.dryRun ? "SIM" : "NÃO"}`);
+    logger.info("");
 
-    console.log(
-        `DRY_RUN: ${DRY_RUN}`,
-    );
+    const { sources, orphanClients, orphanPessoas } = loadClientSources({
+        inputDir: migrationConfig.inputDir,
+    });
 
-    console.log(
-        `Tenant: ${TENANT_ID}`,
-    );
+    logger.info(`Registros relacionados: ${sources.length}`);
+    logger.info(`pesCliente sem pessoa: ${orphanClients.length}`);
+    logger.info(`pessoa sem pesCliente: ${orphanPessoas.length}`);
+    logger.info("");
 
-    console.log(
-        `Branch: ${BRANCH_ID}`,
-    );
+    const existingClients = await prisma.client.findMany({
+        where: { tenantId: migrationConfig.tenantId },
+    });
 
-    console.log(
-        "========================================\n",
-    );
+    logger.info(`Clientes existentes: ${existingClients.length}`);
+    logger.info("");
 
-    const {
-        sources,
-        orphanClients,
-        orphanPessoas,
-    } = loadClientSources();
+    const indexes = buildClientIndexes(existingClients);
+    const mapping = new Map<string, number>();
 
-    console.log(
-        `Registros relacionados: ${sources.length}`,
-    );
-
-    console.log(
-        `pesCliente sem pessoa: ${orphanClients.length}`,
-    );
-
-    console.log(
-        `pessoa sem pesCliente: ${orphanPessoas.length}`,
-    );
-
-    const existingClients =
-        await prisma.client.findMany({
-            where: {
-                tenantId: TENANT_ID,
-            },
-        });
-
-    console.log(
-        `Clientes existentes: ${existingClients.length}`,
-    );
-
-    const indexes =
-        buildClientIndexes(
-            existingClients,
-        );
-
-    const mapping =
-        loadClientMapping();
-
-    if (!DRY_RUN) {
-        createTemporaryMappingFile();
+    if (!migrationConfig.dryRun) {
+        report.startMapping();
     }
 
-    const reports:
-        MigrationReports = {
-        pending: [],
-        errors: [],
-    };
-
-    const counters:
-        MigrationCounters = {
+    const counters: Counters = {
         created: 0,
         existing: 0,
         pending: 0,
@@ -642,187 +402,101 @@ async function main(): Promise<void> {
     };
 
     /*
-     * 1. Clientes que possuem
-     * pessoa + pesCliente.
+     * 1. Clientes que possuem pessoa + pesCliente (caso normal).
      */
-    for (
-        let i = 0;
-        i < sources.length;
-        i++
-    ) {
+    for (let i = 0; i < sources.length; i++) {
         await processSource(
             sources[i],
             i + 1,
             sources.length,
-            existingClients,
             indexes,
             mapping,
-            reports,
             counters,
+            report,
+            logger,
         );
     }
 
     /*
-     * 2. pesCliente sem pessoa.
-     *
-     * Criamos um Client parcial para
-     * preservar o relacionamento das
-     * vendas futuras.
+     * 2. pesCliente sem pessoa — cliente parcial, sem CPF/nome real,
+     * preservado para não perder o relacionamento de vendas antigas.
      */
-    for (
-        let i = 0;
-        i < orphanClients.length;
-        i++
-    ) {
+    for (let i = 0; i < orphanClients.length; i++) {
         await processOrphanClient(
             orphanClients[i],
             i + 1,
             orphanClients.length,
             indexes,
             mapping,
-            reports,
             counters,
+            report,
+            logger,
         );
     }
 
     /*
-     * 3. pessoa sem pesCliente.
-     *
-     * Criamos um Client utilizando
-     * somente os dados disponíveis
-     * em pessoa.csv.
+     * 3. pessoa sem pesCliente — cliente parcial, só com os dados de
+     * pessoa.csv (pode ter CPF, então passa pela checagem de conflito).
      */
-    for (
-        let i = 0;
-        i < orphanPessoas.length;
-        i++
-    ) {
+    for (let i = 0; i < orphanPessoas.length; i++) {
         await processOrphanPessoa(
             orphanPessoas[i],
             i + 1,
             orphanPessoas.length,
             indexes,
             mapping,
-            reports,
             counters,
+            report,
+            logger,
         );
     }
 
-    const finishedAt =
-        new Date();
+    const finishedAt = new Date();
 
-    /*
-     * Mapping definitivo somente
-     * quando não existem erros.
-     */
-    let mappingSaved =
-        false;
-
-    if (!DRY_RUN) {
-        if (
-            counters.errors === 0
-        ) {
-            finalizeClientMapping();
-            mappingSaved = true;
-        } else {
-            discardTemporaryMapping();
-
-            console.log(
-                "\n⚠️ Existem erros. Mapping não foi substituído.",
-            );
-        }
+    if (migrationConfig.dryRun) {
+        logger.info("DRY RUN finalizado. Nenhum mapping foi criado ou alterado.");
+    } else if (counters.errors === 0) {
+        report.finalizeMapping();
+        logger.info("Mapping de client atualizado com sucesso.");
+    } else {
+        report.discardMapping();
+        logger.warning("O mapping não foi atualizado porque ocorreram erros.");
     }
 
-    /*
-     * Relatório de PENDING / ERROR.
-     */
-    saveClientErrors(
-        reports.pending,
-        reports.errors,
-    );
+    report.savePendingAndErrors();
 
-    /*
-     * Relatório da execução.
-     */
-    saveClientExecution({
-        migration: "03-client",
-        tenantId: TENANT_ID,
-        branchId: BRANCH_ID,
-        dryRun: DRY_RUN,
-        startedAt,
-        finishedAt,
-        total:
-            sources.length +
-            orphanClients.length +
-            orphanPessoas.length,
+    const total = sources.length + orphanClients.length + orphanPessoas.length;
+
+    report.saveExecution({
+        entity: "Client",
+        tenantId: migrationConfig.tenantId,
+        dryRun: migrationConfig.dryRun,
+        startedAt: startedAt.toISOString(),
+        finishedAt: finishedAt.toISOString(),
+        durationMs: finishedAt.getTime() - startedAt.getTime(),
+        total,
         created: counters.created,
         existing: counters.existing,
-        pending: counters.pending,
         errors: counters.errors,
-        mappingSaved,
+        pending: counters.pending,
     });
 
-    console.log(
-        "\n========================================",
-    );
-
-    console.log(
-        "RESUMO",
-    );
-
-    console.log(
-        "========================================",
-    );
-
-    console.log(
-        `Total:     ${sources.length +
-        orphanClients.length +
-        orphanPessoas.length
-        }`,
-    );
-
-    console.log(
-        `Created:   ${counters.created}`,
-    );
-
-    console.log(
-        `Existing:  ${counters.existing}`,
-    );
-
-    console.log(
-        `Pending:   ${counters.pending}`,
-    );
-
-    console.log(
-        `Errors:    ${counters.errors}`,
-    );
-
-    console.log(
-        `Mapping:   ${mappingSaved
-            ? "SAVED"
-            : DRY_RUN
-                ? "DRY_RUN"
-                : "NOT_SAVED"
-        }`,
-    );
-
-    console.log(
-        "========================================\n",
-    );
+    logger.info("");
+    logger.info("=================================");
+    logger.info("MIGRAÇÃO FINALIZADA");
+    logger.info("=================================");
+    logger.info(`Total:      ${total}`);
+    logger.info(`Created:    ${counters.created}`);
+    logger.info(`Existing:   ${counters.existing}`);
+    logger.info(`Pending:    ${counters.pending}`);
+    logger.info(`Errors:     ${counters.errors}`);
 }
 
 main()
     .catch((error) => {
-        console.error(
-            "\nERRO FATAL:",
-        );
-
-        console.error(error);
-
+        console.error("Erro fatal na migração:", error);
         process.exitCode = 1;
     })
-    .finally(
-        async () => {
-            await prisma.$disconnect();
-        },
-    );
+    .finally(async () => {
+        await prisma.$disconnect();
+    });

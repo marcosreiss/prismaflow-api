@@ -1,7 +1,4 @@
-// migrations/oticacrista/08-2026/service/client/client.index.ts
-/**
- * Responsável pelos índices em memória utilizados para localizar clientes.
- */
+// migrations/oticacrista/client/client.index.ts
 
 import type { Client } from "@prisma/client";
 
@@ -10,7 +7,7 @@ import {
     normalizeName,
     normalizePhone,
     normalizeRg,
-} from "../../converters/client.converter";
+} from "./client.converter";
 
 export interface ClientIndexes {
     cpfIndex: Map<string, Client[]>;
@@ -19,10 +16,7 @@ export interface ClientIndexes {
     phoneIndex: Map<string, Client[]>;
 }
 
-function buildKey(
-    name: string,
-    value: string,
-): string {
+function buildKey(name: string, value: string): string {
     return `${normalizeName(name)}|${value}`;
 }
 
@@ -41,21 +35,19 @@ function addToIndex(
     index.set(key, [client]);
 }
 
-function normalizeDate(
-    value: Date | null,
-): string | null {
+function normalizeDate(value: Date | null): string | null {
     if (!value) {
         return null;
     }
 
-    return value
-        .toISOString()
-        .slice(0, 10);
+    return value.toISOString().slice(0, 10);
 }
 
-export function buildClientIndexes(
-    clients: Client[],
-): ClientIndexes {
+/**
+ * Constrói os índices em memória a partir dos clientes já existentes
+ * no banco (chamado uma vez, no início da execução).
+ */
+export function buildClientIndexes(clients: Client[]): ClientIndexes {
     const indexes: ClientIndexes = {
         cpfIndex: new Map(),
         rgIndex: new Map(),
@@ -64,95 +56,65 @@ export function buildClientIndexes(
     };
 
     for (const client of clients) {
-        addClientToIndexes(
-            client,
-            indexes,
-        );
+        addClientToIndexes(client, indexes);
     }
 
     return indexes;
 }
 
+/**
+ * Adiciona um cliente (recém-criado ou já existente) aos índices.
+ *
+ * Importante: isso é chamado também depois de CADA criação durante o
+ * loop da migração — não só na carga inicial. Isso garante que, se o
+ * CSV de origem tiver registros duplicados (ex.: mesma pessoa com dois
+ * oldId diferentes), o segundo registro encontre o primeiro que acabou
+ * de ser criado nesta mesma execução, em vez de criar um duplicado.
+ */
 export function addClientToIndexes(
     client: Client,
     indexes: ClientIndexes,
 ): void {
     if (client.cpf) {
-        const cpf =
-            normalizeCpf(client.cpf);
+        const cpf = normalizeCpf(client.cpf);
 
         if (cpf) {
-            addToIndex(
-                indexes.cpfIndex,
-                buildKey(
-                    client.name,
-                    cpf,
-                ),
-                client,
-            );
+            addToIndex(indexes.cpfIndex, buildKey(client.name, cpf), client);
         }
     }
 
     if (client.rg) {
-        const rg =
-            normalizeRg(client.rg);
+        const rg = normalizeRg(client.rg);
 
         if (rg) {
-            addToIndex(
-                indexes.rgIndex,
-                buildKey(
-                    client.name,
-                    rg,
-                ),
-                client,
-            );
+            addToIndex(indexes.rgIndex, buildKey(client.name, rg), client);
         }
     }
 
     if (client.bornDate) {
-        const date =
-            normalizeDate(
-                client.bornDate,
-            );
+        const date = normalizeDate(client.bornDate);
 
         if (date) {
             addToIndex(
                 indexes.birthDateIndex,
-                buildKey(
-                    client.name,
-                    date,
-                ),
+                buildKey(client.name, date),
                 client,
             );
         }
     }
 
-    for (const phone of [
-        client.phone01,
-        client.phone02,
-        client.phone03,
-    ]) {
-        const normalized =
-            normalizePhone(phone);
+    for (const phone of [client.phone01, client.phone02, client.phone03]) {
+        const normalized = normalizePhone(phone);
 
         if (!normalized) {
             continue;
         }
 
-        addToIndex(
-            indexes.phoneIndex,
-            buildKey(
-                client.name,
-                normalized,
-            ),
-            client,
-        );
+        addToIndex(indexes.phoneIndex, buildKey(client.name, normalized), client);
     }
 }
 
-export function normalizeClientDate(
-    value: Date | null,
-): string | null {
+export function normalizeClientDate(value: Date | null): string | null {
     return normalizeDate(value);
 }
 
@@ -161,7 +123,5 @@ export function getClientCandidates(
     name: string,
     value: string,
 ): Client[] | undefined {
-    return index.get(
-        buildKey(name, value),
-    );
+    return index.get(buildKey(name, value));
 }

@@ -206,7 +206,7 @@ function saveExecutionReport(
 ) {
     const outputDir = path.resolve(
         process.cwd(),
-        "migrations/oticacrista/08-2026/reports/executions"
+        "migrations/oticacrista/reports/executions"
     );
 
     fs.mkdirSync(outputDir, { recursive: true });

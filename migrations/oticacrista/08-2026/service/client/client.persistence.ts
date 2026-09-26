@@ -18,6 +18,37 @@ export interface CreateClientParams {
     indexes: ClientIndexes;
 }
 
+/**
+ * Procura um cliente pelo CPF dentro do tenant.
+ *
+ * O CPF é normalizado antes da consulta para manter
+ * o mesmo padrão utilizado pelo converter da migração.
+ */
+export async function findClientByCpf(
+    prisma: PrismaClient,
+    cpf: string | null | undefined,
+    tenantId: string,
+): Promise<Client | null> {
+    if (!cpf) {
+        return null;
+    }
+
+    const normalizedCpf = cpf.replace(/\D/g, "");
+
+    if (!normalizedCpf) {
+        return null;
+    }
+
+    const client = await prisma.client.findFirst({
+        where: {
+            tenantId,
+            cpf: normalizedCpf,
+        },
+    });
+
+    return client;
+}
+
 export async function createClient(
     params: CreateClientParams,
 ): Promise<Client> {
@@ -51,28 +82,21 @@ export async function createClient(
                 uf: data.uf,
                 cep: data.cep,
                 complement: data.complement,
-                isBlacklisted:
-                    data.isBlacklisted,
+                isBlacklisted: data.isBlacklisted,
                 obs: data.obs,
                 phone01: data.phone01,
                 phone02: data.phone02,
                 phone03: data.phone03,
-                reference01:
-                    data.reference01,
-                reference02:
-                    data.reference02,
-                reference03:
-                    data.reference03,
+                reference01: data.reference01,
+                reference02: data.reference02,
+                reference03: data.reference03,
                 isActive: true,
                 tenantId,
                 branchId,
             },
         });
 
-    addClientToIndexes(
-        client,
-        indexes,
-    );
+    addClientToIndexes(client, indexes);
 
     return client;
 }

@@ -22,6 +22,7 @@ import {
 
 import {
     createClient,
+    findClientByCpf,
 } from "./service/client/client.persistence";
 
 import {
@@ -446,6 +447,37 @@ async function processOrphanPessoa(
             convertOrphanPessoa(
                 orphan,
             );
+
+        const existingByCpf =
+            await findClientByCpf(
+                prisma,
+                converted.cpf,
+                TENANT_ID,
+            );
+
+        if (existingByCpf) {
+            appendTemporaryMapping({
+                oldId,
+                newId: existingByCpf.id,
+                status: "EXISTING",
+                oldName,
+                newName: existingByCpf.name,
+                matchedBy: "CPF",
+            });
+
+            mapping.set(
+                oldId,
+                existingByCpf.id,
+            );
+
+            counters.existing++;
+
+            console.log(
+                `→ EXISTING BY CPF | ${oldName} | new_id=${existingByCpf.id}`,
+            );
+
+            return;
+        }
 
         if (!DRY_RUN) {
             const client =

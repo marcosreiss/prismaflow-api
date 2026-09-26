@@ -1,4 +1,4 @@
-// migrations/oticacrista/01-brand.ts
+// migrations/oticacrista/brand/brand.ts
 
 import { prisma } from "../../../src/config/prisma";
 

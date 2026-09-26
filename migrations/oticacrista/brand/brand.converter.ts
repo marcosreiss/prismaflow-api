@@ -1,4 +1,4 @@
-// migrations/oticacrista/brands/brand.converter.ts
+// migrations/oticacrista/brand/brand.converter.ts
 
 // transformação do modelo antigo para o novo
 import type { OldBrand } from "./brand.loader";

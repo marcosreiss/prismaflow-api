@@ -8,6 +8,7 @@
   - [Estratégia para dados inconsistentes](#estratégia-para-dados-inconsistentes)
   - [Regras de negócio — Venda](#regras-de-negócio--venda)
   - [Regras de negócio — Pagamento](#regras-de-negócio--pagamento)
+  - [Padronização dos arquivos e caminhos nos Reports](#padronização-dos-arquivos-e-caminhos-nos-reports)
 
 Este documento reúne decisões arquiteturais e regras de negócio **específicas da migração do tenant `oticacrista`**, complementando o padrão geral descrito em [`migrations/README.md`](../../README.md) e o contexto do tenant em [`../README.md`](../README.md). Novos trechos de decisão podem ser adicionados aqui como novas seções, sem necessidade de renumeração.
 
@@ -62,4 +63,53 @@ O subtotal do pagamento herda o total da venda; o total do pagamento é o subtot
 sale.total → payment.subtotal → (- payment.discount) → payment.total
 ```
 
-Essas regras existem porque os campos financeiros do sistema legado não mapeiam 1:1 para o modelo atual e precisam ser recalculados durante a conversão.
+
+---
+
+## Padronização dos arquivos e caminhos nos Reports
+
+Todos os **nomes de arquivos, diretórios, prefixos e identificadores estruturais específicos da entidade** devem ser declarados no início do arquivo `.report.ts`.
+
+Isso evita strings espalhadas pela implementação e facilita futuras alterações de nomenclatura ou estrutura.
+
+Exemplo:
+
+```tsx
+const ENTITY = "brand";
+const ENTITY_ORDER = "01";
+
+const ERRORS_DIR_NAME = "errors";
+const EXECUTIONS_DIR_NAME = "executions";
+
+const MAPPINGS_DIR = path.resolve(
+    process.cwd(),
+    "migrations/oticacrista/reports/mappings"
+);
+
+const MAPPING_FILE_NAME =
+    `${ENTITY_ORDER}-${ENTITY}-mapping.csv`;
+
+const ERROR_FILE_PREFIX =
+    `${ENTITY_ORDER}-${ENTITY}-error`;
+
+const EXECUTION_FILE_PREFIX =
+    `${ENTITY_ORDER}-${ENTITY}-execution`;
+```
+
+A lógica do report deve utilizar essas constantes, evitando valores como:
+
+```
+"01-brand-mapping.csv"
+"01-brand-error-..."
+"01-brand-execution-..."
+"reports/mappings"
+```
+
+espalhados pelo código.
+
+`Regra`
+
+> **Configurações estruturais ficam no topo do arquivo; a implementação utiliza essas configurações sem repetir os caminhos ou nomes diretamente.**
+> 
+
+Essa padronização deve ser aplicada a todas as entidades futuras.

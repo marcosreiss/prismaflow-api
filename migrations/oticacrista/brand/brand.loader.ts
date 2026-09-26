@@ -1,4 +1,4 @@
-// migrations/oticacrista/brands/brand.loader.ts
+// migrations/oticacrista/brand/brand.loader.ts
 
 // Responsável apenas por ler o CSV
 import fs from "node:fs";

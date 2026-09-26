@@ -1,10 +1,13 @@
-//migrations/oticacrista/product/product.converter.ts
+// migrations/oticacrista/product/product.converter.ts
 
 import type { ProductCategory } from "@prisma/client";
 import type { OldProduct } from "./product.loader";
 
+export type ConvertedKind = "PRODUCT" | "SERVICE";
+
 export interface ConvertedProduct {
     oldId: number;
+    kind: ConvertedKind;
     name: string;
     brandOldId: number | null;
     costPrice: number;
@@ -12,7 +15,6 @@ export interface ConvertedProduct {
     markup: number;
     stockQuantity: number;
     category: ProductCategory | null;
-    oldType: string;
 }
 
 function normalizeText(value: string): string {
@@ -23,14 +25,14 @@ function normalizeText(value: string): string {
         .trim();
 }
 
-export function detectCategory(
-    name: string,
-): ProductCategory | null {
+/**
+ * Detecção automática de categoria por palavras-chave no nome.
+ * Retorna null quando não é possível decidir automaticamente —
+ * nesse caso a decisão final é manual (ver product.matcher.ts).
+ */
+export function detectCategory(name: string): ProductCategory | null {
     const normalized = normalizeText(name);
 
-    /*
-     * FRAME
-     */
     if (
         normalized.includes("ARMACAO") ||
         normalized.includes("OCULOS") ||
@@ -39,19 +41,10 @@ export function detectCategory(
         return "FRAME";
     }
 
-    /*
-     * LENS
-     */
-    if (
-        normalized.includes("LENTE") ||
-        normalized.includes("VARILUX")
-    ) {
+    if (normalized.includes("LENTE") || normalized.includes("VARILUX")) {
         return "LENS";
     }
 
-    /*
-     * ACCESSORY
-     */
     if (
         normalized.includes("COLORACAO") ||
         normalized.includes("RENEGOCIACAO") ||
@@ -60,11 +53,11 @@ export function detectCategory(
         return "ACCESSORY";
     }
 
-    /*
-     * Qualquer outro caso
-     * fica para decisão manual no script principal.
-     */
     return null;
+}
+
+function detectKind(prodTipo: string): ConvertedKind {
+    return normalizeText(prodTipo) === "SERVICO" ? "SERVICE" : "PRODUCT";
 }
 
 export function convertProduct(
@@ -72,6 +65,7 @@ export function convertProduct(
 ): ConvertedProduct {
     return {
         oldId: oldProduct.prodId,
+        kind: detectKind(oldProduct.prodTipo),
         name: oldProduct.prodNome.trim(),
         brandOldId: oldProduct.prodMarca,
         costPrice: Math.max(0, oldProduct.prodPrecoCompra),
@@ -79,6 +73,5 @@ export function convertProduct(
         markup: oldProduct.prodPercentual,
         stockQuantity: Math.max(0, oldProduct.prodQtd),
         category: detectCategory(oldProduct.prodNome),
-        oldType: oldProduct.prodTipo,
     };
 }

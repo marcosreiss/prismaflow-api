@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { formatTime } from "./utils";
 
 export interface MigrationLogger {
     info(message: string): void;
@@ -51,9 +52,7 @@ export function createMigrationLogger(
         level: string,
         message: string
     ): void {
-        const timestamp = new Date()
-            .toISOString()
-            .substring(11, 19);
+        const timestamp = formatTime(new Date());
 
         const formatted =
             `[${timestamp}] [${level}] ${message}`;

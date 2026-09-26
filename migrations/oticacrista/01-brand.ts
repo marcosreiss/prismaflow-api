@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "../../src/config/prisma";
 import { loadBrands } from "./loaders/brand.loader";
 import { convertBrand } from "./converters/brand.converter";
 import {

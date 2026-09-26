@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "../../src/config/prisma";
 
 import { loadProducts } from "./loaders/product.loader";
 import { convertProduct } from "./converters/product.converter";

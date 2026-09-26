@@ -11,16 +11,15 @@ export interface PersistResult {
 }
 
 /**
- * Produto: procura por tenantId + name + brandId.
- * Sem marca definida cai no fallback "SEM MARCA" (resolvido pelo matcher).
+ * Verifica se o produto já existe (tenantId + name + brandId).
+ * Não cria nada — usado para decidir se vale a pena perguntar
+ * a categoria manualmente antes de criar.
  */
-export async function persistProduct(
+export async function findExistingProduct(
     product: ConvertedProduct,
     brand: ResolvedBrand,
-    category: "FRAME" | "LENS" | "ACCESSORY",
     tenantId: string,
-    dryRun: boolean,
-): Promise<PersistResult> {
+): Promise<PersistResult | null> {
     const existing = await prisma.product.findFirst({
         where: {
             tenantId,
@@ -29,14 +28,29 @@ export async function persistProduct(
         },
     });
 
-    if (existing) {
-        return {
-            status: "EXISTING",
-            id: existing.id,
-            name: existing.name,
-        };
+    if (!existing) {
+        return null;
     }
 
+    return {
+        status: "EXISTING",
+        id: existing.id,
+        name: existing.name,
+    };
+}
+
+/**
+ * Cria o produto. Só deve ser chamado depois de confirmado que
+ * o produto não existe (ver findExistingProduct) e que a categoria
+ * já foi resolvida (automática ou manual).
+ */
+export async function createProduct(
+    product: ConvertedProduct,
+    brand: ResolvedBrand,
+    category: "FRAME" | "LENS" | "ACCESSORY",
+    tenantId: string,
+    dryRun: boolean,
+): Promise<PersistResult> {
     if (dryRun) {
         return {
             status: "CREATED",

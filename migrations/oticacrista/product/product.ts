@@ -14,7 +14,11 @@ import {
     resolveCategory,
     closeMatcherPrompt,
 } from "./product.matcher";
-import { persistProduct, persistService } from "./product.persistence";
+import {
+    findExistingProduct,
+    createProduct,
+    persistService,
+} from "./product.persistence";
 import { createProductReport } from "./product.report";
 
 async function main() {
@@ -100,15 +104,36 @@ async function main() {
             }
 
             const brand = resolveBrand(converted, brandMapping);
-            const category = await resolveCategory(converted);
 
-            const result = await persistProduct(
+            /*
+             * Verifica primeiro se o produto já existe. Só perguntamos
+             * a categoria manualmente quando o produto for de fato novo
+             * — não há motivo para interromper a migração com uma
+             * pergunta sobre um registro que já existe no banco atual.
+             */
+            const existingProduct = await findExistingProduct(
                 converted,
                 brand,
-                category,
                 migrationConfig.tenantId,
-                migrationConfig.dryRun,
             );
+
+            let result;
+            let category: string;
+
+            if (existingProduct) {
+                result = existingProduct;
+                category = "";
+            } else {
+                category = await resolveCategory(converted);
+
+                result = await createProduct(
+                    converted,
+                    brand,
+                    category as "FRAME" | "LENS" | "ACCESSORY",
+                    migrationConfig.tenantId,
+                    migrationConfig.dryRun,
+                );
+            }
 
             if (result.status === "EXISTING") {
                 productsExisting++;
@@ -158,11 +183,11 @@ async function main() {
     }
 
     /*
-     * MigrationExecutionReport (shared/types.ts) exige os campos
-     * "created" e "existing" no nível raiz — o mesmo contrato usado
-     * por brand.ts. Como product tem duas sub-entidades (products e
-     * services), somamos os dois nos campos raiz obrigatórios e
-     * mantemos o detalhamento por sub-entidade em campos extras.
+     * MigrationExecutionReport (shared/types.ts) exige "created" e
+     * "existing" no nível raiz — mesmo contrato usado por brand.ts.
+     * Como product tem duas sub-entidades (products e services),
+     * somamos as duas nos campos raiz obrigatórios e mantemos o
+     * detalhamento por sub-entidade em campos extras.
      */
     const executionReport = {
         entity: "Product",

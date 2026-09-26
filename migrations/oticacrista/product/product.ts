@@ -117,23 +117,15 @@ async function main() {
                 migrationConfig.tenantId,
             );
 
-            let result;
-            let category: string;
-
-            if (existingProduct) {
-                result = existingProduct;
-                category = "";
-            } else {
-                category = await resolveCategory(converted);
-
-                result = await createProduct(
+            const result =
+                existingProduct ??
+                (await createProduct(
                     converted,
                     brand,
-                    category as "FRAME" | "LENS" | "ACCESSORY",
+                    await resolveCategory(converted),
                     migrationConfig.tenantId,
                     migrationConfig.dryRun,
-                );
-            }
+                ));
 
             if (result.status === "EXISTING") {
                 productsExisting++;
@@ -150,7 +142,7 @@ async function main() {
                     newName: result.name,
                     brandOldId: brand.brandOldId,
                     brandNewId: brand.brandNewId,
-                    category,
+                    category: result.category,
                 });
             }
 

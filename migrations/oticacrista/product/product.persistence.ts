@@ -8,6 +8,7 @@ export interface PersistResult {
     status: "CREATED" | "EXISTING";
     id: number | null;
     name: string;
+    category: string;
 }
 
 /**
@@ -36,6 +37,7 @@ export async function findExistingProduct(
         status: "EXISTING",
         id: existing.id,
         name: existing.name,
+        category: existing.category,
     };
 }
 
@@ -56,6 +58,7 @@ export async function createProduct(
             status: "CREATED",
             id: null,
             name: product.name,
+            category,
         };
     }
 
@@ -80,6 +83,7 @@ export async function createProduct(
         status: "CREATED",
         id: created.id,
         name: created.name,
+        category,
     };
 }
 
@@ -104,6 +108,7 @@ export async function persistService(
             status: "EXISTING",
             id: existing.id,
             name: existing.name,
+            category: ""
         };
     }
 
@@ -112,6 +117,7 @@ export async function persistService(
             status: "CREATED",
             id: null,
             name: product.name,
+            category: ""
         };
     }
 
@@ -130,5 +136,6 @@ export async function persistService(
         status: "CREATED",
         id: created.id,
         name: created.name,
+        category: ""
     };
 }

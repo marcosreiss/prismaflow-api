@@ -1,15 +1,15 @@
-// migrations/oticacrista/08-2026/01-brand.ts
+// migrations/oticacrista/01-brand.ts
 
 import fs from "node:fs";
 import path from "node:path";
 
 import { prisma } from "../../src/config/prisma";
-import { loadBrands } from "./loaders/brand.loader";
-import { convertBrand } from "./converters/brand.converter";
+import { loadBrands } from "./brands/brand.loader";
+import { convertBrand } from "./brands/brand.converter";
 import {
     BrandMapping,
     saveBrandMapping,
-} from "./mapping/brand.mapping";
+} from "./brands/brand.mapping";
 
 const TENANT_ID = "cmibvcyed00007m0118rkgft8";
 const DRY_RUN = false; // Altere para true se quiser apenas simular a migração sem criar registros

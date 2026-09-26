@@ -1,3 +1,5 @@
+// migrations/oticacrista/brands/brand.loader.ts
+
 // Responsável apenas por ler o CSV
 import fs from "node:fs";
 import path from "node:path";
@@ -11,7 +13,7 @@ export interface OldBrand {
 export function loadBrands(): OldBrand[] {
     const filePath = path.resolve(
         process.cwd(),
-        "migrations/oticacrista/08-2026/input/marca.csv"
+        "migrations/oticacrista/input/marca.csv"
     );
 
     const fileContent = fs.readFileSync(filePath, "utf-8");

@@ -1,3 +1,5 @@
+// migrations/oticacrista/brands/brand.mapping.ts
+
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,7 +16,7 @@ export function saveBrandMapping(
 ): void {
     const outputDir = path.resolve(
         process.cwd(),
-        "migrations/oticacrista/08-2026/reports/mappings"
+        "migrations/oticacrista/reports/mappings"
     );
 
     fs.mkdirSync(outputDir, { recursive: true });

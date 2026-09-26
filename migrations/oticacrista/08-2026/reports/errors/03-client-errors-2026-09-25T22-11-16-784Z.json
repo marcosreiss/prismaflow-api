@@ -1,0 +1,40 @@
+{
+  "pending": [],
+  "errors": [
+    {
+      "oldId": "41",
+      "name": "FRANCISCO DOS SANTOS MARQUES",
+      "status": "ERROR",
+      "orphanType": "PESSOA_WITHOUT_PESCLIENTE",
+      "error": "\nInvalid `prisma.client.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\08-2026\\service\\client\\client.persistence.ts:33:29\n\n  30 } = params;\n  31 \n  32 const client =\n→ 33     await prisma.client.create(\nUnique constraint failed on the constraint: `Client_cpf_tenantId_key`"
+    },
+    {
+      "oldId": "772",
+      "name": "ISABEL CRISTINA MARTINS PINHEIRO",
+      "status": "ERROR",
+      "orphanType": "PESSOA_WITHOUT_PESCLIENTE",
+      "error": "\nInvalid `prisma.client.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\08-2026\\service\\client\\client.persistence.ts:33:29\n\n  30 } = params;\n  31 \n  32 const client =\n→ 33     await prisma.client.create(\nUnique constraint failed on the constraint: `Client_cpf_tenantId_key`"
+    },
+    {
+      "oldId": "781",
+      "name": "JADNA CIRQUEIRA SILVA",
+      "status": "ERROR",
+      "orphanType": "PESSOA_WITHOUT_PESCLIENTE",
+      "error": "\nInvalid `prisma.client.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\08-2026\\service\\client\\client.persistence.ts:33:29\n\n  30 } = params;\n  31 \n  32 const client =\n→ 33     await prisma.client.create(\nUnique constraint failed on the constraint: `Client_cpf_tenantId_key`"
+    },
+    {
+      "oldId": "809",
+      "name": "RONNY DELTON LIMA OLIVEIRA",
+      "status": "ERROR",
+      "orphanType": "PESSOA_WITHOUT_PESCLIENTE",
+      "error": "\nInvalid `prisma.client.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\08-2026\\service\\client\\client.persistence.ts:33:29\n\n  30 } = params;\n  31 \n  32 const client =\n→ 33     await prisma.client.create(\nUnique constraint failed on the constraint: `Client_cpf_tenantId_key`"
+    },
+    {
+      "oldId": "815",
+      "name": "JOEL DE JESUS NUNES COSTA",
+      "status": "ERROR",
+      "orphanType": "PESSOA_WITHOUT_PESCLIENTE",
+      "error": "\nInvalid `prisma.client.create()` invocation in\nC:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\08-2026\\service\\client\\client.persistence.ts:33:29\n\n  30 } = params;\n  31 \n  32 const client =\n→ 33     await prisma.client.create(\nUnique constraint failed on the constraint: `Client_cpf_tenantId_key`"
+    }
+  ]
+}

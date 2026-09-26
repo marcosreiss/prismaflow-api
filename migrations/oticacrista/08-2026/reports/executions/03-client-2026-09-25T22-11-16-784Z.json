@@ -1,0 +1,15 @@
+{
+  "migration": "03-client",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "branchId": "cmibvcyed00017m014r66e39w",
+  "dryRun": false,
+  "startedAt": "2026-09-25T22:10:58.344Z",
+  "finishedAt": "2026-09-25T22:11:16.782Z",
+  "total": 2645,
+  "created": 83,
+  "existing": 2557,
+  "pending": 0,
+  "errors": 5,
+  "mappingSaved": false,
+  "durationMs": 18438
+}

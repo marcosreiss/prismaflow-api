@@ -1,0 +1,33 @@
+{
+  "pending": [
+    {
+      "oldId": "764",
+      "name": "ESPEDITO JOSE DE SOUSA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "23804157300"
+    },
+    {
+      "oldId": "1435",
+      "name": "MARINALVA VIANA ANDRADE",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "14075121291"
+    },
+    {
+      "oldId": "1899",
+      "name": "RAIMUNA NONATA DA SILVA PEREIRA",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "57164410330"
+    },
+    {
+      "oldId": "2655",
+      "name": "MARIA DO ROSARIO GOMES CANTANHENDE",
+      "status": "PENDING",
+      "reason": "CPF já pertence a outro cliente e não houve correspondência segura por nome + CPF.",
+      "cpf": "71883401372"
+    }
+  ],
+  "errors": []
+}

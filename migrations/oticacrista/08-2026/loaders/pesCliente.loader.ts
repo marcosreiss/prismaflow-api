@@ -1,5 +1,10 @@
 // migrations/oticacrista/08-2026/loaders/pesCliente.loader.ts
 
+/**
+ * Ler e estruturar os dados antigos.
+ * responsável por carregar os dados de pesCliente.csv e pessoa.csv
+ */
+
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "csv-parse/sync";

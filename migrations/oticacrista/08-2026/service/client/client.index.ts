@@ -1,4 +1,7 @@
 // migrations/oticacrista/08-2026/service/client/client.index.ts
+/**
+ * Responsável pelos índices em memória utilizados para localizar clientes.
+ */
 
 import type { Client } from "@prisma/client";
 

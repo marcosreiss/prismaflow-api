@@ -1,3 +1,7 @@
+/**
+ * Responsável exclusivamente pela persistência do cliente.
+ */
+
 import type {
     Client,
     PrismaClient,

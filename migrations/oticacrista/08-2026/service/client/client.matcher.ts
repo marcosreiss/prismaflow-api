@@ -1,4 +1,7 @@
 // migrations/oticacrista/08-2026/service/client/client.matcher.ts
+/**
+ * Responsável por responder: esse cliente antigo corresponde a qual cliente novo?
+ */
 
 import type { Client } from "@prisma/client";
 

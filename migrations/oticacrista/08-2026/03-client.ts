@@ -1,3 +1,7 @@
+/**
+ * Orquestrador da migração, não concentra regra de negócio de baixo nível.
+ */
+
 import {
     Client,
     PrismaClient,

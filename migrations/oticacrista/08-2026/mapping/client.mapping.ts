@@ -1,4 +1,7 @@
 // migrations/oticacrista/08-2026/mapping/client.mapping.ts
+/**
+ * Responsável pela relação: oldId -> newId dos clientes.
+ */
 
 import fs from "node:fs";
 import path from "node:path";

@@ -1,5 +1,7 @@
 // migrations/oticacrista/08-2026/converters/client.converter.ts
-
+/**
+ * Transforma o formato legado em um formato compatível com o domínio atual.
+ */
 import type { Gender } from "@prisma/client";
 import type {
     ClientSource,

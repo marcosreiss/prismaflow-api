@@ -1,0 +1,9 @@
+[18:41:17] [INFO] =================================
+[18:41:17] [INFO] MIGRAÇÃO: PRODUCT
+[18:41:17] [INFO] =================================
+[18:41:17] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[18:41:17] [INFO] Branch: cmibvcyed00017m014r66e39w
+[18:41:17] [INFO] DRY RUN: SIM
+[18:41:17] [INFO] 
+[18:41:17] [INFO] Registros encontrados: 787
+[18:41:17] [INFO] 

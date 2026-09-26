@@ -1,0 +1,20 @@
+{
+  "entity": "Product",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": true,
+  "startedAt": "2026-09-26T21:42:07.990Z",
+  "finishedAt": "2026-09-26T21:43:15.583Z",
+  "durationMs": 67593,
+  "total": 787,
+  "created": 0,
+  "existing": 787,
+  "errors": 0,
+  "products": {
+    "created": 0,
+    "existing": 783
+  },
+  "services": {
+    "created": 0,
+    "existing": 4
+  }
+}

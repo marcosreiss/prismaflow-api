@@ -51,7 +51,7 @@ export function createBrandReport(
     ): void {
         const outputDir = path.resolve(
             process.cwd(),
-            "migrations/oticacrista/reports/mappings"
+            "migrations/oticacrista/mappings"
         );
 
         fs.mkdirSync(outputDir, {

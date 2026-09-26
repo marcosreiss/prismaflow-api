@@ -1,7 +1,7 @@
-//migrations/oticacrista/08-2026/converters/product.converter.ts
+//migrations/oticacrista/product/product.converter.ts
 
 import type { ProductCategory } from "@prisma/client";
-import type { OldProduct } from "../loaders/product.loader";
+import type { OldProduct } from "./product.loader";
 
 export interface ConvertedProduct {
     oldId: number;

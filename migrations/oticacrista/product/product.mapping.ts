@@ -1,4 +1,4 @@
-//migrations/oticacrista/08-2026/mapping/product.mapping.ts
+//migrations/oticacrista/product/product.mapping.ts
 
 import fs from "node:fs";
 import path from "node:path";

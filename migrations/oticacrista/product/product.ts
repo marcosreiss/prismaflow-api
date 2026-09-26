@@ -4,20 +4,20 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 
-import { prisma } from "../../src/config/prisma";
+import { prisma } from "../../../src/config/prisma";
 
-import { loadProducts } from "./loaders/product.loader";
-import { convertProduct } from "./converters/product.converter";
+import { loadProducts } from "./product.loader";
+import { convertProduct } from "./product.converter";
 
 import {
     saveProductMapping,
     type ProductMapping,
-} from "./mapping/product.mapping";
+} from "./product.mapping";
 
 import {
     saveServiceMapping,
     type ServiceMapping,
-} from "./mapping/service.mapping";
+} from "./service.mapping";
 
 /* =========================================================
  * CONFIGURAÇÃO

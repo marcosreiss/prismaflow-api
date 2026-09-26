@@ -19,13 +19,13 @@ async function main() {
 
     const logger = createMigrationLogger({
         entity: "brand",
-        entityReportsDir: "./migrations/oticacrista/brands/reports",
+        entityReportsDir: "./migrations/oticacrista/brand/reports",
         executionTimestamp: formatTimestamp(startedAt),
     });
 
     const report = createBrandReport({
         reportsDir:
-            "./migrations/oticacrista/brands/reports",
+            "./migrations/oticacrista/brand/reports",
     });
 
     logger.info("=================================");

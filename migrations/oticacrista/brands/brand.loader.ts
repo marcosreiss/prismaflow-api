@@ -10,13 +10,22 @@ export interface OldBrand {
     marcaNome: string;
 }
 
-export function loadBrands(): OldBrand[] {
-    const filePath = path.resolve(
-        process.cwd(),
-        "migrations/oticacrista/input/marca.csv"
+export interface LoadBrandsOptions {
+    inputDir: string;
+}
+
+export function loadBrands(
+    options: LoadBrandsOptions
+): OldBrand[] {
+    const filePath = path.join(
+        options.inputDir,
+        "marca.csv"
     );
 
-    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const fileContent = fs.readFileSync(
+        filePath,
+        "utf-8"
+    );
 
     const records = parse(fileContent, {
         columns: true,

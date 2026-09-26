@@ -1,33 +1,58 @@
 // migrations/oticacrista/01-brand.ts
 
-import fs from "node:fs";
-import path from "node:path";
-
 import { prisma } from "../../src/config/prisma";
+
+import { migrationConfig } from "./shared/config";
+import { createMigrationLogger } from "./shared/logger";
+import { formatTimestamp } from "./shared/utils";
+
 import { loadBrands } from "./brands/brand.loader";
 import { convertBrand } from "./brands/brand.converter";
+import { persistBrand } from "./brands/brand.persistence";
 import {
-    BrandMapping,
-    saveBrandMapping,
-} from "./brands/brand.mapping";
-
-const TENANT_ID = "cmibvcyed00007m0118rkgft8";
-const DRY_RUN = false; // Altere para true se quiser apenas simular a migração sem criar registros
+    createBrandReport,
+    type BrandMapping,
+} from "./brands/brand.report";
 
 async function main() {
     const startedAt = new Date();
 
-    console.log("=================================");
-    console.log(" MIGRAÇÃO: BRAND");
-    console.log("=================================");
-    console.log(`Tenant: ${TENANT_ID}`);
-    console.log(`DRY RUN: ${DRY_RUN ? "SIM" : "NÃO"}`);
-    console.log("");
+    const logger = createMigrationLogger({
+        entity: "brand",
+        entityReportsDir: "./migrations/oticacrista/brands/reports",
+        executionTimestamp: formatTimestamp(startedAt),
+    });
 
-    const oldBrands = loadBrands();
+    const report = createBrandReport({
+        reportsDir:
+            "./migrations/oticacrista/brands/reports",
+    });
 
-    console.log(`Registros encontrados: ${oldBrands.length}`);
-    console.log("");
+    logger.info("=================================");
+    logger.info("MIGRAÇÃO: BRAND");
+    logger.info("=================================");
+    logger.info(
+        `Tenant: ${migrationConfig.tenantId}`
+    );
+    logger.info(
+        `Branch: ${migrationConfig.branchId ?? "NÃO DEFINIDA"}`
+    );
+    logger.info(
+        `DRY RUN: ${migrationConfig.dryRun
+            ? "SIM"
+            : "NÃO"
+        }`
+    );
+    logger.info("");
+
+    const oldBrands = loadBrands({
+        inputDir: migrationConfig.inputDir,
+    });
+
+    logger.info(
+        `Registros encontrados: ${oldBrands.length}`
+    );
+    logger.info("");
 
     const mappings: BrandMapping[] = [];
 
@@ -37,216 +62,127 @@ async function main() {
 
     for (const oldBrand of oldBrands) {
         try {
-            const brandData = convertBrand(oldBrand, TENANT_ID);
+            const brandData = convertBrand(
+                oldBrand,
+                migrationConfig.tenantId
+            );
 
-            const existingBrand = await prisma.brand.findUnique({
-                where: {
-                    tenantId_name: {
-                        tenantId: TENANT_ID,
-                        name: brandData.name,
-                    },
-                },
-            });
+            const result = await persistBrand(
+                brandData,
+                migrationConfig.dryRun
+            );
 
-            if (existingBrand) {
+            if (result.status === "EXISTING") {
                 existing++;
 
                 mappings.push({
                     oldId: oldBrand.marcaId,
-                    newId: existingBrand.id,
+                    newId: result.id,
                     status: "EXISTING",
                     oldName: oldBrand.marcaNome,
-                    newName: existingBrand.name,
+                    newName: result.name,
                 });
 
-                console.log(
-                    `[EXISTENTE] ${oldBrand.marcaId} → ${existingBrand.id} | ${oldBrand.marcaNome}`
+                logger.info(
+                    `[EXISTENTE] ${oldBrand.marcaId} → ${result.id} | ${oldBrand.marcaNome}`
                 );
 
                 continue;
             }
-
-            if (DRY_RUN) {
-                created++;
-
-                mappings.push({
-                    oldId: oldBrand.marcaId,
-                    newId: null,
-                    status: "CREATED",
-                    oldName: oldBrand.marcaNome,
-                    newName: brandData.name,
-                });
-
-                console.log(
-                    `[DRY RUN - CRIARIA] ${oldBrand.marcaId} | ${oldBrand.marcaNome}`
-                );
-
-                continue;
-            }
-
-            const newBrand = await prisma.brand.create({
-                data: brandData,
-            });
 
             created++;
 
             mappings.push({
                 oldId: oldBrand.marcaId,
-                newId: newBrand.id,
+                newId: result.id,
                 status: "CREATED",
                 oldName: oldBrand.marcaNome,
-                newName: newBrand.name,
+                newName: result.name,
             });
 
-            console.log(
-                `[CRIADO] ${oldBrand.marcaId} → ${newBrand.id} | ${oldBrand.marcaNome}`
-            );
+            if (migrationConfig.dryRun) {
+                logger.info(
+                    `[DRY RUN - CRIARIA] ${oldBrand.marcaId} | ${oldBrand.marcaNome}`
+                );
+            } else {
+                logger.info(
+                    `[CRIADO] ${oldBrand.marcaId} → ${result.id} | ${oldBrand.marcaNome}`
+                );
+            }
         } catch (error) {
             errors++;
 
-            saveBrandError(oldBrand, error);
+            report.saveError({
+                brand: oldBrand,
+                error,
+            });
 
-            console.error(
+            logger.error(
                 `[ERRO] ${oldBrand.marcaId} | ${oldBrand.marcaNome}`
             );
-            console.error(error);
+
+            logger.error(
+                error instanceof Error
+                    ? error.message
+                    : String(error)
+            );
         }
     }
 
     const finishedAt = new Date();
 
-    /*
-     * Só substituímos o mapping definitivo se não houve erro.
-     *
-     * Isso evita que uma execução incompleta destrua
-     * um mapping válido de uma execução anterior.
-     */
     if (errors === 0) {
-        saveBrandMapping(mappings);
+        report.saveMapping(mappings);
+
+        logger.info(
+            "Mapping atualizado com sucesso."
+        );
     } else {
-        console.log("");
-        console.log(
+        logger.warning(
             "O mapping não foi atualizado porque ocorreram erros."
         );
     }
 
-    const timestamp = formatTimestamp(finishedAt);
+    const executionReport = {
+        entity: "Brand",
+        tenantId: migrationConfig.tenantId,
+        dryRun: migrationConfig.dryRun,
 
-    saveExecutionReport({
-        table: "Brand",
-        tenantId: TENANT_ID,
-        dryRun: DRY_RUN,
         startedAt: startedAt.toISOString(),
         finishedAt: finishedAt.toISOString(),
+
+        durationMs:
+            finishedAt.getTime() -
+            startedAt.getTime(),
+
         total: oldBrands.length,
         created,
         existing,
         errors,
-    }, timestamp);
-
-    console.log("");
-    console.log("=================================");
-    console.log(" MIGRAÇÃO FINALIZADA");
-    console.log("=================================");
-    console.log(`Total:      ${oldBrands.length}`);
-    console.log(`Criados:    ${created}`);
-    console.log(`Existentes: ${existing}`);
-    console.log(`Erros:      ${errors}`);
-}
-
-function saveBrandError(
-    oldBrand: {
-        marcaId: number;
-        marcaNome: string;
-    },
-    error: unknown
-) {
-    const outputDir = path.resolve(
-        process.cwd(),
-        "migrations/oticacrista/08-2026/reports/errors"
-    );
-
-    fs.mkdirSync(outputDir, { recursive: true });
-
-    const timestamp = formatTimestamp(new Date());
-
-    const filePath = path.join(
-        outputDir,
-        `01-brand-errors-${timestamp}.json`
-    );
-
-    const errorData = {
-        table: "Brand",
-        oldId: oldBrand.marcaId,
-        oldName: oldBrand.marcaNome,
-        occurredAt: new Date().toISOString(),
-        error: serializeError(error),
     };
 
-    fs.writeFileSync(
-        filePath,
-        JSON.stringify(errorData, null, 2),
-        "utf-8"
+    report.saveExecution(executionReport);
+
+    logger.info("");
+    logger.info("=================================");
+    logger.info("MIGRAÇÃO FINALIZADA");
+    logger.info("=================================");
+    logger.info(
+        `Total:      ${oldBrands.length}`
     );
-}
-
-function saveExecutionReport(
-    report: {
-        table: string;
-        tenantId: string;
-        dryRun: boolean;
-        startedAt: string;
-        finishedAt: string;
-        total: number;
-        created: number;
-        existing: number;
-        errors: number;
-    },
-    timestamp: string
-) {
-    const outputDir = path.resolve(
-        process.cwd(),
-        "migrations/oticacrista/reports/executions"
-    );
-
-    fs.mkdirSync(outputDir, { recursive: true });
-
-    const filePath = path.join(
-        outputDir,
-        `01-brand-execution-${timestamp}.json`
-    );
-
-    fs.writeFileSync(
-        filePath,
-        JSON.stringify(report, null, 2),
-        "utf-8"
-    );
-}
-
-function serializeError(error: unknown) {
-    if (error instanceof Error) {
-        return {
-            name: error.name,
-            message: error.message,
-            stack: error.stack,
-        };
-    }
-
-    return String(error);
-}
-
-function formatTimestamp(date: Date): string {
-    return date
-        .toISOString()
-        .replace("T", "-")
-        .replace(/:/g, "-")
-        .replace(/\..+/, "");
+    logger.info(`Criados:    ${created}`);
+    logger.info(`Existentes: ${existing}`);
+    logger.info(`Erros:      ${errors}`);
 }
 
 main()
     .catch((error) => {
-        console.error("Erro fatal na migração:", error);
-        process.exit(1);
+        console.error(
+            "Erro fatal na migração:",
+            error
+        );
+
+        process.exitCode = 1;
     })
     .finally(async () => {
         await prisma.$disconnect();

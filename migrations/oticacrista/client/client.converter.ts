@@ -5,7 +5,7 @@
 import type { Gender } from "@prisma/client";
 import type {
     ClientSource,
-} from "../loaders/pesCliente.loader";
+} from "./pesCliente.loader";
 
 export interface ClientConverted {
     name: string;

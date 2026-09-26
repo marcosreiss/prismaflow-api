@@ -1,6 +1,6 @@
 // migrations/oticacrista/08-2026/converters/sale.converter.ts
 
-import { SaleSource } from "../loaders/atendimento.loader";
+import { SaleSource } from "./atendimento.loader";
 
 export interface SaleItemConverted {
     oldProductId: number;

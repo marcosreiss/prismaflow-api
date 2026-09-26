@@ -5,7 +5,7 @@ import type {
 import type {
     OrphanClient,
     OrphanPessoa,
-} from "../loaders/pesCliente.loader";
+} from "./pesCliente.loader";
 
 function clean(
     value: string | null | undefined,

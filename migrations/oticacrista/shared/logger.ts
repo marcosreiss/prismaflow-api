@@ -25,7 +25,6 @@ export function createMigrationLogger(
 
     const logsDir = path.join(
         entityReportsDir,
-        entity,
         "logs"
     );
 

@@ -132,11 +132,15 @@ async function main() {
     const finishedAt = new Date();
 
     if (errors === 0) {
-        report.saveMapping(mappings);
-
-        logger.info(
-            "Mapping atualizado com sucesso."
-        );
+        if (migrationConfig.dryRun == false) {
+            report.saveMapping(mappings);
+            logger.info(
+                "Mapping atualizado com sucesso."
+            );
+        } else {
+            logger.info("Migração Executada sem erros");
+            logger.info("DRY_RUN = True. Mapping não atualizado");
+        }
     } else {
         logger.warning(
             "O mapping não foi atualizado porque ocorreram erros."

@@ -17,8 +17,6 @@ import {
 const ENTITY = "brand";
 const ENTITY_NAME = "Brand";
 
-const ENTITY_ORDER = "01";
-
 const ERRORS_DIR_NAME = "errors";
 const EXECUTIONS_DIR_NAME = "executions";
 
@@ -28,13 +26,13 @@ const MAPPINGS_DIR = path.resolve(
 );
 
 const MAPPING_FILE_NAME =
-    `${ENTITY_ORDER}-${ENTITY}-mapping.csv`;
+    `${ENTITY}-mapping.csv`;
 
 const ERROR_FILE_PREFIX =
-    `${ENTITY_ORDER}-${ENTITY}-error`;
+    `${ENTITY}-error`;
 
 const EXECUTION_FILE_PREFIX =
-    `${ENTITY_ORDER}-${ENTITY}-execution`;
+    `${ENTITY}-execution`;
 
 const MAPPING_TEMP_SUFFIX = ".tmp";
 

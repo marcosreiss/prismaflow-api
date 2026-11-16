@@ -233,7 +233,7 @@ Não criar arquivos apenas para obedecer à estrutura — cada arquivo deve ter 
 ### Reports específicos da entidade
 
 ```
-migrations/<tenant>/<entidade>/reports/
+migrations/<tenant>/modules/<entidade>/reports/
 ├── errors/
 └── executions/
 ```

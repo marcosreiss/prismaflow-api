@@ -2,7 +2,7 @@
 
 import readline from "node:readline";
 
-import type { MappingRow } from "../shared/mapping";
+import type { MappingRow } from "@migrations/oticacrista/shared/mapping";
 import type { ConvertedProduct } from "./product.converter";
 
 /* =========================================================

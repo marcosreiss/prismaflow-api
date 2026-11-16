@@ -11,12 +11,12 @@ import {
 
 import {
     loadAtendimentoSources,
-} from "./loaders/atendimento.loader";
+} from "./atendimento.loader";
 
 import {
     convertSale,
     isCarnePayment,
-} from "./converters/sale.converter";
+} from "./sale.converter";
 
 const prisma = new PrismaClient();
 

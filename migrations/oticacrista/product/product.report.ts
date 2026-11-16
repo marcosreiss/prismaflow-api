@@ -3,9 +3,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { createMappingWriter } from "../shared/mapping";
-import { formatTimestamp, serializeError } from "../shared/utils";
-import type { MigrationExecutionReport } from "../shared/types";
+import { createMappingWriter } from "@migrations/oticacrista/shared/mapping";
+import { formatTimestamp, serializeError } from "@migrations/oticacrista/shared/utils";
+import type { MigrationExecutionReport } from "@migrations/oticacrista/shared/types";
 import type { OldProduct } from "./product.loader";
 
 const PRODUCT_MAPPING_HEADER =

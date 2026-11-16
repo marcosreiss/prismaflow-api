@@ -3,9 +3,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { createMappingWriter } from "../shared/mapping";
-import { formatTimestamp, serializeError } from "../shared/utils";
-import type { MigrationExecutionReport } from "../shared/types";
+import { createMappingWriter } from "@migrations/oticacrista/shared/mapping";
+import { formatTimestamp, serializeError } from "@migrations/oticacrista/shared/utils";
+import type { MigrationExecutionReport } from "@migrations/oticacrista/shared/types";
 
 const MAPPING_HEADER = "old_id,new_id,status,old_name,new_name,matched_by";
 

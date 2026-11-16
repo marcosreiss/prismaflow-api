@@ -1,11 +1,11 @@
 // migrations/oticacrista/product/product.ts
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "@/config/prisma";
 
-import { migrationConfig } from "../shared/config";
-import { createMigrationLogger } from "../shared/logger";
-import { formatTimestamp } from "../shared/utils";
-import { loadMapping } from "../shared/mapping";
+import { migrationConfig } from "@migrations/oticacrista/shared/config";
+import { createMigrationLogger } from "@migrations/oticacrista/shared/logger";
+import { formatTimestamp } from "@migrations/oticacrista/shared/utils";
+import { loadMapping } from "@migrations/oticacrista/shared/mapping";
 
 import { loadProducts } from "./product.loader";
 import { convertProduct } from "./product.converter";

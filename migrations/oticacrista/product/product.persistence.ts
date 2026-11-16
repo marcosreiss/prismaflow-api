@@ -1,6 +1,6 @@
 // migrations/oticacrista/product/product.persistence.ts
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "@/config/prisma";
 import type { ConvertedProduct } from "./product.converter";
 import type { ResolvedBrand } from "./product.matcher";
 

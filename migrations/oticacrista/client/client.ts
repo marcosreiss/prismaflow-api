@@ -2,9 +2,9 @@
 
 import { PrismaClient, type Client } from "@prisma/client";
 
-import { migrationConfig } from "../shared/config";
-import { createMigrationLogger } from "../shared/logger";
-import { formatTimestamp } from "../shared/utils";
+import { migrationConfig } from "@migrations/oticacrista/shared/config";
+import { createMigrationLogger } from "@migrations/oticacrista/shared/logger";
+import { formatTimestamp } from "@migrations/oticacrista/shared/utils";
 
 import {
     loadClientSources,

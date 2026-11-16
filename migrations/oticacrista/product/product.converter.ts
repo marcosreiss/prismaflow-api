@@ -48,7 +48,12 @@ export function detectCategory(name: string): ProductCategory | null {
     if (
         normalized.includes("COLORACAO") ||
         normalized.includes("RENEGOCIACAO") ||
-        normalized.includes("ACORDO")
+        normalized.includes("ACORDO") ||
+        normalized.includes("Produto Indisponivel") ||
+        normalized.includes("SALDO DEVEDOR 2014") ||
+        normalized.includes("ATUALIZAR PRODUTO1") ||
+        normalized.includes("ATUALIZAR PRODUTO2") ||
+        normalized.includes("ATUALIZAR PRODUTO4")
     ) {
         return "ACCESSORY";
     }

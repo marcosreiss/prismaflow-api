@@ -373,12 +373,12 @@ async function main(): Promise<void> {
 
     const logger = createMigrationLogger({
         entity: "client",
-        entityReportsDir: "./migrations/oticacrista/client/reports",
+        entityReportsDir: "./migrations/oticacrista/modules/client/reports",
         executionTimestamp: formatTimestamp(startedAt),
     });
 
     const report = createClientReport({
-        entityReportsDir: "./migrations/oticacrista/client/reports",
+        entityReportsDir: "./migrations/oticacrista/modules/client/reports",
         mappingsDir: "./migrations/oticacrista/mappings",
     });
 

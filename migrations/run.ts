@@ -37,6 +37,7 @@ const migrationDir = path.resolve(
 
 const migrationFile = path.join(
     migrationDir,
+    "modules/",
     entity,
     `${entity}.ts`
 );

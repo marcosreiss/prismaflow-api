@@ -1,6 +1,6 @@
 // migrations/oticacrista/brand/brand.persistence.ts
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "@/config/prisma";
 import type { BrandData } from "./brand.converter";
 
 export interface PersistBrandResult {

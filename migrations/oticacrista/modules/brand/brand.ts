@@ -1,10 +1,10 @@
 // migrations/oticacrista/brand/brand.ts
 
-import { prisma } from "../../../src/config/prisma";
+import { prisma } from "@/config/prisma";
 
-import { migrationConfig } from "../shared/config";
-import { createMigrationLogger } from "../shared/logger";
-import { formatTimestamp } from "../shared/utils";
+import { migrationConfig } from "@migrations/oticacrista/shared/config";
+import { createMigrationLogger } from "@migrations/oticacrista/shared/logger";
+import { formatTimestamp } from "@migrations/oticacrista/shared/utils";
 
 import { loadBrands } from "./brand.loader";
 import { convertBrand } from "./brand.converter";

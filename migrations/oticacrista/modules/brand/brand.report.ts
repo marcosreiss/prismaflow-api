@@ -4,11 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { OldBrand } from "./brand.loader";
-import type { MigrationExecutionReport } from "../shared/types";
+import type { MigrationExecutionReport } from "@migrations/oticacrista/shared/types";
 import {
     formatTimestamp,
     serializeError,
-} from "../shared/utils";
+} from "@migrations/oticacrista/shared/utils";
 
 /* =========================================================
  * CONFIGURAÇÃO DE ARQUIVOS E DIRETÓRIOS

@@ -108,8 +108,6 @@ async function main() {
             /*
              * Verifica primeiro se o produto já existe. Só perguntamos
              * a categoria manualmente quando o produto for de fato novo
-             * — não há motivo para interromper a migração com uma
-             * pergunta sobre um registro que já existe no banco atual.
              */
             const existingProduct = await findExistingProduct(
                 converted,

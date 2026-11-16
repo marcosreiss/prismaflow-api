@@ -139,7 +139,7 @@ async function main() {
             );
         } else {
             logger.info("Migração Executada sem erros");
-            logger.info("DRY_RUN = True. Mapping não atualizado");
+            logger.info("DRY RUN finalizado. Nenhum mapping foi criado ou alterado.");
         }
     } else {
         logger.warning(

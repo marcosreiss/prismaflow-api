@@ -1,0 +1,21 @@
+{
+  "entity": "Sale",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": true,
+  "startedAt": "2026-11-17T03:26:08.120Z",
+  "finishedAt": "2026-11-17T03:26:09.685Z",
+  "durationMs": 1565,
+  "total": 2094,
+  "created": 2094,
+  "existing": 0,
+  "errors": 0,
+  "pending": 0,
+  "itemsAnalyzed": 3911,
+  "itemsCreated": 3903,
+  "itemsWithoutSale": 8,
+  "clientsWithoutMapping": 0,
+  "productsWithoutMapping": 0,
+  "financialInconsistencies": 0,
+  "mappingFile": "C:\\Work\\prismaflow\\prismaflow-core\\prismaflow-api\\migrations\\oticacrista\\mappings\\sale-mapping.csv",
+  "mappingFinalized": false
+}

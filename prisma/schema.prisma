@@ -246,7 +246,7 @@ model Sale {
   subtotal       Float?               @default(0)
   discount       Float?               @default(0)
   total          Float?               @default(0)
-  notes          String?
+  notes          String?              @db.Text
   isActive       Boolean              @default(true)
   tenantId       String
   branchId       String

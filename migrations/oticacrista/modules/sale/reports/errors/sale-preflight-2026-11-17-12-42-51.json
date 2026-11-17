@@ -1,0 +1,20 @@
+{
+  "entity": "Sale",
+  "runId": "2026-11-17-12-42-50-13104",
+  "status": "READY",
+  "blockReason": null,
+  "generatedAt": "2026-11-17T15:42:51.851Z",
+  "counts": {
+    "salesAnalyzed": 2094,
+    "salesEligible": 2094,
+    "salesPending": 0,
+    "itemsAnalyzed": 3903,
+    "itemsEligible": 3903,
+    "itemsWithoutSale": 0,
+    "clientsWithoutMapping": 0,
+    "productsWithoutMapping": 0,
+    "financialInconsistencies": 0,
+    "oversizedTexts": 0
+  },
+  "issues": []
+}

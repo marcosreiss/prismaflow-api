@@ -39,7 +39,7 @@ export function createMigrationLogger(
 
     const logFilePath = path.join(
         logsDir,
-        `${entity}-log-${timestamp}.txt`
+        `${entity}-log-${timestamp}.log`
     );
 
     fs.writeFileSync(

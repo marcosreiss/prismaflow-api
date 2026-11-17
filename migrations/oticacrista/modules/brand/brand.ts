@@ -25,7 +25,7 @@ async function main() {
 
     const report = createBrandReport({
         reportsDir:
-            "./migrations/oticacrista/brand/reports",
+            "./migrations/oticacrista/modules/brand/reports",
     });
 
     logger.info("=================================");

@@ -1,0 +1,149 @@
+{
+  "entity": "Sale",
+  "runId": "2026-11-17-12-30-34-15580",
+  "status": "BLOCKED",
+  "blockReason": "8 inconsistência(s) encontrada(s) no preflight.",
+  "generatedAt": "2026-11-17T15:30:35.824Z",
+  "counts": {
+    "salesAnalyzed": 2094,
+    "salesEligible": 2094,
+    "salesPending": 0,
+    "itemsAnalyzed": 3911,
+    "itemsEligible": 3903,
+    "itemsWithoutSale": 8,
+    "clientsWithoutMapping": 0,
+    "productsWithoutMapping": 0,
+    "financialInconsistencies": 0,
+    "oversizedTexts": 0
+  },
+  "issues": [
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "10188",
+      "reasons": [
+        "Atendimento legado 10188 não existe em atendimento.csv."
+      ],
+      "sourceItem": {
+        "itemAtendimento": "10188",
+        "itemProduto": "145",
+        "itemQtd": "1",
+        "itemTotalParcial": "60.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "60.00",
+        "itemObs": ""
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "10188",
+      "reasons": [
+        "Atendimento legado 10188 não existe em atendimento.csv."
+      ],
+      "sourceItem": {
+        "itemAtendimento": "10188",
+        "itemProduto": "133",
+        "itemQtd": "1",
+        "itemTotalParcial": "360.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "360.00",
+        "itemObs": "REF. SJ 005 52-16 140"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "10188",
+      "reasons": [
+        "Atendimento legado 10188 não existe em atendimento.csv."
+      ],
+      "sourceItem": {
+        "itemAtendimento": "10188",
+        "itemProduto": "160",
+        "itemQtd": "1",
+        "itemTotalParcial": "400.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "400.00",
+        "itemObs": "OS. 2234 DR. AMILAR RX OD+2,00-1,75 160º OE+0,25-0,00 AD 2,00 DNP 28,0/28,5 CO 25"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "10982",
+      "reasons": [
+        "Atendimento legado 10982 não existe em atendimento.csv."
+      ],
+      "sourceItem": {
+        "itemAtendimento": "10982",
+        "itemProduto": "213",
+        "itemQtd": "1",
+        "itemTotalParcial": "370.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "370.00",
+        "itemObs": "REF. IN 033 60-18 135 V37"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "10982",
+      "reasons": [
+        "Atendimento legado 10982 não existe em atendimento.csv."
+      ],
+      "sourceItem": {
+        "itemAtendimento": "10982",
+        "itemProduto": "582",
+        "itemQtd": "1",
+        "itemTotalParcial": "650.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "650.00",
+        "itemObs": "OS. 2954 DR. GLAUCO BRITO 4339 RX OD+1,75-0,25 150º 32 OE+1,75-0,00 0º 33 CO 27 AD+2,25"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "",
+      "reasons": [
+        "ID de atendimento inválido: "
+      ],
+      "sourceItem": {
+        "itemAtendimento": "",
+        "itemProduto": "173",
+        "itemQtd": "1",
+        "itemTotalParcial": "700.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "700.00",
+        "itemObs": "OS. 2957 DRª. DIANA OLIVEIRA 3346 RX OD-7,25-0,00 0º 31 OE-6,25-1,25 180º 31 CO 26"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "",
+      "reasons": [
+        "ID de atendimento inválido: "
+      ],
+      "sourceItem": {
+        "itemAtendimento": "",
+        "itemProduto": "575",
+        "itemQtd": "1",
+        "itemTotalParcial": "360.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "360.00",
+        "itemObs": "OS 2976 DRª. DIANA OLIVEIRA 3346 RX OD+2,25-0,25 90º 33 OE+2,25-0,25 105º 32 AD+3,00 CO 25"
+      }
+    },
+    {
+      "kind": "ORPHAN_ITEM",
+      "legacyId": "",
+      "reasons": [
+        "ID de atendimento inválido: "
+      ],
+      "sourceItem": {
+        "itemAtendimento": "",
+        "itemProduto": "560",
+        "itemQtd": "1",
+        "itemTotalParcial": "300.00",
+        "itemDesc": "0",
+        "itemTotalGeral": "300.00",
+        "itemObs": "OS 3059 DRº ROGERIO EFRAIM 5195 RX (OD +0,50-0,00 0º 32) (OE+1,00-0,50 105º 32,5) AD+2,00 CO 23 (PROPRIA ZF DG 3166 501 53-16 140 V37)"
+      }
+    }
+  ]
+}

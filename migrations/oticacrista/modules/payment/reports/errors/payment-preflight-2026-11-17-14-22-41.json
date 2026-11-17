@@ -1,0 +1,109 @@
+{
+  "entity": "Payment",
+  "runId": "2026-11-17-14-22-40-13056",
+  "status": "READY",
+  "blockReason": null,
+  "generatedAt": "2026-11-17T17:22:41.471Z",
+  "counts": {
+    "salesAnalyzed": 2094,
+    "paymentsPlanned": 2094,
+    "paymentErrors": 0,
+    "methodsByType": {
+      "INSTALLMENT": 848,
+      "MONEY": 996,
+      "CREDIT": 687,
+      "DEBIT": 87
+    },
+    "entriesIdentified": 524,
+    "installmentsAnalyzed": 3917,
+    "installmentsConfirmed": 3462,
+    "installmentsPending": 455,
+    "pendingPayments": 150,
+    "totalAmount": 1709185.92,
+    "paidAmount": 1612881.91,
+    "openAmount": 96304.01,
+    "excludedOutOfScope": 0,
+    "roundingWarnings": 2
+  },
+  "roundingWarnings": [
+    {
+      "kind": "INSTALLMENT_ROUNDING",
+      "legacyId": "10741",
+      "reasons": [
+        "Diferença de arredondamento de -R$ 0,01 entre saldo do carnê e soma das parcelas; valores de origem preservados."
+      ],
+      "sourceRecord": [
+        {
+          "carId": "1786",
+          "carAtendimento": "10741",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 283.33",
+          "carVencimento": "01-Jul-19",
+          "carNumeroParcela": "1",
+          "carParcelaStatus": "Pago com sucesso",
+          "carDataPagamento": "01-Jul-19"
+        },
+        {
+          "carId": "1787",
+          "carAtendimento": "10741",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 283.33",
+          "carVencimento": "01-Aug-19",
+          "carNumeroParcela": "2",
+          "carParcelaStatus": "Pago com sucesso",
+          "carDataPagamento": "31-Jul-19"
+        },
+        {
+          "carId": "1788",
+          "carAtendimento": "10741",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 283.33",
+          "carVencimento": "01-Sep-19",
+          "carNumeroParcela": "3",
+          "carParcelaStatus": "Pago com atraso",
+          "carDataPagamento": "09-Sep-19"
+        }
+      ]
+    },
+    {
+      "kind": "INSTALLMENT_ROUNDING",
+      "legacyId": "11826",
+      "reasons": [
+        "Diferença de arredondamento de -R$ 0,01 entre saldo do carnê e soma das parcelas; valores de origem preservados."
+      ],
+      "sourceRecord": [
+        {
+          "carId": "3402",
+          "carAtendimento": "11826",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 133.33",
+          "carVencimento": "05-Aug-24",
+          "carNumeroParcela": "1",
+          "carParcelaStatus": "Aberta",
+          "carDataPagamento": ""
+        },
+        {
+          "carId": "3403",
+          "carAtendimento": "11826",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 133.33",
+          "carVencimento": "05-Sep-24",
+          "carNumeroParcela": "2",
+          "carParcelaStatus": "Aberta",
+          "carDataPagamento": ""
+        },
+        {
+          "carId": "3404",
+          "carAtendimento": "11826",
+          "carParcelas": "3",
+          "carValorParcela": "R$ 133.33",
+          "carVencimento": "05-Oct-24",
+          "carNumeroParcela": "3",
+          "carParcelaStatus": "Aberta",
+          "carDataPagamento": ""
+        }
+      ]
+    }
+  ],
+  "issues": []
+}

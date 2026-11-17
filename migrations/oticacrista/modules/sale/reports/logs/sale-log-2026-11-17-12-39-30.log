@@ -1,0 +1,12 @@
+[12:39:30] [INFO] MIGRAÇÃO: SALE + ITEM PRODUCT
+[12:39:30] [INFO] Run ID: 2026-11-17-12-39-30-14824
+[12:39:30] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[12:39:30] [INFO] Branch: cmibvcyed00017m014r66e39w
+[12:39:30] [INFO] DRY RUN: SIM
+[12:39:31] [INFO] Atendimentos analisados: 2094
+[12:39:31] [INFO] Vendas individualmente aptas: 2094
+[12:39:31] [INFO] Vendas pendentes: 0
+[12:39:31] [INFO] Itens analisados: 3903
+[12:39:31] [INFO] Itens individualmente aptos: 3903
+[12:39:31] [INFO] Itens sem atendimento: 0
+[12:39:31] [SUCCESS] DRY RUN aprovado: seriam criadas 2094 vendas e 3903 itens. Nenhuma escrita no banco ou mapping foi feita.

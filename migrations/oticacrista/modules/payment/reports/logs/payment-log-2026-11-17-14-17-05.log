@@ -1,0 +1,13 @@
+[14:17:05] [INFO] MIGRAÇÃO: PAYMENT + PAYMENT METHOD ITEM + PAYMENT INSTALLMENT
+[14:17:05] [INFO] Run ID: 2026-11-17-14-17-05-27004
+[14:17:05] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[14:17:05] [INFO] Branch: cmibvcyed00017m014r66e39w
+[14:17:05] [INFO] DRY RUN: SIM
+[14:17:07] [INFO] Atendimentos analisados: 2094
+[14:17:07] [INFO] Pagamentos previstos: 2093
+[14:17:07] [INFO] Métodos previstos: {"INSTALLMENT":848,"MONEY":995,"CREDIT":687,"DEBIT":87}
+[14:17:07] [INFO] Parcelas analisadas/confirmadas/pendentes: 3917/3462/455
+[14:17:07] [INFO] Valores total/pago/em aberto: 1708685.92/1612381.91/96304.01
+[14:17:07] [INFO] Excluídos do escopo: 0
+[14:17:07] [INFO] Avisos de arredondamento documentados: 2
+[14:17:07] [ERROR] [MIGRAÇÃO BLOQUEADA ANTES DA PERSISTÊNCIA] 1 inconsistência(s) encontrada(s) no preflight.

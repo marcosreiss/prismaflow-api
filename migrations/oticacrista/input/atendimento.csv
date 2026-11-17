@@ -778,7 +778,7 @@ ateId,ateColaborador,ateCliente,ateDataCompra,ateDataVencimento,ateTotal,atePago
 10826,2,740,25-Sep-19,05-Oct-19,"400,00",Carnê concluído,CARNÊ,"0,00"
 10827,2,1796,26-Sep-19,,"150,00",Pago com sucesso no catão de crédito em 1 parcelas,CRÉDITO,"0,00"
 10828,2,1550,01-Oct-19,,"100,00",Pago com sucesso em dinheiro,DINHEIRO,"0,00"
-10829,2,898,01-Oct-19,,"500,00",0,,
+10829,2,898,01-Oct-19,,"500,00",0,DINHEIRO,"0,00"
 10830,2,1797,02-Oct-19,,"750,00",Pago com sucesso no catão de crédito em 6 parcelas,CRÉDITO,"0,00"
 10831,2,1638,01-Oct-19,,"0,01",Pago com sucesso em dinheiro,DINHEIRO,"0,00"
 10832,2,1798,07-Oct-19,07-Nov-19,"460,00",Carnê concluído,CARNÊ,"100,00"

@@ -1,0 +1,21 @@
+{
+  "entity": "Payment",
+  "phase": "PREFLIGHT",
+  "kind": "INVALID_PAYMENT",
+  "legacyId": "10829",
+  "reasons": [
+    "ateFormaPagamento desconhecida ou vazia: \"\"."
+  ],
+  "occurredAt": "2026-11-17T17:17:07.107Z",
+  "sourceRecord": {
+    "ateId": "10829",
+    "ateColaborador": "2",
+    "ateCliente": "898",
+    "ateDataCompra": "01-Oct-19",
+    "ateDataVencimento": "",
+    "ateTotal": "500,00",
+    "atePago": "0",
+    "ateFormaPagamento": "",
+    "ateEntrada": ""
+  }
+}

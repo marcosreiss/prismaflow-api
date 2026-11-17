@@ -1,11 +1,9 @@
-// migrations/oticacrista/client/client.loader.ts
-
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "csv-parse/sync";
 
-export interface PessoaCsv {
-    pesId: string;
+export interface ClientSource {
+    id: string;
     pesNome: string;
     pesCel: string;
     pesTel: string;
@@ -22,10 +20,6 @@ export interface PessoaCsv {
     pesSexo: string;
     pesContato: string;
     pesSite: string;
-}
-
-export interface PesClienteCsv {
-    cliPessoa: string;
     cliConjuge: string;
     cliFiliacao: string;
     cliRefNome1: string;
@@ -41,105 +35,31 @@ export interface PesClienteCsv {
     cliAtendimentos: string;
 }
 
-export interface ClientSource {
-    pessoa: PessoaCsv;
-    cliente: PesClienteCsv;
-}
+export const CLIENT_CSV_PATH = path.resolve(
+    process.cwd(),
+    "migrations/oticacrista/modules/client/input/cliente.csv",
+);
 
-export interface OrphanClient {
-    cliente: PesClienteCsv;
-    reason: string;
-}
-
-export interface OrphanPessoa {
-    pessoa: PessoaCsv;
-    reason: string;
-}
-
-export interface ClientSources {
-    sources: ClientSource[];
-    orphanClients: OrphanClient[];
-    orphanPessoas: OrphanPessoa[];
-}
-
-export interface LoadClientSourcesOptions {
-    inputDir: string;
-}
-
-function loadCsv<T>(filePath: string): T[] {
-    if (!fs.existsSync(filePath)) {
-        throw new Error(`Arquivo não encontrado: ${filePath}`);
+export function loadClients(): ClientSource[] {
+    if (!fs.existsSync(CLIENT_CSV_PATH)) {
+        throw new Error(`Arquivo de entrada não encontrado: ${CLIENT_CSV_PATH}`);
     }
 
-    const content = fs.readFileSync(filePath, "utf-8");
-
-    return parse(content, {
+    const records = parse(fs.readFileSync(CLIENT_CSV_PATH, "utf8"), {
         columns: true,
         skip_empty_lines: true,
         bom: true,
-        relax_column_count: true,
+        relax_column_count: false,
         trim: true,
-    }) as T[];
-}
+    }) as Record<string, string>[];
 
-/**
- * Lê pessoa.csv e pesCliente.csv e consolida os registros em três grupos:
- *
- * - sources: pessoa + pesCliente casados pelo mesmo id (caso normal);
- * - orphanClients: pesCliente sem pessoa correspondente;
- * - orphanPessoas: pessoa sem pesCliente correspondente.
- *
- * Os dois grupos de órfãos são preservados (não descartados) porque um
- * cliente incompleto ainda pode estar referenciado em vendas antigas —
- * perder o registro significaria perder faturamento/dados contábeis
- * ligados a ele.
- */
-export function loadClientSources(
-    options: LoadClientSourcesOptions,
-): ClientSources {
-    const pessoaPath = path.join(options.inputDir, "pessoa.csv");
-    const pesClientePath = path.join(options.inputDir, "pesCliente.csv");
-
-    const pessoas = loadCsv<PessoaCsv>(pessoaPath);
-    const clientes = loadCsv<PesClienteCsv>(pesClientePath);
-
-    const pessoaMap = new Map<string, PessoaCsv>();
-
-    for (const pessoa of pessoas) {
-        pessoaMap.set(pessoa.pesId, pessoa);
-    }
-
-    const clientePessoaIds = new Set<string>();
-
-    const sources: ClientSource[] = [];
-    const orphanClients: OrphanClient[] = [];
-    const orphanPessoas: OrphanPessoa[] = [];
-
-    for (const cliente of clientes) {
-        const pessoa = pessoaMap.get(cliente.cliPessoa);
-
-        if (!pessoa) {
-            orphanClients.push({
-                cliente,
-                reason: "cliPessoa não possui correspondente em pessoa.csv.",
-            });
-
-            continue;
+    return records.map((record, index) => {
+        if (!record.id?.trim()) {
+            throw new Error(`Registro ${index + 2} sem a coluna id obrigatória.`);
         }
 
-        clientePessoaIds.add(cliente.cliPessoa);
-
-        sources.push({ pessoa, cliente });
-    }
-
-    for (const pessoa of pessoas) {
-        if (!clientePessoaIds.has(pessoa.pesId)) {
-            orphanPessoas.push({
-                pessoa,
-                reason: "pessoa não possui correspondente em pesCliente.csv.",
-            });
-        }
-    }
-
-    return { sources, orphanClients, orphanPessoas };
+        return Object.fromEntries(
+            Object.entries(record).map(([key, value]) => [key, value ?? ""]),
+        ) as unknown as ClientSource;
+    });
 }

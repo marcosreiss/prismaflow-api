@@ -72,15 +72,15 @@ export function createMigrationLogger(
         },
 
         success(message: string) {
-            write("SUCESSO", message);
+            write("SUCCESS", message);
         },
 
         warning(message: string) {
-            write("AVISO", message);
+            write("WARNING", message);
         },
 
         error(message: string) {
-            write("ERRO", message);
+            write("ERROR", message);
         },
     };
 }

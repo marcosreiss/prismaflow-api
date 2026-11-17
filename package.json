@@ -10,7 +10,8 @@
     "start": "node dist/server.js",
     "seed": "ts-node -r tsconfig-paths/register prisma/seeds/index.ts",
     "migration:brand": "npx tsx migrations/oticacrista/01-brand.ts",
-    "migration": "npx tsx migrations/run.ts"
+    "migration": "npx tsx migrations/run.ts",
+    "test:migration:sale": "node -r ts-node/register -r tsconfig-paths/register --test migrations/oticacrista/modules/sale/sale.test.ts"
   },
   "keywords": [],
   "author": "",

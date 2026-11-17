@@ -37,22 +37,47 @@ export function loadMapping(
         );
     }
 
+    return loadMappingFile(filePath, entity);
+}
+
+/** Loads a mapping file at an explicit path using the same strict parser. */
+export function loadMappingFile(
+    filePath: string,
+    entity: string,
+): Map<number, MappingRow> {
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`Mapping de "${entity}" não encontrado: ${filePath}`);
+    }
+
     const content = fs.readFileSync(filePath, "utf-8");
 
     const lines = content
         .split(/\r?\n/)
         .filter((line) => line.trim() !== "");
 
+    if (lines.length === 0) {
+        throw new Error(`Mapping de "${entity}" está vazio: ${filePath}`);
+    }
+
+    const header = parseCsvLine(lines[0]).map((value) => value.toLowerCase());
+    if (header[0] !== "old_id" || header[1] !== "new_id" || header[2] !== "status") {
+        throw new Error(`Cabeçalho inválido no mapping de "${entity}": ${filePath}`);
+    }
+
     const map = new Map<number, MappingRow>();
 
-    for (const line of lines.slice(1)) {
+    for (const [index, line] of lines.slice(1).entries()) {
         const values = parseCsvLine(line);
 
         const oldId = Number(values[0]);
         const newId = Number(values[1]);
 
-        if (!Number.isInteger(oldId) || !Number.isInteger(newId)) {
-            continue;
+        if (!Number.isSafeInteger(oldId) || oldId < 1 || !Number.isSafeInteger(newId) || newId < 1 || !values[2]) {
+            throw new Error(`Mapping de "${entity}" contém IDs inválidos na linha ${index + 2}: ${filePath}`);
+        }
+
+        if (map.has(oldId)) {
+            throw new Error(`Mapping de "${entity}" contém old_id duplicado (${oldId}): ${filePath}`);
         }
 
         map.set(oldId, {

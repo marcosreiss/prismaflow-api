@@ -23,18 +23,21 @@ export interface OldSaleItem {
 function loadCsv<T>(filePath: string, requiredHeaders: string[]): T[] {
     if (!fs.existsSync(filePath)) throw new Error(`Arquivo não encontrado: ${filePath}`);
 
-    const records = parse(fs.readFileSync(filePath, "utf8"), {
-        columns: true,
+    const content = fs.readFileSync(filePath, "utf8");
+    const records = parse(content, {
+        columns: (headers: string[]) => {
+            const normalized = headers.map((header) => header.trim());
+            const duplicates = normalized.filter((header, index) => normalized.indexOf(header) !== index);
+            if (duplicates.length) throw new Error(`Cabeçalho duplicado em ${filePath}: ${[...new Set(duplicates)].join(", ")}`);
+            const missing = requiredHeaders.filter((header) => !normalized.includes(header));
+            if (missing.length) throw new Error(`Colunas obrigatórias ausentes em ${filePath}: ${missing.join(", ")}`);
+            return normalized;
+        },
         skip_empty_lines: true,
         bom: true,
         relax_column_count: false,
         trim: false,
     }) as Array<Record<string, string>>;
-
-    const headers = records.length ? Object.keys(records[0]) : parse(fs.readFileSync(filePath, "utf8"), { to_line: 1, bom: true })[0] as string[];
-    for (const header of requiredHeaders) {
-        if (!headers.includes(header)) throw new Error(`Coluna obrigatória "${header}" não encontrada em ${filePath}.`);
-    }
 
     return records.map((record) => Object.fromEntries(
         Object.entries(record).map(([key, value]) => [key, value ?? ""]),

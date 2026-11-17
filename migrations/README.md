@@ -160,6 +160,8 @@ Regra importante: o `DRY_RUN` não deve ter uma lógica diferente da execução 
 
 Consequência direta: **o mapping definitivo não é criado nem sobrescrito em `DRY_RUN=true`**, porque o ID de um registro novo só existe depois do `prisma.create()` real. Para registros já existentes (`EXISTING`), o ID atual já é conhecido e pode aparecer mesmo em dry-run.
 
+O `DRY_RUN` deve executar as mesmas etapas de carregamento, conversão e preflight da execução real. Deve apontar problemas que impediriam a persistência e gerar relatórios acionáveis, mas nunca executar operações de escrita no banco nem publicar mappings com IDs presumidos. Registros só podem ser contados como aptos quando passarem por todas as validações.
+
 ## Fluxo padrão de uma migração
 
 ```
@@ -184,6 +186,44 @@ Finalização
 
 Nem toda entidade passa por todas as etapas. Uma entidade simples pode seguir apenas `Loader → Converter → Persistence → Report`, sem necessidade de indexação ou matching.
 
+### Preflight obrigatório antes de escrever
+
+Todo módulo deve concluir um preflight antes da primeira escrita no banco, seguindo esta ordem:
+
+1. Carregar os arquivos de origem e validar sua estrutura e colunas obrigatórias.
+2. Converter os registros para os tipos do destino.
+3. Validar IDs, tipos, campos obrigatórios e duplicidades relevantes.
+4. Resolver relacionamentos e mappings necessários.
+5. Validar regras de negócio e cálculos derivados.
+6. Conferir limites e restrições efetivos do banco, incluindo bytes de texto e intervalos numéricos.
+7. Gravar um relatório de preflight com registros aptos, pendências e motivos detalhados.
+8. Bloquear a persistência se houver qualquer inconsistência que torne incompleta ou insegura a migração do conjunto.
+9. Persistir somente após um preflight aprovado.
+10. Finalizar mappings após o commit e gravar o relatório final.
+
+Nenhuma linha dependente deve ser escrita enquanto ainda houver dados sem conversão, relacionamento ou validação completos. Não descarte registros problemáticos silenciosamente.
+
+### Política de transações
+
+- Prefira uma transação global quando a integridade depender da persistência conjunta de vários registros ou entidades relacionadas.
+- Uma falha em qualquer operação dentro da transação global deve propagar o erro e provocar rollback do conjunto.
+- Não capture erros individuais de persistência para continuar quando isso puder deixar dados parcialmente migrados.
+- Dimensione `maxWait` e `timeout` com base no volume medido e no número de operações; não aumente limites sem justificativa.
+- Se uma limitação técnica exigir lotes, documente a exceção e implemente retomada idempotente, reconciliação e relatório de cada lote. Lotes não autorizam perda silenciosa de atomicidade.
+- Relatórios não podem contar registros como criados antes do commit.
+
+### Mapping e commit
+
+O sistema de arquivos não participa da transação do banco. Quando IDs gerados são necessários para o mapping, prepare um mapping temporário incremental, mas publique o arquivo definitivo somente depois do commit. Em rollback, descarte o temporário. Se o commit ocorrer e a publicação falhar, registre uma falha crítica e preserve o temporário, os IDs e um manifesto que permita recuperar o mapping sem repetir a migração. Uma próxima execução deve bloquear enquanto houver artefatos de estado incerto ou recuperação pendente.
+
+Não considere garantida a atomicidade entre banco e sistema de arquivos. O mapping definitivo só é válido se estiver completo e corresponder às linhas confirmadas no banco. `DRY_RUN` nunca publica mappings definitivos para IDs ainda não gerados.
+
+### Compatibilidade com o schema e o banco
+
+Confira os tipos convertidos contra o schema Prisma e contra a estrutura efetivamente aplicada no banco. O schema, sozinho, não prova que a coluna de produção tem o tipo esperado. Verifique tipos, tamanhos de `VARCHAR` e `TEXT`, precisão e intervalos numéricos, campos obrigatórios, defaults, índices, unicidade e chaves estrangeiras.
+
+No MySQL, valide texto pelo tamanho em bytes na codificação usada (`Buffer.byteLength(valor, "utf8")` em Node.js quando aplicável), não pela quantidade de caracteres. Nunca trunque, omita ou resuma texto legítimo em silêncio. Se a coluna não comportar o conteúdo, bloqueie o preflight e avalie uma alteração de schema/coluna antes da execução. Registre divergências entre migration SQL, schema Prisma e estrutura efetiva antes de persistir.
+
 ## Responsabilidade dos arquivos por entidade
 
 ### `<entidade>.ts` (orquestrador)
@@ -196,11 +236,11 @@ Quando uma entidade legada se desdobra em mais de um destino (ex.: `produto.csv`
 
 ### `.loader.ts`
 
-Lê os dados antigos (localiza o arquivo de entrada, lê CSV/XLSX, interpreta e retorna objetos do modelo antigo). Não consulta Prisma, não cria registros, não faz matching, não gera reports, não aplica regras de persistência.
+Lê os dados antigos (localiza o arquivo de entrada, lê CSV/XLSX, interpreta e retorna objetos do modelo antigo) e valida estrutura, cabeçalhos e formato básico. Não consulta Prisma, não cria registros, não faz matching, não gera reports, não aplica regras de persistência.
 
 ### `.converter.ts`
 
-Transforma o modelo antigo no modelo usado pelo sistema novo (normalização de CPF, telefone, datas, sexo, campos antigos → novos, valores vazios, dados textuais). Não consulta banco, não cria registros, não gera mapping, não escreve arquivos.
+Transforma o modelo antigo no modelo usado pelo sistema novo (normalização de CPF, telefone, datas, sexo, campos antigos → novos, valores vazios, dados textuais) e sinaliza conversões inválidas. Não consulta banco, não cria registros, não gera mapping, não escreve arquivos.
 
 ### `.index.ts`
 
@@ -214,7 +254,7 @@ Também é o lugar correto para decisões que não podem ser resolvidas de forma
 
 ### `.persistence.ts`
 
-Concentra toda a interação com o banco: `find`, `findUnique`, `findFirst`, `create`, `update`, `upsert`. O orquestrador nunca executa queries diretamente. A persistência deve sempre respeitar o `DRY_RUN`.
+Concentra toda a interação com o banco: `find`, `findUnique`, `findFirst`, `create`, `update`, `upsert` e transações. O orquestrador nunca executa queries diretamente. A persistência deve sempre respeitar o `DRY_RUN`; a escrita só é chamada depois do preflight aprovado.
 
 Quando a criação de um registro depende de uma decisão manual custosa (matcher interativo), separar a verificação de existência (`findExisting...`) da criação (`create...`) permite ao orquestrador só acionar o matcher quando o registro for realmente novo — evitando perguntas desnecessárias sobre registros que já existem.
 
@@ -223,6 +263,8 @@ Quando a criação de um registro depende de uma decisão manual custosa (matche
 Gera os resultados da migração: mappings, erros, execution reports, serialização e escrita dos arquivos de relatório. Reports de erro/execução específicos da entidade ficam dentro da própria pasta da entidade; o mapping é escrito no diretório centralizado do tenant usando `createMappingWriter` de `shared/mapping.ts` (ver [Mappings](#mappings-centralizados-por-tenant)).
 
 Não deve existir um arquivo `.mapping.ts` próprio por entidade — a leitura/escrita de mapping é sempre feita via `shared/mapping.ts`, para evitar reimplementar a mesma lógica em cada entidade.
+
+O `.report.ts` também grava o relatório de preflight antes de iniciar a persistência. Se a migração usa uma transação global, prepara o mapping temporário antes/durante a transação, mas só o publica depois do commit. Uma falha pós-commit deve deixar artefatos e instruções de recuperação; não se deve repetir a migração às cegas.
 
 ### Critério para criar novos arquivos
 
@@ -263,12 +305,12 @@ old_id,new_id,status,old_name,new_name
 Uma entidade pode gerar mais de um mapping quando os dados de origem se desdobram em mais de um destino — por exemplo, `product.ts` gera tanto `product-mapping.csv` quanto `service-mapping.csv`, a partir do mesmo `produto.csv`.
 
 **Escrita incremental.** O padrão adotado é `createMappingWriter` (`shared/mapping.ts`), com quatro operações:
-- `create(header)` — cria o arquivo `.tmp` com o cabeçalho, uma vez, antes do loop de processamento (só quando `dryRun = false`);
+- `create(header)` — cria o arquivo `.tmp` com o cabeçalho, uma vez, após o preflight e antes da persistência (só quando `dryRun = false`);
 - `append(row)` — adiciona uma linha por vez, conforme cada registro é processado, direto no `.tmp`;
-- `finalize()` — renomeia `.tmp` para o arquivo definitivo, chamado apenas quando a execução termina **sem erros**;
-- `discard()` — remove o `.tmp`, chamado quando a execução termina **com erros**, preservando o último mapping definitivo válido.
+- `finalize()` — publica `.tmp` como arquivo definitivo, chamado apenas após o commit bem-sucedido;
+- `discard()` — remove o `.tmp` somente após rollback confirmado, preservando o último mapping definitivo válido.
 
-Esse padrão é mais seguro que gravar tudo de uma vez ao final, porque não depende de manter a lista completa de mappings em memória até o fim e permite recuperar o progresso mesmo que a execução seja interrompida no meio (o `.tmp` nunca substitui o definitivo sozinho).
+Esse padrão é mais seguro que gravar tudo de uma vez ao final, porque não depende de manter a lista completa de mappings em memória até o fim. Para uma transação global, os IDs podem ser acrescentados ao `.tmp` enquanto a transação está aberta; o `.tmp` nunca substitui o definitivo antes do commit. Se o processo for interrompido e o estado do banco ficar incerto, bloqueie uma nova execução e reconcilie os registros antes de descartar ou publicar o temporário.
 
 Em `DRY_RUN=true`, nenhuma dessas operações é chamada pelo orquestrador — o mapping simplesmente não é tocado.
 
@@ -292,7 +334,7 @@ Gerados pelo `logger` compartilhado (`shared/logger.ts`) durante a execução de
 <entidade>/reports/errors/
 ```
 
-Cada erro deve preservar, quando possível: entidade, ID antigo, identificação do registro, momento do erro, nome do erro, mensagem e stack trace. Um erro em um registro não deve interromper toda a migração — a estratégia padrão é registrar o erro e continuar com o próximo, exceto em falhas estruturais que tornem impossível continuar com segurança.
+Cada erro deve preservar, quando possível: entidade, ID antigo, identificação do registro, momento do erro, nome do erro, mensagem e stack trace. No preflight, registre as inconsistências encontradas e bloqueie o conjunto quando sua migração completa depender delas. Dentro de uma transação global, propague falhas de persistência para provocar rollback; não continue registro a registro. Continuar após um erro só é aceitável quando a independência dos registros e a ausência de persistência parcial estiverem justificadas e documentadas.
 
 ### Execution reports
 
@@ -372,4 +414,23 @@ Para qualquer entidade nova, manter:
 - reutilização de código via `shared/`, sem duplicar funcionalidades genéricas entre entidades;
 - preservação dos mappings necessários para manter a integridade das FKs em migrações posteriores;
 - nenhuma responsabilidade duplicada entre arquivos (ex.: mapping é responsabilidade única do `.report.ts` + `shared/mapping.ts`).
+
+### Checklist obrigatório para novos módulos
+
+- [ ] Documentação e módulos anteriores analisados.
+- [ ] Arquivos de entrada, cabeçalhos e estrutura validados.
+- [ ] Mappings necessários identificados e validados.
+- [ ] Relacionamentos validados antes de qualquer escrita.
+- [ ] Regras de negócio documentadas.
+- [ ] Conversões financeiras e de datas cobertas por testes.
+- [ ] Campos e limites do banco efetivo verificados.
+- [ ] Preservação integral dos dados legítimos garantida.
+- [ ] Preflight implementado e relatado.
+- [ ] `DRY_RUN` executa as mesmas conversões e validações da execução real.
+- [ ] Estratégia transacional definida e justificada pelo volume.
+- [ ] Falhas transacionais provocam rollback do conjunto necessário.
+- [ ] Mapping completo, pós-commit e recuperável em falha de publicação.
+- [ ] Pendências, erros, rollback e bloqueio têm relatórios específicos.
+- [ ] Testes automatizados usam mocks ou ambiente isolado, sem banco real.
+- [ ] Documentação do módulo atualizada.
 </content>

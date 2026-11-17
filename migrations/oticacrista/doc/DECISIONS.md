@@ -45,10 +45,19 @@ O objetivo é migrar automaticamente o máximo possível e isolar apenas os caso
 ## Regras de negócio — Venda
 
 ```
+sale.subtotal = SUM(itemTotalParcial × itemQtd)
+sale.total = atendimento.ateTotal
+sale.discount = sale.subtotal - sale.total
 sale.total = sale.subtotal - sale.discount
 ```
 
-O total da venda é sempre o subtotal menos o desconto — essa regra precisa ser respeitada ao converter os campos financeiros do sistema legado para o modelo `Sale` atual.
+O valor unitário do item vem de `itemTotalParcial`; o subtotal de cada linha multiplica esse valor por `itemQtd`. Os cálculos são feitos em centavos inteiros e representados com duas casas decimais. Se o total legado superar o subtotal calculado, o desconto seria negativo e o atendimento fica pendente.
+
+Todas as observações `itemObs` são associadas ao produto legado e preservadas em `Sale.notes`, inclusive valores vazios e repetidos. O campo é `TEXT`; validar o limite em bytes UTF-8, sem truncar conteúdo. Qualquer pendência bloqueia a migração completa antes da persistência.
+
+Vendas e itens são persistidos em uma transação global. O mapping temporário é preparado com os IDs gerados dentro da transação, mas só é publicado após o commit. Se o commit for confirmado e a publicação falhar, manter o temporário e o manifesto de recuperação; uma nova execução deve parar até a recuperação ou reconciliação.
+
+Depois que `sale-mapping.csv` existe, o runner bloqueia uma nova migração para evitar criar vendas duplicadas, pois o modelo atual não possui um campo de origem legado nem foi definida uma chave segura para localizar uma venda legada já persistida.
 
 ## Regras de negócio — Pagamento
 

@@ -5,32 +5,6 @@ carId,carAtendimento,carParcelas,carValorParcela,carVencimento,carNumeroParcela,
 4,10021,6,R$ 160.00,10-Jun-15,4,Pago com atraso,09-Oct-15
 5,10021,6,R$ 160.00,10-Jul-15,5,Vencida,
 6,10021,6,R$ 160.00,10-Aug-15,6,Vencida,
-18,10023,5,R$ 60.00,30-Jan-17,1,Aberta,
-19,10023,5,R$ 60.00,28-Feb-17,2,Aberta,
-20,10023,5,R$ 60.00,28-Mar-17,3,Aberta,
-21,10023,5,R$ 60.00,28-Apr-17,4,Aberta,
-22,10023,5,R$ 60.00,28-May-17,5,Aberta,
-23,10023,5,R$ 60.00,30-Jan-17,1,Aberta,
-24,10023,5,R$ 60.00,28-Feb-17,2,Aberta,
-25,10023,5,R$ 60.00,28-Mar-17,3,Aberta,
-26,10023,5,R$ 60.00,28-Apr-17,4,Aberta,
-27,10023,5,R$ 60.00,28-May-17,5,Aberta,
-28,10023,5,R$ 58.00,30-Jan-17,1,Aberta,
-29,10023,5,R$ 58.00,28-Feb-17,2,Aberta,
-30,10023,5,R$ 58.00,28-Mar-17,3,Aberta,
-31,10023,5,R$ 58.00,28-Apr-17,4,Aberta,
-32,10023,5,R$ 58.00,28-May-17,5,Aberta,
-33,10023,5,R$ 58.00,30-Jan-17,1,Aberta,
-34,10023,5,R$ 58.00,28-Feb-17,2,Aberta,
-35,10023,5,R$ 58.00,28-Mar-17,3,Aberta,
-36,10023,5,R$ 58.00,28-Apr-17,4,Aberta,
-37,10023,5,R$ 58.00,28-May-17,5,Aberta,
-38,10023,6,R$ 300.00,07-Feb-17,1,Aberta,
-39,10023,6,R$ 300.00,07-Mar-17,2,Aberta,
-40,10023,6,R$ 300.00,07-Apr-17,3,Aberta,
-41,10023,6,R$ 300.00,07-May-17,4,Aberta,
-42,10023,6,R$ 300.00,07-Jun-17,5,Aberta,
-43,10023,6,R$ 300.00,07-Jul-17,6,Aberta,
 44,10024,5,R$ 110.00,23-Sep-16,1,Pago com sucesso,22-Sep-16
 45,10024,5,R$ 110.00,23-Oct-16,2,Pago com atraso,01-Nov-16
 46,10024,5,R$ 110.00,23-Nov-16,3,Pago com atraso,02-Dec-16
@@ -136,9 +110,6 @@ carId,carAtendimento,carParcelas,carValorParcela,carVencimento,carNumeroParcela,
 160,10060,6,R$ 150.00,28-May-17,4,Pago com atraso,27-Jul-18
 161,10060,6,R$ 150.00,28-Jun-17,5,Pago com atraso,27-Jul-18
 162,10060,6,R$ 150.00,28-Jul-17,6,Pago com atraso,27-Jul-18
-163,10059,3,R$ 400.00,15-Feb-17,1,Aberta,
-164,10059,3,R$ 400.00,15-Mar-17,2,Aberta,
-165,10059,3,R$ 400.00,15-Apr-17,3,Aberta,
 166,10061,3,R$ 300.00,15-Feb-17,1,Pago com sucesso,15-Feb-17
 167,10061,3,R$ 300.00,15-Mar-17,2,Pago com atraso,16-Mar-17
 168,10061,3,R$ 300.00,15-Apr-17,3,Pago com atraso,17-Apr-17
@@ -159,15 +130,6 @@ carId,carAtendimento,carParcelas,carValorParcela,carVencimento,carNumeroParcela,
 188,10066,5,R$ 96.00,06-Apr-17,3,Pago com sucesso,05-Apr-17
 189,10066,5,R$ 96.00,06-May-17,4,Pago com sucesso,04-May-17
 190,10066,5,R$ 96.00,06-Jun-17,5,Pago com sucesso,06-Jun-17
-191,10067,4,R$ 87.50,02-Mar-17,1,Aberta,
-192,10067,4,R$ 87.50,02-Apr-17,2,Aberta,
-193,10067,4,R$ 87.50,02-May-17,3,Aberta,
-194,10067,4,R$ 87.50,02-Jun-17,4,Aberta,
-195,10065,5,R$ 220.00,03-Mar-17,1,Aberta,
-196,10065,5,R$ 220.00,03-Apr-17,2,Aberta,
-197,10065,5,R$ 220.00,03-May-17,3,Aberta,
-198,10065,5,R$ 220.00,03-Jun-17,4,Aberta,
-199,10065,5,R$ 220.00,03-Jul-17,5,Aberta,
 200,10073,5,R$ 220.00,03-Mar-17,1,Pago com atraso,04-Mar-17
 201,10073,5,R$ 220.00,03-Apr-17,2,Pago com atraso,06-Apr-17
 202,10073,5,R$ 220.00,03-May-17,3,Pago com atraso,06-May-17
@@ -486,19 +448,12 @@ carId,carAtendimento,carParcelas,carValorParcela,carVencimento,carNumeroParcela,
 553,10182,4,R$ 130.00,05-Jun-17,2,Pago com atraso,22-Jul-17
 554,10182,4,R$ 130.00,05-Jul-17,3,Pago com atraso,22-Jul-17
 555,10182,4,R$ 130.00,05-Aug-17,4,Pago com atraso,01-Sep-17
-556,10188,3,R$ 33.33,17-May-17,1,Vencida,
-557,10188,3,R$ 33.33,17-Jun-17,2,Aberta,
-558,10188,3,R$ 33.33,17-Jul-17,3,Aberta,
 559,10187,6,R$ 160.00,07-May-17,1,Pago com atraso,16-May-17
 560,10187,6,R$ 160.00,07-Jun-17,2,Pago com atraso,13-Jun-17
 561,10187,6,R$ 160.00,07-Jul-17,3,Pago com sucesso,06-Jul-17
 562,10187,6,R$ 160.00,07-Aug-17,4,Pago com atraso,08-Aug-17
 563,10187,6,R$ 160.00,07-Sep-17,5,Pago com atraso,02-Oct-17
 564,10187,6,R$ 160.00,07-Oct-17,6,Pago com atraso,27-Oct-17
-565,10188,4,R$ 120.00,15-May-17,1,Vencida,
-566,10188,4,R$ 120.00,15-Jun-17,2,Aberta,
-567,10188,4,R$ 120.00,15-Jul-17,3,Aberta,
-568,10188,4,R$ 120.00,15-Aug-17,4,Aberta,
 569,10189,5,R$ 160.00,10-May-17,1,Pago com atraso,17-May-17
 570,10189,5,R$ 160.00,10-Jun-17,2,Pago com atraso,14-Jun-17
 571,10189,5,R$ 160.00,10-Jul-17,3,Pago com atraso,12-Jul-17

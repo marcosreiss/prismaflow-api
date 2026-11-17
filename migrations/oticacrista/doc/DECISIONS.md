@@ -29,6 +29,15 @@ Entidades futuras usam esse mapping para reconstruir relacionamentos. Exemplo: u
 
 O ID de um registro novo só existe depois que o Prisma executa o `create()` de fato — em `DRY_RUN=true` não há garantia de qual ID o banco vai gerar. Por isso o mapping definitivo só é gravado na execução real (`DRY_RUN=false`).
 
+## Migração de pagamentos
+
+- `payment/payment.ts` consome somente `input/atendimento.csv` e `input/carne.csv`, resolve a venda existente por `mappings/sale-mapping.csv` e não cria nem altera `Sale`.
+- Payment, métodos e parcelas são criados como árvore aninhada em uma única transação global. A pré-validação consulta vendas existentes, tenant/branch, total persistido e pagamentos já associados antes de qualquer escrita.
+- A entrada vira método `MONEY` independente. Crédito, dinheiro e débito são recebidos integralmente pela ótica. Carnê mantém cada parcela e situação no schema disponível: `paidAmount` igual ao valor e `paidAt` preenchido representam confirmação; zero e `null` representam pendência. O schema não possui enum/campo de status de parcela.
+- Um desvio de exatamente R$ 0,01 na soma do carnê só é aceito quando todas as parcelas têm o mesmo valor de origem. Nenhum valor é ajustado; o relatório registra o arredondamento. A situação do Payment continua determinada pela soma efetivamente paga contra o total.
+- Os atendimentos `10023` e `10188` são explicitamente excluídos do escopo. A forma de pagamento ausente de `10829` é uma inconsistência bloqueante; não há inferência automática.
+- Inspecionados os CSVs de entrada: 2.094 atendimentos, 3.917 parcelas e 2.094 mappings de venda. Dois carnês (10741 e 11826) diferem em R$ 0,01 por arredondamento de parcelas uniformes. A migração real permanece bloqueada pelo registro 10829 até correção/decisão sobre a origem.
+
 Para registros classificados como `EXISTING` (já existentes no banco atual), o ID já é conhecido de antemão e pode aparecer mesmo durante o dry-run — a restrição vale especificamente para os registros que seriam `CREATED`.
 
 ## Estratégia para dados inconsistentes

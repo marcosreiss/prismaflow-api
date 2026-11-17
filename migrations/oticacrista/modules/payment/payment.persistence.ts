@@ -85,6 +85,6 @@ export async function persistPaymentsAtomically(
     }, {
         maxWait: 10_000,
         // Dataset contains about 2,094 payment aggregates and 3,917 installments.
-        timeout: 300_000,
+        timeout: 900_000,
     });
 }

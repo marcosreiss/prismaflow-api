@@ -1,0 +1,13 @@
+[14:38:29] [INFO] MIGRAÇÃO: PAYMENT + PAYMENT METHOD ITEM + PAYMENT INSTALLMENT
+[14:38:29] [INFO] Run ID: 2026-11-17-14-38-29-6720
+[14:38:29] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[14:38:29] [INFO] Branch: cmibvcyed00017m014r66e39w
+[14:38:29] [INFO] DRY RUN: NÃO
+[14:38:31] [INFO] Atendimentos analisados: 2094
+[14:38:31] [INFO] Pagamentos previstos: 2094
+[14:38:31] [INFO] Métodos previstos: {"INSTALLMENT":848,"MONEY":996,"CREDIT":687,"DEBIT":87}
+[14:38:31] [INFO] Parcelas analisadas/confirmadas/pendentes: 3917/3462/455
+[14:38:31] [INFO] Valores total/pago/em aberto: 1709185.92/1612881.91/96304.01
+[14:38:31] [INFO] Excluídos do escopo: 0
+[14:38:31] [INFO] Avisos de arredondamento documentados: 2
+[14:48:11] [SUCCESS] Transação confirmada: 2094 pagamentos, 2618 métodos e 3917 parcelas.

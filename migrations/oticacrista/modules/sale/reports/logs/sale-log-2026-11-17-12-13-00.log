@@ -1,0 +1,12 @@
+[12:13:00] [INFO] MIGRAÇÃO: SALE + ITEM PRODUCT
+[12:13:00] [INFO] Run ID: 2026-11-17-12-13-00-12340
+[12:13:00] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[12:13:00] [INFO] Branch: cmibvcyed00017m014r66e39w
+[12:13:00] [INFO] DRY RUN: SIM
+[12:13:03] [INFO] Atendimentos analisados: 2094
+[12:13:03] [INFO] Vendas individualmente aptas: 746
+[12:13:03] [INFO] Vendas pendentes: 1348
+[12:13:03] [INFO] Itens analisados: 3911
+[12:13:03] [INFO] Itens individualmente aptos: 1220
+[12:13:03] [INFO] Itens sem atendimento: 8
+[12:13:03] [ERROR] [MIGRAÇÃO BLOQUEADA ANTES DA PERSISTÊNCIA] 1356 inconsistência(s) encontrada(s) no preflight.

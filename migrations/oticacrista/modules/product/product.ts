@@ -31,7 +31,7 @@ async function main() {
     });
 
     const report = createProductReport({
-        entityReportsDir: "./migrations/oticacrista/product/reports",
+        entityReportsDir: "./migrations/oticacrista/modules/product/reports",
         mappingsDir: "./migrations/oticacrista/mappings",
     });
 

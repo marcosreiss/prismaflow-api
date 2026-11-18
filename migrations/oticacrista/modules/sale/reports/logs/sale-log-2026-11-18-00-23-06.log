@@ -1,0 +1,6 @@
+[00:23:06] [INFO] MIGRAÇÃO: SALE + ITEM PRODUCT
+[00:23:06] [INFO] Run ID: 2026-11-18-00-23-06-19644
+[00:23:06] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[00:23:06] [INFO] Branch: cmibvcyed00017m014r66e39w
+[00:23:06] [INFO] DRY RUN: NÃO
+[00:23:06] [ERROR] [BLOQUEADA ANTES DO PREFLIGHT] Mapping definitivo já existe em C:\Work\prismaflow\prismaflow-core\prismaflow-api\migrations\oticacrista\mappings\sale-mapping.csv; o módulo não possui reconciliação de vendas previamente migradas e bloqueou nova criação para evitar duplicatas.

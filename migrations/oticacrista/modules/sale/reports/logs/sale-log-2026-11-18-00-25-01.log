@@ -1,0 +1,13 @@
+[00:25:01] [INFO] MIGRAÇÃO: SALE + ITEM PRODUCT
+[00:25:01] [INFO] Run ID: 2026-11-18-00-25-01-19128
+[00:25:01] [INFO] Tenant: cmibvcyed00007m0118rkgft8
+[00:25:01] [INFO] Branch: cmibvcyed00017m014r66e39w
+[00:25:01] [INFO] DRY RUN: NÃO
+[00:25:04] [INFO] Atendimentos analisados: 2094
+[00:25:04] [INFO] Vendas individualmente aptas: 2094
+[00:25:04] [INFO] Vendas pendentes: 0
+[00:25:04] [INFO] Itens analisados: 3903
+[00:25:04] [INFO] Itens individualmente aptos: 3903
+[00:25:04] [INFO] Itens sem atendimento: 0
+[00:30:00] [INFO] Transação confirmada: 2094 vendas e 3903 itens.
+[00:30:00] [SUCCESS] Mapping finalizado após o commit da transação.

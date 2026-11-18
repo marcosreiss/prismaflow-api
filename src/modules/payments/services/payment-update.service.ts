@@ -225,7 +225,7 @@ export class PaymentUpdateService {
           }
           if (!method.firstDueDate) {
             return ApiResponse.error(
-              "Método INSTALLMENT requer firstDueDate.",
+              "Método INSTALLMENT requer Data do Primeiro Pagamento.",
               400,
               req,
             );
@@ -234,7 +234,7 @@ export class PaymentUpdateService {
 
         if (INSTANT_METHODS.includes(method.method) && !method.paidAt) {
           return ApiResponse.error(
-            `O método ${method.method} requer a data de recebimento (paidAt).`,
+            `O método ${method.method} requer a data de recebimento do valor.`,
             400,
             req,
           );

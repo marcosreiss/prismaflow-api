@@ -33,6 +33,7 @@ export class PaymentIntegrityService {
       installments,
       firstDueDate,
     } = methodItem;
+
     const { tenantId, branchId, userId } = context;
 
     const installmentValue = Math.floor((amount / installments) * 100) / 100;
@@ -40,22 +41,28 @@ export class PaymentIntegrityService {
       (amount - installmentValue * installments).toFixed(2),
     );
 
+    // Trabalhar exclusivamente em UTC para evitar deslocamentos de fuso.
     const baseDate = new Date(firstDueDate);
+    const baseYear = baseDate.getUTCFullYear();
+    const baseMonth = baseDate.getUTCMonth();
+    const baseDay = baseDate.getUTCDate();
+
     const created = [];
 
     for (let i = 1; i <= installments; i++) {
+      const targetMonth = baseMonth + (i - 1);
+
+      // Último dia do mês de destino.
+      const lastDayOfMonth = new Date(
+        Date.UTC(baseYear, targetMonth + 1, 0),
+      ).getUTCDate();
+
       const dueDate = new Date(
-        baseDate.getFullYear(),
-        baseDate.getMonth() + (i - 1),
-        baseDate.getDate(),
+        Date.UTC(baseYear, targetMonth, Math.min(baseDay, lastDayOfMonth)),
       );
 
-      // Se o dia não existir no mês destino (ex: 31 em fevereiro), usa último dia do mês
-      if (dueDate.getDate() !== baseDate.getDate()) {
-        dueDate.setDate(0);
-      }
-
       const isLast = i === installments;
+
       const installmentAmount = parseFloat(
         (installmentValue + (isLast ? remainder : 0)).toFixed(2),
       );

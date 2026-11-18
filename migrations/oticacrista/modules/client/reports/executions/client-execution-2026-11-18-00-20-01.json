@@ -1,0 +1,13 @@
+{
+  "entity": "Client",
+  "tenantId": "cmibvcyed00007m0118rkgft8",
+  "dryRun": false,
+  "startedAt": "2026-11-18T03:19:30.545Z",
+  "finishedAt": "2026-11-18T03:20:01.673Z",
+  "durationMs": 31128,
+  "total": 2548,
+  "created": 66,
+  "existing": 2482,
+  "errors": 0,
+  "pending": 0
+}

@@ -19,7 +19,7 @@ async function main() {
 
     const logger = createMigrationLogger({
         entity: "brand",
-        entityReportsDir: "./migrations/oticacrista/brand/reports",
+        entityReportsDir: "./migrations/oticacrista/modules/brand/reports",
         executionTimestamp: formatTimestamp(startedAt),
     });
 
